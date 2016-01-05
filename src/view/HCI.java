@@ -46,7 +46,8 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	private JButton buttonNew,buttonOpen,buttonSave,buttonZoomIn,buttonZoomOut;
 	public HCI(Controller ctrl) {
 		this.ctrl=ctrl;
-
+		this.graph=ctrl.getGraph();
+		
 		//basic parameters of this frame
 		this.setTitle("Logiciel pedagogique de graph");
 	    this.setSize(900, 700);
