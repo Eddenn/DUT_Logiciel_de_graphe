@@ -3,6 +3,6 @@
 /.git/*
 /bin/*
 /bin/*/*
-/controller/
-/view/
-/model/
+/controller/*
+/view/*
+/model/*

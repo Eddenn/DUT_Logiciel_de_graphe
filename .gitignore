@@ -1,1 +1,8 @@
-bin/controller/test.class
+/Farm-Fresh_arrow_refresh.png
+/.settings/*
+/.git/*
+/bin/*
+/bin/*/*
+/controller/*
+/view/*
+/model/*
