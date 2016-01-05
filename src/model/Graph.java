@@ -51,7 +51,7 @@ public class Graph {
 							tMatrix[i][j] = 1;
 						break;
 					}
-					// Si aucun arc de i n'est relié à j, on place un 0 dans la
+					// Si aucun arc de i n'est relié à j, on place un -1 dans la
 					// matrice
 					else
 						tMatrix[i][j] = -1;

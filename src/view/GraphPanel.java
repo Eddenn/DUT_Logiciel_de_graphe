@@ -228,7 +228,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {		
 		if(e.getClickCount() > 1) {
 			double centerX, centerY;
 			for (Point c : HCI.hmVertex.values()) {
@@ -244,36 +244,38 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 					}
 				}
 			}
-			for(Vertex v1 : hci.getGraph().getAlVertex()) {
-				for(Arc arc : v1.getAlArcs()) {
-					Vertex v2 = arc.getVertex();
-					Point p1 = null,p2 = null;
-					for(String s : HCI.hmVertex.keySet()) {
-						if(v1.getName().equals(s))	p1 = HCI.hmVertex.get(s);
-						if(v2.getName().equals(s))	p2 = HCI.hmVertex.get(s);
-					}
-							
-					/*p1.x = (int) ((p1.x+iWidthEdge/2)*iZoom);
-					p1.y = (int) ((p1.y+iHeightEdge/2)*iZoom);
-					p2.x = (int) ((p2.x+iWidthEdge/2)*iZoom);
-					p2.y = (int) ((p2.y+iHeightEdge/2)*iZoom);*/
-					
-					double b = -(p1.x*p2.y-p1.x*p2.x)/(p2.x-p1.x) ;
-							
-					double a = (p1.getX()-b)/(p1.getX());
-					
-					/*double a = (p2.y-p1.y)/(p2.x-p1.x);
-					// Y=aX+b  -b=aX-Y   b=-aX+Y
-					double b = -a*p1.x+p1.y;*/
-					
-					System.out.println("Y="+a+"X+"+b);
-					
-					//Si la souris est sur un arc
-					if( e.getY()==a*e.getX()+b ) {
-						System.out.println("test");
-					}
-				}
-			}
+//			for(Vertex v1 : hci.getGraph().getAlVertex()) {
+//				for(Arc arc : v1.getAlArcs()) {
+//					Vertex v2 = arc.getVertex();
+//					Point p1 = null,p2 = null;
+//					for(String s : HCI.hmVertex.keySet()) {
+//						if(v1.getName().equals(s))	p1 = HCI.hmVertex.get(s);
+//						if(v2.getName().equals(s))	p2 = HCI.hmVertex.get(s);
+//					}
+//							
+//					int aX = (int) ((p1.x+iWidthEdge/2)*iZoom);
+//					int aY = (int) ((p1.y+iHeightEdge/2)*iZoom);
+//					int bX = (int) ((p2.x+iWidthEdge/2)*iZoom);
+//					int bY = (int) ((p2.y+iHeightEdge/2)*iZoom);
+//					
+//					double b = -(aX*bY-aX*bX)/(bX-aX) ;
+//							
+//					double a = (aX-b)/(aX);
+//					
+//					// Y=aX+b  -b=aX-Y   b=-aX+Y
+//					// -aX=(b-Y)   X=-(b-Y)/a
+//					
+//					System.out.println(aX+":"+aY+" / "+bX+":"+bY);
+//					System.out.println("Y="+a+"X+"+b);
+//					System.out.println("Y="+(int)(a*e.getX()+b)+"X="+(int)(-(b-e.getY())/a));
+//					System.out.println("X="+e.getX()+"Y="+e.getY());
+//					
+//					//Si la souris est sur un arc
+//					if( ( (int)(a*e.getX()+b+5) <= e.getY() && e.getY() >= (int)(a*e.getX()+b-5) )&&( (int)(-(b-e.getY())/a+5) <= e.getX() && e.getX() >= (int)(-(b-e.getY())/a-5) ) ) {
+//						System.out.println("test");
+//					}
+//				}
+//			}
 		}
 		repaint();
 	}
