@@ -234,7 +234,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		// New file
-		buttonNew = new JButton("Fichier");
+		buttonNew = new JButton("Nouveau");
 		buttonNew.addActionListener(this);
 		pButton.add(buttonNew);
 		// Open file
@@ -290,10 +290,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 			// FICHIER
 			// Nouveau
-		} else if (e.getSource() == tabMenuItemFile[0]) {
+		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource()==buttonNew) {
 			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
 			// Ouvrir
-		} else if (e.getSource() == tabMenuItemFile[1]) {
+		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource()==buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
