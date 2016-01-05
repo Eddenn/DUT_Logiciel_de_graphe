@@ -8,9 +8,9 @@ package model;
  */
 
 public class Arc {
-/*test*/
-	protected Vertex vertex;
-	protected Integer iValue;
+
+	private Vertex vertex;
+	private Integer iValue;
 
 	public Arc(Vertex vertex) {
 		this.vertex = vertex;

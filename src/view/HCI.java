@@ -270,30 +270,43 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if( e.getSource() == slObject.getJBSwitch() ) {		//Switch the state of the SwitchList
-			slObject.switchState();			
-		} else if (e.getSource() == tabMenuItemFichier[5]) {//Quit
+		//Switch the state of the SwitchList
+		if( e.getSource() == slObject.getJBSwitch() ){		
+			slObject.switchState();	
+			
+		//FICHIER
+			//Nouveau
+		} else if (e.getSource() == tabMenuItemFichier[0]) {
+			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
+			//Ouvrir
+		} else if (e.getSource() == tabMenuItemFichier[1]) {
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());	
+			//Enregistrer sous
+		}else if (e.getSource() == tabMenuItemFichier[3]) {
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+				ctrl.saveFile(dial.getSelectedFile().getAbsolutePath());
+			//Quitter
+		} else if (e.getSource() == tabMenuItemFichier[5]) {
 			this.dispose();
-		} else if (e.getSource() == tabMenuItemAide[0]) {	//A propos
-			JOptionPane.showMessageDialog(this, "<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre</center></html>","A propos",1);
-		} else if (e.getSource() == buttonZoomIn) {			//Zoom in
-			pGraph.zoomIn();
-			pGraph.repaint();
-		    pGraph.revalidate();
-			
-		} else if (e.getSource() == buttonZoomOut) {		//Zoom out
-			pGraph.zoomOut();
-		    pGraph.repaint();
-		    pGraph.revalidate();
-		 
-		} else if (e.getSource() == tabMenuItemGraph[0]) {	//Ajouter sommet
+		
+		//EDITION	
+		//EXPORTER	
+			//Image
+		}else if(e.getSource()==tabMenuItemExport[0]){
+			expImage();
+ 
+		//GRAPH
+			//Ajouter un sommet
+		} else if (e.getSource() == tabMenuItemGraph[0]) {	
 			new Form(this, "Ajouter un sommet", true, ctrl);
-			
-		} else if (e.getSource() == tabMenuItemGraph[1]) {	//Modifier sommet
+			//Modifier un sommet
+		} else if (e.getSource() == tabMenuItemGraph[1]) {	
 			new Form(this, "Modifier un sommet",true, ctrl);
-			
-		} else if (e.getSource() == tabMenuItemGraph[2]) {	//Supprimer sommet
-			
+			//Supprimer un sommet
+		} else if (e.getSource() == tabMenuItemGraph[2]) {	
 			Vertex tmpVertex = null;
 			for(Vertex v : ctrl.getGraph().getAlVertex()) {
 				if( v.getName().equals(getStrSelected()) ) {
@@ -304,13 +317,15 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			HCI.hmVertex.remove(getStrSelected());
 			setStrSelected(null);
 			refresh();
-		}
+			//Ajouter un arc
+		} else if (e.getSource() == tabMenuItemGraph[3]) {
+			new FormAddArc(this, "Ajout d'un arc", true, ctrl);	
 		
-		//Export version
-		if(e.getSource()==tabMenuItemExport[0]){
-			expImage();
-		} 
+		//AIDE
+		} else if (e.getSource() == tabMenuItemAide[0]) {	//A propos
+			JOptionPane.showMessageDialog(this, "<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre</center></html>","A propos",1);
 		
+<<<<<<< HEAD
 		else if (e.getSource() == tabMenuItemFichier[3]) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
@@ -325,6 +340,21 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
 		} else if (e.getSource() == tabMenuItemGraph[3]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
+=======
+
+		//BUTTON
+			//Zoom in
+		} else if (e.getSource() == buttonZoomIn) {			
+			pGraph.zoomIn();
+			pGraph.repaint();
+		    pGraph.revalidate();
+			//Zoom out
+		} else if (e.getSource() == buttonZoomOut) {		
+			pGraph.zoomOut();
+		    pGraph.repaint();
+		    pGraph.revalidate();
+			
+>>>>>>> e6fb842e28dc50f7f81db45d92f4455926c22af3
 		}
 		refresh();
 	}
