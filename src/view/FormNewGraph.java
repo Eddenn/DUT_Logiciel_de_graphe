@@ -19,10 +19,11 @@ public class FormNewGraph extends JDialog implements ActionListener {
 	
 	public FormNewGraph(HCI parent, String title, boolean modal, Controller ctrl){
 		super(parent,title,modal);
-		this.ctrl=ctrl;
 		this.setSize(300, 165);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
+		
+		this.ctrl=ctrl;
 		
 		String[] tabRep = {"Oui","Non"};
 		
@@ -60,9 +61,7 @@ public class FormNewGraph extends JDialog implements ActionListener {
 		setVisible(true);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() == ok ){
 			boolean bValued = boxValued.getSelectedItem().equals("Oui");
 			boolean bOriented = boxOriented.getSelectedItem().equals("Oui");
