@@ -10,8 +10,6 @@ public class Controller {
 		new Controller();
 	}	
 	public Controller() {
-		/*test*/
-		/*test2*/
 		//Create graph
 		g = new Graph(true, true);
 		
