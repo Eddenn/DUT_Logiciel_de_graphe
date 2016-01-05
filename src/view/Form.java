@@ -76,12 +76,13 @@ public class Form extends JDialog implements ActionListener {
 				for(Vertex v : ctrl.getGraph().getAlVertex()) {
 					if(v.getName().equals(hci.getStrSelected())) {
 						v.setName(nom.getText());
+						HCI.hmVertex.put( nom.getText() , HCI.hmVertex.get(hci.getStrSelected()) );
+						HCI.hmVertex.remove(hci.getStrSelected());
+						hci.setStrSelected(nom.getText());
+						hci.refresh();
 					}
 				}
-				HCI.hmVertex.put( nom.getText() , HCI.hmVertex.get(hci.getStrSelected()) );
-				HCI.hmVertex.remove(hci.getStrSelected());
-				hci.setStrSelected(nom.getText());
-				hci.refresh();
+
 				dispose();
 			}
 			if (e.getSource() == annuler) { setVisible(false); }

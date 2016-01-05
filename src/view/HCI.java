@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
+import model.Arc;
 import model.Graph;
 import model.Vertex;
 /*testMel*/
@@ -34,7 +35,7 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	private JMenuItem[] tabMenuItemFichier = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemExport = new JMenuItem[1];
-	private JMenuItem[] tabMenuItemGraph = new JMenuItem[4];
+	private JMenuItem[] tabMenuItemGraph = new JMenuItem[5];
 	private JMenuItem[] tabMenuItemAide = new JMenuItem[1];
 	//List of "Object"
 	private SwitchList slObject;
@@ -182,6 +183,11 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	    	tabMenuItemGraph[3] = new JMenuItem("<html>Ajouter un arc</html>");
 	    	tabMenuItemGraph[3].addActionListener(this);
 	    	menuGraph.add(tabMenuItemGraph[3]);
+	    	
+	    	//MenuItem - Ajouter un arc
+	    	tabMenuItemGraph[4] = new JMenuItem("<html>Supprimer un arc</html>");
+	    	tabMenuItemGraph[4].addActionListener(this);
+	    	menuGraph.add(tabMenuItemGraph[4]);
 
     	//Add menuGraph to this frame
     	menuBarMain.add(menuGraph);
@@ -317,12 +323,34 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			HCI.hmVertex.remove(getStrSelected());
 			setStrSelected(null);
 			refresh();
+			
 			//Ajouter un arc
 		} else if (e.getSource() == tabMenuItemGraph[3]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);	
+			
+			// Supprimer un arc
+		} else if (e.getSource() == tabMenuItemGraph[4]) {	
+			Arc tmpArc = null;
+			
+			System.out.println((getStrSelected().matches("[?{5}-{6}?{6}])")));
+			
+			if (getStrSelected().matches("[?{5}-{6}?{6}])")) {
+				String vName = getStrSelected().substring(0, 5);
+				vName = vName.replaceAll(" ", "");
+				
+				String vBisName = getStrSelected().substring(12);
+				vBisName = vBisName.replaceAll(" ", "");
+				
+				System.out.println(vName + vBisName);
+				
+			    ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));		
+				setStrSelected(null);
+				refresh();
+			}
+		}
 		
 		//AIDE
-		} else if (e.getSource() == tabMenuItemAide[0]) {	//A propos
+		else if (e.getSource() == tabMenuItemAide[0]) {	//A propos
 			JOptionPane.showMessageDialog(this, "<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre</center></html>","A propos",1);
 		
 		//BUTTON
