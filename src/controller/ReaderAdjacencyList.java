@@ -21,6 +21,7 @@ public class ReaderAdjacencyList extends Reader {
 			e.printStackTrace();
 		}
 
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(br);
 
 		boolean bIsDirected = false;

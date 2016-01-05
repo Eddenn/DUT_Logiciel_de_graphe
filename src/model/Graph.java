@@ -5,9 +5,6 @@ import java.util.HashMap;
 
 /**
  * Classe permettant de gérer le graphe dans son ensemble
- * 
- * @author Les grosses bites
- * 
  */
 
 public class Graph {
@@ -57,6 +54,7 @@ public class Graph {
 		return tMatrix;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public HashMap generateAdjacencyList() {
 		return new HashMap();
 	}

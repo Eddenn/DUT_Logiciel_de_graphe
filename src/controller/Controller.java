@@ -8,7 +8,6 @@ import model.Vertex;
 import view.HCI;
 
 public class Controller {
-	@SuppressWarnings("unused")
 	private HCI hci;
 	private Graph graph;
 

@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import model.*;
-import controller.*;
 
 public class SwitchList extends JPanel{
 	/** Serial Version
@@ -55,6 +54,7 @@ public class SwitchList extends JPanel{
 	    this.setPreferredSize(new Dimension(200,500));
 	}
 	//Getters and Setters
+	@SuppressWarnings("rawtypes")
 	public JList getListOfObject() {return this.listOfObject;}
 	public JButton getJBSwitch()   {return this.jbSwitch;}
 	
