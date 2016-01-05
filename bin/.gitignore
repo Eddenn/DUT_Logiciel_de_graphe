@@ -2,3 +2,4 @@
 /bin/*
 /.settings/*
 /.git/*
+/controller/
