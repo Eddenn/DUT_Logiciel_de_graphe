@@ -192,18 +192,14 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	    //-----------//
 	    
 	    //---List of "Object" --//
-	    slObject = new SwitchList(this,this.ctrl);
+	    slObject = new SwitchList(this);
 	    slObject.setBorder(BorderFactory.createLineBorder(Color.black));
 	    add(slObject,BorderLayout.WEST);
 	    slObject.switchState();
 	    //----------------------//
 	    
 	    //---------Graph--------//
-<<<<<<< HEAD
 	    pGraph = new GraphPanel(this);
-=======
-	    pGraph = new GraphPanel(this.ctrl);
->>>>>>> 606b9a2509774ba1c9e761a75c85a78082408bf5
 	    jscrPanel = new JScrollPane(pGraph);
 	    add(jscrPanel,BorderLayout.CENTER);
 	    //----------------------//
