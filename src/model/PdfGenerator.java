@@ -36,10 +36,6 @@ public class PdfGenerator {
 		    }
 		  }
 	
-
-		  // iText allows to add metadata to the PDF which can be viewed in your Adobe
-		  // Reader
-		  // under File -> Properties
 		  private static void addMetaData(Document document) {
 		    document.addTitle("My first PDF");
 		    document.addSubject("Using iText");
