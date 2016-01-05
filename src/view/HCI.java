@@ -323,15 +323,11 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			
 		} else if (e.getSource() == tabMenuItemFichier[0]) {
 			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
-<<<<<<< HEAD
 		} else if (e.getSource() == tabMenuItemGraph[1]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
-=======
 			
 		} else if (e.getSource() == tabMenuItemGraph[3]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
-			
->>>>>>> 324d986a858d9d5399cb6fc06cf335271b89f9ea
 		}
 		refresh();
 	}
