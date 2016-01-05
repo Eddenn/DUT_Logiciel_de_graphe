@@ -40,43 +40,47 @@ public class ReaderMatrix extends Reader {
 			e.printStackTrace();
 		}
 
-		if (alStr.size() < 4) {
+		try {
+			if (alStr.size() < 4) {
+				return null;
+			}
+
+			bIsDirected = checkDirection(alStr.get(0));
+			bIsValuated = checkValue(alStr.get(1));
+
+			alStr.remove(0);
+			alStr.remove(0);
+
+			for (int i = 0; i < alStr.size() && alStr.get(i).equals(""); i++) {
+				alStr.remove(i);
+			}
+
+			int[][] tMatrix = new int[alStr.size()][alStr.size()];
+
+			for (int i = 0; i < alStr.size(); i++) {
+				String tValuesMatrix[] = alStr.get(i).split(" ");
+
+				for (int j = 0; j < tValuesMatrix.length; j++) {
+					tMatrix[i][j] = Integer.parseInt(tValuesMatrix[j]);
+				}
+			}
+
+			if (bIsDirected && bIsValuated) {
+				return createDirectedValuatedGraph(tMatrix);
+			}
+
+			if (bIsDirected && !bIsValuated) {
+				return createDirectedNotValuatedGraph(tMatrix);
+			}
+
+			if (!bIsDirected && bIsValuated) {
+				return createNotDirectedValuatedGraph(tMatrix);
+			}
+
+			return createNotDirectedNotValuatedGraph(tMatrix);
+		} catch (Exception e) {
 			return null;
 		}
-
-		bIsDirected = checkDirection(alStr.get(0));
-		bIsValuated = checkValue(alStr.get(1));
-
-		alStr.remove(0);
-		alStr.remove(0);
-
-		for (int i = 0; i < alStr.size() && alStr.get(i).equals(""); i++) {
-			alStr.remove(i);
-		}
-
-		int[][] tMatrix = new int[alStr.size()][alStr.size()];
-
-		for (int i = 0; i < alStr.size(); i++) {
-			String tValuesMatrix[] = alStr.get(i).split(" ");
-
-			for (int j = 0; j < tValuesMatrix.length; j++) {
-				tMatrix[i][j] = Integer.parseInt(tValuesMatrix[j]);
-			}
-		}
-
-		if (bIsDirected && bIsValuated) {
-			return createDirectedValuatedGraph(tMatrix);
-		}
-
-		if (bIsDirected && !bIsValuated) {
-			return createDirectedNotValuatedGraph(tMatrix);
-		}
-
-		if (!bIsDirected && bIsValuated) {
-			return createNotDirectedValuatedGraph(tMatrix);
-		}
-
-		return createNotDirectedNotValuatedGraph(tMatrix);
 	}
 
 	private static Graph createDirectedValuatedGraph(int[][] tMatrix) {
@@ -212,7 +216,7 @@ public class ReaderMatrix extends Reader {
 
 		return strNew;
 	}
-	
+
 	private static boolean isOnlyComposedOfZ(String str) {
 		for (int i = 0; i < str.length(); i++) {
 			if (str.charAt(i) != 'Z') {
