@@ -18,6 +18,7 @@ import model.Vertex;
 
 public class Form extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
 	private JButton ok, annuler;
 	private Controller ctrl;
@@ -77,11 +78,9 @@ public class Form extends JDialog implements ActionListener {
 						v.setName(nom.getText());
 					}
 				}
-				System.out.println(HCI.hmVertex.get(hci.getStrSelected()) + " / " + hci.getStrSelected());
 				HCI.hmVertex.put( nom.getText() , HCI.hmVertex.get(hci.getStrSelected()) );
 				HCI.hmVertex.remove(hci.getStrSelected());
 				hci.setStrSelected(nom.getText());
-				System.out.println(HCI.hmVertex.get(hci.getStrSelected()) + " / " + hci.getStrSelected());
 				hci.refresh();
 				dispose();
 			}

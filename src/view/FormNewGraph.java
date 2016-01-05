@@ -13,10 +13,13 @@ import controller.Controller;
 
 public class FormNewGraph extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = -1023319410573124162L;
 	private JButton ok, annuler;
+	@SuppressWarnings("rawtypes")
 	private JComboBox boxOriented, boxValued;
 	private Controller ctrl;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public FormNewGraph(HCI parent, String title, boolean modal, Controller ctrl){
 		super(parent,title,modal);
 		this.setSize(300, 165);
