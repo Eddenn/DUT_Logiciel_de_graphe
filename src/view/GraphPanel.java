@@ -26,10 +26,11 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	private double iWidthEdge;	//Largeur
 	private double iHeightEdge; //Hauteur
 	private double iZoom;		//Zoom
-	private Controller ctrl;
+	private HCI hci;
 
-	public GraphPanel(Controller ctrl) {
+	public GraphPanel(HCI hci) {
 		super();
+		this.hci = hci;
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.iZoom = 1.0;
 		this.iHeightEdge = 50*iZoom;
@@ -51,7 +52,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 		drawArcs(g2d);
 		drawEdges(g2d);
-		for(Vertex v : ctrl.getGraph().getAlVertex()) {
+		for(Vertex v : hci.getGraph().getAlVertex()) {
 			if(v.getName().equals(strSelected)) {
 				highlightEdge(g2d, v);
 			}
@@ -83,12 +84,12 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		g2d.setStroke(new BasicStroke((float)iZoom+2));
 		if(arc.getVertex() == v) {	//Arc sur lui même
 			g2d.drawArc((int)((c2.getX()+12.5)*iZoom), (int)((c2.getY()+40)*iZoom), (int)(25*iZoom), (int)(25*iZoom), 150, 240);
-	    	if(  ctrl.getGraph().isbDirected() ) {	
+	    	if(  hci.getGraph().isbDirected() ) {	
 				drawArrow(g2d, pCenter1.x-35, pCenter1.y+80, pCenter2.x, pCenter2.y, (int)(25*iZoom), (int)(10*iZoom));
 			}
 		} else {	//Arc entre deux points
 			g2d.drawLine((int)pCenter1.x, (int)pCenter1.y, (int)pCenter2.x, (int)pCenter2.y);
-	    	if(  ctrl.getGraph().isbDirected() ) {	
+	    	if(  hci.getGraph().isbDirected() ) {	
 				drawArrow(g2d, (int)pCenter1.x, (int)pCenter1.y, (int)pCenter2.x, (int)pCenter2.y, (int)(25*iZoom), (int)(10*iZoom));
 			}
 		}
@@ -171,7 +172,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		Point pCenter1;
 		Point pCenter2;
 		
-		for(Vertex v : ctrl.getGraph().getAlVertex()) {
+		for(Vertex v : hci.getGraph().getAlVertex()) {
 			//Recup les coordonnées associées à ce Vertex
 			Point c1 = HCI.hmVertex.get(v.getName());
 			
@@ -188,21 +189,21 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				
 				if( arc.getVertex() == v ) {	//Arc sur lui même
 					g2d.drawArc((int)((c2.getX()+12.5)*iZoom), (int)((c2.getY()+40)*iZoom), (int)(25*iZoom), (int)(25*iZoom), 150, 240);
-			    	if( ctrl.getGraph().isbDirected() ) {	
+			    	if( hci.getGraph().isbDirected() ) {	
 						g2d.setColor(Color.GRAY);
 						drawArrow(g2d, pCenter1.x-35, pCenter1.y+80, pCenter2.x, pCenter2.y, (int)(25*iZoom), (int)(10*iZoom));
 					}
-					if(  ctrl.getGraph().isbValued() ) {
+					if(  hci.getGraph().isbValued() ) {
 						g2d.setColor(Color.BLACK);
 						g2d.drawString( ""+arc.getIValue() , (int)(pCenter1.x-(2)*iZoom) , (int)(pCenter1.y+(40)*iZoom) );
 					}
 				} else {	//Arc entre deux points
 					g2d.drawLine((int)pCenter1.x, (int)pCenter1.y, (int)pCenter2.x, (int)pCenter2.y);
-			    	if(  ctrl.getGraph().isbDirected() ) {	
+			    	if(  hci.getGraph().isbDirected() ) {	
 						g2d.setColor(Color.GRAY);
 						drawArrow(g2d, pCenter1.x, pCenter1.y, pCenter2.x, pCenter2.y, (int)(25*iZoom), (int)(10*iZoom));
 					}
-					if(  ctrl.getGraph().isbValued() ) {
+					if(  hci.getGraph().isbValued() ) {
 						g2d.setColor(Color.BLACK);
 						g2d.drawString( ""+arc.getIValue() , (pCenter1.x+pCenter2.x)/2 , (pCenter1.y+pCenter2.y)/2 );
 					}
