@@ -42,6 +42,11 @@ public class Controller {
 
 	public void loadFile(String strFileName) {
 		graph = ReaderMatrix.readMatrix(strFileName);
+		
+		if (graph == null) {
+			graph = new Graph(true,true);
+		}
+		
 		hci.initHmVertex();
 		hci.refresh();
 	}
