@@ -301,11 +301,11 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 		else if (e.getSource() == tabMenuItemFichier[3]) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.enregistrerFichier(dial.getSelectedFile().getAbsolutePath());
+				ctrl.saveFile(dial.getSelectedFile().getAbsolutePath());
 		} else if (e.getSource() == tabMenuItemFichier[1]) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.chargerFichier(dial.getSelectedFile().getAbsolutePath());
+				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 		} else if (e.getSource() == tabMenuItemFichier[0]) {
 			FormNewGraph formNewGraph=new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
 		} else if (e.getSource() == tabMenuItemGraph[1]) {

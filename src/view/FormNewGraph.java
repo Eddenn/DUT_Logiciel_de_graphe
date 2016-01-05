@@ -67,7 +67,7 @@ public class FormNewGraph extends JDialog implements ActionListener {
 			boolean bValued = boxValued.getSelectedItem().equals("Oui");
 			boolean bOriented = boxOriented.getSelectedItem().equals("Oui");
 			
-			ctrl.nouveau(bOriented, bValued);
+			ctrl.newGraph(bOriented, bValued);
 		}
 		dispose();
 	}
