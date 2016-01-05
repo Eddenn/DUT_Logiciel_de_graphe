@@ -36,16 +36,16 @@ public class Graph {
 		int alVertexSize = alVertex.size();
 		tMatrix = new int[alVertexSize][alVertexSize];
 
-		//Initialise à -1 les cases de la matrice
+		// Initialise à -1 les cases de la matrice
 		for (int i = 0; i < alVertexSize; i++) {
 			for (int j = 0; j < alVertexSize; j++) {
-				if(this.bValued)
+				if (this.bValued)
 					tMatrix[i][j] = -1;
 				else
 					tMatrix[i][j] = 0;
 			}
 		}
-		
+
 		// On parcours le graphe
 		for (int i = 0; i < alVertexSize; i++) {
 			for (int j = 0; j < alVertexSize; j++) {
@@ -69,8 +69,38 @@ public class Graph {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public HashMap generateAdjacencyList() {
-		return new HashMap();
+	public HashMap<String, ArrayList<String>> generateAdjacencyList() {
+		HashMap<String, ArrayList<String>> hm = new HashMap<String, ArrayList<String>>();
+
+		int qVertex = this.alVertex.size();
+		String curVertex = "";
+		ArrayList<String> list = new ArrayList<String>();
+
+		for (int i = 0; i < qVertex; i++) {
+			curVertex = alVertex.get(i).getName();
+			list.add("{");
+			for (int j = 0; j < alVertex.get(i).getAlArcs().size(); j++) {
+				String s = "(";
+				s += alVertex.get(i).getAlArcs().get(j).getVertex().getName();
+				if (this.isValued()) {
+					s += ",";
+					s += alVertex.get(i).getAlArcs().get(j).getIValue();
+				}
+				s += ")";
+
+				if (j != alVertex.get(i).getAlArcs().size() - 1)
+					s += ",";
+
+				list.add(s);
+			}
+
+			list.add("}");
+			hm.put(curVertex, list);
+
+			list = new ArrayList<String>();
+		}
+
+		return hm;
 	}
 
 	public void addVertex(String strName) {
@@ -167,7 +197,6 @@ public class Graph {
 		return sRet;
 	}
 
-	
 	public String displayMatrix() {
 		this.generateMatrix();
 		String sRet = "";
@@ -181,44 +210,46 @@ public class Graph {
 
 		return sRet;
 	}
-	
-	public String getFormattedList(){
-		
+
+	public String getFormattedList() {
+
 		HashMap<String, ArrayList<String>> hm = generateAdjacencyList();
-		
+
 		String sRet = "";
-		
+
 		Set<String> setKey = hm.keySet();
 		java.util.Iterator<String> it = setKey.iterator();
-		
+
 		while (it.hasNext()) {
 			String strKey = it.next();
 			sRet += strKey + "=";
-			
-			for(String s : hm.get(strKey)){
+
+			for (String s : hm.get(strKey)) {
 				sRet += s;
 			}
-			
+
 			sRet += "\n";
 		}
-		
+
 		return sRet;
 	}
-	
-	public String displayMatrix2(){
+
+	public String displayMatrix2() {
 		this.generateMatrix();
 		String sRet = "";
-		
-		for (int i = 0; i < tMatrix.length; i++){
+
+		for (int i = 0; i < tMatrix.length; i++) {
 			sRet += "[";
-			for (int j = 0; j < tMatrix[0].length; j++){
+			for (int j = 0; j < tMatrix[0].length; j++) {
 				sRet += String.format("%4d", tMatrix[i][j]);
-				if (j < tMatrix.length - 1 ) sRet += ", ";
+				if (j < tMatrix.length - 1)
+					sRet += ", ";
 			}
 			sRet += "]";
-			if (i < tMatrix[0].length - 1 ) sRet += ",\n";
+			if (i < tMatrix[0].length - 1)
+				sRet += ",\n";
 		}
-		
+
 		return sRet;
 	}
 }

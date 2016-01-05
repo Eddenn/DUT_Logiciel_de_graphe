@@ -318,7 +318,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		}else if (e.getSource()==tabMenuItemExport[1]){
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath());
+				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath(), this);
 
 			// GRAPH
 			// Ajouter un sommet
@@ -465,6 +465,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public Graph getGraph() {
 		return graph;
+	}
+	
+	public GraphPanel getGraphPanel() {
+		return pGraph;
 	}
 
 	@Override
