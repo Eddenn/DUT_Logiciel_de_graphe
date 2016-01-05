@@ -20,30 +20,33 @@ public class Controller {
 	}
 	
 	
-	public void enregistrerFichier(String nomDuFichier){
-		FileWriter fw=null;
+	public void saveFile(String strFileName){
+		FileWriter fw = null;
+		
 		try {
 			// ouverture du fichier en mode écriture
-			fw = new FileWriter(nomDuFichier,false);
+			fw = new FileWriter(strFileName,false);
+			
 			// écriture des lignes de texte
 			fw.write("Directed="+ g.isbDirected() + "\n");
 			fw.write("Valued=" + g.isbValued() + "\n\n");
 			fw.write(g.displayMatrix());
+			
 			// fermeture du fichier
 			fw.close();
 		} 
 		catch (IOException e) {
-			System.out.println("Problème d'écriture dans le fichier "+nomDuFichier);
+			System.out.println("Problème d'écriture dans le fichier "+ strFileName + ".");
 		}
 	}
 	
-	public void chargerFichier(String nomDuFichier) {
-		g = ReaderMatrix.readMatrix(nomDuFichier);
+	public void loadFile(String strFileName) {
+		g = ReaderMatrix.readMatrix(strFileName);
 		hci.initHmVertex();
 		hci.refresh();
 	}
 	
-	public void nouveau(boolean bOriented, boolean bValued) {
+	public void newGraph(boolean bOriented, boolean bValued) {
 		g = new Graph(bOriented,bValued);
 		hci.initHmVertex();
 		hci.refresh();
@@ -63,7 +66,6 @@ public class Controller {
 	}
 	
 	public static void main(String[] args) {
-		
 		new Controller();
 	}
 	
