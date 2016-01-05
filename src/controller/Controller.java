@@ -1,47 +1,52 @@
 package controller;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import model.Graph;
+import model.Vertex;
 import view.HCI;
 
 public class Controller {
 	@SuppressWarnings("unused")
-	private static HCI hci;
-	private static Graph g;
-	public static void main(String[] args) {
-		new Controller();
-	}	
+	private HCI hci;
+	private Graph g;
+	
 	public Controller() {
-		/*test*/
-		/*test2*/
 		//Create graph
 		g = new Graph(true, true);
 		
-		//Graph non valuï¿½ 
-		/*g.addVertex("S1");
-		g.addVertex("S2");
-		g.addVertex("S3");
-		g.addArc(g.getAlVertex().get(0), g.getAlVertex().get(0));
-		g.addVertex("S4");
-		for(int i=0; i<20 ;i++) {
-			g.addVertex("A"+i);
-		}
-		for(int i=1; i<24 ;i++) {
-			g.addArc(g.getAlVertex().get(i-1), g.getAlVertex().get(i));
-		}*/
-		
-		//Graph valuï¿½ 
-		g.addVertex("S1000");
-		g.addVertex("S2");
-		g.addArc(g.getAlVertex().get(0), g.getAlVertex().get(0),5);
-		g.addVertex("S3");
-		g.addVertex("S4");
-		for(int i=0; i<20 ;i++) {
-			g.addVertex("A"+i);
-		}
-		for(int i=1; i<24 ;i++) {
-			g.addArc(g.getAlVertex().get(i-1), g.getAlVertex().get(i),i);
-		}
 		//Initialize the frame
 		hci = new HCI(this);
+	}
+	
+	
+	public void enregistrerFichier(String nomDuFichier){
+		FileWriter fw=null;
+		try {
+			// ouverture du fichier en mode écriture
+			fw = new FileWriter(nomDuFichier,false);
+			// écriture des lignes de texte
+			fw.write("Directed="+ g.isbDirected() + "\n");
+			fw.write("Valued=" + g.isbValued() + "\n\n");
+			fw.write(g.displayMatrix());
+			// fermeture du fichier
+			fw.close();
+		} 
+		catch (IOException e) {
+			System.out.println("Problème d'écriture dans le fichier "+nomDuFichier);
+		}
+	}
+	
+	public void chargerFichier(String nomDuFichier) {
+		g = ReaderMatrix.readMatrix(nomDuFichier);
+		hci.initHmVertex();
+		hci.refresh();
+	}
+	
+	public void nouveau(boolean bOriented, boolean bValued) {
+		g = new Graph(bOriented,bValued);
+		hci.initHmVertex();
+		hci.refresh();
 	}
 	
 	public void addVertex(String nom){
@@ -49,5 +54,20 @@ public class Controller {
 		hci.addVertex(nom);
 	}
 	
-	public static Graph getGraph() {return g;}
+	public void addArc(Vertex v, Vertex vBis) {
+		g.addArc(v, vBis);
+	}
+	
+	public void addArc(Vertex v, Vertex vBis, int iValue) {
+		g.addArc(v, vBis, iValue);
+	}
+	
+	public static void main(String[] args) {
+		
+		new Controller();
+	}
+	
+	public Graph getGraph() {
+		return g;
+	}
 }

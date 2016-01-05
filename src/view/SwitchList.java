@@ -58,7 +58,7 @@ public class SwitchList extends JPanel{
 	
 	@SuppressWarnings("unchecked")
 	public void refresh() {
-		Graph graphLoaded = Controller.getGraph();
+		Graph graphLoaded = ctrl.getGraph();
 		if(state == 0) {	//State of the SwitchList (0 = Sommets)
 			String[] tabVertex = new String[graphLoaded.getAlVertex().size()];
 			int cpt = 0;

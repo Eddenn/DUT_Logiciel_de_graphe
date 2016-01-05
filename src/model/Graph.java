@@ -132,6 +132,20 @@ public class Graph {
 	public ArrayList<Vertex> getAlVertex() {
 		return this.alVertex;
 	}
+	
+	public Vertex getVertex(int i) {
+		return alVertex.get(i);
+	}
+	
+	public Vertex getVertex(String strVertexName) {
+		for (Vertex vertex : alVertex) {
+			if (vertex.getName().equals(strVertexName)) {
+				return vertex;
+			}
+		}
+		
+		return null;
+	}
 
 	// Display
 	public String toString() {
@@ -142,139 +156,19 @@ public class Graph {
 		}
 		return sRet;
 	}
-
-	public static void main(String[] args) {
-		Graph a = new Graph(false, false);
-
-		a.addVertex("A");
-		a.addVertex("B");
-		a.addVertex("C");
-
-		a.addArc(a.getAlVertex().get(0), a.getAlVertex().get(1));
-		a.addArc(a.getAlVertex().get(1), a.getAlVertex().get(2));
-		a.addArc(a.getAlVertex().get(1), a.getAlVertex().get(0));
-
-		System.out.println(a);
-		System.out.println();
-
-		Graph b = new Graph(true, false);
-
-		b.addVertex("A");
-		b.addVertex("B");
-		b.addVertex("C");
-
-		b.addArc(b.getAlVertex().get(0), b.getAlVertex().get(1));
-		b.addArc(b.getAlVertex().get(1), b.getAlVertex().get(2));
-		a.addArc(b.getAlVertex().get(1), b.getAlVertex().get(0));
-
-		System.out.println(b);
-		System.out.println();
-
-		Graph c = new Graph(true, true);
-
-		c.addVertex("A");
-		c.addVertex("B");
-		c.addVertex("C");
-
-		c.addArc(c.getAlVertex().get(0), c.getAlVertex().get(1),8);
-		c.addArc(c.getAlVertex().get(1), c.getAlVertex().get(2),5);
-		a.addArc(c.getAlVertex().get(1), c.getAlVertex().get(0),3);
-
-		System.out.println(c);
-		System.out.println();
-
-		Graph d = new Graph(false, true);
-
-		d.addVertex("A");
-		d.addVertex("B");
-		d.addVertex("C");
-
-		d.addArc(d.getAlVertex().get(0), d.getAlVertex().get(1),8);
-		d.addArc(d.getAlVertex().get(1), d.getAlVertex().get(2),5);
-		a.addArc(d.getAlVertex().get(1), d.getAlVertex().get(0),3);
-
-		System.out.println(d);
+	
+	public String displayMatrix() {
+		this.generateMatrix();
+		String sRet = "";
 		
-		d.generateMatrix();
-		b.generateMatrix();
-		c.generateMatrix();
-		a.generateMatrix();
-		
-		System.out.println("Oriente : "+ a.bDirected + " Value : " + a.bValued);
-		for (int i = 0 ; i < a.tMatrix.length ; i++) {
-			for (int j = 0; j < a.tMatrix.length ; j++) {
-				System.out.print(a.tMatrix[i][j] + " ");
+		for (int i = 0 ; i < this.tMatrix.length ; i++) {
+			for (int j = 0; j < this.tMatrix.length ; j++) {
+				sRet += tMatrix[i][j] + " ";
 			}
-			System.out.println();
-		}
-		System.out.println();
-		
-		
-		System.out.println("Oriente : "+ b.bDirected + " Value : " + b.bValued);
-		for (int i = 0 ; i < b.tMatrix.length ; i++) {
-			for (int j = 0; j < b.tMatrix.length ; j++) {
-				System.out.print(b.tMatrix[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		
-		
-		System.out.println("Oriente : "+ c.bDirected + " Value : " + c.bValued);
-		for (int i = 0 ; i < c.tMatrix.length ; i++) {
-			for (int j = 0; j < c.tMatrix.length ; j++) {
-				System.out.print(c.tMatrix[i][j] + " ");
-			}
-			System.out.println();
+			sRet += "\n";
 		}
 		
-		
-		System.out.println();
-		
-		System.out.println("Oriente : "+ d.bDirected + " Value : " + d.bValued);
-		for (int i = 0 ; i < d.tMatrix.length ; i++) {
-			for (int j = 0; j < d.tMatrix.length ; j++) {
-				System.out.print(d.tMatrix[i][j] + " ");
-			}
-			System.out.println();
-		}
-		
-		System.out.println();
-		
-		
-		d.deleteVertex(d.getAlVertex().get(2));
-		d.generateMatrix();
-		
-		System.out.println("Oriente : "+ d.bDirected + " Value : " + d.bValued);
-		for (int i = 0 ; i < d.tMatrix.length ; i++) {
-			for (int j = 0; j < d.tMatrix.length ; j++) {
-				System.out.print(d.tMatrix[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		
-		
-		System.out.println("Oriente : "+ c.bDirected + " Value : " + c.bValued);
-		for (int i = 0 ; i < c.tMatrix.length ; i++) {
-			for (int j = 0; j < c.tMatrix.length ; j++) {
-				System.out.print(c.tMatrix[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		
-		c.deleteArc(d.getAlVertex().get(1).getAlArcs().get(1));//a corriger
-		c.generateMatrix();
-		
-		System.out.println("Oriente : "+ c.bDirected + " Value : " + c.bValued);
-		for (int i = 0 ; i < c.tMatrix.length ; i++) {
-			for (int j = 0; j < c.tMatrix.length ; j++) {
-				System.out.print(c.tMatrix[i][j] + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
+		return sRet;
 	}
 
 }
