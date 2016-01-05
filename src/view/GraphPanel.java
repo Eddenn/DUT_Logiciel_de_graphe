@@ -17,6 +17,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import com.itextpdf.text.log.SysoCounter;
+
 import model.Arc;
 import model.Vertex;
 
@@ -173,6 +175,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void drawArcs(Graphics2D g2d) {	
 		Point pCenter1;
 		Point pCenter2;
+		boolean bMirroir=false;
 		
 		for(Vertex v : hci.getGraph().getAlVertex()) {
 			//Recup les coordonnées associées à ce Vertex
@@ -199,15 +202,69 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 						g2d.setColor(Color.BLACK);
 						g2d.drawString( ""+arc.getIValue() , (int)(pCenter1.x-(2)*iZoom) , (int)(pCenter1.y+(40)*iZoom) );
 					}
-				} else {	//Arc entre deux points
-					g2d.drawLine((int)pCenter1.x, (int)pCenter1.y, (int)pCenter2.x, (int)pCenter2.y);
-			    	if(  hci.getGraph().isDirected() ) {	
-						g2d.setColor(Color.GRAY);
-						drawArrow(g2d, pCenter1.x, pCenter1.y, pCenter2.x, pCenter2.y, (int)(25*iZoom), (int)(10*iZoom));
+				} else {	//Arc entre deux points	
+					//Si A -> B et B -> A
+					bMirroir = false;
+					for(Arc arcTmp : arc.getVertex().getAlArcs()) {
+						if(arcTmp.getVertex()==v) {
+							bMirroir = true;
+						}
 					}
-					if(  hci.getGraph().isValued() ) {
-						g2d.setColor(Color.BLACK);
-						g2d.drawString( ""+arc.getIValue() , (pCenter1.x+pCenter2.x)/2 , (pCenter1.y+pCenter2.y)/2 );
+					if(bMirroir) {
+						/*-----Cacul des points M et N pour placer les deux arcs par rapport à pCenter1*/
+						int d = 0;
+						int h = (int) (iWidthEdge/3*iZoom);
+						int dx = (int)pCenter2.x - (int)pCenter1.x, dy = (int)pCenter2.y - (int)pCenter1.y;
+				        double D = Math.sqrt(dx*dx + dy*dy);
+				        double xm1 = D - d, xn1 = xm1, ym1 = h, yn1 = -h, x;
+				        double sin = dy/D, cos = dx/D;
+				        x = xm1*cos - ym1*sin + (int)pCenter1.x;
+				        ym1 = xm1*sin + ym1*cos + (int)pCenter1.y;
+				        xm1 = x;
+				        x = xn1*cos - yn1*sin + (int)pCenter1.x;
+				        yn1 = xn1*sin + yn1*cos + (int)pCenter1.y;
+				        xn1 = x;
+				        /*-----------------------------------------------------------------------------*/
+						/*-----Cacul des points M et N pour placer les deux arcs par rapport à pCenter2*/
+				        d = 0;
+						h = (int) (iWidthEdge/3*iZoom);
+						dx = (int)pCenter1.x - (int)pCenter2.x;
+						dy = (int)pCenter1.y - (int)pCenter2.y;
+				        D = Math.sqrt(dx*dx + dy*dy);
+				        double xm2 = D - d;
+				        double xn2 = xm2;
+				        double ym2 = h;
+				        double yn2 = -h;
+				        x=0.0;
+				        sin = dy/D;
+				        cos = dx/D;
+				        x = xm2*cos - ym2*sin + (int)pCenter2.x;
+				        ym2 = xm2*sin + ym2*cos + (int)pCenter2.y;
+				        xm2 = x;
+				        x = xn2*cos - yn2*sin + (int)pCenter2.x;
+				        yn2 = xn2*sin + yn2*cos + (int)pCenter2.y;
+				        xn2 = x;
+				        /*-----------------------------------------------------------------------------*/
+				        
+				        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);
+				        if(  hci.getGraph().isDirected() ) {	
+							g2d.setColor(Color.GRAY);
+							drawArrow(g2d, (int)xm1, (int)ym1, (int)xn2, (int)yn2, (int)(22*iZoom), (int)(10*iZoom));
+						}
+						if(  hci.getGraph().isValued() ) {
+							g2d.setColor(Color.BLACK);
+							g2d.drawString( ""+arc.getIValue() , (int)(xm1+xn2)/2 , (int)(ym1+yn2)/2 );
+						}				        
+					} else {
+						g2d.drawLine((int)pCenter1.x, (int)pCenter1.y, (int)pCenter2.x, (int)pCenter2.y);
+						if(  hci.getGraph().isDirected() ) {	
+							g2d.setColor(Color.GRAY);
+							drawArrow(g2d, pCenter1.x, pCenter1.y, pCenter2.x, pCenter2.y, (int)(25*iZoom), (int)(10*iZoom));
+						}
+						if(  hci.getGraph().isValued() ) {
+							g2d.setColor(Color.BLACK);
+							g2d.drawString( ""+arc.getIValue() , (pCenter1.x+pCenter2.x)/2 , (pCenter1.y+pCenter2.y)/2 );
+						}
 					}
 				}
 				g2d.setColor(Color.BLACK);
