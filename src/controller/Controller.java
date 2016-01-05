@@ -20,7 +20,7 @@ public class Controller {
 	}
 	
 	
-	public void saveFile(String strFileName){
+	public void saveFile(String strFileName) {
 		FileWriter fw = null;
 		
 		try {
@@ -52,7 +52,7 @@ public class Controller {
 		hci.refresh();
 	}
 	
-	public void addVertex(String nom){
+	public void addVertex(String nom) {
 		g.addVertex(nom);
 		hci.addVertex(nom);
 	}

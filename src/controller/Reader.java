@@ -12,7 +12,7 @@ public abstract class Reader {
 	}
 
 	protected static boolean checkValue(String str) {
-		str = str.replace("Valuated=", "");
+		str = str.replace("Valued=", "");
 
 		if (str.toLowerCase().equals("true")) {
 			return true;
