@@ -72,7 +72,7 @@ public class Form extends JDialog implements ActionListener {
 		}
 		if(this.getTitle().equals("Modifier un sommet")) {
 			if (e.getSource() == ok && hci.getStrSelected() != null){
-				for(Vertex v : Controller.getGraph().getAlVertex()) {
+				for(Vertex v : ctrl.getGraph().getAlVertex()) {
 					if(v.getName().equals(hci.getStrSelected())) {
 						v.setName(nom.getText());
 					}

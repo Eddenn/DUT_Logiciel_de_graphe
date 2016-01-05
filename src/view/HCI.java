@@ -235,10 +235,18 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	    //**---------------------------**//
 	    
 	    
-	    //Initialization of hmVertex
-	    HCI.hmVertex = new HashMap<String, Point>();
-	    for( Vertex v : Controller.getGraph().getAlVertex() ) {
-			HCI.hmVertex.put(v.getName(), new Point(xInitialize, yInitialize));	
+	    initHmVertex();
+	    
+	    pGraph.setPreferredSize(new Dimension((int)(600+pGraph.getiWidthEdge()),(int)(yInitialize+pGraph.getiHeightEdge())));
+	    pack();
+		setVisible(true);
+	}
+	
+	public void initHmVertex() {
+		//Initialization of hmVertex
+	    hmVertex = new HashMap<String, Point>();
+	    for( Vertex v : ctrl.getGraph().getAlVertex() ) {
+			hmVertex.put(v.getName(), new Point(xInitialize, yInitialize));	
 			
 	    	if(xInitialize < 600 - pGraph.getiWidthEdge()) {
 		    	xInitialize += pGraph.getiWidthEdge()*2;
@@ -247,9 +255,6 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	    		xInitialize = 0;
 	    	}
 	    }
-	    pGraph.setPreferredSize(new Dimension((int)(600+pGraph.getiWidthEdge()),(int)(yInitialize+pGraph.getiHeightEdge())));
-	    pack();
-		setVisible(true);
 	}
 	
 	@Override
@@ -277,12 +282,12 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			System.out.println(hmVertex.toString());
 		} else if (e.getSource() == tabMenuItemGraph[2]) {	//Supprimer sommet
 			Vertex tmpVertex = null;
-			for(Vertex v : Controller.getGraph().getAlVertex()) {
+			for(Vertex v : ctrl.getGraph().getAlVertex()) {
 				if( v.getName().equals(getStrSelected()) ) {
 					tmpVertex = v;
 				}
 			}
-			Controller.getGraph().deleteVertex(tmpVertex);
+			ctrl.getGraph().deleteVertex(tmpVertex);
 			HCI.hmVertex.remove(getStrSelected());
 			setStrSelected(null);
 			refresh();
