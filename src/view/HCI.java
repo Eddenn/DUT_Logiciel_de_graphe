@@ -44,6 +44,7 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	//Panel of JButton
 	private JPanel pButton;
 	private JButton buttonNew,buttonOpen,buttonSave,buttonZoomIn,buttonZoomOut;
+	
 	public HCI(Controller ctrl) {
 		this.ctrl=ctrl;
 		this.graph=ctrl.getGraph();
@@ -317,6 +318,7 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			HCI.hmVertex.remove(getStrSelected());
 			setStrSelected(null);
 			refresh();
+			
 			//Ajouter un arc
 		} else if (e.getSource() == tabMenuItemGraph[3]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);	
@@ -416,5 +418,9 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			pGraph.setStrSelected((String)slObject.getListOfObject().getSelectedValue());
 			repaint();
 		}
+	}
+	
+	public void setError(String strMes){
+		JOptionPane.showMessageDialog(null, strMes, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 }
