@@ -11,10 +11,11 @@ public class Controller {
 	}	
 	public Controller() {
 		/*test*/
+		/*test2*/
 		//Create graph
 		g = new Graph(true, true);
 		
-		//Graph non valué 
+		//Graph non valuï¿½ 
 		/*g.addVertex("S1");
 		g.addVertex("S2");
 		g.addVertex("S3");
@@ -27,7 +28,7 @@ public class Controller {
 			g.addArc(g.getAlVertex().get(i-1), g.getAlVertex().get(i));
 		}*/
 		
-		//Graph valué 
+		//Graph valuï¿½ 
 		g.addVertex("S1000");
 		g.addVertex("S2");
 		g.addArc(g.getAlVertex().get(0), g.getAlVertex().get(0),5);
