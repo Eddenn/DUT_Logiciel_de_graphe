@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import controller.Controller;
 
@@ -17,15 +20,17 @@ public class FormAddArc extends JDialog implements ActionListener {
 	private JButton ok, annuler;
 	@SuppressWarnings("rawtypes")
 	private JComboBox boxDep, boxArr;
+	private JTextField valArc;
 	private Controller ctrl;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public FormAddArc(HCI parent, String title, boolean modal, Controller ctrl){
 		super(parent,title,modal);
-		this.ctrl=ctrl;
 		this.setSize(300, 165);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
+		
+		this.ctrl=ctrl;
 		
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
 		
@@ -37,21 +42,39 @@ public class FormAddArc extends JDialog implements ActionListener {
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
 		
+		// Panel contenant les JComboBox et le textfield
+		JPanel content = new JPanel(new BorderLayout());
+		
 		// Panel contenant les JComboBox
-		JPanel content = new JPanel();
+		JPanel panelComboBox = new JPanel();
 		
 		// Gestion du sommet de départ
 		JLabel lDep = new JLabel("Départ : ");
-		content.add(lDep);
+		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
-		content.add(boxDep);
+		panelComboBox.add(boxDep,"");
 		
 		// Gestion du sommet d'arrivé
 		JLabel lArr = new JLabel("Arrivé : ");
-		content.add(lArr);
+		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
-		content.add(boxArr);
+		panelComboBox.add(boxArr);
 		
+		// Panel contenant le textField
+		JPanel panelTextField = new JPanel(new BorderLayout());
+		
+		// Gestion du TextField
+		panelTextField.add(new JLabel("Valeur de l'arc : "),"West");
+		valArc = new JTextField();
+		
+		if (! parent.getGraph().isbValued())
+			valArc.setEditable(false);
+		
+		panelTextField.add(valArc);
+		
+		// Ajout des comboBox et textField a la fenetre
+		content.add(panelComboBox,"North");
+		content.add(panelTextField);
 		add(content);
 		
 		// Panel contenant les boutons
@@ -60,8 +83,8 @@ public class FormAddArc extends JDialog implements ActionListener {
 		ok.addActionListener(this);
 		annuler = new JButton ("Annuler");
 		annuler.addActionListener(this);
-		control.add(annuler);
 		control.add(ok);
+		control.add(annuler);
 		add(control, "South");
 		
 		setVisible(true);
@@ -73,9 +96,21 @@ public class FormAddArc extends JDialog implements ActionListener {
 			int vertexDep = boxDep.getSelectedIndex();
 			int vertexArr = boxArr.getSelectedIndex();
 			
-			ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));
+			if (this.ctrl.getGraph().isbValued()) {
+				if (valArc.getText().matches("[0-9]+")) {
+					ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
+					dispose();
+				}
+				else
+					valArc.setText("Valeur erronée");
+			}
+			else {
+				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));
+				dispose();
+			}
 		}
-		dispose();
+		else
+			dispose();
 	}
 	
 

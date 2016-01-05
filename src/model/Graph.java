@@ -20,10 +20,15 @@ public class Graph {
 		this.bValued = bValued;
 
 	}
-	
-	//Getters and Setters
-	public boolean isbDirected() {return bDirected;}
-	public boolean isbValued() 	 {return bValued;}
+
+	// Getters and Setters
+	public boolean isDirected() {
+		return bDirected;
+	}
+
+	public boolean isValued() {
+		return bValued;
+	}
 
 	// Méthode permettant de générer la matrice du graphe
 	public int[][] generateMatrix() {
@@ -37,17 +42,19 @@ public class Graph {
 				for (Arc a : alVertex.get(i).getAlArcs()) {
 					// Si l'un des arcs de i est relié à j
 					if (a.getVertex() == alVertex.get(j)) {
-						// Si la matrice est valué, on affiche la valeur de l'arc
+						// Si la matrice est valué, on affiche la valeur de
+						// l'arc
 						if (bValued)
 							tMatrix[i][j] = a.getIValue();
 						// Sinon, on note l'existence de l'arc avec 1
 						else
 							tMatrix[i][j] = 1;
 						break;
-					} 
-					// Si aucun arc de i n'est relié à j, on place un 0 dans la matrice
+					}
+					// Si aucun arc de i n'est relié à j, on place un 0 dans la
+					// matrice
 					else
-						tMatrix[i][j] = 0;
+						tMatrix[i][j] = -1;
 				}
 			}
 		}
@@ -77,34 +84,30 @@ public class Graph {
 			Arc a2 = new Arc(vBis);
 			v.getAlArcs().add(a2);
 			vBis.getAlArcs().add(a1);
-			/*Edge e = new Edge(v, vBis);
-			v.getAlArcs().add(e);
-			vBis.getAlArcs().add(e);*/
 		}
 	}
-	
-	
+
 	public void deleteVertex(Vertex v) {
-		for (int i = 0; i < alVertex.size(); i++ ){
-			for (int j = 0; j < alVertex.get(i).getAlArcs().size(); j++){
-				if (alVertex.get(i).getAlArcs().get(j).getVertex() == v){
+		for (int i = 0; i < alVertex.size(); i++) {
+			for (int j = 0; j < alVertex.get(i).getAlArcs().size(); j++) {
+				if (alVertex.get(i).getAlArcs().get(j).getVertex() == v) {
 					alVertex.get(i).getAlArcs().remove(j);
 				}
 			}
 		}
 		this.alVertex.remove(v);
 	}
-	
+
 	public void deleteArc(Arc a) {
 		for (int i = 0; i < alVertex.size(); i++) {
 			ArrayList<Arc> alArcRef = alVertex.get(i).getAlArcs();
-			for (int j = 0; j < alArcRef.size() ; i++) {
+			for (int j = 0; j < alArcRef.size(); i++) {
 				if (alArcRef.get(j) == a) {
 					alArcRef.remove(j);
 				}
 			}
 		}
-			
+
 	}
 
 	// Methode permettant d'ajouter des arcs et arêtes valués
@@ -117,9 +120,10 @@ public class Graph {
 			Arc a2 = new Arc(vBis, iValue);
 			v.getAlArcs().add(a2);
 			vBis.getAlArcs().add(a1);
-			/*Edge e = new Edge(v, vBis, iValue);
-			v.getAlArcs().add(e);
-			vBis.getAlArcs().add(e);*/
+			/*
+			 * Edge e = new Edge(v, vBis, iValue); v.getAlArcs().add(e);
+			 * vBis.getAlArcs().add(e);
+			 */
 		}
 	}
 
@@ -127,21 +131,22 @@ public class Graph {
 	public int[][] getTMatrix() {
 		return this.tMatrix;
 	}
+
 	public ArrayList<Vertex> getAlVertex() {
 		return this.alVertex;
 	}
-	
+
 	public Vertex getVertex(int i) {
 		return alVertex.get(i);
 	}
-	
+
 	public Vertex getVertex(String strVertexName) {
 		for (Vertex vertex : alVertex) {
 			if (vertex.getName().equals(strVertexName)) {
 				return vertex;
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -154,18 +159,18 @@ public class Graph {
 		}
 		return sRet;
 	}
-	
+
 	public String displayMatrix() {
 		this.generateMatrix();
 		String sRet = "";
-		
-		for (int i = 0 ; i < this.tMatrix.length ; i++) {
-			for (int j = 0; j < this.tMatrix.length ; j++) {
+
+		for (int i = 0; i < this.tMatrix.length; i++) {
+			for (int j = 0; j < this.tMatrix.length; j++) {
 				sRet += tMatrix[i][j] + " ";
 			}
 			sRet += "\n";
 		}
-		
+
 		return sRet;
 	}
 
