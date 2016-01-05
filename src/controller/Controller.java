@@ -81,6 +81,13 @@ public class Controller {
 			hci.setError("L'arc existe déjà.");
 		}
 	}
+	
+	public void delArc(Vertex v, Vertex vBis) {
+		for (int i = 0; i < v.getAlArcs().size(); i++) {
+			if (v.getAlArcs().get(i).getVertex() == vBis)
+				graph.deleteArc(v.getAlArcs().get(i));
+		}
+	}
 
 	private boolean checkArcAlreadyExist(Vertex v, Vertex vBis) {
 		for (Arc arc : v.getAlArcs()) {

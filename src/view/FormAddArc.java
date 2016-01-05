@@ -95,7 +95,12 @@ public class FormAddArc extends JDialog implements ActionListener {
 			int vertexDep = boxDep.getSelectedIndex();
 			int vertexArr = boxArr.getSelectedIndex();
 			
+<<<<<<< HEAD
 			if (this.ctrl.getGraph().isValued()) {
+=======
+
+			if (this.ctrl.getGraph().isValued() ) {
+>>>>>>> 0f7efe56f03c902ef7652e5beb536eb8f57b56ba
 				if (valArc.getText().matches("[0-9]+")) {
 					ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
 					dispose();

@@ -13,7 +13,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+
 import model.Arc;
 import model.Vertex;
 
@@ -306,7 +309,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 						strEdgeMove = s;
 				}
 			}
-		}
+		}	
 	}
 
 	@Override
