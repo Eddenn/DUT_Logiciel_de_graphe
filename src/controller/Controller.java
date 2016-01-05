@@ -2,7 +2,9 @@ package controller;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import model.Arc;
 import model.Graph;
 import model.Vertex;
 import view.HCI;
@@ -27,8 +29,8 @@ public class Controller {
 			fw = new FileWriter(strFileName, false);
 
 			// écriture des lignes de texte
-			fw.write("Directed=" + graph.isbDirected() + "\n");
-			fw.write("Valued=" + graph.isbValued() + "\n\n");
+			fw.write("Directed=" + graph.isDirected() + "\n");
+			fw.write("Valued=" + graph.isValued() + "\n\n");
 			fw.write(graph.displayMatrix());
 
 			// fermeture du fichier
@@ -61,13 +63,27 @@ public class Controller {
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {
-		graph.addArc(v, vBis);
+		if (checkArcAlreadyExist(v,vBis)) {
+			graph.addArc(v, vBis);
+		} else {
+			// Afficher message d'erreur
+		}
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
 		graph.addArc(v, vBis, iValue);
 	}
 
+	private boolean checkArcAlreadyExist(Vertex v, Vertex vBis) {
+		for (Arc arc : v.getAlArcs()) {
+			if (arc.getVertex() == vBis) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	public static void main(String[] args) {
 		new Controller();
 	}

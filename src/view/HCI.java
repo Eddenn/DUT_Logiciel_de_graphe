@@ -325,6 +325,7 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 		} else if (e.getSource() == tabMenuItemAide[0]) {	//A propos
 			JOptionPane.showMessageDialog(this, "<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre</center></html>","A propos",1);
 		
+<<<<<<< HEAD
 		//BUTTON
 			//Zoom in
 		} else if (e.getSource() == buttonZoomIn) {			
@@ -337,6 +338,25 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 		    pGraph.repaint();
 		    pGraph.revalidate();
 			
+=======
+		else if (e.getSource() == tabMenuItemFichier[3]) {
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+				ctrl.saveFile(dial.getSelectedFile().getAbsolutePath());
+			
+		} else if (e.getSource() == tabMenuItemFichier[1]) {
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
+			
+		} else if (e.getSource() == tabMenuItemFichier[0]) {
+			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
+		} else if (e.getSource() == tabMenuItemGraph[1]) {
+			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
+			
+		} else if (e.getSource() == tabMenuItemGraph[3]) {
+			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
+>>>>>>> 8fa755db534004aa5710699a2c65b5b291b0f7b6
 		}
 		refresh();
 	}
