@@ -70,19 +70,37 @@ public class SwitchList extends JPanel{
 			}
 			listOfObject.setListData(tabVertex);
 		} else if(state == 1) { 	//State of the SwitchList (1 = Arcs)
-			String[] tabArc = new String[graphLoaded.getAlVertex().size()];
+			int nbArc = 0;
+			for(Vertex v : graphLoaded.getAlVertex()) {
+				for(Arc a : v.getAlArcs()) {
+					nbArc++;
+				}
+			}
+			String[] tabArc = new String[nbArc];
 			int cpt = 0;
+			boolean bFound = false;
 			for(Vertex v : graphLoaded.getAlVertex()) {
 				if(graphLoaded.isValued()) {	
 					if (graphLoaded.isDirected()) {
 						//Valué et orienté
 						for(Arc a : v.getAlArcs()) {
 							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"----->"+HCI.centerStr(a.getVertex().getName(),5);
+							cpt++;
 						}
 					} else {
 						//Valué et non orienté
 						for(Arc a : v.getAlArcs()) {
-							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"------"+HCI.centerStr(a.getVertex().getName(),5);
+							bFound = false;
+							for(String s : tabArc) {
+								if( s!=null && (s.equals(HCI.centerStr(a.getVertex().getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"------"+HCI.centerStr(v.getName(),5)))) {
+									bFound = true;
+								}
+							}
+							if(!bFound) {
+								tabArc[cpt] = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"------"+HCI.centerStr(a.getVertex().getName(),5);
+								cpt++;
+							}
+							
 						}
 					}
 				} else {
@@ -90,16 +108,24 @@ public class SwitchList extends JPanel{
 						//Non valué et orienté
 						for(Arc a : v.getAlArcs()) {
 							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"-------->"+HCI.centerStr(a.getVertex().getName(),5);
+							cpt++;
 						}
 					} else {
 						//Non valué et non orienté
 						for(Arc a : v.getAlArcs()) {
-							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"---------"+HCI.centerStr(a.getVertex().getName(),5);
+							bFound = false;
+							for(String s : tabArc) {
+								if( s!=null && s.equals(HCI.centerStr(a.getVertex().getName(),5)+"---------"+HCI.centerStr(v.getName(),5))) {
+									bFound = true;
+								}
+							}
+							if(!bFound) {
+								tabArc[cpt] = HCI.centerStr(v.getName(),5)+"---------"+HCI.centerStr(a.getVertex().getName(),5);
+								cpt++;
+							}
 						}
 					}
 				}
-				cpt++;
-				// TO DO suppression des doublons
 			}
 			listOfObject.setListData(tabArc);
 			// Resultat voulu

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Classe permettant de gérer le graphe dans son ensemble
@@ -35,6 +36,16 @@ public class Graph {
 		int alVertexSize = alVertex.size();
 		tMatrix = new int[alVertexSize][alVertexSize];
 
+		//Initialise à -1 les cases de la matrice
+		for (int i = 0; i < alVertexSize; i++) {
+			for (int j = 0; j < alVertexSize; j++) {
+				if(this.bValued)
+					tMatrix[i][j] = -1;
+				else
+					tMatrix[i][j] = 0;
+			}
+		}
+		
 		// On parcours le graphe
 		for (int i = 0; i < alVertexSize; i++) {
 			for (int j = 0; j < alVertexSize; j++) {
@@ -51,10 +62,6 @@ public class Graph {
 							tMatrix[i][j] = 1;
 						break;
 					}
-					// Si aucun arc de i n'est relié à j, on place un -1 dans la
-					// matrice
-					else
-						tMatrix[i][j] = -1;
 				}
 			}
 		}
@@ -159,7 +166,48 @@ public class Graph {
 		}
 		return sRet;
 	}
+	
+	public String getFormattedList(){
+		
+		HashMap<String, ArrayList<String>> hm = generateAdjacencyList();
+		
+		String sRet = "";
+		
+		Set<String> setKey = hm.keySet();
+		java.util.Iterator<String> it = setKey.iterator();
+		
+		while (it.hasNext()) {
+			String strKey = it.next();
+			sRet += strKey + "=";
+			
+			for(String s : hm.get(strKey)){
+				sRet += s;
+			}
+			
+			sRet += "\n";
+		}
+		
+		return sRet;
+	}
+	
+	public String displayMatrix2(){
+		this.generateMatrix();
+		String sRet = "";
+		
+		for (int i = 0; i < tMatrix.length; i++){
+			sRet += "[";
+			for (int j = 0; j < tMatrix[0].length; j++){
+				sRet += String.format("%4d", tMatrix[i][j]);
+				if (j < tMatrix.length - 1 ) sRet += ", ";
+			}
+			sRet += "]";
+			if (i < tMatrix[0].length - 1 ) sRet += ",\n";
+		}
+		
+		return sRet;
+	}
 
+	
 	public String displayMatrix() {
 		this.generateMatrix();
 		String sRet = "";
