@@ -67,7 +67,7 @@ public class FormAddArc extends JDialog implements ActionListener {
 		panelTextField.add(new JLabel("Valeur de l'arc : "),"West");
 		valArc = new JTextField();
 		
-		if (! parent.getGraph().isbValued())
+		if (! parent.getGraph().isValued())
 			valArc.setEditable(false);
 		
 		panelTextField.add(valArc);
@@ -96,7 +96,7 @@ public class FormAddArc extends JDialog implements ActionListener {
 			int vertexDep = boxDep.getSelectedIndex();
 			int vertexArr = boxArr.getSelectedIndex();
 			
-			if (this.ctrl.getGraph().isbValued()) {
+			if (this.ctrl.getGraph().isValued() ) {
 				if (valArc.getText().matches("[0-9]+")) {
 					ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
 					dispose();
