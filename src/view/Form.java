@@ -23,58 +23,61 @@ public class Form extends JDialog implements ActionListener {
 	private JButton ok, annuler;
 	private Controller ctrl;
 	private HCI hci;
-	
-	public Form(HCI hci, String title, boolean modal, Controller ctrl){
-		super(hci,title,modal);
+
+	public Form(HCI hci, String title, boolean modal, Controller ctrl) {
+		super(hci, title, modal);
 		this.hci = hci;
-		this.ctrl=ctrl;
+		this.ctrl = ctrl;
 		this.setSize(300, 150);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		
-		//Contenu
+
+		// Contenu
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
-		content.setPreferredSize(new Dimension(300,70));
+		content.setPreferredSize(new Dimension(300, 70));
 		content.setBorder(BorderFactory.createTitledBorder("Sommet"));
-		JLabel nomL=new JLabel("Nom:");
-		nom=new JTextField();
-		nom.setPreferredSize(new Dimension (100,25));
+		JLabel nomL = new JLabel("Nom:");
+		nom = new JTextField();
+		nom.setPreferredSize(new Dimension(100, 25));
 		content.add(nomL);
 		content.add(nom);
 		add(content);
-		
-		//Panel Bouton
-		JPanel control =new JPanel();
-		ok = new JButton ("Ok");
+
+		// Panel Bouton
+		JPanel control = new JPanel();
+		ok = new JButton("Ok");
 		ok.addActionListener(this);
-		annuler = new JButton ("Annuler");
+		annuler = new JButton("Annuler");
 		annuler.addActionListener(this);
 		control.add(ok);
 		control.add(annuler);
 		add(control, "South");
-		
+
 		setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(this.getTitle().equals("Ajouter un sommet")) {
-			if (e.getSource() == ok ){
+		if (this.getTitle().equals("Ajouter un sommet")) {
+			if (e.getSource() == ok) {
 				ctrl.addVertex(nom.getText());
-				
-				HCI.hmVertex.put(nom.getText(), new Point(0,0));
+
+				HCI.hmVertex.put(nom.getText(), new Point(0, 0));
 				hci.setStrSelected(nom.getText());
-				
+
 				dispose();
 			}
-			if (e.getSource() == annuler) { setVisible(false); }
+			if (e.getSource() == annuler) {
+				setVisible(false);
+			}
 		}
-		if(this.getTitle().equals("Modifier un sommet")) {
-			if (e.getSource() == ok && hci.getStrSelected() != null){
-				for(Vertex v : ctrl.getGraph().getAlVertex()) {
-					if(v.getName().equals(hci.getStrSelected())) {
+
+		if (this.getTitle().equals("Modifier un sommet")) {
+			if (e.getSource() == ok && hci.getStrSelected() != null) {
+				for (Vertex v : ctrl.getGraph().getAlVertex()) {
+					if (v.getName().equals(hci.getStrSelected())) {
 						v.setName(nom.getText());
 						HCI.hmVertex.put( nom.getText() , HCI.hmVertex.get(hci.getStrSelected()) );
 						HCI.hmVertex.remove(hci.getStrSelected());
@@ -82,10 +85,20 @@ public class Form extends JDialog implements ActionListener {
 						hci.refresh();
 					}
 				}
+<<<<<<< HEAD
 
+=======
+				
+				HCI.hmVertex.put(nom.getText(), HCI.hmVertex.get(hci.getStrSelected()));
+				HCI.hmVertex.remove(hci.getStrSelected());
+				hci.setStrSelected(nom.getText());
+				hci.refresh();
+>>>>>>> 485fca41d8e0737060526a340e07162f087ebfec
 				dispose();
 			}
-			if (e.getSource() == annuler) { setVisible(false); }
+			if (e.getSource() == annuler) {
+				setVisible(false);
+			}
 		}
 	}
 
