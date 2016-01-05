@@ -23,9 +23,11 @@ public class SwitchList extends JPanel{
 	private JButton jbSwitch;
 	private JLabel lTitle;
 	private int state = 1;
+	private HCI hci;
 	
 	@SuppressWarnings("rawtypes")
-	public SwitchList(HCI g) {
+	public SwitchList(HCI hci) {
+		this.hci = hci;
 		setLayout(new BorderLayout());
 		
 		/*--Header of the JList--*/
@@ -35,7 +37,7 @@ public class SwitchList extends JPanel{
 		ImageIcon iSwitch = new ImageIcon( getClass().getResource( "/Farm-Fresh_arrow_refresh_16.png"));
 		jbSwitch = new JButton(iSwitch);
 		jbSwitch.setContentAreaFilled(false);
-		jbSwitch.addActionListener(g);
+		jbSwitch.addActionListener(hci);
 		jpTop.add(jbSwitch);
 		lTitle = new JLabel("Liste des Sommets");
 	    jpTop.add(lTitle);
@@ -46,7 +48,7 @@ public class SwitchList extends JPanel{
 	    listOfObject = new JList();
 	    DefaultListCellRenderer renderer =  (DefaultListCellRenderer)listOfObject.getCellRenderer();  //Center string in the list
 	    renderer.setHorizontalAlignment(JLabel.CENTER); 											  // -----------------------
-	    listOfObject.addListSelectionListener(g);
+	    listOfObject.addListSelectionListener(hci);
 	    JScrollPane jscrPanel = new JScrollPane(listOfObject);
 	    add(jscrPanel,BorderLayout.CENTER);
 	    
@@ -58,7 +60,7 @@ public class SwitchList extends JPanel{
 	
 	@SuppressWarnings("unchecked")
 	public void refresh() {
-		Graph graphLoaded = ctrl.getGraph();
+		Graph graphLoaded = hci.getGraph();
 		if(state == 0) {	//State of the SwitchList (0 = Sommets)
 			String[] tabVertex = new String[graphLoaded.getAlVertex().size()];
 			int cpt = 0;

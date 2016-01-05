@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
+import model.Graph;
 import model.Vertex;
 /*testMel*/
 public class HCI extends JFrame implements ActionListener,ListSelectionListener{
@@ -21,7 +22,8 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	  */
 	private static final long serialVersionUID = -1456746983405013221L;
 	private Controller ctrl;
-	
+	private Graph graph;
+
 	//Data of Vertex
 	protected static HashMap<String, Point> hmVertex;
     int xInitialize = 0,yInitialize = 0;	//Used for the preferedsize of pGraph
@@ -197,7 +199,7 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	    //----------------------//
 	    
 	    //---------Graph--------//
-	    pGraph = new GraphPanel();
+	    pGraph = new GraphPanel(this);
 	    jscrPanel = new JScrollPane(pGraph);
 	    add(jscrPanel,BorderLayout.CENTER);
 	    //----------------------//
@@ -365,6 +367,7 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	
 	public String getStrSelected() 		 {return pGraph.getStrSelected();}
 	public void setStrSelected(String s) {pGraph.setStrSelected(s);}
+	public Graph getGraph() 			 {return graph;}
 	
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
