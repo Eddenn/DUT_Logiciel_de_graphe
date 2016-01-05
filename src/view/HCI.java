@@ -15,6 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
 import model.Graph;
+import model.PdfGenerator;
 import model.Vertex;
 
 /*testMel*/
@@ -35,7 +36,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenu menuFichier, menuEdition, menuExport, menuGraph, menuAide;
 	private JMenuItem[] tabMenuItemFile = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
-	private JMenuItem[] tabMenuItemExport = new JMenuItem[1];
+	private JMenuItem[] tabMenuItemExport = new JMenuItem[2];
 	private JMenuItem[] tabMenuItemGraph = new JMenuItem[4];
 	private JMenuItem[] tabMenuItemAide = new JMenuItem[1];
 	
@@ -169,7 +170,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemExport[0] = new JMenuItem("Image   ");
 		tabMenuItemExport[0].addActionListener(this);
 		menuExport.add(tabMenuItemExport[0]);
-
+		//MenuItem - PDF
+		tabMenuItemExport[1] = new JMenuItem("Fichier PDF  ");
+		tabMenuItemExport[1].addActionListener(this);
+		menuExport.add(tabMenuItemExport[1]);		
+		
 		menuBarMain.add(menuExport);
 
 		menuGraph = new JMenu("Graph");
@@ -311,6 +316,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Image
 		} else if (e.getSource() == tabMenuItemExport[0]) {
 			expImage();
+			//PDF
+		}else if (e.getSource()==tabMenuItemExport[1]){
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath());
 
 			// GRAPH
 			// Ajouter un sommet
