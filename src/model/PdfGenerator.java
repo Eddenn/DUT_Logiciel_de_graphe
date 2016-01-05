@@ -18,8 +18,11 @@ public class PdfGenerator {
 	private static Font smallBold 	= new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 	private static Graph g;
 	  
-	public static void generer(Graph g, String name){
+	public static void generer(Graph g, String name, String path){
 		 try {
+			 
+			 if (path != null) FILE = path;
+			 
 			  PdfGenerator.g = g;
 		      Document document = new Document();
 		      PdfWriter.getInstance(document, new FileOutputStream(FILE));
@@ -33,7 +36,6 @@ public class PdfGenerator {
 		    }
 		  }
 	
-			int lol; //test commitaaaaa
 
 		  // iText allows to add metadata to the PDF which can be viewed in your Adobe
 		  // Reader
