@@ -304,7 +304,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource() == tabMenuItemFile[3]) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.saveFile(dial.getSelectedFile().getAbsolutePath());
+				ctrl.saveFile(dial.getSelectedFile().getAbsolutePath()+".txt");
 			// Quitter
 		} else if (e.getSource() == tabMenuItemFile[5]) {
 			this.dispose();
@@ -318,7 +318,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		}else if (e.getSource()==tabMenuItemExport[1]){
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath());
+				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath() + ".pdf");
 
 			// GRAPH
 			// Ajouter un sommet
