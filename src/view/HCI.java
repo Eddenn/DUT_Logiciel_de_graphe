@@ -34,7 +34,7 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	private JMenuItem[] tabMenuItemFichier = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemExport = new JMenuItem[1];
-	private JMenuItem[] tabMenuItemGraph = new JMenuItem[3];
+	private JMenuItem[] tabMenuItemGraph = new JMenuItem[4];
 	private JMenuItem[] tabMenuItemAide = new JMenuItem[1];
 	//List of "Object"
 	private SwitchList slObject;
@@ -174,6 +174,14 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	    	tabMenuItemGraph[2] = new JMenuItem("<html>Supprimer un sommet</html>");
 	    	tabMenuItemGraph[2].addActionListener(this);
 	    	menuGraph.add(tabMenuItemGraph[2]);
+	    	
+		    //Separator
+		    menuGraph.addSeparator();
+	    	
+		    //MenuItem - Ajouter un arc
+	    	tabMenuItemGraph[3] = new JMenuItem("<html>Ajouter un arc</html>");
+	    	tabMenuItemGraph[3].addActionListener(this);
+	    	menuGraph.add(tabMenuItemGraph[3]);
 
     	//Add menuGraph to this frame
     	menuBarMain.add(menuGraph);
@@ -280,10 +288,12 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 		 
 		} else if (e.getSource() == tabMenuItemGraph[0]) {	//Ajouter sommet
 			new Form(this, "Ajouter un sommet", true, ctrl);
+			
 		} else if (e.getSource() == tabMenuItemGraph[1]) {	//Modifier sommet
 			new Form(this, "Modifier un sommet",true, ctrl);
-			System.out.println(hmVertex.toString());
+			
 		} else if (e.getSource() == tabMenuItemGraph[2]) {	//Supprimer sommet
+			
 			Vertex tmpVertex = null;
 			for(Vertex v : ctrl.getGraph().getAlVertex()) {
 				if( v.getName().equals(getStrSelected()) ) {
@@ -305,15 +315,20 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.saveFile(dial.getSelectedFile().getAbsolutePath());
+			
 		} else if (e.getSource() == tabMenuItemFichier[1]) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
+			
 		} else if (e.getSource() == tabMenuItemFichier[0]) {
 			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
-		} else if (e.getSource() == tabMenuItemGraph[1]) {
+			
+		} else if (e.getSource() == tabMenuItemGraph[3]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
+			
 		}
+		refresh();
 	}
 	
 	private void expImage(){
@@ -376,6 +391,7 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	}
 	
 	public void refresh() {
+		graph = ctrl.getGraph();
 		slObject.refresh();
 		repaint();
 	}
