@@ -71,7 +71,11 @@ public class Controller {
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
-		graph.addArc(v, vBis, iValue);
+		if (checkArcAlreadyExist(v,vBis)) {
+			graph.addArc(v, vBis, iValue);
+		} else {
+			// Afficher message d'erreur
+		}
 	}
 
 	private boolean checkArcAlreadyExist(Vertex v, Vertex vBis) {
