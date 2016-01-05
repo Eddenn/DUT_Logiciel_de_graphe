@@ -3,14 +3,19 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
 import model.Vertex;
-
+/*testMel*/
 public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	/** Serial Version
 	  */
@@ -23,9 +28,10 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	
 	//Menu bar of this frame
 	private JMenuBar menuBarMain;
-	private JMenu menuFichier,menuEdition,menuGraph,menuAide;
+	private JMenu menuFichier,menuEdition,menuExport,menuGraph,menuAide;
 	private JMenuItem[] tabMenuItemFichier = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
+	private JMenuItem[] tabMenuItemExport = new JMenuItem[1];
 	private JMenuItem[] tabMenuItemGraph = new JMenuItem[3];
 	private JMenuItem[] tabMenuItemAide = new JMenuItem[1];
 	//List of "Object"
@@ -139,6 +145,15 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	    
 	    //Add menuEdition to this frame
 	    menuBarMain.add(menuEdition);
+	    
+	  //Export
+	    menuExport= new JMenu("Exporter");
+		    //Menu Item - Image
+		    tabMenuItemExport[0] = new JMenuItem("Image   ");
+		    tabMenuItemExport[0].addActionListener(this);
+		    menuExport.add(tabMenuItemExport[0]);
+	    
+	    menuBarMain.add(menuExport);	
 	    
 	    menuGraph = new JMenu("Graph");
 	    
@@ -276,6 +291,50 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			HCI.hmVertex.remove(getStrSelected());
 			setStrSelected(null);
 			refresh();
+		}
+		
+		//Export version
+		if(e.getSource()==tabMenuItemExport[0]){
+			expImage();
+		}
+	}
+	
+	private void expImage(){
+		FileNameExtensionFilter filterPNG = new FileNameExtensionFilter("PNG (*.png)", ".png");
+		FileNameExtensionFilter filterJPG = new FileNameExtensionFilter("JPEG (*.jpg;*.jpeg;*.jpe;*.jfif)", ".jpg");
+		FileNameExtensionFilter filterGIF = new FileNameExtensionFilter("GIF (*.gif)", ".gif");
+
+		JFileChooser dial = new JFileChooser(new File("."));
+		dial.setAcceptAllFileFilterUsed(false);
+		dial.addChoosableFileFilter(filterPNG);
+		dial.addChoosableFileFilter(filterJPG);
+		dial.addChoosableFileFilter(filterGIF);
+		
+		if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			String ext = "";
+			String extension = dial.getFileFilter().getDescription();
+			
+			if (extension.equals("PNG (*.png)")) {
+				ext = "png";
+			}
+			
+			if (extension.equals("JPEG (*.jpg;*.jpeg;*.jpe;*.jfif)")) {
+				ext = "jpg";
+			}
+			
+			if (extension.equals("GIF (*.gif)")) {
+				ext = "gif";
+			}
+			
+			
+			Dimension size = pGraph.getSize();
+			BufferedImage image = new BufferedImage(size.width,size.height,BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = image.createGraphics();
+			pGraph.paint(g2);
+		
+			try {
+				ImageIO.write(image, ext, new File(dial.getSelectedFile().getAbsolutePath() + "." + ext));
+			} catch (Exception ex) {}
 		}
 	}
 	
