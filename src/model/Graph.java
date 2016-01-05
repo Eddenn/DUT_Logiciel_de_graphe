@@ -166,46 +166,6 @@ public class Graph {
 		}
 		return sRet;
 	}
-	
-	public String getFormattedList(){
-		
-		HashMap<String, ArrayList<String>> hm = generateAdjacencyList();
-		
-		String sRet = "";
-		
-		Set<String> setKey = hm.keySet();
-		java.util.Iterator<String> it = setKey.iterator();
-		
-		while (it.hasNext()) {
-			String strKey = it.next();
-			sRet += strKey + "=";
-			
-			for(String s : hm.get(strKey)){
-				sRet += s;
-			}
-			
-			sRet += "\n";
-		}
-		
-		return sRet;
-	}
-	
-	public String displayMatrix2(){
-		this.generateMatrix();
-		String sRet = "";
-		
-		for (int i = 0; i < tMatrix.length; i++){
-			sRet += "[";
-			for (int j = 0; j < tMatrix[0].length; j++){
-				sRet += String.format("%4d", tMatrix[i][j]);
-				if (j < tMatrix.length - 1 ) sRet += ", ";
-			}
-			sRet += "]";
-			if (i < tMatrix[0].length - 1 ) sRet += ",\n";
-		}
-		
-		return sRet;
-	}
 
 	
 	public String displayMatrix() {
