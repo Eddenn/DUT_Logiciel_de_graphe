@@ -23,9 +23,10 @@ public class SwitchList extends JPanel{
 	private JButton jbSwitch;
 	private JLabel lTitle;
 	private int state = 1;
+	private Controller ctrl;
 	
 	@SuppressWarnings("rawtypes")
-	public SwitchList(HCI g) {
+	public SwitchList(HCI g, Controller ctrl) {
 		setLayout(new BorderLayout());
 		
 		/*--Header of the JList--*/

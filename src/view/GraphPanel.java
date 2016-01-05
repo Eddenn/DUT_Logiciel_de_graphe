@@ -26,8 +26,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	private double iWidthEdge;	//Largeur
 	private double iHeightEdge; //Hauteur
 	private double iZoom;		//Zoom
+	private Controller ctrl;
 
-	public GraphPanel() {
+	public GraphPanel(Controller ctrl) {
 		super();
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.iZoom = 1.0;

@@ -190,14 +190,14 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 	    //-----------//
 	    
 	    //---List of "Object" --//
-	    slObject = new SwitchList(this);
+	    slObject = new SwitchList(this,this.ctrl);
 	    slObject.setBorder(BorderFactory.createLineBorder(Color.black));
 	    add(slObject,BorderLayout.WEST);
 	    slObject.switchState();
 	    //----------------------//
 	    
 	    //---------Graph--------//
-	    pGraph = new GraphPanel();
+	    pGraph = new GraphPanel(this.ctrl);
 	    jscrPanel = new JScrollPane(pGraph);
 	    add(jscrPanel,BorderLayout.CENTER);
 	    //----------------------//
@@ -296,6 +296,20 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 		//Export version
 		if(e.getSource()==tabMenuItemExport[0]){
 			expImage();
+		} 
+		
+		else if (e.getSource() == tabMenuItemFichier[3]) {
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+				ctrl.enregistrerFichier(dial.getSelectedFile().getAbsolutePath());
+		} else if (e.getSource() == tabMenuItemFichier[1]) {
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+				ctrl.chargerFichier(dial.getSelectedFile().getAbsolutePath());
+		} else if (e.getSource() == tabMenuItemFichier[0]) {
+			FormNewGraph formNewGraph=new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
+		} else if (e.getSource() == tabMenuItemGraph[1]) {
+			FormAddArc formAddArc=new FormAddArc(this, "Ajout d'un arc", true, ctrl);
 		}
 	}
 	
