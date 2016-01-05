@@ -234,11 +234,43 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			for (Point c : HCI.hmVertex.values()) {
 				centerX = (c.getX()+iWidthEdge/2)*iZoom;
 				centerY = (c.getY()+iHeightEdge/2)*iZoom;
+				
+				//Si la souris est sur un sommet
 				if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2))) {
 					// Find the key of this coordinate
 					for(String s : HCI.hmVertex.keySet()) {
 						if (HCI.hmVertex.get(s) == c)
 							strSelected = s;
+					}
+				}
+			}
+			for(Vertex v1 : hci.getGraph().getAlVertex()) {
+				for(Arc arc : v1.getAlArcs()) {
+					Vertex v2 = arc.getVertex();
+					Point p1 = null,p2 = null;
+					for(String s : HCI.hmVertex.keySet()) {
+						if(v1.getName().equals(s))	p1 = HCI.hmVertex.get(s);
+						if(v2.getName().equals(s))	p2 = HCI.hmVertex.get(s);
+					}
+							
+					/*p1.x = (int) ((p1.x+iWidthEdge/2)*iZoom);
+					p1.y = (int) ((p1.y+iHeightEdge/2)*iZoom);
+					p2.x = (int) ((p2.x+iWidthEdge/2)*iZoom);
+					p2.y = (int) ((p2.y+iHeightEdge/2)*iZoom);*/
+					
+					double b = -(p1.x*p2.y-p1.x*p2.x)/(p2.x-p1.x) ;
+							
+					double a = (p1.getX()-b)/(p1.getX());
+					
+					/*double a = (p2.y-p1.y)/(p2.x-p1.x);
+					// Y=aX+b  -b=aX-Y   b=-aX+Y
+					double b = -a*p1.x+p1.y;*/
+					
+					System.out.println("Y="+a+"X+"+b);
+					
+					//Si la souris est sur un arc
+					if( e.getY()==a*e.getX()+b ) {
+						System.out.println("test");
 					}
 				}
 			}
