@@ -346,7 +346,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[4]) {	
-			Arc tmpArc = null;	
 			
 			if (getStrSelected().matches(".{5}-{6}.*")) {
 				String vName = getStrSelected().substring(0, 5);
