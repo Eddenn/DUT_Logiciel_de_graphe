@@ -338,25 +338,6 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 		    pGraph.repaint();
 		    pGraph.revalidate();
 			
-
-		}else if (e.getSource() == tabMenuItemFichier[3]) {
-			JFileChooser dial = new JFileChooser(new File("."));
-			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.saveFile(dial.getSelectedFile().getAbsolutePath());
-			
-		} else if (e.getSource() == tabMenuItemFichier[1]) {
-			JFileChooser dial = new JFileChooser(new File("."));
-			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
-			
-		} else if (e.getSource() == tabMenuItemFichier[0]) {
-			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
-		} else if (e.getSource() == tabMenuItemGraph[1]) {
-			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
-			
-		} else if (e.getSource() == tabMenuItemGraph[3]) {
-			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
-
 		}
 		refresh();
 	}
