@@ -50,29 +50,33 @@ public class ReaderAdjacencyList extends Reader {
 			alStr.remove(i);
 		}
 
-		Graph graph = new Graph(bIsDirected, bIsValued);
-		String[] tVertexName = new String[alStr.size()];
+		try {
+			Graph graph = new Graph(bIsDirected, bIsValued);
+			String[] tVertexName = new String[alStr.size()];
 
-		for (int i = 0; i < alStr.size(); i++) {
-			String[] tStr = alStr.get(i).split("=");
+			for (int i = 0; i < alStr.size(); i++) {
+				String[] tStr = alStr.get(i).split("=");
 
-			graph.addVertex(tStr[0]);
-			tVertexName[i] = tStr[0];
+				graph.addVertex(tStr[0]);
+				tVertexName[i] = tStr[0];
+			}
+
+			if (bIsDirected && bIsValued) {
+				return createDirectedValuedGraph(graph, alStr, tVertexName);
+			}
+
+			if (bIsDirected && !bIsValued) {
+				return createDirectedNotValuedGraph(graph, alStr, tVertexName);
+			}
+
+			if (!bIsDirected && bIsValued) {
+				return createNotDirectedValuedGraph(graph, alStr, tVertexName);
+			}
+
+			return createNotDirectedNotValuedGraph(graph, alStr, tVertexName);
+		} catch (Exception e) {
+			return null;
 		}
-
-		if (bIsDirected && bIsValued) {
-			return createDirectedValuedGraph(graph, alStr, tVertexName);
-		}
-
-		if (bIsDirected && !bIsValued) {
-			return createDirectedNotValuedGraph(graph, alStr, tVertexName);
-		}
-
-		if (!bIsDirected && bIsValued) {
-			return createNotDirectedValuedGraph(graph, alStr, tVertexName);
-		}
-
-		return createNotDirectedNotValuedGraph(graph, alStr, tVertexName);
 	}
 
 	private static Graph createDirectedValuedGraph(Graph graph, ArrayList<String> alStr, String[] tVertexName) {

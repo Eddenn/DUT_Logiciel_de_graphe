@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -96,7 +95,11 @@ public class FormAddArc extends JDialog implements ActionListener {
 			int vertexDep = boxDep.getSelectedIndex();
 			int vertexArr = boxArr.getSelectedIndex();
 			
+<<<<<<< HEAD
+			if (this.ctrl.getGraph().isValued()) {
+=======
 			if (this.ctrl.getGraph().isValued() ) {
+>>>>>>> fd1ff52b38a8a254fb15c60a7330f1e359924a18
 				if (valArc.getText().matches("[0-9]+")) {
 					ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
 					dispose();
