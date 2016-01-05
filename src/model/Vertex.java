@@ -5,16 +5,15 @@ import java.util.ArrayList;
 
 /**
  * Classe permettant de gérer les sommets
- * 
- * @author Les grosses bites
- * 
  */
 
 public class Vertex {
 
 	private String strName;
 	private ArrayList<Arc> alArcs;
+	@SuppressWarnings("unused")
 	private Color color;
+	@SuppressWarnings("unused")
 	private Graph graph;
 
 	public Vertex(String strName, Graph graph) {
@@ -28,9 +27,6 @@ public class Vertex {
 		this.strName = strName;
 		this.graph = graph;
 	}
-	
-	
-	
 
 	// Getters and Setters
 	public String getName() {

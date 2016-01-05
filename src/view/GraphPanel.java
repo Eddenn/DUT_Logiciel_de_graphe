@@ -14,7 +14,6 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import controller.Controller;
 import model.Arc;
 import model.Vertex;
 

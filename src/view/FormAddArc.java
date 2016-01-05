@@ -13,10 +13,13 @@ import controller.Controller;
 
 public class FormAddArc extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = 2869913711173398321L;
 	private JButton ok, annuler;
+	@SuppressWarnings("rawtypes")
 	private JComboBox boxDep, boxArr;
 	private Controller ctrl;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public FormAddArc(HCI parent, String title, boolean modal, Controller ctrl){
 		super(parent,title,modal);
 		this.ctrl=ctrl;
@@ -66,7 +69,6 @@ public class FormAddArc extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() == ok ){
 			int vertexDep = boxDep.getSelectedIndex();
 			int vertexArr = boxArr.getSelectedIndex();

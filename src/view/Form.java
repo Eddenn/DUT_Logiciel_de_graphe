@@ -18,6 +18,7 @@ import model.Vertex;
 
 public class Form extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
 	private JButton ok, annuler;
 	private Controller ctrl;

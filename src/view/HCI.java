@@ -310,9 +310,9 @@ public class HCI extends JFrame implements ActionListener,ListSelectionListener{
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 		} else if (e.getSource() == tabMenuItemFichier[0]) {
-			FormNewGraph formNewGraph=new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
+			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
 		} else if (e.getSource() == tabMenuItemGraph[1]) {
-			FormAddArc formAddArc=new FormAddArc(this, "Ajout d'un arc", true, ctrl);
+			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
 		}
 	}
 	
