@@ -22,12 +22,8 @@ import model.Graph;
 import model.PdfGenerator;
 import model.Vertex;
 
-<<<<<<< HEAD
-public class HCI extends JFrame implements ActionListener, ListSelectionListener {
-=======
-/*testMel*/
+
 public class HCI extends JFrame implements ActionListener, ListSelectionListener, MouseListener {
->>>>>>> 90e92e350859b560c292cf78e011166293673439
 	/**
 	 * Serial Version
 	 */
@@ -303,9 +299,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
 
-<<<<<<< HEAD
+
 		this.addKeyListener(pGraph);
-=======
+
 		this.setSize(900, 700);
 		setPreferredSize(new Dimension(900, 700));
 		this.setLocation(250, 0);
@@ -378,7 +374,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// MenuItem - Rï¿½pï¿½ter
 		tabMenuItemEdition[1] = new JMenuItem(
-				"<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
+				"<html>Rï¿½pï¿½ter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
 		tabMenuItemEdition[1].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[1]);
 
@@ -547,7 +543,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
 
->>>>>>> 90e92e350859b560c292cf78e011166293673439
 		setVisible(true);
 	}
 
@@ -610,9 +605,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Modifier un sommet
 		} else if (e.getSource() == tabMenuItemGraph[1]) {
 			if(pGraph.getAlSelected().size() > 1 ) {
-				showError("Veuilliez sélectionné un seul sommet.");
+				showError("Veuilliez sï¿½lectionnï¿½ un seul sommet.");
 			} else if (pGraph.getAlSelected().size() == 0) {
-				showError("Veuilliez sélectionné un sommet.");
+				showError("Veuilliez sï¿½lectionnï¿½ un sommet.");
 			} else {
 				new Form(this, "Modifier un sommet", true, ctrl);
 			}
@@ -630,12 +625,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 			setAlSelected(new ArrayList<String>());
 			refresh();
-<<<<<<< HEAD
-			//Ajouter un arc
-=======
 
-			// Ajouter un arc
->>>>>>> 90e92e350859b560c292cf78e011166293673439
+			//Ajouter un arc
 		} else if (e.getSource() == tabMenuItemGraph[3]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
 
