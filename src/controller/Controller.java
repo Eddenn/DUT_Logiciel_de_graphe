@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.itextpdf.awt.geom.Point;
+import java.awt.Point;
 
 import model.Arc;
 import model.Graph;
@@ -15,7 +15,7 @@ import view.HCI;
 public class Controller {
 	private HCI hci;
 	private Graph graph;
-	private ArrayList<String> saveVertexList;
+	private ArrayList<ArrayList<String>> saveVertexList;
 	private ArrayList<Point[]> saveCoordList;
 	private int cptModif;
 
@@ -27,7 +27,7 @@ public class Controller {
 		hci = new HCI(this);
 		
 		// Initialize the arrrayList which permit to implement the undo and redo
-		saveVertexList = new ArrayList<String>();
+		saveVertexList = new ArrayList<ArrayList<String>>();
 		saveCoordList = new ArrayList<Point[]>();
 		cptModif= 0;
 	}
@@ -70,6 +70,10 @@ public class Controller {
 	}
 
 	public boolean addVertex(String strVertexName) {
+		provSave();
+		saveVertexList.add(graph.getFormattedListAlString());
+		cptModif++;
+		
 		boolean bExist=false;
 		if (graph.getVertex(strVertexName) != null) {
 			hci.setError("Un sommet avec le nom " + strVertexName + " existe déjà.");
@@ -86,6 +90,7 @@ public class Controller {
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {
+		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis);
 		} else {
@@ -94,6 +99,7 @@ public class Controller {
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
+		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis, iValue);
 		} else {
@@ -102,6 +108,7 @@ public class Controller {
 	}
 	
 	public void delArc(Vertex v, Vertex vBis) {
+		provSave();
 		for (int i = 0; i < v.getAlArcs().size(); i++) {
 			if (v.getAlArcs().get(i).getVertex() == vBis)
 				graph.deleteArc(v.getAlArcs().get(i));
@@ -119,9 +126,9 @@ public class Controller {
 	}
 	
 	public void undo() {
-		HashMap<String, ArrayList<String>> hmAdjacency = graph.generateAdjacencyList();
-		System.out.println(hmAdjacency);
-		for (String key : hmAdjacency.)
+		if (cptModif > 0) {
+			
+		}
 	}
 	
 	public void redo() {
@@ -134,5 +141,20 @@ public class Controller {
 
 	public Graph getGraph() {
 		return graph;
+	}
+	
+	public void provSave() {
+		saveVertexList.add(graph.getFormattedListAlString());
+		Point[] tabPoint = new Point[graph.getAlVertex().size()];
+		
+		int cpt = 0;
+		for (Point c : hci.getHmVertex().values()) {
+			tabPoint[cpt] = c;
+			cpt++;
+		}
+		
+		saveCoordList.add(tabPoint);
+		
+		cptModif++;
 	}
 }

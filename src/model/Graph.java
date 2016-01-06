@@ -233,6 +233,30 @@ public class Graph {
 
 		return sRet;
 	}
+	
+	public ArrayList<String> getFormattedListAlString() {
+
+		HashMap<String, ArrayList<String>> hm = generateAdjacencyList();
+
+		ArrayList<String> alRet = new ArrayList<String>();
+		String sProv = "";
+		
+		Set<String> setKey = hm.keySet();
+		java.util.Iterator<String> it = setKey.iterator();
+
+		while (it.hasNext()) {
+			String strKey = it.next();
+			sProv += strKey + "=";
+
+			for (String s : hm.get(strKey)) {
+				sProv += s;
+			}
+			alRet.add(sProv);
+			sProv = "";
+		}
+
+		return alRet;
+	}
 
 	public String displayMatrix2() {
 		this.generateMatrix();

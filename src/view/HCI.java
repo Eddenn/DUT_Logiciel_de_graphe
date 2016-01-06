@@ -295,8 +295,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pGraph.setPreferredSize(
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
-<<<<<<< HEAD
-=======
 
 		this.setSize(900, 700);
 		setPreferredSize(new Dimension(900, 700));
@@ -370,7 +368,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// MenuItem - Rï¿½pï¿½ter
 		tabMenuItemEdition[1] = new JMenuItem(
-				"<html>Rï¿½pï¿½ter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
+				"<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
 		tabMenuItemEdition[1].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[1]);
 
@@ -538,7 +536,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pGraph.setPreferredSize(
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
->>>>>>> 290509a73763da9a0434052081f5b628033e9ce1
 
 		setVisible(true);
 	}
@@ -752,6 +749,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public String getStrSelected() {
 		return pGraph.getStrSelected();
+	}
+	
+	public HashMap<String,Point> getHmVertex() {
+		return hmVertex;
 	}
 
 	public void setStrSelected(String s) {
