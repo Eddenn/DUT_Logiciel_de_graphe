@@ -55,13 +55,8 @@ public class Controller {
 		graph = Reader.read(strFileName);
 
 		if (graph == null) {
-<<<<<<< HEAD
 			graph = new Graph(true,true);
 			hci.showError("Format du fichier invalide.");
-=======
-			graph = new Graph(true, true);
-			hci.setError("Format du fichier invalide.");
->>>>>>> 90e92e350859b560c292cf78e011166293673439
 		}
 
 		hci.initHmVertex();
@@ -75,27 +70,17 @@ public class Controller {
 	}
 
 	public boolean addVertex(String strVertexName) {
-<<<<<<< HEAD
 		provSave();
 		saveVertexList.add(graph.getFormattedListAlString());
 		cptModif++;
 		
 		boolean bExist=false;
-=======
-		boolean bExist = false;
-
->>>>>>> c27c84337f1f962b75f00c9ee285ad35d8f8dfe2
 		if (graph.getVertex(strVertexName) != null) {
-<<<<<<< HEAD
 			hci.showError("Un sommet avec le nom " + strVertexName + " existe déjà.");
-			bExist=true;
-=======
-			hci.setError("Un sommet avec le nom " + strVertexName + " existe déjà.");
 			bExist = true;
 		} else if (strVertexName.replaceAll(" ", "").equals("")) {
-			hci.setError("Le nom de votre sommet ne peut pas être vide");
+			hci.showError("Le nom de votre sommet ne peut pas être vide");
 			bExist = true;
->>>>>>> 90e92e350859b560c292cf78e011166293673439
 		} else {
 			graph.addVertex(strVertexName);
 			hci.addVertex(strVertexName);
@@ -105,12 +90,8 @@ public class Controller {
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {
-<<<<<<< HEAD
 		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
-=======
-		if (checkArcAlreadyExist(v, vBis)) {
->>>>>>> c27c84337f1f962b75f00c9ee285ad35d8f8dfe2
 			graph.addArc(v, vBis);
 		} else {
 			hci.showError("L'arc existe déjà.");
@@ -118,12 +99,8 @@ public class Controller {
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
-<<<<<<< HEAD
 		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
-=======
-		if (checkArcAlreadyExist(v, vBis)) {
->>>>>>> c27c84337f1f962b75f00c9ee285ad35d8f8dfe2
 			graph.addArc(v, vBis, iValue);
 		} else {
 			hci.showError("L'arc existe déjà.");
@@ -146,9 +123,7 @@ public class Controller {
 		}
 
 		return true;
-	}<<<<<<<HEAD
-
-	=======
+	}
 
 	public void undo() {
 		if (cptModif > 0) {
@@ -159,8 +134,6 @@ public class Controller {
 	public void redo() {
 
 	}
-
-	>>>>>>>dbe59d79167dcc64767596d36ac62e02618989aa
 
 	public static void main(String[] args) {
 		new Controller();

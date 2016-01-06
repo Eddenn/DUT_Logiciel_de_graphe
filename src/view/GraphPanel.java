@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -288,7 +289,15 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {	
+	public void mouseClicked(MouseEvent e) {
+		/* Clic droit */
+		int mod = e.getModifiers();
+
+		if ((mod & InputEvent.BUTTON3_MASK) != 0)
+			hci.getPopMenu().show(this, e.getX(), e.getY());
+		/*------------*/
+		
+		/* Double clic */
 		if(e.getClickCount() > 1) {
 			double centerX, centerY;
 			for (Point c : HCI.hmVertex.values()) {
@@ -339,6 +348,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 //				}
 //			}
 		}
+		/*-----------*/
 		repaint();
 	}
 	@Override

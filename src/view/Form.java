@@ -65,17 +65,13 @@ public class Form extends JDialog implements ActionListener {
 				boolean bExist=ctrl.addVertex(nom.getText());
 				if(!bExist){
 					HCI.hmVertex.put(nom.getText(), new Point(0, 0));
-<<<<<<< HEAD
 					hci.getAlSelected().clear();
 					hci.getAlSelected().add(nom.getText());
-=======
-					hci.setStrSelected(nom.getText());
-					dispose();
->>>>>>> 90e92e350859b560c292cf78e011166293673439
 				}
+				dispose();
 			}
 			if (e.getSource() == annuler) {
-				setVisible(false);
+				dispose();
 			}
 		}
 
