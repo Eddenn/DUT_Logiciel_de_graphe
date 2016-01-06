@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.itextpdf.awt.geom.Point;
+import java.awt.Point;
 
 import model.Arc;
 import model.Graph;
@@ -15,7 +15,7 @@ import view.HCI;
 public class Controller implements IControlable {
 	private HCI hci;
 	private Graph graph;
-	private ArrayList<String> saveVertexList;
+	private ArrayList<ArrayList<String>> saveVertexList;
 	private ArrayList<Point[]> saveCoordList;
 	private int cptModif;
 
@@ -27,7 +27,7 @@ public class Controller implements IControlable {
 		hci = new HCI(this);
 
 		// Initialize the arrrayList which permit to implement the undo and redo
-		saveVertexList = new ArrayList<String>();
+		saveVertexList = new ArrayList<ArrayList<String>>();
 		saveCoordList = new ArrayList<Point[]>();
 		cptModif = 0;
 	}
@@ -55,8 +55,8 @@ public class Controller implements IControlable {
 		graph = Reader.read(strFileName);
 
 		if (graph == null) {
-			graph = new Graph(true, true);
-			hci.setError("Format du fichier invalide.");
+			graph = new Graph(true,true);
+			hci.showError("Format du fichier invalide.");
 		}
 
 		hci.initHmVertex();
@@ -70,13 +70,16 @@ public class Controller implements IControlable {
 	}
 
 	public boolean addVertex(String strVertexName) {
-		boolean bExist = false;
-
+		provSave();
+		saveVertexList.add(graph.getFormattedListAlString());
+		cptModif++;
+		
+		boolean bExist=false;
 		if (graph.getVertex(strVertexName) != null) {
-			hci.setError("Un sommet avec le nom " + strVertexName + " existe déjà.");
+			hci.showError("Un sommet avec le nom " + strVertexName + " existe déjà.");
 			bExist = true;
 		} else if (strVertexName.replaceAll(" ", "").equals("")) {
-			hci.setError("Le nom de votre sommet ne peut pas être vide");
+			hci.showError("Le nom de votre sommet ne peut pas être vide");
 			bExist = true;
 		} else {
 			graph.addVertex(strVertexName);
@@ -87,22 +90,25 @@ public class Controller implements IControlable {
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {
-		if (checkArcAlreadyExist(v, vBis)) {
+		provSave();
+		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis);
 		} else {
-			hci.setError("L'arc existe déjà.");
+			hci.showError("L'arc existe déjà.");
 		}
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
-		if (checkArcAlreadyExist(v, vBis)) {
+		provSave();
+		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis, iValue);
 		} else {
-			hci.setError("L'arc existe déjà.");
+			hci.showError("L'arc existe déjà.");
 		}
 	}
 
 	public void delArc(Vertex v, Vertex vBis) {
+		provSave();
 		for (int i = 0; i < v.getAlArcs().size(); i++) {
 			if (v.getAlArcs().get(i).getVertex() == vBis)
 				graph.deleteArc(v.getAlArcs().get(i));
@@ -120,9 +126,15 @@ public class Controller implements IControlable {
 	}
 
 	public void undo() {
+<<<<<<< HEAD
 		HashMap<String, ArrayList<String>> hmAdjacency = graph.generateAdjacencyList();
 		System.out.println(hmAdjacency);
 		// for (String key : hmAdjacency.)
+=======
+		if (cptModif > 0) {
+			
+		}
+>>>>>>> e6b9bd56baf7ead2bec4f545c8a5e6b62cd50704
 	}
 
 	public void redo() {
@@ -136,6 +148,7 @@ public class Controller implements IControlable {
 	public Graph getGraph() {
 		return graph;
 	}
+<<<<<<< HEAD
 
 	@Override
 	public char[] listeSommet() {
@@ -150,5 +163,21 @@ public class Controller implements IControlable {
 	@Override
 	public void majIHM() {
 		hci.refresh();
+=======
+	
+	public void provSave() {
+		saveVertexList.add(graph.getFormattedListAlString());
+		Point[] tabPoint = new Point[graph.getAlVertex().size()];
+		
+		int cpt = 0;
+		for (Point c : hci.getHmVertex().values()) {
+			tabPoint[cpt] = c;
+			cpt++;
+		}
+		
+		saveCoordList.add(tabPoint);
+		
+		cptModif++;
+>>>>>>> e6b9bd56baf7ead2bec4f545c8a5e6b62cd50704
 	}
 }

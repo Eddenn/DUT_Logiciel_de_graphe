@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -17,13 +18,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
-import model.Arc;
 import model.Graph;
 import model.PdfGenerator;
 import model.Vertex;
 
-/*testMel*/
-public class HCI extends JFrame implements ActionListener, ListSelectionListener, MouseListener {
+
+public class HCI extends JFrame implements ActionListener, ListSelectionListener {
 	/**
 	 * Serial Version
 	 */
@@ -78,6 +78,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(true);
 		this.setLayout(new BorderLayout());
+		this.setFocusable(true);
+		this.setFocusTraversalKeysEnabled(false);
+
 
 		// **---Contents of this frame---**//
 		// ---Menu bar---//
@@ -248,7 +251,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// ---------Graph--------//
 		pGraph = new GraphPanel(this);
-		pGraph.addMouseListener(this);
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
@@ -286,223 +288,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pButton.add(buttonZoomOut);
 
 		add(pButton, BorderLayout.NORTH);
-		// ----------------------//
-
-		// **---------------------------**//
-
-		initHmVertex();
-
-		pGraph.setPreferredSize(
-				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
-		pack();
-
-		this.setSize(900, 700);
-		setPreferredSize(new Dimension(900, 700));
-		this.setLocation(250, 0);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(true);
-		this.setLayout(new BorderLayout());
-
-		// **---Contents of this frame---**//
-		// ---Menu bar---//
-		menuBarMain = new JMenuBar();
-		menuFichier = new JMenu("Fichier");
-
-		/*
-		 * Tips : &nbsp; = normal space &thinsp; = thin space &emsp; = 4 normal
-		 * spaces
-		 */
-		// MenuItem - Nouveau
-		tabMenuItemFile[0] = new JMenuItem(
-				"<html>Nouveau...&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;<i>Ctrl+N</i></html>");
-		tabMenuItemFile[0].addActionListener(this);
-		menuFichier.add(tabMenuItemFile[0]);
-
-		// MenuItem - Ouvrir
-		tabMenuItemFile[1] = new JMenuItem(
-				"<html>Ouvrir...&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;<i>Ctrl+O</i></html>");
-		tabMenuItemFile[1].addActionListener(this);
-		menuFichier.add(tabMenuItemFile[1]);
-
-		// Separator
-		menuFichier.addSeparator();
-
-		// MenuItem - Enregistrer
-		tabMenuItemFile[2] = new JMenuItem(
-				"<html>Enregister&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;<i>Ctrl+S</i></html>");
-		tabMenuItemFile[2].addActionListener(this);
-		menuFichier.add(tabMenuItemFile[2]);
-
-		// MenuItem - Enregistrer sous
-		tabMenuItemFile[3] = new JMenuItem("<html>Enregister sous...&emsp;<i>Ctrl+Maj+S</i></html>");
-		tabMenuItemFile[3].addActionListener(this);
-		menuFichier.add(tabMenuItemFile[3]);
-
-		// Separator
-		menuFichier.addSeparator();
-
-		// MenuItem - Imprimer
-		tabMenuItemFile[4] = new JMenuItem(
-				"<html>Imprimer&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+P</i></html>");
-		tabMenuItemFile[4].addActionListener(this);
-		menuFichier.add(tabMenuItemFile[4]);
-
-		// Separator
-		menuFichier.addSeparator();
-
-		// MenuItem - Quitter
-		tabMenuItemFile[5] = new JMenuItem("<html>Quitter</html>");
-		tabMenuItemFile[5].addActionListener(this);
-		menuFichier.add(tabMenuItemFile[5]);
-
-		// Add menuFichier to this frame
-		menuBarMain.add(menuFichier);
-
-		menuEdition = new JMenu("Edition");
-
-		// MenuItem - Annuler
-		tabMenuItemEdition[0] = new JMenuItem(
-				"<html>Annuler&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;&thinsp;<i>Ctrl+Z</i></html>");
-		tabMenuItemEdition[0].addActionListener(this);
-		menuEdition.add(tabMenuItemEdition[0]);
-
-		// MenuItem - Rï¿½pï¿½ter
-		tabMenuItemEdition[1] = new JMenuItem(
-				"<html>Rï¿½pï¿½ter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
-		tabMenuItemEdition[1].addActionListener(this);
-		menuEdition.add(tabMenuItemEdition[1]);
-
-		// Separator
-		menuEdition.addSeparator();
-
-		// MenuItem - Couper
-		tabMenuItemEdition[2] = new JMenuItem("<html>Couper&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<i>Ctrl+X</i></html>");
-		tabMenuItemEdition[2].addActionListener(this);
-		menuEdition.add(tabMenuItemEdition[2]);
-
-		// MenuItem - Copier
-		tabMenuItemEdition[3] = new JMenuItem(
-				"<html>Copier&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;<i>Ctrl+C</i></html>");
-		tabMenuItemEdition[3].addActionListener(this);
-		menuEdition.add(tabMenuItemEdition[3]);
-
-		// MenuItem - Coller
-		tabMenuItemEdition[4] = new JMenuItem(
-				"<html>Coller&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;<i>Ctrl+V</i></html>");
-		tabMenuItemEdition[4].addActionListener(this);
-		menuEdition.add(tabMenuItemEdition[4]);
-
-		// Separator
-		menuEdition.addSeparator();
-
-		// MenuItem - Selectionner tout
-		tabMenuItemEdition[5] = new JMenuItem("<html>Sï¿½lectionner tout&emsp;&nbsp;&nbsp;<i>Ctrl+A</i></html>");
-		tabMenuItemEdition[5].addActionListener(this);
-		menuEdition.add(tabMenuItemEdition[5]);
-
-		// Add menuEdition to this frame
-		menuBarMain.add(menuEdition);
-
-		// Export
-		menuExport = new JMenu("Exporter");
-		// Menu Item - Image
-		tabMenuItemExport[0] = new JMenuItem("Image   ");
-		tabMenuItemExport[0].addActionListener(this);
-		menuExport.add(tabMenuItemExport[0]);
-		// MenuItem - PDF
-		tabMenuItemExport[1] = new JMenuItem("Fichier PDF  ");
-		tabMenuItemExport[1].addActionListener(this);
-		menuExport.add(tabMenuItemExport[1]);
-
-		menuBarMain.add(menuExport);
-
-		menuGraph = new JMenu("Graph");
-
-		// MenuItem - Ajouter un sommet
-		tabMenuItemGraph[0] = new JMenuItem("<html>Ajouter un sommet</html>");
-		tabMenuItemGraph[0].addActionListener(this);
-		menuGraph.add(tabMenuItemGraph[0]);
-
-		// MenuItem - Modifier un sommet
-		tabMenuItemGraph[1] = new JMenuItem("<html>Modifier un sommet</html>");
-		tabMenuItemGraph[1].addActionListener(this);
-		menuGraph.add(tabMenuItemGraph[1]);
-
-		// MenuItem - Supprimer un sommet
-		tabMenuItemGraph[2] = new JMenuItem("<html>Supprimer un sommet</html>");
-		tabMenuItemGraph[2].addActionListener(this);
-		menuGraph.add(tabMenuItemGraph[2]);
-
-		// Separator
-		menuGraph.addSeparator();
-
-		// MenuItem - Ajouter un arc
-		tabMenuItemGraph[3] = new JMenuItem("<html>Ajouter un arc</html>");
-		tabMenuItemGraph[3].addActionListener(this);
-		menuGraph.add(tabMenuItemGraph[3]);
-
-		// MenuItem - Ajouter un arc
-		tabMenuItemGraph[4] = new JMenuItem("<html>Supprimer un arc</html>");
-		tabMenuItemGraph[4].addActionListener(this);
-		menuGraph.add(tabMenuItemGraph[4]);
-
-		// Add menuGraph to this frame
-		menuBarMain.add(menuGraph);
-
-		menuAide = new JMenu("Aide");
-
-		// MenuItem - A Propos
-		tabMenuItemAide[0] = new JMenuItem("<html>&Agrave; propos</html>");
-		tabMenuItemAide[0].addActionListener(this);
-		menuAide.add(tabMenuItemAide[0]);
-
-		// Add menuAide to this frame
-		menuBarMain.add(menuAide);
-
-		menuBarMain.setPreferredSize(new Dimension(250, 20));
-		setJMenuBar(menuBarMain);
-		// -----------//
-
-		// ---List of "Object" --//
-		slObject = new SwitchList(this);
-		slObject.setBorder(BorderFactory.createLineBorder(Color.black));
-		add(slObject, BorderLayout.WEST);
-		slObject.switchState();
-		// ----------------------//
-
-		// ---------Graph--------//
-		pGraph = new GraphPanel(this);
-		jscrPanel = new JScrollPane(pGraph);
-		add(jscrPanel, BorderLayout.CENTER);
-		// ----------------------//
-
-		// -------ButtonBar------//
-		pButton = new JPanel();
-		pButton.setBackground(Color.WHITE);
-		pButton.setLayout(new FlowLayout(FlowLayout.LEFT));
-		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
-
-		// New file
-		buttonNew = new JButton("Fichier");
-		buttonNew.addActionListener(this);
-		pButton.add(buttonNew);
-		// Open file
-		buttonOpen = new JButton("Ouvrir");
-		buttonOpen.addActionListener(this);
-		pButton.add(buttonOpen);
-		// Save file
-		buttonSave = new JButton("Enregistrer");
-		buttonSave.addActionListener(this);
-		pButton.add(buttonSave);
-		// Zoom in
-		buttonZoomIn = new JButton("+");
-		buttonZoomIn.addActionListener(this);
-		pButton.add(buttonZoomIn);
-		// Zoom out
-		buttonZoomOut = new JButton("-");
-		buttonZoomOut.addActionListener(this);
-		pButton.add(buttonZoomOut);
-
+		
 		// Instancitation du menu contextuel et de ses Ã©lÃ©ments
 		popMenu = new JPopupMenu();
 
@@ -525,8 +311,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		popUpDeleteArc = new JMenuItem("Supprimer un arc");
 		popUpDeleteArc.addActionListener(this);
 		popMenu.add(popUpDeleteArc);
-
-		add(pButton, BorderLayout.NORTH);
 		// ----------------------//
 
 		// **---------------------------**//
@@ -536,7 +320,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pGraph.setPreferredSize(
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
-
+		this.addKeyListener(pGraph);
 		setVisible(true);
 	}
 
@@ -598,41 +382,48 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			new Form(this, "Ajouter un sommet", true, ctrl);
 			// Modifier un sommet
 		} else if (e.getSource() == tabMenuItemGraph[1]) {
-			new Form(this, "Modifier un sommet", true, ctrl);
+			if(pGraph.getAlSelected().size() > 1 ) {
+				showError("Veuilliez sélectionné un seul sommet.");
+			} else if (pGraph.getAlSelected().size() == 0) {
+				showError("Veuilliez sélectionné un sommet.");
+			} else {
+				new Form(this, "Modifier un sommet", true, ctrl);
+			}
 			// Supprimer un sommet
 		} else if (e.getSource() == tabMenuItemGraph[2]) {
-			Vertex tmpVertex = null;
-			for (Vertex v : ctrl.getGraph().getAlVertex()) {
-				if (v.getName().equals(getStrSelected())) {
-					tmpVertex = v;
+			for(String s : pGraph.getAlSelected()) {
+				Vertex tmpVertex = null;
+				for (Vertex v : ctrl.getGraph().getAlVertex()) {
+					if (v.getName().equals(s)) {
+						tmpVertex = v;
+					}
 				}
+				ctrl.getGraph().deleteVertex(tmpVertex);
+				HCI.hmVertex.remove(s);
 			}
-			ctrl.getGraph().deleteVertex(tmpVertex);
-			HCI.hmVertex.remove(getStrSelected());
-			setStrSelected(null);
+			setAlSelected(new ArrayList<String>());
 			refresh();
-
 			// Ajouter un arc
 		} else if (e.getSource() == tabMenuItemGraph[3]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
 
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[4]) {
-			System.out.println((getStrSelected().matches("[?{5}-{6}?{6}])")));
-
-			if (getStrSelected().matches("[?{5}-{6}?{6}])")) {
-				String vName = getStrSelected().substring(0, 5);
-				vName = vName.replaceAll(" ", "");
-
-				String vBisName = getStrSelected().substring(12);
-				vBisName = vBisName.replaceAll(" ", "");
-
-				System.out.println(vName + vBisName);
-
-				ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));
-				setStrSelected(null);
-				refresh();
+			for(String s : pGraph.getAlSelected()) {
+				if (s.matches("[?{5}-{6}?{6}])")) {
+					String vName = s.substring(0, 5);
+					vName = vName.replaceAll(" ", "");
+					
+					String vBisName = s.substring(12);
+					vBisName = vBisName.replaceAll(" ", "");
+					
+					System.out.println(vName + vBisName);
+					
+				    ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));		
+				}
 			}
+			setAlSelected(new ArrayList<String>());
+			refresh();
 		}
 
 		// AIDE
@@ -744,12 +535,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		repaint();
 	}
 
-	public String getStrSelected() {
-		return pGraph.getStrSelected();
+	public ArrayList<String> getAlSelected() {
+		return pGraph.getAlSelected();
+	}
+	
+	public HashMap<String,Point> getHmVertex() {
+		return hmVertex;
 	}
 
-	public void setStrSelected(String s) {
-		pGraph.setStrSelected(s);
+	public void setAlSelected(ArrayList<String> s) {
+		pGraph.setAlSelected(s);
 	}
 
 	public Graph getGraph() {
@@ -767,49 +562,17 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getSource() == slObject.getListOfObject()) {
-			pGraph.setStrSelected((String) slObject.getListOfObject().getSelectedValue());
+			pGraph.getAlSelected().clear();
+			for( String s : slObject.getListOfObject().getSelectedValuesList() ) {
+				pGraph.getAlSelected().add(s);
+			}
 			repaint();
 		}
 	}
 
-	public void setError(String strError) {
+	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
-	/* Gestion du clic droit */
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-		int mod = e.getModifiers();
-
-		if ((mod & InputEvent.BUTTON3_MASK) != 0)
-			popMenu.show(this, e.getX() + 110, e.getY() + 90);
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* Gestion des clicks de la popuup */
+	public JPopupMenu getPopMenu() { return this.popMenu;}
 }
