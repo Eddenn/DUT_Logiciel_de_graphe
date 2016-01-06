@@ -126,15 +126,9 @@ public class Controller implements IControlable {
 	}
 
 	public void undo() {
-<<<<<<< HEAD
 		HashMap<String, ArrayList<String>> hmAdjacency = graph.generateAdjacencyList();
 		System.out.println(hmAdjacency);
 		// for (String key : hmAdjacency.)
-=======
-		if (cptModif > 0) {
-			
-		}
->>>>>>> e6b9bd56baf7ead2bec4f545c8a5e6b62cd50704
 	}
 
 	public void redo() {
@@ -148,8 +142,7 @@ public class Controller implements IControlable {
 	public Graph getGraph() {
 		return graph;
 	}
-<<<<<<< HEAD
-
+	
 	@Override
 	public char[] listeSommet() {
 		return graph.getListVertex();
@@ -163,7 +156,7 @@ public class Controller implements IControlable {
 	@Override
 	public void majIHM() {
 		hci.refresh();
-=======
+	}
 	
 	public void provSave() {
 		saveVertexList.add(graph.getFormattedListAlString());
@@ -178,6 +171,6 @@ public class Controller implements IControlable {
 		saveCoordList.add(tabPoint);
 		
 		cptModif++;
->>>>>>> e6b9bd56baf7ead2bec4f545c8a5e6b62cd50704
+
 	}
 }
