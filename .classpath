@@ -3,32 +3,17 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="src" path="images"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/itextpdf-5.5.8.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/itextpdf-5.5.8-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/itextpdf-5.5.8-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/itext-pdfa-5.5.8.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/itext-pdfa-5.5.8-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/itext-pdfa-5.5.8-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/itext-xtra-5.5.8.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/itext-xtra-5.5.8-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/itext-xtra-5.5.8-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/xmlworker-5.5.8.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/xmlworker-5.5.8-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Mes Documents/Documents/Cours - DUT/Librairie_JAVA/itext-5.5.8/xmlworker-5.5.8-sources.jar"/>
-=======
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/itextpdf-5.5.8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/itextpdf-5.5.8-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/itextpdf-5.5.8-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/itext-pdfa-5.5.8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/itext-pdfa-5.5.8-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/itext-pdfa-5.5.8-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/itext-xtra-5.5.8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/itext-xtra-5.5.8-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/itext-xtra-5.5.8-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/xmlworker-5.5.8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/xmlworker-5.5.8-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Utilisateur/Downloads/itext-5.5.8/xmlworker-5.5.8-sources.jar"/>
->>>>>>> 0f7efe56f03c902ef7652e5beb536eb8f57b56ba
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/itextpdf-5.5.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/itextpdf-5.5.8-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/itextpdf-5.5.8-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/itext-pdfa-5.5.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/itext-pdfa-5.5.8-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/itext-pdfa-5.5.8-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/itext-xtra-5.5.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/itext-xtra-5.5.8-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/itext-xtra-5.5.8-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/xmlworker-5.5.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/xmlworker-5.5.8-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Guillaume/Documents/Projet/librairy/itext-5.5.8/xmlworker-5.5.8-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
