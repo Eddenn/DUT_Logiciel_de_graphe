@@ -811,5 +811,5 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	}
 
-	/* Gestion des clicks de la popuuuup */
+	/* Gestion des clicks de la popuup */
 }
