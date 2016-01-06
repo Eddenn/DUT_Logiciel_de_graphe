@@ -210,7 +210,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 							bMirroir = true;
 						}
 					}
-					if(bMirroir) {
+					if(bMirroir && hci.getGraph().isDirected()) {
 						/*-----Cacul des points M et N pour placer les deux arcs par rapport à pCenter1*/
 						int d = 0;
 						int h = (int) (iWidthEdge/3*iZoom);
@@ -246,11 +246,8 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				        xn2 = x;
 				        /*-----------------------------------------------------------------------------*/
 				        
-				        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);
-				        if(  hci.getGraph().isDirected() ) {	
-							g2d.setColor(Color.GRAY);
-							drawArrow(g2d, (int)xm1, (int)ym1, (int)xn2, (int)yn2, (int)(22*iZoom), (int)(10*iZoom));
-						}
+				        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);	
+						drawArrow(g2d, (int)xm1, (int)ym1, (int)xn2, (int)yn2, (int)(22*iZoom), (int)(10*iZoom));
 						if(  hci.getGraph().isValued() ) {
 							g2d.setColor(Color.BLACK);
 							g2d.drawString( ""+arc.getIValue() , (int)(xm1+xn2)/2 , (int)(ym1+yn2)/2 );
