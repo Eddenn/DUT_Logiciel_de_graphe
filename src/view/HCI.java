@@ -254,7 +254,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		// New file
-		buttonNew = new JButton("Fichier");
+		buttonNew = new JButton("Nouveau");
 		buttonNew.addActionListener(this);
 		pButton.add(buttonNew);
 		// Open file
