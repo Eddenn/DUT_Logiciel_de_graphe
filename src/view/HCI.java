@@ -330,6 +330,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			this.dispose();
 
 			// EDITION
+		} else if (e.getSource() == tabMenuItemEdition[0]) {
+				ctrl.undo();
+			
 			// EXPORTER
 			// Image
 		} else if (e.getSource() == tabMenuItemExport[0]) {
