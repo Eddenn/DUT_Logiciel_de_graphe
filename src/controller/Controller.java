@@ -40,13 +40,13 @@ public class Controller {
 	}
 
 	public void loadFile(String strFileName) {
-		graph = ReaderMatrix.readMatrix(strFileName);
-		
+		graph = Reader.read(strFileName);
+
 		if (graph == null) {
-			graph = new Graph(true,true);
+			graph = new Graph(true, true);
 			hci.setError("Format du fichier invalide.");
 		}
-		
+
 		hci.initHmVertex();
 		hci.refresh();
 	}
@@ -58,10 +58,10 @@ public class Controller {
 	}
 
 	public boolean addVertex(String strVertexName) {
-		boolean bExist=false;
+		boolean bExist = false;
 		if (graph.getVertex(strVertexName) != null) {
 			hci.setError("Un sommet avec le nom " + strVertexName + " existe déjà.");
-			bExist=true;
+			bExist = true;
 		} else {
 			graph.addVertex(strVertexName);
 			hci.addVertex(strVertexName);
@@ -70,7 +70,7 @@ public class Controller {
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {
-		if (checkArcAlreadyExist(v,vBis)) {
+		if (checkArcAlreadyExist(v, vBis)) {
 			graph.addArc(v, vBis);
 		} else {
 			hci.setError("L'arc existe déjà.");
@@ -78,13 +78,13 @@ public class Controller {
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
-		if (checkArcAlreadyExist(v,vBis)) {
+		if (checkArcAlreadyExist(v, vBis)) {
 			graph.addArc(v, vBis, iValue);
 		} else {
 			hci.setError("L'arc existe déjà.");
 		}
 	}
-	
+
 	public void delArc(Vertex v, Vertex vBis) {
 		for (int i = 0; i < v.getAlArcs().size(); i++) {
 			if (v.getAlArcs().get(i).getVertex() == vBis)
@@ -98,10 +98,10 @@ public class Controller {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	public static void main(String[] args) {
 		new Controller();
 	}

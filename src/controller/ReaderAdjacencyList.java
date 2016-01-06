@@ -1,47 +1,13 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import model.Graph;
 import model.Vertex;
 
 public class ReaderAdjacencyList extends Reader {
-	public static Graph ReadAdjacencyList(String strFile) {
-		BufferedReader br = null;
-
-		try {
-			br = new BufferedReader(new FileReader(strFile));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		@SuppressWarnings("resource")
-		Scanner sc = new Scanner(br);
-
-		boolean bIsDirected = false;
-		boolean bIsValued = false;
-
-		ArrayList<String> alStr = new ArrayList<String>();
-
-		while (sc.hasNextLine()) {
-			alStr.add(sc.nextLine());
-		}
-
-		try {
-			br.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		bIsDirected = checkDirection(alStr.get(0));
-		bIsValued = checkValue(alStr.get(1));
+	public static Graph ReadAdjacencyList(ArrayList<String> alStr) {
+		boolean bIsDirected = checkDirection(alStr.get(0));
+		boolean bIsValued = checkValue(alStr.get(1));
 
 		alStr.remove(0);
 		alStr.remove(0);
@@ -52,6 +18,7 @@ public class ReaderAdjacencyList extends Reader {
 
 		try {
 			Graph graph = new Graph(bIsDirected, bIsValued);
+			
 			String[] tVertexName = new String[alStr.size()];
 
 			for (int i = 0; i < alStr.size(); i++) {
@@ -60,7 +27,11 @@ public class ReaderAdjacencyList extends Reader {
 				graph.addVertex(tStr[0]);
 				tVertexName[i] = tStr[0];
 			}
-
+			
+			for (String str : alStr) {
+				System.out.println(str);
+			}
+		
 			if (bIsDirected && bIsValued) {
 				return createDirectedValuedGraph(graph, alStr, tVertexName);
 			}
@@ -128,7 +99,6 @@ public class ReaderAdjacencyList extends Reader {
 					Vertex vBis = graph.getVertex(strVertexValue);
 
 					graph.addArc(v, vBis);
-
 				}
 			}
 		}

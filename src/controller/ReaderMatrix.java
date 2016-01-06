@@ -11,46 +11,14 @@ import model.Graph;
 import model.Vertex;
 
 public class ReaderMatrix extends Reader {
-	public static Graph readMatrix(String strFile) {
-		BufferedReader br = null;
+	public static Graph readMatrix(ArrayList<String> alStr) {
+		boolean bIsDirected = checkDirection(alStr.get(0));
+		boolean bIsValued = checkValue(alStr.get(1));
+
+		alStr.remove(0);
+		alStr.remove(0);
 
 		try {
-			br = new BufferedReader(new FileReader(strFile));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		@SuppressWarnings("resource")
-		Scanner sc = new Scanner(br);
-
-		boolean bIsDirected = false;
-		boolean bIsValuated = false;
-
-		ArrayList<String> alStr = new ArrayList<String>();
-
-		while (sc.hasNextLine()) {
-			alStr.add(sc.nextLine());
-		}
-
-		try {
-			br.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			if (alStr.size() < 4) {
-				return null;
-			}
-
-			bIsDirected = checkDirection(alStr.get(0));
-			bIsValuated = checkValue(alStr.get(1));
-
-			alStr.remove(0);
-			alStr.remove(0);
-
 			for (int i = 0; i < alStr.size() && alStr.get(i).equals(""); i++) {
 				alStr.remove(i);
 			}
@@ -65,15 +33,15 @@ public class ReaderMatrix extends Reader {
 				}
 			}
 
-			if (bIsDirected && bIsValuated) {
+			if (bIsDirected && bIsValued) {
 				return createDirectedValuatedGraph(tMatrix);
 			}
 
-			if (bIsDirected && !bIsValuated) {
+			if (bIsDirected && !bIsValued) {
 				return createDirectedNotValuatedGraph(tMatrix);
 			}
 
-			if (!bIsDirected && bIsValuated) {
+			if (!bIsDirected && bIsValued) {
 				return createNotDirectedValuatedGraph(tMatrix);
 			}
 
