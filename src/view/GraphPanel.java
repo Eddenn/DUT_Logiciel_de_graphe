@@ -210,7 +210,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 							bMirroir = true;
 						}
 					}
-					if(bMirroir) {
+					if(bMirroir && hci.getGraph().isDirected()) {
 						/*-----Cacul des points M et N pour placer les deux arcs par rapport à pCenter1*/
 						int d = 0;
 						int h = (int) (iWidthEdge/3*iZoom);
@@ -246,11 +246,8 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				        xn2 = x;
 				        /*-----------------------------------------------------------------------------*/
 				        
-				        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);
-				        if(  hci.getGraph().isDirected() ) {	
-							g2d.setColor(Color.GRAY);
-							drawArrow(g2d, (int)xm1, (int)ym1, (int)xn2, (int)yn2, (int)(22*iZoom), (int)(10*iZoom));
-						}
+				        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);	
+						drawArrow(g2d, (int)xm1, (int)ym1, (int)xn2, (int)yn2, (int)(22*iZoom), (int)(10*iZoom));
 						if(  hci.getGraph().isValued() ) {
 							g2d.setColor(Color.BLACK);
 							g2d.drawString( ""+arc.getIValue() , (int)(xm1+xn2)/2 , (int)(ym1+yn2)/2 );
@@ -299,8 +296,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2))) {
 					// Find the key of this coordinate
 					for(String s : HCI.hmVertex.keySet()) {
-						if (HCI.hmVertex.get(s) == c)
+						if (HCI.hmVertex.get(s) == c) {
 							strSelected = s;
+						}
 					}
 				}
 			}
@@ -391,7 +389,20 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {}
+	public void mouseMoved(MouseEvent e) {
+		// Permet d'afficher les coordonnées du point dès que la souris passe dessus
+		double centerX, centerY;
+		for (Point c : HCI.hmVertex.values()) {
+			centerX = (c.getX()+iWidthEdge/2)*iZoom;
+			centerY = (c.getY()+iHeightEdge/2)*iZoom;
+			if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2)))
+				hci.getLabelCoord().setText("X : " + centerX + " Y : " + centerY);
+			else {
+				if (! hci.getLabelCoord().equals(""))
+					hci.getLabelCoord().setText("");
+			}
+		}	
+	}
 	
 	public void refreshPreferedSize() {
 		int xMax = 0;
