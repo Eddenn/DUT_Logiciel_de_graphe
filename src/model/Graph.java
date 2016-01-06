@@ -168,6 +168,16 @@ public class Graph {
 	public int[][] getTMatrix() {
 		return this.tMatrix;
 	}
+	
+	public char[] getListVertex() {
+		char[] tChar = new char[alVertex.size()];
+		
+		for (int i = 0; i < alVertex.size(); i++) {
+			tChar[i] = alVertex.get(i).getName().charAt(0);
+		}
+		
+		return tChar;
+	}
 
 	public ArrayList<Vertex> getAlVertex() {
 		return this.alVertex;
@@ -185,6 +195,10 @@ public class Graph {
 		}
 
 		return null;
+	}
+	
+	public void setValued(boolean bValued) {
+		this.bValued = bValued;
 	}
 
 	// Display

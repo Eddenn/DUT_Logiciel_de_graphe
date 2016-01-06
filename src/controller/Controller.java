@@ -12,7 +12,7 @@ import model.Graph;
 import model.Vertex;
 import view.HCI;
 
-public class Controller {
+public class Controller implements IControlable {
 	private HCI hci;
 	private Graph graph;
 	private ArrayList<String> saveVertexList;
@@ -117,21 +117,17 @@ public class Controller {
 		}
 
 		return true;
-	}<<<<<<<HEAD
-
-	=======
+	}
 
 	public void undo() {
 		HashMap<String, ArrayList<String>> hmAdjacency = graph.generateAdjacencyList();
 		System.out.println(hmAdjacency);
-		for (String key : hmAdjacency.)
+		// for (String key : hmAdjacency.)
 	}
 
 	public void redo() {
 
 	}
-
-	>>>>>>>dbe59d79167dcc64767596d36ac62e02618989aa
 
 	public static void main(String[] args) {
 		new Controller();
@@ -139,5 +135,20 @@ public class Controller {
 
 	public Graph getGraph() {
 		return graph;
+	}
+
+	@Override
+	public char[] listeSommet() {
+		return graph.getListVertex();
+	}
+
+	@Override
+	public int[][] getMatrice() {
+		return graph.getTMatrix();
+	}
+
+	@Override
+	public void majIHM() {
+		hci.refresh();
 	}
 }
