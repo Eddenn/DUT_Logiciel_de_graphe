@@ -252,7 +252,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
-		lCoord = new JLabel(" ");
+		lCoord = new JLabel("");
 		panelCenter.add(jscrPanel);
 		panelCenter.add(lCoord, "South");
 		add(panelCenter, BorderLayout.CENTER);
@@ -582,9 +582,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			this.dispose();
 
 			// EDITION
-		} else if (e.getSource() == tabMenuItemEdition[0]) {
-				ctrl.undo();
-			
 			// EXPORTER
 			// Image
 		} else if (e.getSource() == tabMenuItemExport[0]) {

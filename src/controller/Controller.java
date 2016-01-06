@@ -25,11 +25,11 @@ public class Controller {
 
 		// Initialize the frame
 		hci = new HCI(this);
-		
+
 		// Initialize the arrrayList which permit to implement the undo and redo
 		saveVertexList = new ArrayList<ArrayList<String>>();
 		saveCoordList = new ArrayList<Point[]>();
-		cptModif= 0;
+		cptModif = 0;
 	}
 
 	public void saveFile(String strFileName) {
@@ -52,13 +52,13 @@ public class Controller {
 	}
 
 	public void loadFile(String strFileName) {
-		graph = ReaderMatrix.readMatrix(strFileName);
-		
+		graph = Reader.read(strFileName);
+
 		if (graph == null) {
-			graph = new Graph(true,true);
+			graph = new Graph(true, true);
 			hci.setError("Format du fichier invalide.");
 		}
-		
+
 		hci.initHmVertex();
 		hci.refresh();
 	}
@@ -70,28 +70,37 @@ public class Controller {
 	}
 
 	public boolean addVertex(String strVertexName) {
+<<<<<<< HEAD
 		provSave();
 		saveVertexList.add(graph.getFormattedListAlString());
 		cptModif++;
 		
 		boolean bExist=false;
+=======
+		boolean bExist = false;
+
+>>>>>>> c27c84337f1f962b75f00c9ee285ad35d8f8dfe2
 		if (graph.getVertex(strVertexName) != null) {
 			hci.setError("Un sommet avec le nom " + strVertexName + " existe déjà.");
-			bExist=true;
-		} 
-		else if (strVertexName.replaceAll(" ", "").equals("")) {
-			hci.setError("Le nom de votre sommet ne peut pas être vide");	
-			bExist=true;
+			bExist = true;
+		} else if (strVertexName.replaceAll(" ", "").equals("")) {
+			hci.setError("Le nom de votre sommet ne peut pas être vide");
+			bExist = true;
 		} else {
 			graph.addVertex(strVertexName);
 			hci.addVertex(strVertexName);
 		}
+
 		return bExist;
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {
+<<<<<<< HEAD
 		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
+=======
+		if (checkArcAlreadyExist(v, vBis)) {
+>>>>>>> c27c84337f1f962b75f00c9ee285ad35d8f8dfe2
 			graph.addArc(v, vBis);
 		} else {
 			hci.setError("L'arc existe déjà.");
@@ -99,14 +108,18 @@ public class Controller {
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
+<<<<<<< HEAD
 		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
+=======
+		if (checkArcAlreadyExist(v, vBis)) {
+>>>>>>> c27c84337f1f962b75f00c9ee285ad35d8f8dfe2
 			graph.addArc(v, vBis, iValue);
 		} else {
 			hci.setError("L'arc existe déjà.");
 		}
 	}
-	
+
 	public void delArc(Vertex v, Vertex vBis) {
 		provSave();
 		for (int i = 0; i < v.getAlArcs().size(); i++) {
@@ -121,20 +134,24 @@ public class Controller {
 				return false;
 			}
 		}
-		
+
 		return true;
-	}
-	
+	}<<<<<<<HEAD
+
+	=======
+
 	public void undo() {
 		if (cptModif > 0) {
 			
 		}
 	}
-	
+
 	public void redo() {
-		
+
 	}
-	
+
+	>>>>>>>dbe59d79167dcc64767596d36ac62e02618989aa
+
 	public static void main(String[] args) {
 		new Controller();
 	}
