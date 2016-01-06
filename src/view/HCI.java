@@ -29,7 +29,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private Graph graph;
 
 	// Data of Vertex
-	protected HashMap<String, Point> hmVertex;
+	protected static HashMap<String, Point> hmVertex;
 	int xInitialize = 0, yInitialize = 0; // Used for the preferedsize of pGraph
 
 	// Menu bar of this frame
