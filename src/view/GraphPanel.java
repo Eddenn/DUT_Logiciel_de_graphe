@@ -8,24 +8,24 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-
-import com.itextpdf.text.log.SysoCounter;
 
 import model.Arc;
 import model.Vertex;
 
 @SuppressWarnings("serial")
-public class GraphPanel extends JPanel implements MouseListener,MouseMotionListener {
+public class GraphPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener {
 
-	private String strSelected;	//Selected Edge
+	private ArrayList<String> alSelected;	//Selected Edge or Arc
+	private boolean bCtrlPressed;
 	private String strEdgeMove; //For moving Edge
 	private double iWidthEdge;	//Largeur
 	private double iHeightEdge; //Hauteur
@@ -35,11 +35,12 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public GraphPanel(HCI hci) {
 		super();
 		this.hci = hci;
+		this.bCtrlPressed = false;
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.iZoom = 1.0;
 		this.iHeightEdge = 50*iZoom;
 		this.iWidthEdge = 50*iZoom;
-		this.strSelected = null;
+		this.alSelected = new ArrayList<String>();
 		this.strEdgeMove = null;
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -57,14 +58,16 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		drawArcs(g2d);
 		drawEdges(g2d);
 		for(Vertex v : hci.getGraph().getAlVertex()) {
-			if(v.getName().equals(strSelected)) {
-				highlightEdge(g2d, v);
+			for(String s : alSelected) {
+				if(v.getName().equals(s)) {
+					highlightEdge(g2d, v);
+				}
 			}
 		}
 	}
 	
-	public String getStrSelected() 		 {return this.strSelected;}
-	public void setStrSelected(String s) {this.strSelected = s;}
+	public ArrayList<String> getAlSelected() 	   {return this.alSelected;}
+	public void setAlSelected(ArrayList<String> s) {this.alSelected = s;}
 	
 	public Point findPoint(Vertex v) {
 		return HCI.hmVertex.get(v.getName());
@@ -285,7 +288,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {		
+	public void mouseClicked(MouseEvent e) {	
 		if(e.getClickCount() > 1) {
 			double centerX, centerY;
 			for (Point c : HCI.hmVertex.values()) {
@@ -297,7 +300,8 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 					// Find the key of this coordinate
 					for(String s : HCI.hmVertex.keySet()) {
 						if (HCI.hmVertex.get(s) == c) {
-							strSelected = s;
+							if(!bCtrlPressed) alSelected.clear();
+							if(!alSelected.contains(s))	alSelected.add(s);
 						}
 					}
 				}
@@ -390,6 +394,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		hci.requestFocus();
 		// Permet d'afficher les coordonnées du point dès que la souris passe dessus
 		double centerX, centerY;
 		for (Point c : HCI.hmVertex.values()) {
@@ -415,4 +420,22 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		setPreferredSize(new Dimension((int)((xMax+getiWidthEdge())*iZoom),(int)((yMax+getiHeightEdge())*iZoom)));
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode()==17) bCtrlPressed = true;
+		
+		if(e.getModifiersEx()==128 && e.getKeyCode()==67 ) {
+			System.out.println("CTRL+C");
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode()==17) bCtrlPressed = false;
+	}
+		
+	@Override
+	public void keyTyped(KeyEvent e) {}
 }

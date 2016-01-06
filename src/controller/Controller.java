@@ -44,7 +44,7 @@ public class Controller {
 		
 		if (graph == null) {
 			graph = new Graph(true,true);
-			hci.setError("Format du fichier invalide.");
+			hci.showError("Format du fichier invalide.");
 		}
 		
 		hci.initHmVertex();
@@ -60,7 +60,7 @@ public class Controller {
 	public boolean addVertex(String strVertexName) {
 		boolean bExist=false;
 		if (graph.getVertex(strVertexName) != null) {
-			hci.setError("Un sommet avec le nom " + strVertexName + " existe déjà.");
+			hci.showError("Un sommet avec le nom " + strVertexName + " existe déjà.");
 			bExist=true;
 		} else {
 			graph.addVertex(strVertexName);
@@ -73,7 +73,7 @@ public class Controller {
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis);
 		} else {
-			hci.setError("L'arc existe déjà.");
+			hci.showError("L'arc existe déjà.");
 		}
 	}
 
@@ -81,7 +81,7 @@ public class Controller {
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis, iValue);
 		} else {
-			hci.setError("L'arc existe déjà.");
+			hci.showError("L'arc existe déjà.");
 		}
 	}
 	
