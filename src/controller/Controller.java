@@ -2,6 +2,10 @@ package controller;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.itextpdf.awt.geom.Point;
 
 import model.Arc;
 import model.Graph;
@@ -11,6 +15,9 @@ import view.HCI;
 public class Controller {
 	private HCI hci;
 	private Graph graph;
+	private ArrayList<String> saveVertexList;
+	private ArrayList<Point[]> saveCoordList;
+	private int cptModif;
 
 	public Controller() {
 		// Create graph
@@ -18,6 +25,11 @@ public class Controller {
 
 		// Initialize the frame
 		hci = new HCI(this);
+
+		// Initialize the arrrayList which permit to implement the undo and redo
+		saveVertexList = new ArrayList<String>();
+		saveCoordList = new ArrayList<Point[]>();
+		cptModif = 0;
 	}
 
 	public void saveFile(String strFileName) {
@@ -59,13 +71,18 @@ public class Controller {
 
 	public boolean addVertex(String strVertexName) {
 		boolean bExist = false;
+
 		if (graph.getVertex(strVertexName) != null) {
 			hci.setError("Un sommet avec le nom " + strVertexName + " existe déjà.");
+			bExist = true;
+		} else if (strVertexName.replaceAll(" ", "").equals("")) {
+			hci.setError("Le nom de votre sommet ne peut pas être vide");
 			bExist = true;
 		} else {
 			graph.addVertex(strVertexName);
 			hci.addVertex(strVertexName);
 		}
+
 		return bExist;
 	}
 
@@ -100,7 +117,21 @@ public class Controller {
 		}
 
 		return true;
+	}<<<<<<<HEAD
+
+	=======
+
+	public void undo() {
+		HashMap<String, ArrayList<String>> hmAdjacency = graph.generateAdjacencyList();
+		System.out.println(hmAdjacency);
+		for (String key : hmAdjacency.)
 	}
+
+	public void redo() {
+
+	}
+
+	>>>>>>>dbe59d79167dcc64767596d36ac62e02618989aa
 
 	public static void main(String[] args) {
 		new Controller();
