@@ -57,13 +57,16 @@ public class Controller {
 		hci.refresh();
 	}
 
-	public void addVertex(String strVertexName) {
+	public boolean addVertex(String strVertexName) {
+		boolean bExist=false;
 		if (graph.getVertex(strVertexName) != null) {
 			hci.setError("Un sommet avec le nom " + strVertexName + " existe déjà.");
+			bExist=true;
 		} else {
 			graph.addVertex(strVertexName);
 			hci.addVertex(strVertexName);
 		}
+		return bExist;
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {

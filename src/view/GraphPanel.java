@@ -296,8 +296,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2))) {
 					// Find the key of this coordinate
 					for(String s : HCI.hmVertex.keySet()) {
-						if (HCI.hmVertex.get(s) == c)
+						if (HCI.hmVertex.get(s) == c) {
 							strSelected = s;
+						}
 					}
 				}
 			}
@@ -381,14 +382,29 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			if( e.getY()/(iZoom)-(iHeightEdge/2)>0 && e.getY()+(iHeightEdge/2*iZoom)<this.getHeight()) {
 				HCI.hmVertex.get(strEdgeMove).y =((int)(e.getY()/(iZoom)-(iHeightEdge/2)));
 			}
+			hci.getLabelCoord().setText("  X : " + (double) (HCI.hmVertex.get(strEdgeMove).x +25) + "       Y : " + (double)(HCI.hmVertex.get(strEdgeMove).y + 25));
 			repaint();
 			setCursor(new Cursor(Cursor.MOVE_CURSOR));
 		}
-
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {}
+	public void mouseMoved(MouseEvent e) {
+		// Permet d'afficher les coordonnées du point dès que la souris passe dessus
+		double centerX, centerY;
+		for (Point c : HCI.hmVertex.values()) {
+			centerX = (c.getX()+iWidthEdge/2)*iZoom;
+			centerY = (c.getY()+iHeightEdge/2)*iZoom;
+			if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2))) {
+				hci.getLabelCoord().setText("  X : " + centerX + "       Y : " + centerY);
+				break;
+			}
+			else {
+				if (! hci.getLabelCoord().getText().equals(" "))
+					hci.getLabelCoord().setText(" ");
+			}
+		}	
+	}
 	
 	public void refreshPreferedSize() {
 		int xMax = 0;
