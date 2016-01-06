@@ -319,7 +319,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		}else if (e.getSource()==tabMenuItemExport[1]){
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath() + ".pdf");
+				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath(), this);
 
 			// GRAPH
 			// Ajouter un sommet
@@ -414,7 +414,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			Dimension size = pGraph.getSize();
 			BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2 = image.createGraphics();
-			pGraph.paint(g2);
+			pGraph.printAll(g2);
 
 			try {
 				ImageIO.write(image, ext, new File(dial.getSelectedFile().getAbsolutePath() + "." + ext));
@@ -476,5 +476,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public void setError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public GraphPanel getGraphPanel() {
+		return this.pGraph;
 	}
 }
