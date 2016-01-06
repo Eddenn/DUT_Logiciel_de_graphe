@@ -262,7 +262,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	    
 	    //**---------------------------**//
 	    
-	    
 	    initHmVertex();
 	    
 	    pGraph.setPreferredSize(new Dimension((int)(600+pGraph.getiWidthEdge()),(int)(yInitialize+pGraph.getiHeightEdge())));
@@ -271,6 +270,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	public void initHmVertex() {
+		xInitialize = 0;
+		yInitialize = 0;
 		// Initialization of hmVertex
 		hmVertex = new HashMap<String, Point>();
 		for (Vertex v : ctrl.getGraph().getAlVertex()) {
@@ -346,8 +347,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[4]) {	
-			Arc tmpArc = null;
-			
 			System.out.println((getStrSelected().matches("[?{5}-{6}?{6}])")));
 			
 			if (getStrSelected().matches("[?{5}-{6}?{6}])")) {

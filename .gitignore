@@ -2,8 +2,7 @@
 /.settings/*
 /.git/*
 /bin/*
-/bin/*/*
-/controller/*
-/view/*
-/model/*
+/bin/model/*
 /bin/view/*
+/bin/view/*
+.classpath
