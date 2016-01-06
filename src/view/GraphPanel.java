@@ -382,10 +382,10 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			if( e.getY()/(iZoom)-(iHeightEdge/2)>0 && e.getY()+(iHeightEdge/2*iZoom)<this.getHeight()) {
 				HCI.hmVertex.get(strEdgeMove).y =((int)(e.getY()/(iZoom)-(iHeightEdge/2)));
 			}
+			hci.getLabelCoord().setText("  X : " + (double) (HCI.hmVertex.get(strEdgeMove).x +25) + "       Y : " + (double)(HCI.hmVertex.get(strEdgeMove).y + 25));
 			repaint();
 			setCursor(new Cursor(Cursor.MOVE_CURSOR));
 		}
-
 	}
 
 	@Override
@@ -395,11 +395,13 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		for (Point c : HCI.hmVertex.values()) {
 			centerX = (c.getX()+iWidthEdge/2)*iZoom;
 			centerY = (c.getY()+iHeightEdge/2)*iZoom;
-			if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2)))
-				hci.getLabelCoord().setText("X : " + centerX + " Y : " + centerY);
+			if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2))) {
+				hci.getLabelCoord().setText("  X : " + centerX + "       Y : " + centerY);
+				break;
+			}
 			else {
-				if (! hci.getLabelCoord().equals(""))
-					hci.getLabelCoord().setText("");
+				if (! hci.getLabelCoord().getText().equals(" "))
+					hci.getLabelCoord().setText(" ");
 			}
 		}	
 	}
