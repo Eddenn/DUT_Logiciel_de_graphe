@@ -44,11 +44,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		this.iHeightEdge = 50*iZoom;
 		this.iWidthEdge = 50*iZoom;
 		this.alSelected = new ArrayList<String>();
-<<<<<<< HEAD
-		this.strEdgeMove = null;
 		this.bDragged = false;
-=======
->>>>>>> 93edc85811f724f62ea171f66b962d286ea601c1
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 	}
@@ -340,32 +336,17 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-<<<<<<< HEAD
-		strEdgeMove = null;
 		if (bDragged = true) {
 			hci.getController().provSave();
 			bDragged = false;
 		}
-=======
->>>>>>> 93edc85811f724f62ea171f66b962d286ea601c1
+
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
 	@Override
-<<<<<<< HEAD
-	public void mouseDragged(MouseEvent e) {
-		if(strEdgeMove != null) {
-			if( e.getX()/(iZoom)-(iWidthEdge/2)>0  && e.getX()+(iWidthEdge/2*iZoom) <this.getWidth()) {
-				HCI.hmVertex.get(strEdgeMove).x =((int)(e.getX()/(iZoom)-(iWidthEdge/2)));
-			}
-			if( e.getY()/(iZoom)-(iHeightEdge/2)>0 && e.getY()+(iHeightEdge/2*iZoom)<this.getHeight()) {
-				HCI.hmVertex.get(strEdgeMove).y =((int)(e.getY()/(iZoom)-(iHeightEdge/2)));
-			}
-			hci.getLabelCoord().setText("  X : " + (double) (HCI.hmVertex.get(strEdgeMove).x +25) + "       Y : " + (double)(HCI.hmVertex.get(strEdgeMove).y + 25));
-			bDragged = true;
-			repaint();
-			setCursor(new Cursor(Cursor.MOVE_CURSOR));
-=======
+
+
 	public void mouseDragged(MouseEvent e) {	
 		if(alSelected.size() != 0) {
 			double centerX, centerY;
@@ -405,6 +386,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 								HCI.hmVertex.get(edgeSelected).y += deplacement.y;
 								//Text qui affiche les coordonnées
 								hci.getLabelCoord().setText("  X : " + (double) (HCI.hmVertex.get(edgeSelected).x +25) + "       Y : " + (double)(HCI.hmVertex.get(edgeSelected).y + 25));
+								bDragged = true;
 								repaint();
 							}
 						}
@@ -412,7 +394,6 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 					}
 				}
 			}	
->>>>>>> 93edc85811f724f62ea171f66b962d286ea601c1
 		}
 		saveMousePosition = e.getPoint();
 	}
