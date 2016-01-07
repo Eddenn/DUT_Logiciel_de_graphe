@@ -145,7 +145,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// MenuItem - Rï¿½pï¿½ter
 		tabMenuItemEdition[1] = new JMenuItem(
-				"<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
+				"<html>Rï¿½pï¿½ter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
 		tabMenuItemEdition[1].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[1]);
 
@@ -173,7 +173,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		menuEdition.addSeparator();
 
 		// MenuItem - Selectionner tout
-		tabMenuItemEdition[5] = new JMenuItem("<html>Sélectionner tout&emsp;&nbsp;&nbsp;<i>Ctrl+A</i></html>");
+		tabMenuItemEdition[5] = new JMenuItem("<html>Sï¿½lectionner tout&emsp;&nbsp;&nbsp;<i>Ctrl+A</i></html>");
 		tabMenuItemEdition[5].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[5]);
 
@@ -363,7 +363,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// FICHIER
 			// Nouveau
 		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
-			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
+			new FormNewGraph(this, "Crï¿½ation d'un nouveau graphe", true, ctrl);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
@@ -453,7 +453,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// AIDE
 		else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
-					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
+					"<html>Projet tuteurï¿½ de deuxiï¿½me annï¿½e de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
 
 			// BUTTON
@@ -478,22 +478,14 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource() == popUpEditVertex) {
 			new FormAddArc(this, "Modifier un sommet", true, ctrl);
 
-			/* Non implÃ©mentÃ©e pour le moment */
-		} // else if (e.getSource() == popUpDeleteArc) {
-			// new FormAddArc(this, "Ajouter un arc", true, ctrl);
-			//
-			// }else if (e.getSource() == popUpEditArc) {
-			// new FormAddArc(this, "Mofifier un arc", true, ctrl);
-			// }
-	
-		else if (e.getSource() == popUpEditVertex) {
+		} else if (e.getSource() == popUpEditVertex) {
 			new Form(this, "Modifier un sommet", true, ctrl);
 
 		}else if (e.getSource() == popUpDeleteArc) {
 			new FormDeleteArc(this, "Supprimer un arc", true, ctrl);
 			
 		}else if (e.getSource() == popUpEditArc) {
-			new FormAddArc(this, "Mofifier un arc", true, ctrl);
+			new FormUpdateArc(this, "Modifier un arc", true, ctrl);
 		}
 		refresh();
 	}

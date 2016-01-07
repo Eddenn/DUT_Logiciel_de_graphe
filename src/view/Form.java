@@ -96,64 +96,64 @@ public class Form extends JDialog implements ActionListener {
 			}
 		}
 		else if (this.getTitle().equals("Modifier un arc")){
+			
+			//Juste de l'IHM
+			
+			JComboBox boxDep, boxArr;
+			
+			String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
+			
+			for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
+				tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
+			}
+			
+			JLabel text = new JLabel("<html> Saisissez les donnees de l'arc : LOL <br/><br/> </html>");
+			text.setHorizontalAlignment(JLabel.CENTER);
+			add(text, "North");
+			
+			// Panel contenant les JComboBox et le textfield
+			JPanel content = new JPanel(new BorderLayout());
+			
+			// Panel contenant les JComboBox
+			JPanel panelComboBox = new JPanel();
+			
+			// Gestion du sommet de d�part
+			JLabel lDep = new JLabel("Depart : ");
+			panelComboBox.add(lDep,"West");
+			boxDep = new JComboBox(tabVertex);
+			panelComboBox.add(boxDep,"");
+			
+			// Gestion du sommet d'arriv�
+			JLabel lArr = new JLabel("Arrivee : ");
+			panelComboBox.add(lArr);
+			boxArr = new JComboBox(tabVertex);
+			panelComboBox.add(boxArr);
+			
+			// Panel contenant le textField
+			JPanel panelTextField = new JPanel(new BorderLayout());
+
+			// Ajout des comboBox et textField a la fenetre
+			content.add(panelComboBox,"North");
+			content.add(panelTextField);
+			add(content);
+			
+			// Panel contenant les boutons
+			JPanel control =new JPanel();
+			ok = new JButton ("Valider");
+			ok.addActionListener(this);
+			annuler = new JButton ("Annuler");
+			annuler.addActionListener(this);
+			control.add(ok);
+			control.add(annuler);
+			add(control, "South");
+			
+			setVisible(true);
+			
+			//Code de gestion de la modification de l'arc.
 			if (e.getSource() == ok){
 				Vertex vOrigine = null;
 				Vertex vDest	= null;
 				
-				
-				//Juste de l'IHM
-				
-				JComboBox boxDep, boxArr;
-				
-				String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
-				
-				for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
-					tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
-				}
-				
-				JLabel text = new JLabel("<html> Saisissez les donn�es de l'arc : <br/><br/> </html>");
-				text.setHorizontalAlignment(JLabel.CENTER);
-				add(text, "North");
-				
-				// Panel contenant les JComboBox et le textfield
-				JPanel content = new JPanel(new BorderLayout());
-				
-				// Panel contenant les JComboBox
-				JPanel panelComboBox = new JPanel();
-				
-				// Gestion du sommet de d�part
-				JLabel lDep = new JLabel("Depart : ");
-				panelComboBox.add(lDep,"West");
-				boxDep = new JComboBox(tabVertex);
-				panelComboBox.add(boxDep,"");
-				
-				// Gestion du sommet d'arriv�
-				JLabel lArr = new JLabel("Arrivee : ");
-				panelComboBox.add(lArr);
-				boxArr = new JComboBox(tabVertex);
-				panelComboBox.add(boxArr);
-				
-				// Panel contenant le textField
-				JPanel panelTextField = new JPanel(new BorderLayout());
-
-				// Ajout des comboBox et textField a la fenetre
-				content.add(panelComboBox,"North");
-				content.add(panelTextField);
-				add(content);
-				
-				// Panel contenant les boutons
-				JPanel control =new JPanel();
-				ok = new JButton ("Valider");
-				ok.addActionListener(this);
-				annuler = new JButton ("Annuler");
-				annuler.addActionListener(this);
-				control.add(ok);
-				control.add(annuler);
-				add(control, "South");
-				
-				setVisible(true);
-				
-				//Code de gestion de la modification de l'arc.
 				try{
 					for(Vertex v : ctrl.getGraph().getAlVertex()){
 						if (v.getName().equals(boxDep.getSelectedItem())){
@@ -176,9 +176,10 @@ public class Form extends JDialog implements ActionListener {
 					}		
 				} catch(Exception e1 ) {e1.printStackTrace();}
 			
-				dispose();
 			}
 		}
+		
+		dispose();
 	}
 
 }
