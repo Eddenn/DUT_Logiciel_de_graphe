@@ -64,6 +64,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenuItem popUpEditVertex;
 	private JMenuItem popUpDeleteVertex;
 	private JMenuItem popUpDeleteArc;
+	private JMenuItem popUpEditArc;
 
 	public HCI(Controller controller) {
 		this.ctrl = controller;
@@ -307,10 +308,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		popUpAddArc = new JMenuItem("Ajouter un arc");
 		popUpAddArc.addActionListener(this);
 		popMenu.add(popUpAddArc);
+		
+		popUpEditArc = new JMenuItem("Modifier un arc");
+		popUpEditArc.addActionListener(this);
+		popMenu.add(popUpEditArc);
 
 		popUpDeleteArc = new JMenuItem("Supprimer un arc");
 		popUpDeleteArc.addActionListener(this);
 		popMenu.add(popUpDeleteArc);
+
 		// ----------------------//
 
 		// **---------------------------**//
@@ -430,14 +436,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[4]) {
 			for(String s : pGraph.getAlSelected()) {
-				if (s.matches("[?{5}-{6}?{6}])")) {
+				if (s.matches(".{5}-{5}.*")) {
 					String vName = s.substring(0, 5);
 					vName = vName.replaceAll(" ", "");
 					
-					String vBisName = s.substring(12);
+					String vBisName = s.substring(24);
 					vBisName = vBisName.replaceAll(" ", "");
-					
-					System.out.println(vName + vBisName);
 					
 				    ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));		
 				}
@@ -481,7 +485,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// }else if (e.getSource() == popUpEditArc) {
 			// new FormAddArc(this, "Mofifier un arc", true, ctrl);
 			// }
+	
+		else if (e.getSource() == popUpEditVertex) {
+			new Form(this, "Modifier un sommet", true, ctrl);
 
+		}else if (e.getSource() == popUpDeleteArc) {
+			new FormDeleteArc(this, "Supprimer un arc", true, ctrl);
+			
+		}else if (e.getSource() == popUpEditArc) {
+			new FormAddArc(this, "Mofifier un arc", true, ctrl);
+		}
 		refresh();
 	}
 
@@ -592,6 +605,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public Controller getController() {
+		return this.ctrl;
 	}
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}

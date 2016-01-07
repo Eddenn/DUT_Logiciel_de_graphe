@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Classe permettant de gérer les arcs entre les sommets
+ * Classe permettant de gï¿½rer les arcs entre les sommets
  * 
  * @author Les grosses bites
  * 
@@ -32,6 +32,10 @@ public class Arc {
 
 	public int getIValue() {
 		return this.iValue;
+	}
+	
+	public void setValue(int a){
+		this.iValue = a;
 	}
 
 	// Equivalent toString

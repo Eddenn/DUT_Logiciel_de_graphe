@@ -55,6 +55,13 @@ public class Controller implements IControlable, IIhmable {
 
 			// fermeture du fichier
 			fw.close();
+			
+			// Remise a zero des sauvegarde provisoire
+			saveVertexList = new ArrayList<ArrayList<String>>();
+			saveCoordList = new ArrayList<Point[]>();
+			provSave();
+			cptModif = 0;
+			
 		} catch (IOException e) {
 			hci.showError("Probl�me d'enregistrement du fichier " + file+ ".");
 		}
@@ -142,7 +149,8 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	public void redo() {
-		if (cptModif >= 0 && cptModif < saveVertexList.size()) {
+		if (cptModif >= 0 && cptModif+1 < saveVertexList.size()) {
+			System.out.println(cptModif);
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif+1)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif+1));
 			cptModif++;

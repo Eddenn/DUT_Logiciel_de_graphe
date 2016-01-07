@@ -32,6 +32,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	private double iHeightEdge; //Hauteur
 	private double iZoom;		//Zoom
 	private HCI hci;
+	private boolean bDragged;
 
 	public GraphPanel(HCI hci) {
 		super();
@@ -43,6 +44,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		this.iHeightEdge = 50*iZoom;
 		this.iWidthEdge = 50*iZoom;
 		this.alSelected = new ArrayList<String>();
+		this.bDragged = false;
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 	}
@@ -334,10 +336,17 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		if (bDragged = true) {
+			hci.getController().provSave();
+			bDragged = false;
+		}
+
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
 	@Override
+
+
 	public void mouseDragged(MouseEvent e) {	
 		if(alSelected.size() != 0) {
 			double centerX, centerY;
@@ -377,6 +386,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 								HCI.hmVertex.get(edgeSelected).y += deplacement.y;
 								//Text qui affiche les coordonnées
 								hci.getLabelCoord().setText("  X : " + (double) (HCI.hmVertex.get(edgeSelected).x +25) + "       Y : " + (double)(HCI.hmVertex.get(edgeSelected).y + 25));
+								bDragged = true;
 								repaint();
 							}
 						}
@@ -426,6 +436,16 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		if(e.getModifiersEx()==128 && e.getKeyCode()==68 ) {
 			System.out.println("CTRL+V");
+		}
+		
+		if(e.getModifiersEx()==128 && e.getKeyCode()==90 ) {
+			hci.getController().undo();
+			hci.refresh();
+		}
+		
+		if(e.getModifiersEx()==128 && e.getKeyCode()==89 ) {
+			hci.getController().redo();
+			hci.refresh();
 		}
 		
 	}
