@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import model.Arc;
 import model.Graph;
@@ -65,6 +67,12 @@ public class Controller implements IControlable, IIhmable {
 				
 		logoFrame.setVisible(true);
 		FormNewGraph nouveauGraph = new FormNewGraph(hci, "Création d'un nouveau graphe", true, this);
+		nouveauGraph.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) 
+            {
+    			System.exit(1);
+            } 
+         } ) ; 
 		//Attend la fin de la saisie des parametres du graphe
 		while(!nouveauGraph.getBEnd()){}
 		logoFrame.dispose();

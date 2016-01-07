@@ -31,12 +31,6 @@ public class FormNewGraph extends JDialog implements ActionListener {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) 
-            {
-    			System.exit(1);
-            } 
-         } ) ; 
 		
 		this.ctrl=ctrl;
 		
