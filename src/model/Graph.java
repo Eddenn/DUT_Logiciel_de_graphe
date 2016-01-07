@@ -40,9 +40,9 @@ public class Graph {
 		for (int i = 0; i < alVertexSize; i++) {
 			for (int j = 0; j < alVertexSize; j++) {
 				if (this.bValued)
-					tMatrix[i][j] = -1;
+					tMatrix[j][i] = -1;
 				else
-					tMatrix[i][j] = 0;
+					tMatrix[j][i] = 0;
 			}
 		}
 
@@ -56,10 +56,10 @@ public class Graph {
 						// Si la matrice est valué, on affiche la valeur de
 						// l'arc
 						if (bValued)
-							tMatrix[i][j] = a.getIValue();
+							tMatrix[j][i] = a.getIValue();
 						// Sinon, on note l'existence de l'arc avec 1
 						else
-							tMatrix[i][j] = 1;
+							tMatrix[j][i] = 1;
 						break;
 					}
 				}

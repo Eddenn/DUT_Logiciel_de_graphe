@@ -68,7 +68,7 @@ public class ReaderMatrix extends Reader {
 				if (tMatrix[i][j] != -1) {
 					Vertex vBis = graph.getVertex(j);
 
-					graph.addArc(v, vBis, tMatrix[i][j]);
+					graph.addArc(vBis, v, tMatrix[i][j]);
 				}
 			}
 		}
@@ -93,7 +93,7 @@ public class ReaderMatrix extends Reader {
 				if (tMatrix[i][j] == 1) {
 					Vertex vBis = graph.getVertex(j);
 
-					graph.addArc(v, vBis);
+					graph.addArc(vBis, v);
 				}
 			}
 		}
@@ -120,7 +120,7 @@ public class ReaderMatrix extends Reader {
 				if (tMatrix[i][j] == 1) {
 					Vertex vBis = graph.getVertex(j);
 
-					graph.addArc(v, vBis, tMatrix[i][j]);
+					graph.addArc(vBis, v, tMatrix[i][j]);
 				}
 			}
 
@@ -149,7 +149,7 @@ public class ReaderMatrix extends Reader {
 				if (tMatrix[i][j] == 1) {
 					Vertex vBis = graph.getVertex(j);
 
-					graph.addArc(v, vBis);
+					graph.addArc(vBis, v);
 				}
 			}
 
