@@ -1,9 +1,10 @@
 /Farm-Fresh_arrow_refresh.png
 /.settings/*
 /.git/*
-/bin/*
-/bin/model/*
-/bin/view/*
-/bin/view/*
+bin/*
+bin/model/*
+bin/view/*
+bin/view/*
 liste_adjacence.data
 test.pdf
+.classpath

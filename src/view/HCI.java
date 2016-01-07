@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -17,13 +18,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
-import model.Arc;
 import model.Graph;
 import model.PdfGenerator;
 import model.Vertex;
 
-/*testMel*/
-public class HCI extends JFrame implements ActionListener, ListSelectionListener, MouseListener {
+
+public class HCI extends JFrame implements ActionListener, ListSelectionListener {
 	/**
 	 * Serial Version
 	 */
@@ -78,6 +78,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(true);
 		this.setLayout(new BorderLayout());
+		this.setFocusable(true);
+		this.setFocusTraversalKeysEnabled(false);
+
 
 		// **---Contents of this frame---**//
 		// ---Menu bar---//
@@ -248,7 +251,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// ---------Graph--------//
 		pGraph = new GraphPanel(this);
-		pGraph.addMouseListener(this);
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
@@ -286,6 +288,32 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pButton.add(buttonZoomOut);
 
 		add(pButton, BorderLayout.NORTH);
+<<<<<<< HEAD
+=======
+		
+		// Instancitation du menu contextuel et de ses Ã©lÃ©ments
+		popMenu = new JPopupMenu();
+
+		popUpAddVertex = new JMenuItem("Ajouter un sommet");
+		popUpAddVertex.addActionListener(this);
+		popMenu.add(popUpAddVertex);
+
+		popUpEditVertex = new JMenuItem("Modifier un sommet");
+		popUpEditVertex.addActionListener(this);
+		popMenu.add(popUpEditVertex);
+
+		popUpDeleteVertex = new JMenuItem("Supprimer un sommet");
+		popUpDeleteVertex.addActionListener(this);
+		popMenu.add(popUpDeleteVertex);
+
+		popUpAddArc = new JMenuItem("Ajouter un arc");
+		popUpAddArc.addActionListener(this);
+		popMenu.add(popUpAddArc);
+
+		popUpDeleteArc = new JMenuItem("Supprimer un arc");
+		popUpDeleteArc.addActionListener(this);
+		popMenu.add(popUpDeleteArc);
+>>>>>>> 33d176e7099356ac59cb41e01c1e4fe983cb46cb
 		// ----------------------//
 
 		// **---------------------------**//
@@ -295,6 +323,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pGraph.setPreferredSize(
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
+<<<<<<< HEAD
+=======
+		this.addKeyListener(pGraph);
+>>>>>>> 33d176e7099356ac59cb41e01c1e4fe983cb46cb
 		setVisible(true);
 	}
 
@@ -360,41 +392,48 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			new Form(this, "Ajouter un sommet", true, ctrl);
 			// Modifier un sommet
 		} else if (e.getSource() == tabMenuItemGraph[1]) {
-			new Form(this, "Modifier un sommet", true, ctrl);
+			if(pGraph.getAlSelected().size() > 1 ) {
+				showError("Veuilliez sélectionné un seul sommet.");
+			} else if (pGraph.getAlSelected().size() == 0) {
+				showError("Veuilliez sélectionné un sommet.");
+			} else {
+				new Form(this, "Modifier un sommet", true, ctrl);
+			}
 			// Supprimer un sommet
 		} else if (e.getSource() == tabMenuItemGraph[2]) {
-			Vertex tmpVertex = null;
-			for (Vertex v : ctrl.getGraph().getAlVertex()) {
-				if (v.getName().equals(getStrSelected())) {
-					tmpVertex = v;
+			for(String s : pGraph.getAlSelected()) {
+				Vertex tmpVertex = null;
+				for (Vertex v : ctrl.getGraph().getAlVertex()) {
+					if (v.getName().equals(s)) {
+						tmpVertex = v;
+					}
 				}
+				ctrl.getGraph().deleteVertex(tmpVertex);
+				HCI.hmVertex.remove(s);
 			}
-			ctrl.getGraph().deleteVertex(tmpVertex);
-			HCI.hmVertex.remove(getStrSelected());
-			setStrSelected(null);
+			setAlSelected(new ArrayList<String>());
 			refresh();
-
 			// Ajouter un arc
 		} else if (e.getSource() == tabMenuItemGraph[3]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
 
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[4]) {
-			System.out.println((getStrSelected().matches("[?{5}-{6}?{6}])")));
-
-			if (getStrSelected().matches("[?{5}-{6}?{6}])")) {
-				String vName = getStrSelected().substring(0, 5);
-				vName = vName.replaceAll(" ", "");
-
-				String vBisName = getStrSelected().substring(12);
-				vBisName = vBisName.replaceAll(" ", "");
-
-				System.out.println(vName + vBisName);
-
-				ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));
-				setStrSelected(null);
-				refresh();
+			for(String s : pGraph.getAlSelected()) {
+				if (s.matches("[?{5}-{6}?{6}])")) {
+					String vName = s.substring(0, 5);
+					vName = vName.replaceAll(" ", "");
+					
+					String vBisName = s.substring(12);
+					vBisName = vBisName.replaceAll(" ", "");
+					
+					System.out.println(vName + vBisName);
+					
+				    ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));		
+				}
 			}
+			setAlSelected(new ArrayList<String>());
+			refresh();
 		}
 
 		// AIDE
@@ -506,16 +545,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		repaint();
 	}
 
-	public String getStrSelected() {
-		return pGraph.getStrSelected();
+	public ArrayList<String> getAlSelected() {
+		return pGraph.getAlSelected();
 	}
 
 	public HashMap<String, Point> getHmVertex() {
 		return hmVertex;
 	}
 
-	public void setStrSelected(String s) {
-		pGraph.setStrSelected(s);
+	public void setAlSelected(ArrayList<String> s) {
+		pGraph.setAlSelected(s);
 	}
 
 	public Graph getGraph() {
@@ -533,49 +572,17 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getSource() == slObject.getListOfObject()) {
-			pGraph.setStrSelected((String) slObject.getListOfObject().getSelectedValue());
+			pGraph.getAlSelected().clear();
+			for( String s : slObject.getListOfObject().getSelectedValuesList() ) {
+				pGraph.getAlSelected().add(s);
+			}
 			repaint();
 		}
 	}
 
-	public void setError(String strError) {
+	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
-	/* Gestion du clic droit */
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-		int mod = e.getModifiers();
-
-		if ((mod & InputEvent.BUTTON3_MASK) != 0)
-			popMenu.show(this, e.getX() + 110, e.getY() + 90);
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* Gestion des clicks de la popuup */
+	public JPopupMenu getPopMenu() { return this.popMenu;}
 }

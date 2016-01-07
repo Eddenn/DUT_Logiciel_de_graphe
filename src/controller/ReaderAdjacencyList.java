@@ -27,11 +27,7 @@ public class ReaderAdjacencyList extends Reader {
 				graph.addVertex(tStr[0]);
 				tVertexName[i] = tStr[0];
 			}
-			
-			for (String str : alStr) {
-				System.out.println(str);
-			}
-		
+
 			if (bIsDirected && bIsValued) {
 				return createDirectedValuedGraph(graph, alStr, tVertexName);
 			}
@@ -66,6 +62,13 @@ public class ReaderAdjacencyList extends Reader {
 
 					String[] tStrVertexValue = strVertexValue.split(",");
 
+					// On vérifie s'il est bien valué.
+					if (tStrVertexValue.length < 2) {
+						graph.setValued(false);
+						
+						return createDirectedNotValuedGraph(graph,alStr,tVertexName);
+					}
+					
 					Vertex v = graph.getVertex(tStr[0]);
 
 					Vertex vBis = graph.getVertex(tStrVertexValue[0]);
@@ -94,6 +97,16 @@ public class ReaderAdjacencyList extends Reader {
 					String strVertexValue = tLinkedVertex[i].replaceAll("\\(", "");
 					strVertexValue = strVertexValue.replaceAll("\\)", "");
 
+					// On fait un test pour vérifier si la liste est bien non-valuée
+					String[] tStrVertexValue = strVertexValue.split(",");
+					
+					// Si c'est valué, on retourne avec la méthode valué
+					if (tStrVertexValue.length > 1) {
+						graph.setValued(true);
+						
+						return createDirectedValuedGraph(graph, alStr, tVertexName);
+					}
+					
 					Vertex v = graph.getVertex(tStr[0]);
 
 					Vertex vBis = graph.getVertex(strVertexValue);
@@ -124,6 +137,13 @@ public class ReaderAdjacencyList extends Reader {
 
 					String[] tStrVertexValue = strVertexValue.split(",");
 
+					// On vérifie s'il est bien valué.
+					if (tStrVertexValue.length < 2) {
+						graph.setValued(false);
+						
+						return createNotDirectedNotValuedGraph(graph,alStr,tVertexName);
+					}
+					
 					if (!alVertexAlreadyProcessed.contains(tStrVertexValue[0])) {
 						Vertex v = graph.getVertex(tStr[0]);
 
@@ -156,6 +176,16 @@ public class ReaderAdjacencyList extends Reader {
 					String strVertexValue = tLinkedVertex[i].replaceAll("\\(", "");
 					strVertexValue = strVertexValue.replaceAll("\\)", "");
 
+					// On fait un test pour vérifier si la liste est bien non-valuée
+					String[] tStrVertexValue = strVertexValue.split(",");
+					
+					// Si c'est valué, on retourne avec la méthode valué
+					if (tStrVertexValue.length > 1) {
+						graph.setValued(true);
+
+						return createNotDirectedValuedGraph(graph, alStr, tVertexName);
+					}
+					
 					if (!alVertexAlreadyProcessed.contains(strVertexValue)) {
 						Vertex v = graph.getVertex(tStr[0]);
 

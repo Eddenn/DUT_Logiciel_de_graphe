@@ -64,23 +64,25 @@ public class Form extends JDialog implements ActionListener {
 			if (e.getSource() == ok) {
 				if(!ctrl.addVertex(nom.getText())){
 					HCI.hmVertex.put(nom.getText(), new Point(0, 0));
-					hci.setStrSelected(nom.getText());
-					dispose();
+					hci.getAlSelected().clear();
+					hci.getAlSelected().add(nom.getText());
 				}
+				dispose();
 			}
 			if (e.getSource() == annuler) {
-				setVisible(false);
+				dispose();
 			}
 		}
 
 		if (this.getTitle().equals("Modifier un sommet")) {
-			if (e.getSource() == ok && hci.getStrSelected() != null) {
+			if (e.getSource() == ok ) {
 				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-					if (v.getName().equals(hci.getStrSelected())) {
+					if (v.getName().equals(hci.getAlSelected().get(0))) {
 						v.setName(nom.getText());
-						HCI.hmVertex.put(nom.getText(), HCI.hmVertex.get(hci.getStrSelected()));
-						HCI.hmVertex.remove(hci.getStrSelected());
-						hci.setStrSelected(nom.getText());
+						HCI.hmVertex.put(nom.getText(), HCI.hmVertex.get(hci.getAlSelected().get(0)));
+						HCI.hmVertex.remove(hci.getAlSelected().get(0));
+						hci.getAlSelected().clear();
+						hci.getAlSelected().add(nom.getText());
 						hci.refresh();
 					}
 				}
