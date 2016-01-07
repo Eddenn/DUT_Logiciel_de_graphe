@@ -30,7 +30,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JPopupMenu popMenu;
 
 	// Data of Vertex
-	protected static HashMap<String, Point> hmVertex;
+	protected HashMap<String, Point> hmVertex;
 	int xInitialize = 0, yInitialize = 0; // Used for the preferedsize of pGraph
 
 	// Menu bar of this frame
@@ -422,7 +422,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 					}
 				}
 				ctrl.getGraph().deleteVertex(tmpVertex);
-				HCI.hmVertex.remove(s);
+				this.hmVertex.remove(s);
 			}
 			setAlSelected(new ArrayList<String>());
 			refresh();
