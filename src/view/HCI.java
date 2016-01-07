@@ -378,7 +378,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath() + ".pdf", this);
-
 			// GRAPH
 			// Ajouter un sommet
 		} else if (e.getSource() == tabMenuItemGraph[0]) {
