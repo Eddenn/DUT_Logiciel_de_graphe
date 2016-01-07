@@ -430,14 +430,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[4]) {
 			for(String s : pGraph.getAlSelected()) {
-				if (s.matches("[?{5}-{6}?{6}])")) {
+				if (s.matches(".{5}-{5}.*")) {
 					String vName = s.substring(0, 5);
 					vName = vName.replaceAll(" ", "");
 					
-					String vBisName = s.substring(12);
+					String vBisName = s.substring(24);
 					vBisName = vBisName.replaceAll(" ", "");
-					
-					System.out.println(vName + vBisName);
 					
 				    ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));		
 				}
@@ -592,6 +590,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public Controller getController() {
+		return this.ctrl;
 	}
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
