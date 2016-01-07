@@ -18,7 +18,7 @@ public class Controller implements IControlable, IIhmable {
 	private ArrayList<ArrayList<String>> saveVertexList;
 	private ArrayList<Point[]> saveCoordList;
 	private int cptModif;
-	private static String file;
+	private static String file="";
 	
 	private IParcourable parcours; 
 
@@ -257,5 +257,8 @@ public class Controller implements IControlable, IIhmable {
 	@Override
 	public String getMessage() {
 		return parcours.getMessage();
+	}
+	public String getFile(){
+		return file;
 	}
 }
