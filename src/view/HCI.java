@@ -64,6 +64,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenuItem popUpEditVertex;
 	private JMenuItem popUpDeleteVertex;
 	private JMenuItem popUpDeleteArc;
+	private JMenuItem popUpEditArc;
 
 	public HCI(Controller controller) {
 		this.ctrl = controller;
@@ -307,10 +308,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		popUpAddArc = new JMenuItem("Ajouter un arc");
 		popUpAddArc.addActionListener(this);
 		popMenu.add(popUpAddArc);
+		
+		popUpEditArc = new JMenuItem("Modifier un arc");
+		popUpEditArc.addActionListener(this);
+		popMenu.add(popUpEditArc);
 
 		popUpDeleteArc = new JMenuItem("Supprimer un arc");
 		popUpDeleteArc.addActionListener(this);
 		popMenu.add(popUpDeleteArc);
+
 		// ----------------------//
 
 		// **---------------------------**//
@@ -468,6 +474,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		} else if (e.getSource() == popUpAddVertex) {
 			new Form(this, "Ajouter un sommet", true, ctrl);
+<<<<<<< HEAD
 
 		} else if (e.getSource() == popUpEditVertex) {
 			new FormAddArc(this, "Modifier un sommet", true, ctrl);
@@ -479,6 +486,18 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// }else if (e.getSource() == popUpEditArc) {
 			// new FormAddArc(this, "Mofifier un arc", true, ctrl);
 			// }
+=======
+			
+		}else if (e.getSource() == popUpEditVertex) {
+			new Form(this, "Modifier un sommet", true, ctrl);
+
+		}else if (e.getSource() == popUpDeleteArc) {
+			new FormDeleteArc(this, "Supprimer un arc", true, ctrl);
+			
+		}else if (e.getSource() == popUpEditArc) {
+			new FormAddArc(this, "Mofifier un arc", true, ctrl);
+		}
+>>>>>>> da88bcf9381575915bbd6e84d92b22e09a35b282
 
 		refresh();
 	}
