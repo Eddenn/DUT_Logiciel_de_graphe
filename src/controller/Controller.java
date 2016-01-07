@@ -9,15 +9,19 @@ import java.awt.Point;
 
 import model.Arc;
 import model.Graph;
+import model.IParcourable;
 import model.Vertex;
 import view.HCI;
 
-public class Controller implements IControlable {
+public class Controller implements IControlable, IIhmable {
 	private HCI hci;
 	private Graph graph;
 	private ArrayList<ArrayList<String>> saveVertexList;
 	private ArrayList<Point[]> saveCoordList;
 	private int cptModif;
+	private static String file;
+	
+	private IParcourable parcours; 
 
 	public Controller() {
 		// Create graph
@@ -34,13 +38,16 @@ public class Controller implements IControlable {
 	}
 
 	public void saveFile(String strFileName) {
+		if(!strFileName.equals("")){
+			file=strFileName;
+		}
 		FileWriter fw = null;
 
 		try {
-			// ouverture du fichier en mode écriture
-			fw = new FileWriter(strFileName, false);
+			// ouverture du fichier en mode ï¿½criture
+			fw = new FileWriter(file, false);
 
-			// écriture des lignes de texte
+			// ï¿½criture des lignes de texte
 			fw.write("IsMatrix=true\n");
 			fw.write("Directed=" + graph.isDirected() + "\n");
 			fw.write("Valued=" + graph.isValued() + "\n\n");
@@ -49,7 +56,7 @@ public class Controller implements IControlable {
 			// fermeture du fichier
 			fw.close();
 		} catch (IOException e) {
-			hci.showError("Problème d'écriture dans le fichier " + strFileName + ".");
+			hci.showError("Problï¿½me d'enregistrement du fichier " + file+ ".");
 		}
 	}
 
@@ -74,10 +81,10 @@ public class Controller implements IControlable {
 	public boolean addVertex(String strVertexName) {
 		boolean bExist=false;
 		if (graph.getVertex(strVertexName) != null) {
-			hci.showError("Un sommet avec le nom " + strVertexName + " existe déjà.");
+			hci.showError("Un sommet avec le nom " + strVertexName + " existe dï¿½jï¿½.");
 			bExist = true;
 		} else if (strVertexName.replaceAll(" ", "").equals("")) {
-			hci.showError("Le nom de votre sommet ne peut pas être vide");
+			hci.showError("Le nom de votre sommet ne peut pas ï¿½tre vide");
 			bExist = true;
 		} else {
 			graph.addVertex(strVertexName);
@@ -92,16 +99,22 @@ public class Controller implements IControlable {
 			graph.addArc(v, vBis);
 			provSave();
 		} else {
-			hci.showError("L'arc existe déjà.");
+			hci.showError("L'arc existe dï¿½jï¿½.");
 		}
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis, iValue);
+<<<<<<< HEAD
 			provSave();
 		} else
 			hci.showError("L'arc existe déjà.");
+=======
+		} else {
+			hci.showError("L'arc existe dï¿½jï¿½.");
+		}
+>>>>>>> 1a3fbc5cd2be28b535a2cd1be119a5fd1a3f576e
 	}
 
 	public void delArc(Vertex v, Vertex vBis) {
@@ -198,5 +211,50 @@ public class Controller implements IControlable {
 		saveCoordList.add(tabPoint);
 		System.out.println(saveVertexList);
 		System.out.println(cptModif);
+	}
+	
+	/*MÃ©thodes de l'interface IIhmable */
+	@Override
+	public int getNbSommet() {
+		return graph.getAlVertex().size();
+	}
+
+	@Override
+	public int getNbArc(int indSommet) {
+		return graph.getAlVertex().get(indSommet).getAlArcs().size();
+	}
+
+	@Override
+	public char getNomSommet(int indSommet) {
+		return graph.getAlVertex().get(indSommet).getName().charAt(0);
+	}
+
+	@Override
+	public int getValArc(int indSommetOri, int indArc) {
+		return graph.getAlVertex().get(indSommetOri).getAlArcs().get(indArc).getIValue();
+	}
+
+	@Override
+	public char getNomSommetArc(int indSommetOri, int indArc) {
+		return graph.getAlVertex().get(indSommetOri).getAlArcs().get(indArc).getVertex().getName().charAt(0);
+	}
+
+	@Override
+	public boolean sommetActif(char sommet) {
+		if (parcours.sommetActif(sommet))
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean arcActif(char sommetOri, char sommetDest) {
+		if (parcours.arcActif(sommetOri, sommetDest))
+			return true;
+		return false;
+	}
+
+	@Override
+	public String getMessage() {
+		return parcours.getMessage();
 	}
 }
