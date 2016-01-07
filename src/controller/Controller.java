@@ -106,7 +106,7 @@ public class Controller implements IControlable, IIhmable {
 			graph.addArc(v, vBis);
 			provSave();
 		} else {
-			hci.showError("L'arc existe dï¿½jï¿½.");
+			hci.showError("L'arc existe déjà.");
 		}
 	}
 
