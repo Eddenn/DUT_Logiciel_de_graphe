@@ -189,11 +189,8 @@ public class Controller implements IControlable, IIhmable {
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-1)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif-1));
 			cptModif--;
-<<<<<<< HEAD
-=======
 //			System.out.println(saveVertexList);
 //			System.out.println(cptModif);
->>>>>>> 412f4720bae778f39e2a483bd7dfcf366595e525
 		}
 		
 	}
@@ -204,11 +201,8 @@ public class Controller implements IControlable, IIhmable {
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif+1)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif+1));
 			cptModif++;
-<<<<<<< HEAD
-=======
 //			System.out.println(saveVertexList);
 //			System.out.println(cptModif);
->>>>>>> 412f4720bae778f39e2a483bd7dfcf366595e525
 		}
 	}
 
@@ -267,12 +261,9 @@ public class Controller implements IControlable, IIhmable {
 		}
 		
 		saveCoordList.add(tabPoint);
-<<<<<<< HEAD
 		System.out.println(saveCoordList);
-=======
 //		System.out.println(saveVertexList);
 //		System.out.println(cptModif);
->>>>>>> 412f4720bae778f39e2a483bd7dfcf366595e525
 	}
 	
 	/*Méthodes de l'interface IIhmable */
