@@ -288,8 +288,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pButton.add(buttonZoomOut);
 
 		add(pButton, BorderLayout.NORTH);
-<<<<<<< HEAD
-=======
 		
 		// Instancitation du menu contextuel et de ses éléments
 		popMenu = new JPopupMenu();
@@ -313,7 +311,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		popUpDeleteArc = new JMenuItem("Supprimer un arc");
 		popUpDeleteArc.addActionListener(this);
 		popMenu.add(popUpDeleteArc);
->>>>>>> 33d176e7099356ac59cb41e01c1e4fe983cb46cb
 		// ----------------------//
 
 		// **---------------------------**//
@@ -323,10 +320,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pGraph.setPreferredSize(
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
-<<<<<<< HEAD
-=======
+		
 		this.addKeyListener(pGraph);
->>>>>>> 33d176e7099356ac59cb41e01c1e4fe983cb46cb
 		setVisible(true);
 	}
 
@@ -344,6 +339,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				yInitialize += pGraph.getiHeightEdge() * 2;
 				xInitialize = 0;
 			}
+		}
+	}
+	
+	public void initHmVertexByTab(Point[] tab) {
+		// Initialization of hmVertex
+		hmVertex = new HashMap<String, Point>();
+		
+		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
+			hmVertex.put(ctrl.getGraph().getAlVertex().get(i).getName(), tab[i]);
 		}
 	}
 
@@ -374,6 +378,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// EDITION
 		} else if (e.getSource() == tabMenuItemEdition[0]) {
 				ctrl.undo();
+				this.refresh();
+		} else if (e.getSource() == tabMenuItemEdition[1]) {
+				ctrl.redo();
 				this.refresh();
 		
 			// EXPORTER
