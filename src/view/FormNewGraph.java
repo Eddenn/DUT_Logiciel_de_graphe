@@ -34,7 +34,7 @@ public class FormNewGraph extends JDialog implements ActionListener {
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) 
             {
-    			bEnd = true;
+    			System.exit(1);
             } 
          } ) ; 
 		
