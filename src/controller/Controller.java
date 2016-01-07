@@ -40,6 +40,7 @@ public class Controller implements IControlable {
 			fw = new FileWriter(strFileName, false);
 
 			// écriture des lignes de texte
+			fw.write("IsMatrix=true\n");
 			fw.write("Directed=" + graph.isDirected() + "\n");
 			fw.write("Valued=" + graph.isValued() + "\n\n");
 			fw.write(graph.displayMatrix());
@@ -47,7 +48,7 @@ public class Controller implements IControlable {
 			// fermeture du fichier
 			fw.close();
 		} catch (IOException e) {
-			System.out.println("Problème d'écriture dans le fichier " + strFileName + ".");
+			hci.showError("Problème d'écriture dans le fichier " + strFileName + ".");
 		}
 	}
 
