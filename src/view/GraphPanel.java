@@ -366,8 +366,6 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 							//Calcul de la différence entre la dernière position de la souris et l'actuelle
 							Point deplacement = new Point(e.getPoint().x-saveMousePosition.x,e.getPoint().y-saveMousePosition.y);
 							
-							System.out.println(minPosition +"\n"+ maxPosition +"\n"+ deplacement);
-							System.out.println(this.getWidth()+":"+this.getHeight());
 							/*--Déplacement--*/
 							if( (minPosition.x==0 && deplacement.x>=0 || minPosition.x>0) && 
 								(minPosition.y==0 && deplacement.y>=0 || minPosition.y>0) &&
@@ -430,6 +428,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 		if(e.getModifiersEx()==128 && e.getKeyCode()==67 ) {
 			System.out.println("CTRL+C");
+		}
+		if(e.getModifiersEx()==128 && e.getKeyCode()==68 ) {
+			System.out.println("CTRL+V");
 		}
 		
 	}
