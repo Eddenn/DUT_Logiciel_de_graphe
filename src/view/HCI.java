@@ -320,6 +320,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pGraph.setPreferredSize(
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
+		
 		this.addKeyListener(pGraph);
 		setVisible(true);
 	}
@@ -340,6 +341,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 		}
 	}
+	
+	public void initHmVertexByTab(Point[] tab) {
+		// Initialization of hmVertex
+		hmVertex = new HashMap<String, Point>();
+		
+		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
+			hmVertex.put(ctrl.getGraph().getAlVertex().get(i).getName(), tab[i]);
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -350,12 +360,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// FICHIER
 			// Nouveau
 		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
-			new FormNewGraph(this, "Crï¿½ation d'un nouveau graphe", true, ctrl);
+			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
+			//Enregistrer
+		}else if(e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave){
+				ctrl.saveFile("");
 			// Enregistrer sous
 		} else if (e.getSource() == tabMenuItemFile[3]) {
 			JFileChooser dial = new JFileChooser(new File("."));
@@ -366,6 +379,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			this.dispose();
 
 			// EDITION
+		} else if (e.getSource() == tabMenuItemEdition[0]) {
+				ctrl.undo();
+				this.refresh();
+		} else if (e.getSource() == tabMenuItemEdition[1]) {
+				ctrl.redo();
+				this.refresh();
+		
 			// EXPORTER
 			// Image
 		} else if (e.getSource() == tabMenuItemExport[0]) {
@@ -383,9 +403,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Modifier un sommet
 		} else if (e.getSource() == tabMenuItemGraph[1]) {
 			if(pGraph.getAlSelected().size() > 1 ) {
-				showError("Veuilliez sélectionné un seul sommet.");
+				showError("Veuilliez sï¿½lectionnï¿½ un seul sommet.");
 			} else if (pGraph.getAlSelected().size() == 0) {
-				showError("Veuilliez sélectionné un sommet.");
+				showError("Veuilliez sï¿½lectionnï¿½ un sommet.");
 			} else {
 				new Form(this, "Modifier un sommet", true, ctrl);
 			}
@@ -429,7 +449,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// AIDE
 		else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
-					"<html>Projet tuteurï¿½ de deuxiï¿½me annï¿½e de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
+					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
 
 			// BUTTON
@@ -447,20 +467,20 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Items du menu contextuel
 		} else if (e.getSource() == popUpAddArc) {
 			new FormAddArc(this, "Ajouter un arc", true, ctrl);
-			
-		}else if (e.getSource() == popUpAddVertex) {
+
+		} else if (e.getSource() == popUpAddVertex) {
 			new Form(this, "Ajouter un sommet", true, ctrl);
-			
-		}else if (e.getSource() == popUpEditVertex) {
+
+		} else if (e.getSource() == popUpEditVertex) {
 			new FormAddArc(this, "Modifier un sommet", true, ctrl);
-		
-			/*Non implÃ©mentÃ©e pour le moment */
-		}//else if (e.getSource() == popUpDeleteArc) {
-//			new FormAddArc(this, "Ajouter un arc", true, ctrl);
-//			
-//		}else if (e.getSource() == popUpEditArc) {
-//			new FormAddArc(this, "Mofifier un arc", true, ctrl);
-//		}
+
+			/* Non implÃ©mentÃ©e pour le moment */
+		} // else if (e.getSource() == popUpDeleteArc) {
+			// new FormAddArc(this, "Ajouter un arc", true, ctrl);
+			//
+			// }else if (e.getSource() == popUpEditArc) {
+			// new FormAddArc(this, "Mofifier un arc", true, ctrl);
+			// }
 
 		refresh();
 	}
@@ -538,8 +558,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public ArrayList<String> getAlSelected() {
 		return pGraph.getAlSelected();
 	}
-	
-	public HashMap<String,Point> getHmVertex() {
+
+	public HashMap<String, Point> getHmVertex() {
 		return hmVertex;
 	}
 
@@ -575,4 +595,5 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
+
 }

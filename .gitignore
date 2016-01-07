@@ -1,8 +1,18 @@
 /Farm-Fresh_arrow_refresh.png
 /.settings/*
 /.git/*
+<<<<<<< HEAD
 /bin/*
 /bin/model/*
 /bin/view/*
 /bin/view/*
 .classpath
+=======
+bin/*
+bin/model/*
+bin/view/*
+bin/view/*
+liste_adjacence.data
+test.pdf
+.classpath
+>>>>>>> 33c9a66458a810b32865003e4e80366ec6c08e17

@@ -9,15 +9,19 @@ import java.awt.Point;
 
 import model.Arc;
 import model.Graph;
+import model.IParcourable;
 import model.Vertex;
 import view.HCI;
 
-public class Controller {
+public class Controller implements IControlable, IIhmable {
 	private HCI hci;
 	private Graph graph;
 	private ArrayList<ArrayList<String>> saveVertexList;
 	private ArrayList<Point[]> saveCoordList;
 	private int cptModif;
+	private static String file;
+	
+	private IParcourable parcours; 
 
 	public Controller() {
 		// Create graph
@@ -29,17 +33,22 @@ public class Controller {
 		// Initialize the arrrayList which permit to implement the undo and redo
 		saveVertexList = new ArrayList<ArrayList<String>>();
 		saveCoordList = new ArrayList<Point[]>();
-		cptModif = 0;
+		provSave();
+		cptModif--;
 	}
 
 	public void saveFile(String strFileName) {
+		if(!strFileName.equals("")){
+			file=strFileName;
+		}
 		FileWriter fw = null;
 
 		try {
-			// ouverture du fichier en mode écriture
-			fw = new FileWriter(strFileName, false);
+			// ouverture du fichier en mode ï¿½criture
+			fw = new FileWriter(file, false);
 
-			// écriture des lignes de texte
+			// ï¿½criture des lignes de texte
+			fw.write("IsMatrix=true\n");
 			fw.write("Directed=" + graph.isDirected() + "\n");
 			fw.write("Valued=" + graph.isValued() + "\n\n");
 			fw.write(graph.displayMatrix());
@@ -47,7 +56,7 @@ public class Controller {
 			// fermeture du fichier
 			fw.close();
 		} catch (IOException e) {
-			System.out.println("Problème d'écriture dans le fichier " + strFileName + ".");
+			hci.showError("Problï¿½me d'enregistrement du fichier " + file+ ".");
 		}
 	}
 
@@ -70,48 +79,50 @@ public class Controller {
 	}
 
 	public boolean addVertex(String strVertexName) {
-		provSave();
-		saveVertexList.add(graph.getFormattedListAlString());
-		cptModif++;
-		
 		boolean bExist=false;
 		if (graph.getVertex(strVertexName) != null) {
-			hci.showError("Un sommet avec le nom " + strVertexName + " existe déjà.");
+			hci.showError("Un sommet avec le nom " + strVertexName + " existe dï¿½jï¿½.");
 			bExist = true;
 		} else if (strVertexName.replaceAll(" ", "").equals("")) {
-			hci.showError("Le nom de votre sommet ne peut pas être vide");
+			hci.showError("Le nom de votre sommet ne peut pas ï¿½tre vide");
 			bExist = true;
 		} else {
 			graph.addVertex(strVertexName);
 			hci.addVertex(strVertexName);
+			provSave();
 		}
-
 		return bExist;
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {
-		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis);
+			provSave();
 		} else {
-			hci.showError("L'arc existe déjà.");
+			hci.showError("L'arc existe dï¿½jï¿½.");
 		}
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
-		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis, iValue);
-		} else {
+<<<<<<< HEAD
+			provSave();
+		} else
 			hci.showError("L'arc existe déjà.");
+=======
+		} else {
+			hci.showError("L'arc existe dï¿½jï¿½.");
 		}
+>>>>>>> 1a3fbc5cd2be28b535a2cd1be119a5fd1a3f576e
 	}
 
 	public void delArc(Vertex v, Vertex vBis) {
-		provSave();
 		for (int i = 0; i < v.getAlArcs().size(); i++) {
-			if (v.getAlArcs().get(i).getVertex() == vBis)
+			if (v.getAlArcs().get(i).getVertex() == vBis) {
 				graph.deleteArc(v.getAlArcs().get(i));
+				provSave();
+			}
 		}
 	}
 
@@ -127,12 +138,23 @@ public class Controller {
 
 	public void undo() {
 		if (cptModif > 0) {
-			
+			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-1)));
+			hci.initHmVertexByTab(saveCoordList.get(cptModif-1));
+			cptModif--;
+			System.out.println(saveVertexList);
+			System.out.println(cptModif);
 		}
+		
 	}
 
 	public void redo() {
-
+		if (cptModif >= 0 && cptModif < saveVertexList.size()) {
+			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif+1)));
+			hci.initHmVertexByTab(saveCoordList.get(cptModif+1));
+			cptModif++;
+			System.out.println(saveVertexList);
+			System.out.println(cptModif);
+		}
 	}
 
 	public static void main(String[] args) {
@@ -143,18 +165,96 @@ public class Controller {
 		return graph;
 	}
 	
+	@Override
+	public char[] listeSommet() {
+		return graph.getListVertex();
+	}
+
+	@Override
+	public int[][] getMatrice() {
+		return graph.getTMatrix();
+	}
+
+	@Override
+	public void majIHM() {
+		hci.refresh();
+	}
+	
 	public void provSave() {
-		saveVertexList.add(graph.getFormattedListAlString());
-		Point[] tabPoint = new Point[graph.getAlVertex().size()];
+		// Incrémentation du compteur indiquant le nombre de modification (Repère utilisé pour savoir notre position dans la ArrayList permettant le retour en arrière
+		cptModif++;
 		
+		// Initialisation de la ArrayList contenant la liste d'adjacence du graphe au moment où l'utilisateur effectue une action
+		ArrayList<String> alProv = graph.getFormattedListAlString();
+		alProv.add(0,"Valued="+graph.isValued());
+		alProv.add(0,"Directed="+graph.isDirected());
+		
+		// Suppression des dernières actions effectuées dans le cas où l'utilisateur effectue une nouvelle action sans redo
+		if (cptModif < saveVertexList.size()) {
+			for (int i = cptModif ; i < saveVertexList.size(); i++) {
+				saveVertexList.remove(i);
+				saveCoordList.remove(i);
+			}
+		}
+		
+		// Ajout de la liste d'adjacence dans la ArrayList de sauvegarde
+		saveVertexList.add(alProv);
+		
+		// Sauvegarde des coordonnées
+		Point[] tabPoint = new Point[graph.getAlVertex().size()];
 		int cpt = 0;
 		for (Point c : hci.getHmVertex().values()) {
-			tabPoint[cpt] = c;
+			tabPoint[cpt] = new Point(c);
 			cpt++;
 		}
 		
 		saveCoordList.add(tabPoint);
-		
-		cptModif++;
+		System.out.println(saveVertexList);
+		System.out.println(cptModif);
+	}
+	
+	/*MÃ©thodes de l'interface IIhmable */
+	@Override
+	public int getNbSommet() {
+		return graph.getAlVertex().size();
+	}
+
+	@Override
+	public int getNbArc(int indSommet) {
+		return graph.getAlVertex().get(indSommet).getAlArcs().size();
+	}
+
+	@Override
+	public char getNomSommet(int indSommet) {
+		return graph.getAlVertex().get(indSommet).getName().charAt(0);
+	}
+
+	@Override
+	public int getValArc(int indSommetOri, int indArc) {
+		return graph.getAlVertex().get(indSommetOri).getAlArcs().get(indArc).getIValue();
+	}
+
+	@Override
+	public char getNomSommetArc(int indSommetOri, int indArc) {
+		return graph.getAlVertex().get(indSommetOri).getAlArcs().get(indArc).getVertex().getName().charAt(0);
+	}
+
+	@Override
+	public boolean sommetActif(char sommet) {
+		if (parcours.sommetActif(sommet))
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean arcActif(char sommetOri, char sommetDest) {
+		if (parcours.arcActif(sommetOri, sommetDest))
+			return true;
+		return false;
+	}
+
+	@Override
+	public String getMessage() {
+		return parcours.getMessage();
 	}
 }
