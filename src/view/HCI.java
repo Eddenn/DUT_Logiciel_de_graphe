@@ -383,9 +383,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Modifier un sommet
 		} else if (e.getSource() == tabMenuItemGraph[1]) {
 			if(pGraph.getAlSelected().size() > 1 ) {
-				showError("Veuilliez sélectionné un seul sommet.");
+				showError("Veuilliez sï¿½lectionnï¿½ un seul sommet.");
 			} else if (pGraph.getAlSelected().size() == 0) {
-				showError("Veuilliez sélectionné un sommet.");
+				showError("Veuilliez sï¿½lectionnï¿½ un sommet.");
 			} else {
 				new Form(this, "Modifier un sommet", true, ctrl);
 			}
@@ -575,4 +575,5 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
+
 }
