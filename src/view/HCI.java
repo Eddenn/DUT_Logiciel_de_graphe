@@ -66,13 +66,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public HCI(Controller controller) {
 		this.ctrl = controller;
 		this.graph = controller.getGraph();
-
+		
 		// basic parameters of this frame
 		this.setTitle("Logiciel pedagogique de graph");
 
 		this.setSize(900, 700);
-		setPreferredSize(new Dimension(900, 700));
-		this.setLocation(250, 0);
+		this.setPreferredSize(new Dimension(900, 700));
+		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(true);
 		this.setLayout(new BorderLayout());
@@ -145,7 +145,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// MenuItem - Rï¿½pï¿½ter
 		tabMenuItemEdition[1] = new JMenuItem(
-				"<html>Rï¿½pï¿½ter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
+				"<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
 		tabMenuItemEdition[1].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[1]);
 
@@ -173,7 +173,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		menuEdition.addSeparator();
 
 		// MenuItem - Selectionner tout
-		tabMenuItemEdition[5] = new JMenuItem("<html>Sï¿½lectionner tout&emsp;&nbsp;&nbsp;<i>Ctrl+A</i></html>");
+		tabMenuItemEdition[5] = new JMenuItem("<html>Sélectionner tout&emsp;&nbsp;&nbsp;<i>Ctrl+A</i></html>");
 		tabMenuItemEdition[5].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[5]);
 
@@ -265,23 +265,23 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		// New file
-		buttonNew = new JButton(new ImageIcon("images/nouveau.jpg"));
+		buttonNew = new JButton(new ImageIcon("images/nouveau.png"));
 		buttonNew.addActionListener(this);
 		pButton.add(buttonNew);
 		// Open file
-		buttonOpen = new JButton(new ImageIcon("images/ouvrir.jpg"));
+		buttonOpen = new JButton(new ImageIcon("images/ouvrir.png"));
 		buttonOpen.addActionListener(this);
 		pButton.add(buttonOpen);
 		// Save file
-		buttonSave = new JButton(new ImageIcon("images/enregistrer.jpg"));
+		buttonSave = new JButton(new ImageIcon("images/enregistrer.png"));
 		buttonSave.addActionListener(this);
 		pButton.add(buttonSave);
 		// Zoom in
-		buttonZoomIn = new JButton(new ImageIcon("images/zoom +.jpg"));
+		buttonZoomIn = new JButton(new ImageIcon("images/zoom_In.png"));
 		buttonZoomIn.addActionListener(this);
 		pButton.add(buttonZoomIn);
 		// Zoom out
-		buttonZoomOut = new JButton(new ImageIcon("images/zoom -.jpg"));
+		buttonZoomOut = new JButton(new ImageIcon("images/zoom_Out.png"));
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 
@@ -325,7 +325,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pack();
 		
 		this.addKeyListener(pGraph);
-		setVisible(true);
 	}
 
 	public void initHmVertex() {
@@ -613,5 +612,5 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
-
+	
 }

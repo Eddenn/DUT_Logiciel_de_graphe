@@ -1,4 +1,4 @@
-Farm-Fresh arrow refresh.png in Farm-Fresh Web Icons
+*.png in Farm-Fresh Web Icons
 Date	18 September 2010 (UTC)
 Source	http://www.fatcow.com/free-icons/
 Author	FatCow Web Hosting

@@ -2,10 +2,13 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,13 +21,22 @@ public class FormNewGraph extends JDialog implements ActionListener {
 	@SuppressWarnings("rawtypes")
 	private JComboBox boxOriented, boxValued;
 	private Controller ctrl;
+	private boolean bEnd;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public FormNewGraph(HCI parent, String title, boolean modal, Controller ctrl){
 		super(parent,title,modal);
+		this.bEnd = false;
 		this.setSize(300, 165);
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) 
+            {
+    			bEnd = true;
+            } 
+         } ) ; 
 		
 		this.ctrl=ctrl;
 		
@@ -68,10 +80,12 @@ public class FormNewGraph extends JDialog implements ActionListener {
 		if (e.getSource() == ok ){
 			boolean bValued = boxValued.getSelectedItem().equals("Oui");
 			boolean bOriented = boxOriented.getSelectedItem().equals("Oui");
-			
 			ctrl.newGraph(bOriented, bValued);
 		}
+		this.bEnd=true;
 		dispose();
 	}
+	
+	public boolean getBEnd() {return this.bEnd;}
 
 }

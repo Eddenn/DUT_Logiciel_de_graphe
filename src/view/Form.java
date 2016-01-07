@@ -66,7 +66,7 @@ public class Form extends JDialog implements ActionListener {
 		if (this.getTitle().equals("Ajouter un sommet")) {
 			if (e.getSource() == ok) {
 				if(!ctrl.addVertex(nom.getText())){
-					HCI.hmVertex.put(nom.getText(), new Point(0, 0));
+					hci.hmVertex.put(nom.getText(), new Point(0, 0));
 					hci.getAlSelected().clear();
 					hci.getAlSelected().add(nom.getText());
 				}
@@ -82,8 +82,8 @@ public class Form extends JDialog implements ActionListener {
 				for (Vertex v : ctrl.getGraph().getAlVertex()) {
 					if (v.getName().equals(hci.getAlSelected().get(0))) {
 						v.setName(nom.getText());
-						HCI.hmVertex.put(nom.getText(), HCI.hmVertex.get(hci.getAlSelected().get(0)));
-						HCI.hmVertex.remove(hci.getAlSelected().get(0));
+						hci.hmVertex.put(nom.getText(), hci.hmVertex.get(hci.getAlSelected().get(0)));
+						hci.hmVertex.remove(hci.getAlSelected().get(0));
 						hci.getAlSelected().clear();
 						hci.getAlSelected().add(nom.getText());
 						hci.refresh();
