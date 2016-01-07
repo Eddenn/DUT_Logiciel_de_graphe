@@ -3,9 +3,6 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -558,7 +555,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	public void addVertex(String strName) {
-		hmVertex.put(strName, new Point(0, 0));
+		hmVertex.put(strName, new Point(1, 1));
 		slObject.refresh();
 	}
 
