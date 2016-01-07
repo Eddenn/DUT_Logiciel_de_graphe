@@ -356,6 +356,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
+			//Enregistrer
+		}else if(e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave){
+				ctrl.saveFile("");
 			// Enregistrer sous
 		} else if (e.getSource() == tabMenuItemFile[3]) {
 			JFileChooser dial = new JFileChooser(new File("."));

@@ -19,6 +19,7 @@ public class Controller implements IControlable, IIhmable {
 	private ArrayList<ArrayList<String>> saveVertexList;
 	private ArrayList<Point[]> saveCoordList;
 	private int cptModif;
+	private static String file;
 	
 	private IParcourable parcours; 
 
@@ -36,11 +37,14 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	public void saveFile(String strFileName) {
+		if(!strFileName.equals("")){
+			file=strFileName;
+		}
 		FileWriter fw = null;
 
 		try {
 			// ouverture du fichier en mode �criture
-			fw = new FileWriter(strFileName, false);
+			fw = new FileWriter(file, false);
 
 			// �criture des lignes de texte
 			fw.write("IsMatrix=true\n");
@@ -51,7 +55,7 @@ public class Controller implements IControlable, IIhmable {
 			// fermeture du fichier
 			fw.close();
 		} catch (IOException e) {
-			hci.showError("Probl�me d'�criture dans le fichier " + strFileName + ".");
+			hci.showError("Probl�me d'enregistrement du fichier " + file+ ".");
 		}
 	}
 
