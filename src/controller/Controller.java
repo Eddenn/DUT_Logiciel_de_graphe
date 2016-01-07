@@ -56,16 +56,20 @@ public class Controller implements IControlable, IIhmable {
 			fw.close();
 			
 			// Remise a zero des sauvegarde provisoire
-			saveVertexList = new ArrayList<ArrayList<String>>();
-			saveCoordList = new ArrayList<Point[]>();
-			provSave();
-			cptModif = 0;
+			initProvSave();
 			
 		} catch (IOException e) {
 			hci.showError("Problï¿½me d'enregistrement du fichier " + file+ ".");
 		}
 	}
 
+	public void initProvSave() {
+		saveVertexList = new ArrayList<ArrayList<String>>();
+		saveCoordList = new ArrayList<Point[]>();
+		provSave();
+		cptModif = 0;
+	}
+	
 	public void loadFile(String strFileName) {
 		graph = Reader.read(strFileName);
 
@@ -75,6 +79,8 @@ public class Controller implements IControlable, IIhmable {
 		}
 
 		hci.initHmVertex();
+		initProvSave();
+		provSave();
 		hci.refresh();
 	}
 
@@ -141,8 +147,6 @@ public class Controller implements IControlable, IIhmable {
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-1)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif-1));
 			cptModif--;
-			System.out.println(saveVertexList);
-			System.out.println(cptModif);
 		}
 		
 	}
@@ -153,8 +157,6 @@ public class Controller implements IControlable, IIhmable {
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif+1)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif+1));
 			cptModif++;
-			System.out.println(saveVertexList);
-			System.out.println(cptModif);
 		}
 	}
 
@@ -191,9 +193,12 @@ public class Controller implements IControlable, IIhmable {
 		alProv.add(0,"Directed="+graph.isDirected());
 		
 		// Suppression des dernières actions effectuées dans le cas où l'utilisateur effectue une nouvelle action sans redo
-		if (cptModif < saveVertexList.size()) {
+		System.out.println(cptModif);
+		if (cptModif < saveCoordList.size()) {
 			for (int i = cptModif ; i < saveVertexList.size(); i++) {
 				saveVertexList.remove(i);
+			}
+			for (int i = cptModif; i < saveCoordList.size(); i++) {
 				saveCoordList.remove(i);
 			}
 		}
@@ -210,8 +215,7 @@ public class Controller implements IControlable, IIhmable {
 		}
 		
 		saveCoordList.add(tabPoint);
-		System.out.println(saveVertexList);
-		System.out.println(cptModif);
+		System.out.println(saveCoordList);
 	}
 	
 	/*MÃ©thodes de l'interface IIhmable */

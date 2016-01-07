@@ -349,8 +349,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// Initialization of hmVertex
 		hmVertex = new HashMap<String, Point>();
 		
+		ArrayList<Vertex> alVertex = ctrl.getGraph().getAlVertex();
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
-			hmVertex.put(ctrl.getGraph().getAlVertex().get(i).getName(), tab[i]);
+			hmVertex.put(alVertex.get(i).getName(), tab[i]);
 		}
 	}
 

@@ -465,12 +465,12 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			}
 			clipBoardEdge.clear();
 		}
-		
+		//CTRL+Z
 		if(e.getModifiersEx()==128 && e.getKeyCode()==90 ) {
 			hci.getController().undo();
 			hci.refresh();
 		}
-		
+		//CTRL+Y
 		if(e.getModifiersEx()==128 && e.getKeyCode()==89 ) {
 			hci.getController().redo();
 			hci.refresh();
