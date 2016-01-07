@@ -29,6 +29,7 @@ public class Controller {
 		// Initialize the arrrayList which permit to implement the undo and redo
 		saveVertexList = new ArrayList<ArrayList<String>>();
 		saveCoordList = new ArrayList<Point[]>();
+		provSave();
 		cptModif = 0;
 	}
 
@@ -70,16 +71,8 @@ public class Controller {
 	}
 
 	public boolean addVertex(String strVertexName) {
-<<<<<<< HEAD
-		provSave();
-		saveVertexList.add(graph.getFormattedListAlString());
-		cptModif++;
-		
-		boolean bExist=false;
-=======
 		boolean bExist = false;
 
->>>>>>> c27c84337f1f962b75f00c9ee285ad35d8f8dfe2
 		if (graph.getVertex(strVertexName) != null) {
 			hci.setError("Un sommet avec le nom " + strVertexName + " existe déjà.");
 			bExist = true;
@@ -90,42 +83,34 @@ public class Controller {
 			graph.addVertex(strVertexName);
 			hci.addVertex(strVertexName);
 		}
-
+		provSave();
 		return bExist;
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {
-<<<<<<< HEAD
-		provSave();
-		if (checkArcAlreadyExist(v,vBis)) {
-=======
 		if (checkArcAlreadyExist(v, vBis)) {
->>>>>>> c27c84337f1f962b75f00c9ee285ad35d8f8dfe2
 			graph.addArc(v, vBis);
 		} else {
 			hci.setError("L'arc existe déjà.");
 		}
+		provSave();
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
-<<<<<<< HEAD
-		provSave();
-		if (checkArcAlreadyExist(v,vBis)) {
-=======
 		if (checkArcAlreadyExist(v, vBis)) {
->>>>>>> c27c84337f1f962b75f00c9ee285ad35d8f8dfe2
 			graph.addArc(v, vBis, iValue);
 		} else {
 			hci.setError("L'arc existe déjà.");
 		}
+		provSave();
 	}
 
 	public void delArc(Vertex v, Vertex vBis) {
-		provSave();
 		for (int i = 0; i < v.getAlArcs().size(); i++) {
 			if (v.getAlArcs().get(i).getVertex() == vBis)
 				graph.deleteArc(v.getAlArcs().get(i));
 		}
+		provSave();
 	}
 
 	private boolean checkArcAlreadyExist(Vertex v, Vertex vBis) {
@@ -136,13 +121,14 @@ public class Controller {
 		}
 
 		return true;
-	}<<<<<<<HEAD
-
-	=======
+	}
 
 	public void undo() {
 		if (cptModif > 0) {
-			
+			System.out.println(saveVertexList.get(cptModif-1));
+			graph = ReaderAdjacencyList.ReadAdjacencyList(saveVertexList.get(cptModif-1));
+			hci.initHmVertex();
+			cptModif--;
 		}
 	}
 
@@ -150,7 +136,6 @@ public class Controller {
 
 	}
 
-	>>>>>>>dbe59d79167dcc64767596d36ac62e02618989aa
 
 	public static void main(String[] args) {
 		new Controller();
@@ -161,7 +146,19 @@ public class Controller {
 	}
 	
 	public void provSave() {
-		saveVertexList.add(graph.getFormattedListAlString());
+		ArrayList<String> alProv = graph.getFormattedListAlString();
+		alProv.add(0,"Valued="+graph.isValued());
+		alProv.add(0,"Directed="+graph.isDirected());
+		
+		if (cptModif < saveVertexList.size()) {
+			for (int i = cptModif ; i < saveVertexList.size(); i++) {
+				saveVertexList.remove(i);
+				saveCoordList.remove(i);
+			}
+		}
+		
+		System.out.println(alProv);
+		saveVertexList.add(alProv);
 		Point[] tabPoint = new Point[graph.getAlVertex().size()];
 		
 		int cpt = 0;

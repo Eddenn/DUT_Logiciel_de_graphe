@@ -62,8 +62,7 @@ public class Form extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (this.getTitle().equals("Ajouter un sommet")) {
 			if (e.getSource() == ok) {
-				boolean bExist=ctrl.addVertex(nom.getText());
-				if(!bExist){
+				if(!ctrl.addVertex(nom.getText())){
 					HCI.hmVertex.put(nom.getText(), new Point(0, 0));
 					hci.setStrSelected(nom.getText());
 					dispose();
