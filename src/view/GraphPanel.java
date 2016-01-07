@@ -15,7 +15,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -28,7 +27,6 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 
 	private ArrayList<String> alSelected;	//Selected Edge or Arc
 	private Point saveMousePosition;
-	private HashMap<String,Point> clipBoardEdge;
 	private boolean bCtrlPressed;
 	private double iWidthEdge;	//Largeur
 	private double iHeightEdge; //Hauteur
@@ -38,7 +36,6 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public GraphPanel(HCI hci) {
 		super();
 		this.hci = hci;
-		this.clipBoardEdge = new HashMap<String,Point>();
 		this.saveMousePosition= new Point(0,0);
 		this.bCtrlPressed = false;
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -422,36 +419,19 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//CTRL Pressed pour la sélection
 		if(e.getKeyCode()==17) bCtrlPressed = true;
 		
-		//CTRL+C
 		if(e.getModifiersEx()==128 && e.getKeyCode()==67 ) {
 			System.out.println("CTRL+C");
-			clipBoardEdge.clear();
-			for(String s : alSelected) {
-				int cpt = 1;
-				while(HCI.hmVertex.containsKey(s.substring(0,1)+"("+cpt+")") || clipBoardEdge.containsKey(s.substring(0,1)+"("+cpt+")")) {
-					cpt++;
-				}
-				clipBoardEdge.put(s.substring(0,1)+"("+cpt+")", new Point((int)(HCI.hmVertex.get(s).x+iWidthEdge*iZoom),(int)(HCI.hmVertex.get(s).y+iHeightEdge*iZoom)));
-			}
 		}
-		//CTRL+V
-		if(e.getModifiersEx()==128 && e.getKeyCode()==86 ) {
-			for(String s : clipBoardEdge.keySet()) {
-				hci.getGraph().addVertex(s);
-				HCI.hmVertex.put(s, clipBoardEdge.get(s));
-				hci.refresh();
-			}
-			clipBoardEdge.clear();
+		if(e.getModifiersEx()==128 && e.getKeyCode()==68 ) {
+			System.out.println("CTRL+V");
 		}
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//CTRL released pour la sélection
 		if(e.getKeyCode()==17) bCtrlPressed = false;
 	}
 		
