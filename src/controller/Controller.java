@@ -99,22 +99,16 @@ public class Controller implements IControlable, IIhmable {
 			graph.addArc(v, vBis);
 			provSave();
 		} else {
-			hci.showError("L'arc existe dï¿½jï¿½.");
+			hci.showError("L'arc existe déjà.");
 		}
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis, iValue);
-<<<<<<< HEAD
 			provSave();
 		} else
 			hci.showError("L'arc existe déjà.");
-=======
-		} else {
-			hci.showError("L'arc existe dï¿½jï¿½.");
-		}
->>>>>>> 1a3fbc5cd2be28b535a2cd1be119a5fd1a3f576e
 	}
 
 	public void delArc(Vertex v, Vertex vBis) {
