@@ -1,6 +1,6 @@
-/Farm-Fresh_arrow_refresh.png
 /.settings/*
 /.git/*
+<<<<<<< HEAD
 bin/*
 bin/model/*
 bin/view/*
@@ -15,3 +15,10 @@ TestParcoursPorc.txt
 bigImage.pdf
 graphParcours.txt
 testBig.pdf
+=======
+/bin/*
+/bin/model/*
+/bin/view/*
+/bin/view/*
+.classpath
+>>>>>>> 48d5dcdd235301c7495dd0a1a13e88090d1f2ce5

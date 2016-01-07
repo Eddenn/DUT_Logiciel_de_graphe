@@ -3,7 +3,6 @@ package controller;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import java.awt.Point;
 
@@ -19,7 +18,7 @@ public class Controller implements IControlable, IIhmable {
 	private ArrayList<ArrayList<String>> saveVertexList;
 	private ArrayList<Point[]> saveCoordList;
 	private int cptModif;
-	private static String file;
+	private static String file="";
 	
 	private IParcourable parcours; 
 
@@ -33,7 +32,8 @@ public class Controller implements IControlable, IIhmable {
 		// Initialize the arrrayList which permit to implement the undo and redo
 		saveVertexList = new ArrayList<ArrayList<String>>();
 		saveCoordList = new ArrayList<Point[]>();
-		cptModif = 0;
+		provSave();
+		cptModif--;
 	}
 
 	public void saveFile(String strFileName) {
@@ -54,6 +54,13 @@ public class Controller implements IControlable, IIhmable {
 
 			// fermeture du fichier
 			fw.close();
+			
+			// Remise a zero des sauvegarde provisoire
+			saveVertexList = new ArrayList<ArrayList<String>>();
+			saveCoordList = new ArrayList<Point[]>();
+			provSave();
+			cptModif = 0;
+			
 		} catch (IOException e) {
 			hci.showError("Problï¿½me d'enregistrement du fichier " + file+ ".");
 		}
@@ -78,10 +85,6 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	public boolean addVertex(String strVertexName) {
-		provSave();
-		saveVertexList.add(graph.getFormattedListAlString());
-		cptModif++;
-		
 		boolean bExist=false;
 		if (graph.getVertex(strVertexName) != null) {
 			hci.showError("Un sommet avec le nom " + strVertexName + " existe dï¿½jï¿½.");
@@ -92,34 +95,34 @@ public class Controller implements IControlable, IIhmable {
 		} else {
 			graph.addVertex(strVertexName);
 			hci.addVertex(strVertexName);
+			provSave();
 		}
-
 		return bExist;
 	}
 
 	public void addArc(Vertex v, Vertex vBis) {
-		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis);
+			provSave();
 		} else {
-			hci.showError("L'arc existe dï¿½jï¿½.");
+			hci.showError("L'arc existe déjà.");
 		}
 	}
 
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
-		provSave();
 		if (checkArcAlreadyExist(v,vBis)) {
 			graph.addArc(v, vBis, iValue);
-		} else {
-			hci.showError("L'arc existe dï¿½jï¿½.");
-		}
+			provSave();
+		} else
+			hci.showError("L'arc existe déjà.");
 	}
 
 	public void delArc(Vertex v, Vertex vBis) {
-		provSave();
 		for (int i = 0; i < v.getAlArcs().size(); i++) {
-			if (v.getAlArcs().get(i).getVertex() == vBis)
+			if (v.getAlArcs().get(i).getVertex() == vBis) {
 				graph.deleteArc(v.getAlArcs().get(i));
+				provSave();
+			}
 		}
 	}
 
@@ -134,13 +137,25 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	public void undo() {
-		HashMap<String, ArrayList<String>> hmAdjacency = graph.generateAdjacencyList();
-		System.out.println(hmAdjacency);
-		// for (String key : hmAdjacency.)
+		if (cptModif > 0) {
+			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-1)));
+			hci.initHmVertexByTab(saveCoordList.get(cptModif-1));
+			cptModif--;
+			System.out.println(saveVertexList);
+			System.out.println(cptModif);
+		}
+		
 	}
 
 	public void redo() {
-
+		if (cptModif >= 0 && cptModif+1 < saveVertexList.size()) {
+			System.out.println(cptModif);
+			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif+1)));
+			hci.initHmVertexByTab(saveCoordList.get(cptModif+1));
+			cptModif++;
+			System.out.println(saveVertexList);
+			System.out.println(cptModif);
+		}
 	}
 
 	public static void main(String[] args) {
@@ -167,19 +182,36 @@ public class Controller implements IControlable, IIhmable {
 	}
 	
 	public void provSave() {
-		saveVertexList.add(graph.getFormattedListAlString());
-		Point[] tabPoint = new Point[graph.getAlVertex().size()];
+		// Incrémentation du compteur indiquant le nombre de modification (Repère utilisé pour savoir notre position dans la ArrayList permettant le retour en arrière
+		cptModif++;
 		
+		// Initialisation de la ArrayList contenant la liste d'adjacence du graphe au moment où l'utilisateur effectue une action
+		ArrayList<String> alProv = graph.getFormattedListAlString();
+		alProv.add(0,"Valued="+graph.isValued());
+		alProv.add(0,"Directed="+graph.isDirected());
+		
+		// Suppression des dernières actions effectuées dans le cas où l'utilisateur effectue une nouvelle action sans redo
+		if (cptModif < saveVertexList.size()) {
+			for (int i = cptModif ; i < saveVertexList.size(); i++) {
+				saveVertexList.remove(i);
+				saveCoordList.remove(i);
+			}
+		}
+		
+		// Ajout de la liste d'adjacence dans la ArrayList de sauvegarde
+		saveVertexList.add(alProv);
+		
+		// Sauvegarde des coordonnées
+		Point[] tabPoint = new Point[graph.getAlVertex().size()];
 		int cpt = 0;
 		for (Point c : hci.getHmVertex().values()) {
-			tabPoint[cpt] = c;
+			tabPoint[cpt] = new Point(c);
 			cpt++;
 		}
 		
 		saveCoordList.add(tabPoint);
-		
-		cptModif++;
-
+		System.out.println(saveVertexList);
+		System.out.println(cptModif);
 	}
 	
 	/*MÃ©thodes de l'interface IIhmable */
@@ -225,5 +257,8 @@ public class Controller implements IControlable, IIhmable {
 	@Override
 	public String getMessage() {
 		return parcours.getMessage();
+	}
+	public String getFile(){
+		return file;
 	}
 }

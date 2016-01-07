@@ -3,9 +3,6 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -33,7 +30,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JPopupMenu popMenu;
 
 	// Data of Vertex
-	protected static HashMap<String, Point> hmVertex;
+	protected HashMap<String, Point> hmVertex;
 	int xInitialize = 0, yInitialize = 0; // Used for the preferedsize of pGraph
 
 	// Menu bar of this frame
@@ -64,6 +61,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenuItem popUpEditVertex;
 	private JMenuItem popUpDeleteVertex;
 	private JMenuItem popUpDeleteArc;
+	private JMenuItem popUpEditArc;
 
 	public HCI(Controller controller) {
 		this.ctrl = controller;
@@ -267,23 +265,23 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		// New file
-		buttonNew = new JButton("Nouveau");
+		buttonNew = new JButton(new ImageIcon("images/nouveau.jpg"));
 		buttonNew.addActionListener(this);
 		pButton.add(buttonNew);
 		// Open file
-		buttonOpen = new JButton("Ouvrir");
+		buttonOpen = new JButton(new ImageIcon("images/ouvrir.jpg"));
 		buttonOpen.addActionListener(this);
 		pButton.add(buttonOpen);
 		// Save file
-		buttonSave = new JButton("Enregistrer");
+		buttonSave = new JButton(new ImageIcon("images/enregistrer.jpg"));
 		buttonSave.addActionListener(this);
 		pButton.add(buttonSave);
 		// Zoom in
-		buttonZoomIn = new JButton("+");
+		buttonZoomIn = new JButton(new ImageIcon("images/zoom +.jpg"));
 		buttonZoomIn.addActionListener(this);
 		pButton.add(buttonZoomIn);
 		// Zoom out
-		buttonZoomOut = new JButton("-");
+		buttonZoomOut = new JButton(new ImageIcon("images/zoom -.jpg"));
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 
@@ -307,10 +305,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		popUpAddArc = new JMenuItem("Ajouter un arc");
 		popUpAddArc.addActionListener(this);
 		popMenu.add(popUpAddArc);
+		
+		popUpEditArc = new JMenuItem("Modifier un arc");
+		popUpEditArc.addActionListener(this);
+		popMenu.add(popUpEditArc);
 
 		popUpDeleteArc = new JMenuItem("Supprimer un arc");
 		popUpDeleteArc.addActionListener(this);
 		popMenu.add(popUpDeleteArc);
+
 		// ----------------------//
 
 		// **---------------------------**//
@@ -320,6 +323,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pGraph.setPreferredSize(
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
+		
 		this.addKeyListener(pGraph);
 		setVisible(true);
 	}
@@ -340,6 +344,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 		}
 	}
+	
+	public void initHmVertexByTab(Point[] tab) {
+		// Initialization of hmVertex
+		hmVertex = new HashMap<String, Point>();
+		
+		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
+			hmVertex.put(ctrl.getGraph().getAlVertex().get(i).getName(), tab[i]);
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -350,25 +363,36 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// FICHIER
 			// Nouveau
 		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
-			new FormNewGraph(this, "Crï¿½ation d'un nouveau graphe", true, ctrl);
+			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 			//Enregistrer
-		}else if(e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave){
+		}else if(e.getSource()==tabMenuItemFile[2] ){
 				ctrl.saveFile("");
 			// Enregistrer sous
-		} else if (e.getSource() == tabMenuItemFile[3]) {
-			JFileChooser dial = new JFileChooser(new File("."));
-			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.saveFile(dial.getSelectedFile().getAbsolutePath() + ".txt");
+		} else if (e.getSource() == tabMenuItemFile[3] || e.getSource()==buttonSave) {
+			if(ctrl.getFile().equals("")){
+				JFileChooser dial = new JFileChooser(new File("."));
+				if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+					ctrl.saveFile(dial.getSelectedFile().getAbsolutePath() + ".txt");
+			}else{
+				ctrl.saveFile("");
+			}
 			// Quitter
 		} else if (e.getSource() == tabMenuItemFile[5]) {
 			this.dispose();
 
 			// EDITION
+		} else if (e.getSource() == tabMenuItemEdition[0]) {
+				ctrl.undo();
+				this.refresh();
+		} else if (e.getSource() == tabMenuItemEdition[1]) {
+				ctrl.redo();
+				this.refresh();
+		
 			// EXPORTER
 			// Image
 		} else if (e.getSource() == tabMenuItemExport[0]) {
@@ -401,7 +425,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 					}
 				}
 				ctrl.getGraph().deleteVertex(tmpVertex);
-				HCI.hmVertex.remove(s);
+				this.hmVertex.remove(s);
 			}
 			setAlSelected(new ArrayList<String>());
 			refresh();
@@ -412,14 +436,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[4]) {
 			for(String s : pGraph.getAlSelected()) {
-				if (s.matches("[?{5}-{6}?{6}])")) {
+				if (s.matches(".{5}-{5}.*")) {
 					String vName = s.substring(0, 5);
 					vName = vName.replaceAll(" ", "");
 					
-					String vBisName = s.substring(12);
+					String vBisName = s.substring(24);
 					vBisName = vBisName.replaceAll(" ", "");
-					
-					System.out.println(vName + vBisName);
 					
 				    ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));		
 				}
@@ -431,7 +453,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// AIDE
 		else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
-					"<html>Projet tuteurï¿½ de deuxiï¿½me annï¿½e de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
+					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
 
 			// BUTTON
@@ -449,21 +471,30 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Items du menu contextuel
 		} else if (e.getSource() == popUpAddArc) {
 			new FormAddArc(this, "Ajouter un arc", true, ctrl);
-			
-		}else if (e.getSource() == popUpAddVertex) {
-			new Form(this, "Ajouter un sommet", true, ctrl);
-			
-		}else if (e.getSource() == popUpEditVertex) {
-			new FormAddArc(this, "Modifier un sommet", true, ctrl);
-		
-			/*Non implÃ©mentÃ©e pour le moment */
-		}//else if (e.getSource() == popUpDeleteArc) {
-//			new FormAddArc(this, "Ajouter un arc", true, ctrl);
-//			
-//		}else if (e.getSource() == popUpEditArc) {
-//			new FormAddArc(this, "Mofifier un arc", true, ctrl);
-//		}
 
+		} else if (e.getSource() == popUpAddVertex) {
+			new Form(this, "Ajouter un sommet", true, ctrl);
+
+		} else if (e.getSource() == popUpEditVertex) {
+			new FormAddArc(this, "Modifier un sommet", true, ctrl);
+
+			/* Non implÃ©mentÃ©e pour le moment */
+		} // else if (e.getSource() == popUpDeleteArc) {
+			// new FormAddArc(this, "Ajouter un arc", true, ctrl);
+			//
+			// }else if (e.getSource() == popUpEditArc) {
+			// new FormAddArc(this, "Mofifier un arc", true, ctrl);
+			// }
+	
+		else if (e.getSource() == popUpEditVertex) {
+			new Form(this, "Modifier un sommet", true, ctrl);
+
+		}else if (e.getSource() == popUpDeleteArc) {
+			new FormDeleteArc(this, "Supprimer un arc", true, ctrl);
+			
+		}else if (e.getSource() == popUpEditArc) {
+			new FormAddArc(this, "Mofifier un arc", true, ctrl);
+		}
 		refresh();
 	}
 
@@ -527,7 +558,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	public void addVertex(String strName) {
-		hmVertex.put(strName, new Point(0, 0));
+		hmVertex.put(strName, new Point(1, 1));
 		slObject.refresh();
 	}
 
@@ -540,8 +571,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public ArrayList<String> getAlSelected() {
 		return pGraph.getAlSelected();
 	}
-	
-	public HashMap<String,Point> getHmVertex() {
+
+	public HashMap<String, Point> getHmVertex() {
 		return hmVertex;
 	}
 
@@ -574,6 +605,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public Controller getController() {
+		return this.ctrl;
 	}
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
