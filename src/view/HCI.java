@@ -265,23 +265,23 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		// New file
-		buttonNew = new JButton("Nouveau");
+		buttonNew = new JButton(new ImageIcon("images/nouveau.jpg"));
 		buttonNew.addActionListener(this);
 		pButton.add(buttonNew);
 		// Open file
-		buttonOpen = new JButton("Ouvrir");
+		buttonOpen = new JButton(new ImageIcon("images/ouvrir.jpg"));
 		buttonOpen.addActionListener(this);
 		pButton.add(buttonOpen);
 		// Save file
-		buttonSave = new JButton("Enregistrer");
+		buttonSave = new JButton(new ImageIcon("images/enregistrer.jpg"));
 		buttonSave.addActionListener(this);
 		pButton.add(buttonSave);
 		// Zoom in
-		buttonZoomIn = new JButton("+");
+		buttonZoomIn = new JButton(new ImageIcon("images/zoom +.jpg"));
 		buttonZoomIn.addActionListener(this);
 		pButton.add(buttonZoomIn);
 		// Zoom out
-		buttonZoomOut = new JButton("-");
+		buttonZoomOut = new JButton(new ImageIcon("images/zoom -.jpg"));
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 
@@ -370,13 +370,17 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 			//Enregistrer
-		}else if(e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave){
+		}else if(e.getSource()==tabMenuItemFile[2] ){
 				ctrl.saveFile("");
 			// Enregistrer sous
-		} else if (e.getSource() == tabMenuItemFile[3]) {
-			JFileChooser dial = new JFileChooser(new File("."));
-			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.saveFile(dial.getSelectedFile().getAbsolutePath() + ".txt");
+		} else if (e.getSource() == tabMenuItemFile[3] || e.getSource()==buttonSave) {
+			if(ctrl.getFile().equals("")){
+				JFileChooser dial = new JFileChooser(new File("."));
+				if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+					ctrl.saveFile(dial.getSelectedFile().getAbsolutePath() + ".txt");
+			}else{
+				ctrl.saveFile("");
+			}
 			// Quitter
 		} else if (e.getSource() == tabMenuItemFile[5]) {
 			this.dispose();
