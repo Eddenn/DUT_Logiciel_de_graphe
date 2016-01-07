@@ -3,7 +3,7 @@ package model;
 /**
  * Classe permettant de g�rer les arcs entre les sommets
  * 
- * @author Les grosses bites
+ * @author Groupe 3
  * 
  */
 
