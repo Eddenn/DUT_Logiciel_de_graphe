@@ -154,26 +154,29 @@ public class Form extends JDialog implements ActionListener {
 				setVisible(true);
 				
 				//Code de gestion de la modification de l'arc.
-				
-				for(Vertex v : ctrl.getGraph().getAlVertex()){
-					if (v.getName().equals(boxDep.getSelectedItem())){
-						vOrigine = v;
-					}
-				}
-				for(Vertex v : ctrl.getGraph().getAlVertex()){
-					if (v.getName().equals(boxArr.getSelectedItem())){
-						vDest = v;
-					}
-				}
-				
-				for (Arc a : vOrigine.getAlArcs()){
-					for (Arc b : vDest.getAlArcs()){
-						if (a.equals(b) || a == b){
-							a.setValue(5);
-							b.setValue(5);
+				try{
+					for(Vertex v : ctrl.getGraph().getAlVertex()){
+						if (v.getName().equals(boxDep.getSelectedItem())){
+							vOrigine = v;
 						}
 					}
-				}
+					for(Vertex v : ctrl.getGraph().getAlVertex()){
+						if (v.getName().equals(boxArr.getSelectedItem())){
+							vDest = v;
+						}
+					}
+					
+					for (Arc a : vOrigine.getAlArcs()){
+						for (Arc b : vDest.getAlArcs()){
+							if (a.equals(b) || a == b){
+								a.setValue(5);
+								b.setValue(5);
+							}
+						}
+					}		
+				} catch(Exception e1 ) {e1.printStackTrace();}
+			
+				dispose();
 			}
 		}
 	}
