@@ -341,54 +341,49 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void mouseDragged(MouseEvent e) {	
 		if(alSelected.size() != 0) {
 			double centerX, centerY;
-			//for (Point c : HCI.hmVertex.values()) {
-				// Find the key of this coordinate
-				for(String s : HCI.hmVertex.keySet()) {
-					if (alSelected.contains(s)) {
-						Point c = HCI.hmVertex.get(s);
-						centerX = (c.getX()+iWidthEdge/2)*iZoom;
-						centerY = (c.getY()+iHeightEdge/2)*iZoom;
-						if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2))) {
-							/*-----Déplacements des sommets sélectonnés----*/
-							setCursor(new Cursor(Cursor.MOVE_CURSOR));
-							//Coordonnées minimales des points sélectionnés
-							Point minPosition = new Point(c.x,c.y);
-							for(String edgeSelected : alSelected) {
-								if( HCI.hmVertex.get(edgeSelected).x < minPosition.x) {minPosition.x = HCI.hmVertex.get(edgeSelected).x;}
-								if( HCI.hmVertex.get(edgeSelected).y < minPosition.y) {minPosition.y = HCI.hmVertex.get(edgeSelected).y;}
-							}
-							//Coordonnées maximales des points sélectionnés
-							Point maxPosition = new Point((int) (c.x+iWidthEdge*iZoom),(int) (c.y+iHeightEdge*iZoom));
-							for(String edgeSelected : alSelected) {
-								if( HCI.hmVertex.get(edgeSelected).x+iWidthEdge*iZoom > maxPosition.x) {maxPosition.x = (int) (HCI.hmVertex.get(edgeSelected).x+iWidthEdge*iZoom);}
-								if( HCI.hmVertex.get(edgeSelected).y+iHeightEdge*iZoom > maxPosition.y) {maxPosition.y = (int) (HCI.hmVertex.get(edgeSelected).y+iHeightEdge*iZoom);}
-							}
-							//Calcul de la différence entre la dernière position de la souris et l'actuelle
-							Point deplacement = new Point(e.getPoint().x-saveMousePosition.x,e.getPoint().y-saveMousePosition.y);
-							
-							/*--Déplacement--*/
-							if( (minPosition.x==0 && deplacement.x>=0 || minPosition.x>0) && 
-								(minPosition.y==0 && deplacement.y>=0 || minPosition.y>0) &&
-								(maxPosition.x==this.getWidth()  && deplacement.x<=0 || maxPosition.x<this.getWidth() ) && 
-								(maxPosition.y==this.getHeight() && deplacement.y<=0 || maxPosition.y<this.getHeight()) && 
-								(minPosition.x+deplacement.x>=0) && minPosition.y+deplacement.y>=0 && maxPosition.x+deplacement.x<=this.getWidth() && maxPosition.y+deplacement.y<=this.getHeight() ) {
-								//Sommet par sommet
-								for(String edgeSelected : alSelected) {
-//									if( (HCI.hmVertex.get(edgeSelected).x+deplacement.x)>=0 && (HCI.hmVertex.get(edgeSelected).x+iWidthEdge*iZoom+deplacement.x)<=this.getWidth() ) {
-//									if( (HCI.hmVertex.get(edgeSelected).y+deplacement.y)>=0 && (HCI.hmVertex.get(edgeSelected).y+iHeightEdge*iZoom+deplacement.y)<=this.getHeight() ) {
-
-									HCI.hmVertex.get(edgeSelected).x += deplacement.x;
-									HCI.hmVertex.get(edgeSelected).y += deplacement.y;
-									//Text qui affiche les coordonnées
-									hci.getLabelCoord().setText("  X : " + (double) (HCI.hmVertex.get(edgeSelected).x +25) + "       Y : " + (double)(HCI.hmVertex.get(edgeSelected).y + 25));
-									repaint();
-								}
-							}
-							/*---------------------------------------------*/
+			// Find the key of this coordinate
+			for(String s : HCI.hmVertex.keySet()) {
+				if (alSelected.contains(s)) {
+					Point c = HCI.hmVertex.get(s);
+					centerX = (c.getX()+iWidthEdge/2)*iZoom;
+					centerY = (c.getY()+iHeightEdge/2)*iZoom;
+					if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2))) {
+						/*-----Déplacements des sommets sélectonnés----*/
+						setCursor(new Cursor(Cursor.MOVE_CURSOR));
+						//Coordonnées minimales des points sélectionnés
+						Point minPosition = new Point(c.x,c.y);
+						for(String edgeSelected : alSelected) {
+							if( HCI.hmVertex.get(edgeSelected).x < minPosition.x) {minPosition.x = HCI.hmVertex.get(edgeSelected).x;}
+							if( HCI.hmVertex.get(edgeSelected).y < minPosition.y) {minPosition.y = HCI.hmVertex.get(edgeSelected).y;}
 						}
+						//Coordonnées maximales des points sélectionnés
+						Point maxPosition = new Point((int) (c.x+iWidthEdge*iZoom),(int) (c.y+iHeightEdge*iZoom));
+						for(String edgeSelected : alSelected) {
+							if( HCI.hmVertex.get(edgeSelected).x+iWidthEdge*iZoom > maxPosition.x) {maxPosition.x = (int) (HCI.hmVertex.get(edgeSelected).x+iWidthEdge*iZoom);}
+							if( HCI.hmVertex.get(edgeSelected).y+iHeightEdge*iZoom > maxPosition.y) {maxPosition.y = (int) (HCI.hmVertex.get(edgeSelected).y+iHeightEdge*iZoom);}
+						}
+						//Calcul de la différence entre la dernière position de la souris et l'actuelle
+						Point deplacement = new Point(e.getPoint().x-saveMousePosition.x,e.getPoint().y-saveMousePosition.y);
+						
+						/*--Déplacement--*/
+						if( (minPosition.x==0 && deplacement.x>=0 || minPosition.x>0) && 
+							(minPosition.y==0 && deplacement.y>=0 || minPosition.y>0) &&
+							(maxPosition.x==this.getWidth()  && deplacement.x<=0 || maxPosition.x<this.getWidth() ) && 
+							(maxPosition.y==this.getHeight() && deplacement.y<=0 || maxPosition.y<this.getHeight()) && 
+							(minPosition.x+deplacement.x>=0) && minPosition.y+deplacement.y>=0 && maxPosition.x+deplacement.x<=this.getWidth() && maxPosition.y+deplacement.y<=this.getHeight() ) {
+							//Sommet par sommet
+							for(String edgeSelected : alSelected) {
+								HCI.hmVertex.get(edgeSelected).x += deplacement.x;
+								HCI.hmVertex.get(edgeSelected).y += deplacement.y;
+								//Text qui affiche les coordonnées
+								hci.getLabelCoord().setText("  X : " + (double) (HCI.hmVertex.get(edgeSelected).x +25) + "       Y : " + (double)(HCI.hmVertex.get(edgeSelected).y + 25));
+								repaint();
+							}
+						}
+						/*---------------------------------------------*/
 					}
 				}
-			//}			
+			}	
 		}
 		saveMousePosition = e.getPoint();
 	}
