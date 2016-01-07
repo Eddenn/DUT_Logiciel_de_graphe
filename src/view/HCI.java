@@ -474,7 +474,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		} else if (e.getSource() == popUpAddVertex) {
 			new Form(this, "Ajouter un sommet", true, ctrl);
-<<<<<<< HEAD
 
 		} else if (e.getSource() == popUpEditVertex) {
 			new FormAddArc(this, "Modifier un sommet", true, ctrl);
@@ -486,9 +485,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// }else if (e.getSource() == popUpEditArc) {
 			// new FormAddArc(this, "Mofifier un arc", true, ctrl);
 			// }
-=======
-			
-		}else if (e.getSource() == popUpEditVertex) {
+	
+		else if (e.getSource() == popUpEditVertex) {
 			new Form(this, "Modifier un sommet", true, ctrl);
 
 		}else if (e.getSource() == popUpDeleteArc) {
@@ -497,8 +495,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		}else if (e.getSource() == popUpEditArc) {
 			new FormAddArc(this, "Mofifier un arc", true, ctrl);
 		}
->>>>>>> da88bcf9381575915bbd6e84d92b22e09a35b282
-
 		refresh();
 	}
 
