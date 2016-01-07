@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.itextpdf.text.log.SysoCounter;
+
 import controller.Controller;
 
 public class FormNewGraph extends JDialog implements ActionListener {
@@ -22,16 +24,20 @@ public class FormNewGraph extends JDialog implements ActionListener {
 	private JComboBox boxOriented, boxValued;
 	private Controller ctrl;
 	private boolean bEnd;
+	private boolean bClose;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public FormNewGraph(HCI parent, String title, boolean modal, Controller ctrl){
 		super(parent,title,modal);
 		this.bEnd = false;
+		this.bClose = false;
 		this.setSize(300, 165);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setResizable(false);
-		
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {bEnd=true;bClose=true;} 
+         } ) ; 
 		this.ctrl=ctrl;
 		
 		String[] tabRep = {"Oui","Non"};
@@ -81,5 +87,6 @@ public class FormNewGraph extends JDialog implements ActionListener {
 	}
 	
 	public boolean getBEnd() {return this.bEnd;}
+	public boolean getBClose() {return this.bClose;}
 
 }

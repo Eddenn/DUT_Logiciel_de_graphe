@@ -64,17 +64,14 @@ public class Controller implements IControlable, IIhmable {
 		logoFrame.setSize(530, 530);
 		logoFrame.setLocationRelativeTo(null);
 		logoFrame.setBackground(new Color(0,0,0,0));
-				
+		
 		logoFrame.setVisible(true);
 		FormNewGraph nouveauGraph = new FormNewGraph(hci, "Création d'un nouveau graphe", true, this);
-		nouveauGraph.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) 
-            {
-    			System.exit(1);
-            } 
-         } ) ; 
 		//Attend la fin de la saisie des parametres du graphe
 		while(!nouveauGraph.getBEnd()){}
+		if(nouveauGraph.getBClose()) {
+			System.exit(0);
+		}
 		logoFrame.dispose();
 		hci.setVisible(true);
 		/*-------------------------------*/
