@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.itextpdf.text.pdf.TextField;
+
 import controller.Controller;
 import model.Arc;
 import model.Vertex;
@@ -24,6 +26,7 @@ public class FormUpdateArc extends JDialog implements ActionListener {
 	private JComboBox boxDep, boxArr;
 	private JTextField valArc;
 	private Controller ctrl;
+	private JTextField textfield;
 
 	public FormUpdateArc(HCI parent, String title, boolean modal, Controller ctrl) {
 		super(parent, title, modal);
@@ -65,7 +68,7 @@ public class FormUpdateArc extends JDialog implements ActionListener {
 
 		// Panel contenant le textField
 		JPanel panelTextField = new JPanel(new BorderLayout());
-		JTextField textfield = new JTextField();
+		textfield = new JTextField();
 		panelTextField.add(textfield);
 
 		// Ajout des comboBox et textField a la fenetre
@@ -97,12 +100,10 @@ public class FormUpdateArc extends JDialog implements ActionListener {
 					try {
 						for (Vertex v : ctrl.getGraph().getAlVertex()) {
 							if (v.getName().equals("a")) {
-								System.out.println("okk");
 								vOrigine = v;
 							}
 						}
 						for (Vertex v : ctrl.getGraph().getAlVertex()) {
-								System.out.println("okkkk");
 							if (v.getName().equals("b")) {
 								vDest = v;
 							}
@@ -111,9 +112,9 @@ public class FormUpdateArc extends JDialog implements ActionListener {
 						for (Arc a : vOrigine.getAlArcs()) {
 							for (Arc b : vDest.getAlArcs()) {
 								if (a.getVertex() == vDest || b.getVertex() == vOrigine || true) {
-									System.out.println("okkkkkk");
-									a.setValue(5);
-									b.setValue(5);
+									int value = Integer.parseInt(textfield.getText());
+									a.setValue(value);
+									b.setValue(value);
 								}
 							}
 						}
