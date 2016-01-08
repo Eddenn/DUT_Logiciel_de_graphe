@@ -38,7 +38,7 @@ public class FormAddArc extends JDialog implements ActionListener {
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
 			tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
 		}
-		
+
 		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");

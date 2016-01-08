@@ -63,10 +63,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.graph = controller.getGraph();
 		
 		// basic parameters of this frame
-		this.setTitle("Logiciel pedagogique de graph");
+		this.setTitle("Logiciel pédagogique d'édition de graphe");
 
 		this.setSize(900, 700);
 		this.setPreferredSize(new Dimension(900, 700));
+		ImageIcon img = new ImageIcon("images/PetitLogo.png");
+		this.setIconImage(img.getImage());
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(true);
@@ -139,8 +141,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		menuEdition.add(tabMenuItemEdition[0]);
 
 		// MenuItem - Répéter
-		tabMenuItemEdition[1] = new JMenuItem(
-				"<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
+		tabMenuItemEdition[1] = new JMenuItem("<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
 		tabMenuItemEdition[1].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[1]);
 
@@ -266,28 +267,33 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// New file
 		buttonNew = new JButton(new ImageIcon("images/nouveau.png"));
+		buttonNew.setToolTipText("Nouveau");
 		buttonNew.addActionListener(this);
 		pButton.add(buttonNew);
 		// Open file
 		buttonOpen = new JButton(new ImageIcon("images/ouvrir.png"));
+		buttonOpen.setToolTipText("Ouvrir");
 		buttonOpen.addActionListener(this);
 		pButton.add(buttonOpen);
 		// Save file
 		buttonSave = new JButton(new ImageIcon("images/enregistrer.png"));
+		buttonSave.setToolTipText("Enregistrer");
 		buttonSave.addActionListener(this);
 		pButton.add(buttonSave);
 		// Zoom in
 		buttonZoomIn = new JButton(new ImageIcon("images/zoom_In.png"));
+		buttonZoomIn.setToolTipText("Agrandir");
 		buttonZoomIn.addActionListener(this);
 		pButton.add(buttonZoomIn);
 		// Zoom out
 		buttonZoomOut = new JButton(new ImageIcon("images/zoom_Out.png"));
+		buttonZoomOut.setToolTipText("R�duire");
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 
 		add(pButton, BorderLayout.NORTH);
 		
-		// Instancitation du menu contextuel et de ses éléments
+		// Instancitation du menu contextuel et de ses �l�ments
 		popMenu = new JPopupMenu();
 		// MenuItem - Ajouter un sommet
 		popUpItem[0] = new JMenuItem("<html>Ajouter un sommet</html>");
@@ -377,11 +383,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
-			//Enregistrer
-		}else if(e.getSource()==tabMenuItemFile[2] ){
-				ctrl.saveFile("");
-			// Enregistrer sous
-		} else if (e.getSource() == tabMenuItemFile[3] || e.getSource()==buttonSave) {
+			// Enregistrer  et Enregistrer sous
+		} else if (e.getSource()==tabMenuItemFile[2] || e.getSource() == tabMenuItemFile[3] || e.getSource()==buttonSave) {
 			if(ctrl.getFile().equals("")){
 				JFileChooser dial = new JFileChooser(new File("."));
 				if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
@@ -451,19 +454,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5]) {
-			for(String s : pGraph.getAlSelected()) {
-				if (s.matches(".{5}-{5}.*")) {
-					String vName = s.substring(0, 5);
-					vName = vName.replaceAll(" ", "");
-					
-					String vBisName = s.substring(24);
-					vBisName = vBisName.replaceAll(" ", "");
-					
-				    ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));		
-				}
-			}
-			setAlSelected(new ArrayList<String>());
-			refresh();
+			new FormDeleteArc(this, "Supprimer un arc", true, ctrl);
 		}
 
 		/*-- AIDE --*/
@@ -484,7 +475,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			pGraph.zoomOut();
 			pGraph.repaint();
 			pGraph.revalidate();
-
 		} 
 		refresh();
 	}
