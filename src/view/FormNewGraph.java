@@ -69,8 +69,8 @@ public class FormNewGraph extends JDialog implements ActionListener {
 		ok.addActionListener(this);
 		annuler = new JButton ("Annuler");
 		annuler.addActionListener(this);
-		control.add(annuler);
 		control.add(ok);
+		control.add(annuler);
 		add(control, "South");
 		
 		setVisible(true);

@@ -36,6 +36,7 @@ public class SwitchList extends JPanel{
 		ImageIcon iSwitch = new ImageIcon( getClass().getResource( "/Farm-Fresh_arrow_refresh_16.png"));
 		jbSwitch = new JButton(iSwitch);
 		jbSwitch.setContentAreaFilled(false);
+		jbSwitch.setToolTipText("Changer de liste");
 		jbSwitch.addActionListener(hci);
 		jpTop.add(jbSwitch);
 		lTitle = new JLabel("Liste des Sommets");
