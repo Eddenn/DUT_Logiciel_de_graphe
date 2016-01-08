@@ -23,6 +23,7 @@ import model.Vertex;
 
 import view.FormNewGraph;
 import view.HCI;
+import view.StartFrame;
 
 public class Controller implements IControlable, IIhmable {
 	private HCI hci;
@@ -40,47 +41,11 @@ public class Controller implements IControlable, IIhmable {
 
 		// Initialize the frame
 		hci = new HCI(this);
-
-		/*-----Choix de l'utilisateur----*/
-		//Frame pour le logo
-		JFrame logoFrame = new JFrame();
-		logoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		JPanel pLogo = new JPanel(){
-			public void paintComponent(Graphics g){
-				Image logo = null;
-				try {
-					logo = ImageIO.read(new File("images/Logo_LGP.png"));
-				} catch (IOException e) {}
-				g.drawImage(logo, 0, 0, null);
-			}
-		};
-		pLogo.revalidate();
-		pLogo.repaint();
-		pLogo.setBackground(new Color(0,0,0,0));
-		pLogo.setOpaque(false);
-		logoFrame.add(pLogo);
-		logoFrame.setUndecorated(true);
-		logoFrame.setSize(530, 530);
-		logoFrame.setLocationRelativeTo(null);
-		logoFrame.setBackground(new Color(0,0,0,0));
 		
-		logoFrame.setVisible(true);
-		FormNewGraph nouveauGraph = new FormNewGraph(hci, "Création d'un nouveau graphe", true, this);
-		//Attend la fin de la saisie des parametres du graphe
-		while(!nouveauGraph.getBEnd()){}
-		if(nouveauGraph.getBClose()) {
-			System.exit(0);
-		}
-		logoFrame.dispose();
-		hci.setVisible(true);
-		/*-------------------------------*/
+		new StartFrame(this,hci);
 		
 		// Initialize the arrrayList which permit to implement the undo and redo
-		saveVertexList = new ArrayList<ArrayList<String>>();
-		saveCoordList = new ArrayList<Point[]>();
-		provSave();
-		cptModif--;
+		initProvSave();
 	}
 
 	public void saveFile(String strFileName) {
@@ -191,10 +156,10 @@ public class Controller implements IControlable, IIhmable {
 
 	public void undo() {
 		if (cptModif > 0) {
-			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-1)));
-			hci.initHmVertexByTab(saveCoordList.get(cptModif-1));
-			cptModif--;
-//			System.out.println(saveVertexList);
+			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif--)));
+			System.out.println(saveCoordList.get(cptModif));
+			hci.initHmVertexByTab(saveCoordList.get(cptModif));
+			System.out.println(saveVertexList);
 //			System.out.println(cptModif);
 		}
 		
@@ -202,12 +167,10 @@ public class Controller implements IControlable, IIhmable {
 
 	public void redo() {
 		if (cptModif >= 0 && cptModif+1 < saveVertexList.size()) {
+			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif++)));
+			hci.initHmVertexByTab(saveCoordList.get(cptModif));
+			System.out.println(saveVertexList);
 			System.out.println(cptModif);
-			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif+1)));
-			hci.initHmVertexByTab(saveCoordList.get(cptModif+1));
-			cptModif++;
-//			System.out.println(saveVertexList);
-//			System.out.println(cptModif);
 		}
 	}
 
@@ -247,10 +210,10 @@ public class Controller implements IControlable, IIhmable {
 		System.out.println(cptModif);
 		if (cptModif < saveCoordList.size()) {
 			for (int i = cptModif ; i < saveVertexList.size(); i++) {
-				saveVertexList.remove(i);
+				saveVertexList.remove(cptModif);
 			}
 			for (int i = cptModif; i < saveCoordList.size(); i++) {
-				saveCoordList.remove(i);
+				saveCoordList.remove(cptModif);
 			}
 		}
 		
@@ -267,8 +230,8 @@ public class Controller implements IControlable, IIhmable {
 		
 		saveCoordList.add(tabPoint);
 		System.out.println(saveCoordList);
-//		System.out.println(saveVertexList);
-//		System.out.println(cptModif);
+		System.out.println(saveVertexList);
+		System.out.println(cptModif);
 	}
 	
 	/*MÃ©thodes de l'interface IIhmable */

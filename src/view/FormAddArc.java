@@ -38,8 +38,8 @@ public class FormAddArc extends JDialog implements ActionListener {
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
 			tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
 		}
-		
-		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
+
+		JLabel text = new JLabel("<html> Saisissez les donnÃ©es de l'arc : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
 		
@@ -49,14 +49,14 @@ public class FormAddArc extends JDialog implements ActionListener {
 		// Panel contenant les JComboBox
 		JPanel panelComboBox = new JPanel();
 		
-		// Gestion du sommet de départ
-		JLabel lDep = new JLabel("Départ : ");
+		// Gestion du sommet de dÃ©part
+		JLabel lDep = new JLabel("DÃ©part : ");
 		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
 		panelComboBox.add(boxDep,"");
 		
-		// Gestion du sommet d'arrivé
-		JLabel lArr = new JLabel("Arrivé : ");
+		// Gestion du sommet d'arrivÃ©e
+		JLabel lArr = new JLabel("ArrivÃ©e : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
 		panelComboBox.add(boxArr);
@@ -103,7 +103,7 @@ public class FormAddArc extends JDialog implements ActionListener {
 					dispose();
 				}
 				else
-					valArc.setText("Valeur erronée");
+					valArc.setText("Valeur erronÃ©e");
 			}
 			else {
 				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));

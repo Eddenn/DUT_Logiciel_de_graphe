@@ -39,7 +39,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenuItem[] tabMenuItemFile = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemExport = new JMenuItem[2];
-	private JMenuItem[] tabMenuItemGraph = new JMenuItem[5];
+	private JMenuItem[] tabMenuItemGraph = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemAide = new JMenuItem[1];
 
 	// List of "Object"
@@ -56,23 +56,18 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut;
 
 	// Items du menu contextuel
-	private JMenuItem popUpAddVertex;
-	private JMenuItem popUpAddArc;
-	private JMenuItem popUpEditVertex;
-	private JMenuItem popUpDeleteVertex;
-	private JMenuItem popUpDeleteArc;
-	private JMenuItem popUpEditArc;
+	private JMenuItem[] popUpItem = new JMenuItem[6];
 
 	public HCI(Controller controller) {
 		this.ctrl = controller;
 		this.graph = controller.getGraph();
 		
 		// basic parameters of this frame
-		this.setTitle("Logiciel pédagogique d'édition de graphe");
+		this.setTitle("Logiciel pÃ©dagogique d'Ã©dition de graphe");
 
 		this.setSize(900, 700);
 		this.setPreferredSize(new Dimension(900, 700));
-		ImageIcon img = new ImageIcon("images/PetitLogo.png");
+		ImageIcon img = new ImageIcon("images/Logo_32x32_LGP.png");
 		this.setIconImage(img.getImage());
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -145,9 +140,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemEdition[0].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[0]);
 
-		// MenuItem - Rï¿½pï¿½ter
-		tabMenuItemEdition[1] = new JMenuItem(
-				"<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
+		// MenuItem - RÃ©pÃ©ter
+		tabMenuItemEdition[1] = new JMenuItem("<html>RÃ©pÃ©ter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
 		tabMenuItemEdition[1].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[1]);
 
@@ -175,7 +169,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		menuEdition.addSeparator();
 
 		// MenuItem - Selectionner tout
-		tabMenuItemEdition[5] = new JMenuItem("<html>Sélectionner tout&emsp;&nbsp;&nbsp;<i>Ctrl+A</i></html>");
+		tabMenuItemEdition[5] = new JMenuItem("<html>SÃ©lectionner tout&emsp;&nbsp;&nbsp;<i>Ctrl+A</i></html>");
 		tabMenuItemEdition[5].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[5]);
 
@@ -220,10 +214,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemGraph[3].addActionListener(this);
 		menuGraph.add(tabMenuItemGraph[3]);
 
-		// MenuItem - Ajouter un arc
-		tabMenuItemGraph[4] = new JMenuItem("<html>Supprimer un arc</html>");
+		// MenuItem - Modifier un arc
+		tabMenuItemGraph[4] = new JMenuItem("<html>Modifier un arc</html>");
 		tabMenuItemGraph[4].addActionListener(this);
 		menuGraph.add(tabMenuItemGraph[4]);
+		
+		// MenuItem - Supprimer un arc
+		tabMenuItemGraph[5] = new JMenuItem("<html>Supprimer un arc</html>");
+		tabMenuItemGraph[5].addActionListener(this);
+		menuGraph.add(tabMenuItemGraph[5]);
 
 		// Add menuGraph to this frame
 		menuBarMain.add(menuGraph);
@@ -268,58 +267,97 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// New file
 		buttonNew = new JButton(new ImageIcon("images/nouveau.png"));
+		buttonNew.setContentAreaFilled(false);
+		buttonNew.setBorderPainted(false);
+		buttonNew.setRolloverIcon(new ImageIcon("images/nouveau_rollover.png"));
+		buttonNew.setMargin(new Insets(0, 0, 0, 0));
+		buttonNew.setBackground(new Color(255,255,255));
+		buttonNew.setForeground(new Color(255,255,255));
+		//buttonNew.setSize(1, height);
 		buttonNew.setToolTipText("Nouveau");
 		buttonNew.addActionListener(this);
 		pButton.add(buttonNew);
 		// Open file
 		buttonOpen = new JButton(new ImageIcon("images/ouvrir.png"));
+		buttonOpen.setContentAreaFilled(false);
+		buttonOpen.setBorderPainted(false);
+		buttonOpen.setRolloverIcon(new ImageIcon("images/ouvrir_rollover.png"));
+		buttonOpen.setMargin(new Insets(0, 0, 0, 0));
+		buttonOpen.setBackground(new Color(255,255,255));
+		buttonOpen.setForeground(new Color(255,255,255));
 		buttonOpen.setToolTipText("Ouvrir");
 		buttonOpen.addActionListener(this);
 		pButton.add(buttonOpen);
 		// Save file
 		buttonSave = new JButton(new ImageIcon("images/enregistrer.png"));
+		buttonSave.setContentAreaFilled(false);
+		buttonSave.setBorderPainted(false);
+		buttonSave.setRolloverIcon(new ImageIcon("images/enregistrer_rollover.png"));
+		buttonSave.setMargin(new Insets(0, 0, 0, 0));
+		buttonSave.setBackground(new Color(255,255,255));
+		buttonSave.setForeground(new Color(255,255,255));
 		buttonSave.setToolTipText("Enregistrer");
 		buttonSave.addActionListener(this);
 		pButton.add(buttonSave);
 		// Zoom in
 		buttonZoomIn = new JButton(new ImageIcon("images/zoom_In.png"));
+		buttonZoomIn.setContentAreaFilled(false);
+		buttonZoomIn.setBorderPainted(false);
+		buttonZoomIn.setRolloverIcon(new ImageIcon("images/zoom_In_rollover.png"));
+		buttonZoomIn.setMargin(new Insets(0, 0, 0, 0));
+		buttonZoomIn.setBackground(new Color(255,255,255));
+		buttonZoomIn.setForeground(new Color(255,255,255));
 		buttonZoomIn.setToolTipText("Agrandir");
 		buttonZoomIn.addActionListener(this);
 		pButton.add(buttonZoomIn);
 		// Zoom out
 		buttonZoomOut = new JButton(new ImageIcon("images/zoom_Out.png"));
-		buttonZoomOut.setToolTipText("Réduire");
+		buttonZoomOut.setContentAreaFilled(false);
+		buttonZoomOut.setBorderPainted(false);
+		buttonZoomOut.setRolloverIcon(new ImageIcon("images/zoom_Out_rollover.png"));
+		buttonZoomOut.setMargin(new Insets(0, 0, 0, 0));
+		buttonZoomOut.setBackground(new Color(255,255,255));
+		buttonZoomOut.setForeground(new Color(255,255,255));
+		buttonZoomOut.setToolTipText("RÃ©duire");
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 
 		add(pButton, BorderLayout.NORTH);
 		
-		// Instancitation du menu contextuel et de ses éléments
+		// Instancitation du menu contextuel et de ses Ã©lÃ©ments
 		popMenu = new JPopupMenu();
+		// MenuItem - Ajouter un sommet
+		popUpItem[0] = new JMenuItem("<html>Ajouter un sommet</html>");
+		popUpItem[0].addActionListener(this);
+		popMenu.add(popUpItem[0]);
 
-		popUpAddVertex = new JMenuItem("Ajouter un sommet");
-		popUpAddVertex.addActionListener(this);
-		popMenu.add(popUpAddVertex);
+		// MenuItem - Modifier un sommet
+		popUpItem[1] = new JMenuItem("<html>Modifier un sommet</html>");
+		popUpItem[1].addActionListener(this);
+		popMenu.add(popUpItem[1]);
 
-		popUpEditVertex = new JMenuItem("Modifier un sommet");
-		popUpEditVertex.addActionListener(this);
-		popMenu.add(popUpEditVertex);
+		// MenuItem - Supprimer un sommet
+		popUpItem[2] = new JMenuItem("<html>Supprimer un sommet</html>");
+		popUpItem[2].addActionListener(this);
+		popMenu.add(popUpItem[2]);
 
-		popUpDeleteVertex = new JMenuItem("Supprimer un sommet");
-		popUpDeleteVertex.addActionListener(this);
-		popMenu.add(popUpDeleteVertex);
+		// Separator
+		popMenu.addSeparator();
 
-		popUpAddArc = new JMenuItem("Ajouter un arc");
-		popUpAddArc.addActionListener(this);
-		popMenu.add(popUpAddArc);
+		// MenuItem - Ajouter un arc
+		popUpItem[3] = new JMenuItem("<html>Ajouter un arc</html>");
+		popUpItem[3].addActionListener(this);
+		popMenu.add(popUpItem[3]);
+
+		// MenuItem - Modifier un arc
+		popUpItem[4] = new JMenuItem("<html>Modifier un arc</html>");
+		popUpItem[4].addActionListener(this);
+		popMenu.add(popUpItem[4]);
 		
-		popUpEditArc = new JMenuItem("Modifier un arc");
-		popUpEditArc.addActionListener(this);
-		popMenu.add(popUpEditArc);
-
-		popUpDeleteArc = new JMenuItem("Supprimer un arc");
-		popUpDeleteArc.addActionListener(this);
-		popMenu.add(popUpDeleteArc);
+		// MenuItem - Supprimer un arc
+		popUpItem[5] = new JMenuItem("<html>Supprimer un arc</html>");
+		popUpItem[5].addActionListener(this);
+		popMenu.add(popUpItem[5]);
 
 		// ----------------------//
 
@@ -367,10 +405,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		if (e.getSource() == slObject.getJBSwitch()) {
 			slObject.switchState();
 
-			// FICHIER
+		/*-- FICHIER --*/
 			// Nouveau
 		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
-			new FormNewGraph(this, "Création d'un nouveau graphe", true, ctrl);
+			new FormNewGraph(this, "CrÃ©ation d'un nouveau graphe", true, ctrl);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
@@ -389,7 +427,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource() == tabMenuItemFile[5]) {
 			this.dispose();
 
-			// EDITION
+		/*-- EDITION --*/
 		} else if (e.getSource() == tabMenuItemEdition[0]) {
 				ctrl.undo();
 				this.refresh();
@@ -397,7 +435,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				ctrl.redo();
 				this.refresh();
 		
-			// EXPORTER
+		/*-- EXPORTER --*/
 			// Image
 		} else if (e.getSource() == tabMenuItemExport[0]) {
 			expImage();
@@ -406,21 +444,24 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath() + ".pdf", this);
-			// GRAPH
+			
+		/*-- GRAPH --*/
 			// Ajouter un sommet
-		} else if (e.getSource() == tabMenuItemGraph[0]) {
+		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0]) {
 			new Form(this, "Ajouter un sommet", true, ctrl);
+			
 			// Modifier un sommet
-		} else if (e.getSource() == tabMenuItemGraph[1]) {
+		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1]) {
 			if(pGraph.getAlSelected().size() > 1 ) {
-				showError("Veuilliez sélectionner un seul sommet.");
+				showError("Veuilliez sÃ©lectionnÃ© un seul sommet.");
 			} else if (pGraph.getAlSelected().size() == 0) {
-				showError("Veuilliez sélectionner un sommet.");
+				showError("Veuilliez sÃ©lectionnÃ© un sommet.");
 			} else {
 				new Form(this, "Modifier un sommet", true, ctrl);
 			}
+			
 			// Supprimer un sommet
-		} else if (e.getSource() == tabMenuItemGraph[2]) {
+		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2]) {
 			for(String s : pGraph.getAlSelected()) {
 				Vertex tmpVertex = null;
 				for (Vertex v : ctrl.getGraph().getAlVertex()) {
@@ -433,61 +474,39 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 			setAlSelected(new ArrayList<String>());
 			refresh();
+			
 			// Ajouter un arc
-		} else if (e.getSource() == tabMenuItemGraph[3]) {
+		} else if (e.getSource() == tabMenuItemGraph[3] || e.getSource() == popUpItem[3]) {
 			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
+			
+			// Mofidier un arc
+		} else if (e.getSource() == tabMenuItemGraph[4] || e.getSource() == popUpItem[4]) {
+			new FormUpdateArc(this, "Modifier un arc", true, ctrl);
 
 			// Supprimer un arc
-		} else if (e.getSource() == tabMenuItemGraph[4]) {
-			for(String s : pGraph.getAlSelected()) {
-				if (s.matches(".{5}-{5}.*")) {
-					String vName = s.substring(0, 5);
-					vName = vName.replaceAll(" ", "");
-					
-					String vBisName = s.substring(24);
-					vBisName = vBisName.replaceAll(" ", "");
-					
-				    ctrl.delArc(graph.getVertex(vName), graph.getVertex(vBisName));		
-				}
-			}
-			setAlSelected(new ArrayList<String>());
-			refresh();
+		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5]) {
+			new FormDeleteArc(this, "Supprimer un arc", true, ctrl);
 		}
 
-		// AIDE
+		/*-- AIDE --*/
 		else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
-					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre</center></html>",
+					"<html>Projet tuteurÃ© de deuxiÃ¨me annÃ©e de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
 
-			// BUTTON
+		/*-- BUTTON --*/
 			// Zoom in
 		} else if (e.getSource() == buttonZoomIn) {
 			pGraph.zoomIn();
 			pGraph.repaint();
 			pGraph.revalidate();
+			
 			// Zoom out
 		} else if (e.getSource() == buttonZoomOut) {
 			pGraph.zoomOut();
 			pGraph.repaint();
 			pGraph.revalidate();
-
-			// Items du menu contextuel
-		} else if (e.getSource() == popUpAddArc) {
-			new FormAddArc(this, "Ajouter un arc", true, ctrl);
-
-		} else if (e.getSource() == popUpAddVertex) {
-			new Form(this, "Ajouter un sommet", true, ctrl);
-
-		} else if (e.getSource() == popUpEditVertex) {
-			new Form(this, "Modifier un sommet", true, ctrl);
-
-		}else if (e.getSource() == popUpDeleteArc) {
-			new FormDeleteArc(this, "Supprimer un arc", true, ctrl);
-			
-		}else if (e.getSource() == popUpEditArc) {
-			//new FormUpdateArc(this, "Modifier un arc", true, ctrl);
-		}
+		} 
 		refresh();
 	}
 
@@ -577,6 +596,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		return graph;
 	}
 
+	public SwitchList getSlObject() {
+		return this.slObject;
+	}
 	public GraphPanel getGraphPanel() {
 		return pGraph;
 	}
