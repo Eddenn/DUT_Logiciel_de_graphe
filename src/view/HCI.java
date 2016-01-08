@@ -36,11 +36,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	// Menu bar of this frame
 	private JMenuBar menuBarMain;
 	private JMenu menuFichier, menuEdition, menuExport, menuGraph, menuAide;
-	private JMenuItem[] tabMenuItemFile = new JMenuItem[6];
-	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
-	private JMenuItem[] tabMenuItemExport = new JMenuItem[2];
-	private JMenuItem[] tabMenuItemGraph = new JMenuItem[5];
-	private JMenuItem[] tabMenuItemAide = new JMenuItem[1];
+	private JMenuItem[] tabMenuItemFile 	= new JMenuItem[6];
+	private JMenuItem[] tabMenuItemEdition 	= new JMenuItem[6];
+	private JMenuItem[] tabMenuItemExport 	= new JMenuItem[2];
+	private JMenuItem[] tabMenuItemGraph 	= new JMenuItem[5];
+	private JMenuItem[] tabMenuItemAide 	= new JMenuItem[1];
 
 	// List of "Object"
 	private SwitchList slObject;
