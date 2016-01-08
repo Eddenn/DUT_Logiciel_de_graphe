@@ -75,10 +75,13 @@ public class FormNewGraph extends JDialog implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == ok ){
+		if(e.getSource() == ok ){
 			boolean bValued = boxValued.getSelectedItem().equals("Oui");
 			boolean bOriented = boxOriented.getSelectedItem().equals("Oui");
 			ctrl.newGraph(bOriented, bValued);
+		}
+		if(e.getSource() == annuler){
+			bClose=true;
 		}
 		this.bEnd=true;
 		dispose();
