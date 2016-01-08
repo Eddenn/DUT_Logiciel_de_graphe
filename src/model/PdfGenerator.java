@@ -2,7 +2,6 @@ package model;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,6 +52,9 @@ public class PdfGenerator {
 				} else {
 					strImagePath = path.substring(0, path.indexOf(".pdf"));
 				}
+				
+				Date date= new java.util.Date();
+				strImagePath += date.getTime();
 			}
 
 			// simple test de commit
