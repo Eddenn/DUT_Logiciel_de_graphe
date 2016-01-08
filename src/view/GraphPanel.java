@@ -26,9 +26,9 @@ import model.Vertex;
 @SuppressWarnings("serial")
 public class GraphPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener {
 
-	private ArrayList<String> alSelected;		//Sélection
+	private ArrayList<String> alSelected;		//SÃ©lection
 	private HashMap<String,Point> clipBoardEdge;//Presse-Papier
-	private Point saveMousePosition;			//Sauvegarde de la dernière position de la souris (Voir MouseDragged)
+	private Point saveMousePosition;			//Sauvegarde de la derniÃ©re position de la souris (Voir MouseDragged)
 	private boolean bDragged;
 	private boolean bCtrlPressed;
 	private double iWidthEdge;	//Largeur
@@ -53,7 +53,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		this.addMouseMotionListener(this);
 	}
 	
-	/*--Méthode principale de dessin--*/
+	/*--MÃ©thode principale de dessin--*/
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -86,13 +86,13 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		Point c1 = hci.hmVertex.get(v.getName());
 		Point c2 = hci.hmVertex.get(arc.getVertex().getName());
 		
-		//Coordonnées centrale des deux points en fonction du zoom
+		//Coordonnï¿½es centrale des deux points en fonction du zoom
 		Point pCenter1 = new Point( (int)(c1.getX()+iWidthEdge/2*iZoom) , (int)(c1.getY()+iHeightEdge/2*iZoom) );
 		Point pCenter2 = new Point( (int)(c2.getX()+iWidthEdge/2*iZoom) , (int)(c2.getY()+iHeightEdge/2*iZoom) );		
 		
 		g2d.setColor(new Color(20,20,255,50));
 		g2d.setStroke(new BasicStroke((float)iZoom+2));
-		if(arc.getVertex() == v) {	//Arc sur lui même
+		if(arc.getVertex() == v) {	//Arc sur lui mï¿½me
 			g2d.drawArc((int)(c2.getX()+12.5*iZoom), (int)(c2.getY()+40*iZoom), (int)(25*iZoom), (int)(25*iZoom), 150, 240);
 	    	if(  hci.getGraph().isDirected() ) {	
 				drawArrow(g2d, pCenter1.x-35, pCenter1.y+80, pCenter2.x, pCenter2.y, (int)(25*iZoom), (int)(10*iZoom));
@@ -130,8 +130,8 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	   * @param y1 y-position du point 1
 	   * @param x2 x-position du point 2
 	   * @param y2 y-position du point 2
-	   * @param d  largeur de la flèche
-	   * @param h  hauteur de la flèche
+	   * @param d  largeur de la flï¿½che
+	   * @param h  hauteur de la flï¿½che
 	   */
     private void drawArrow(Graphics g, int x1, int y1, int x2, int y2, int d, int h){    	
     	//Distance entre les points
@@ -184,13 +184,13 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		boolean bMirroir=false;
 		
 		for(Vertex v : hci.getGraph().getAlVertex()) {
-			//Recup les coordonnées associées à ce Vertex
+			//Recup les coordonnÃ©es associÃ©es Ã  ce Vertex
 			Point c1 = hci.hmVertex.get(v.getName());
 			
 			for(Arc arc : v.getAlArcs()) {					
 				Point c2 = hci.hmVertex.get(arc.getVertex().getName());
 				
-				//Coordonnées centrale des deux points en fonction du zoom
+				//Coordonnï¿½es centrale des deux points en fonction du zoom
 				pCenter1 = new Point( (int)(c1.getX()+(iWidthEdge/2)*iZoom) , (int)(c1.getY()+(iHeightEdge/2)*iZoom) );
 				pCenter2 = new Point( (int)(c2.getX()+(iWidthEdge/2)*iZoom) , (int)(c2.getY()+(iHeightEdge/2)*iZoom) );
 				
@@ -198,7 +198,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				g2d.setColor(Color.GRAY);
 				g2d.setFont(g2d.getFont().deriveFont( Font.PLAIN, (float)( 11*iZoom)));
 				
-				if( arc.getVertex() == v ) {	//Arc sur lui même
+				if( arc.getVertex() == v ) {	//Arc sur lui mï¿½me
 					g2d.drawArc((int)(c2.getX()+12.5*iZoom), (int)(c2.getY()+40*iZoom), (int)(25*iZoom), (int)(25*iZoom), 150, 240);
 			    	if( hci.getGraph().isDirected() ) {	
 						g2d.setColor(Color.GRAY);
@@ -217,7 +217,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 						}
 					}
 					if(bMirroir && hci.getGraph().isDirected()) {
-						/*-----Cacul des points M et N pour placer les deux arcs par rapport à pCenter1*/
+						/*-----Cacul des points M et N pour placer les deux arcs par rapport ï¿½ pCenter1*/
 						int d = 0;
 						int h = (int) (iWidthEdge/3*iZoom);
 						int dx = (int)pCenter2.x - (int)pCenter1.x, dy = (int)pCenter2.y - (int)pCenter1.y;
@@ -231,7 +231,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				        yn1 = xn1*sin + yn1*cos + (int)pCenter1.y;
 				        xn1 = x;
 				        /*-----------------------------------------------------------------------------*/
-						/*-----Cacul des points M et N pour placer les deux arcs par rapport à pCenter2*/
+						/*-----Cacul des points M et N pour placer les deux arcs par rapport ï¿½ pCenter2*/
 				        d = 0;
 						h = (int) (iWidthEdge/3*iZoom);
 						dx = (int)pCenter1.x - (int)pCenter2.x;
@@ -320,12 +320,21 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void mouseClicked(MouseEvent e) {
 		/* Clic droit */
 		int mod = e.getModifiers();
-
 		if ((mod & InputEvent.BUTTON3_MASK) != 0)
 			hci.getPopMenu().show(this, e.getX(), e.getY());
 		/*------------*/
+		/* Clic droit sur la liste*/
+		System.out.println(e.getSource());
+		if(e.getSource()==hci.getSlObject().getListOfObject()) {
+			System.out.println("slObject");
+		}
+		if ((mod & InputEvent.BUTTON3_MASK) != 0 && e.getSource()==hci.getSlObject().getListOfObject()){
+			System.out.println("test");
+			hci.getPopMenu().show(this, e.getX(), e.getY());
+		}
+		/*------------------------*/
 		
-		/* Double clic */
+		/* SÃ©lection */
 		if(e.getClickCount() > 0) {
 			double centerX, centerY;
 			boolean bFind=false;
@@ -387,24 +396,24 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 					centerX = c.getX()+iWidthEdge/2*iZoom;
 					centerY = c.getY()+iHeightEdge/2*iZoom;
 					if (Math.pow(e.getX() - centerX, 2) + Math.pow(e.getY() - centerY, 2) <= (Math.pow(iWidthEdge/2*iZoom, 2))) {
-						/*-----Déplacements des sommets sélectonnés----*/
+						/*-----Dï¿½placements des sommets sï¿½lectonnï¿½s----*/
 						setCursor(new Cursor(Cursor.MOVE_CURSOR));
-						//Coordonnées minimales des points sélectionnés
+						//Coordonnï¿½es minimales des points sï¿½lectionnï¿½s
 						Point minPosition = new Point(c.x,c.y);
 						for(String edgeSelected : alSelected) {
 							if( hci.hmVertex.get(edgeSelected).x < minPosition.x) {minPosition.x = (int) (hci.hmVertex.get(edgeSelected).x);}
 							if( hci.hmVertex.get(edgeSelected).y < minPosition.y) {minPosition.y = (int) (hci.hmVertex.get(edgeSelected).y);}
 						}
-						//Coordonnées maximales des points sélectionnés
+						//Coordonnï¿½es maximales des points sï¿½lectionnï¿½s
 						Point maxPosition = new Point((int) (c.x+iWidthEdge*iZoom),(int) (c.y+iHeightEdge*iZoom));
 						for(String edgeSelected : alSelected) {
 							if( (hci.hmVertex.get(edgeSelected).x+iWidthEdge)  > maxPosition.x) {maxPosition.x = (int) ((hci.hmVertex.get(edgeSelected).x+iWidthEdge));}
 							if( (hci.hmVertex.get(edgeSelected).y+iHeightEdge) > maxPosition.y) {maxPosition.y = (int) ((hci.hmVertex.get(edgeSelected).y+iHeightEdge));}
 						}
-						//Calcul de la différence entre la dernière position de la souris et l'actuelle
+						//Calcul de la diffï¿½rence entre la derniï¿½re position de la souris et l'actuelle
 						Point deplacement = new Point(e.getPoint().x-saveMousePosition.x,e.getPoint().y-saveMousePosition.y);
 						
-						/*--Déplacement--*/
+						/*--Dï¿½placement--*/
 						if( (minPosition.x<=0 && deplacement.x>=0 || minPosition.x>0) && 
 							(minPosition.y<=0 && deplacement.y>=0 || minPosition.y>0) &&
 							(maxPosition.x>=this.getWidth()  && deplacement.x<=0 || maxPosition.x<this.getWidth() ) && 
@@ -414,7 +423,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 							for(String edgeSelected : alSelected) {
 								hci.hmVertex.get(edgeSelected).x += deplacement.x;
 								hci.hmVertex.get(edgeSelected).y += deplacement.y;
-								//Texte qui affiche les coordonnées
+								//Texte qui affiche les coordonnï¿½es
 								hci.getLabelCoord().setText("  X : " + (double) (hci.hmVertex.get(edgeSelected).x +25) + "       Y : " + (double)(hci.hmVertex.get(edgeSelected).y + 25));
 								bDragged = true;
 								repaint();
@@ -430,7 +439,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		hci.requestFocus();
-		// Permet d'afficher les coordonnées du point dès que la souris passe dessus
+		// Permet d'afficher les coordonnï¿½es du point dï¿½s que la souris passe dessus
 		Point c = isOnEdge(e);
 		if (c!=null) {
 			hci.getLabelCoord().setText("  X : " + c.x + "       Y : " + c.y);
@@ -444,7 +453,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	/*--KeyListener--*/
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//CTRL Pressed pour la sélection
+		//CTRL Pressed pour la sÃ©lection
 		if(e.getKeyCode()==17) bCtrlPressed = true;
 		
 		//CTRL+C
@@ -484,7 +493,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//CTRL released pour la sélection
+		//CTRL released pour la sï¿½lection
 		if(e.getKeyCode()==17) bCtrlPressed = false;
 	}	
 	@Override

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * Classe permettant de gérer le graphe dans son ensemble
+ * Classe permettant de gÃ©rer le graphe dans son ensemble
  */
 
 public class Graph {
@@ -31,12 +31,12 @@ public class Graph {
 		return bValued;
 	}
 
-	// Méthode permettant de générer la matrice du graphe
+	// MÃ©thode permettant de gÃ©nÃ©rer la matrice du graphe
 	public int[][] generateMatrix() {
 		int alVertexSize = alVertex.size();
 		tMatrix = new int[alVertexSize][alVertexSize];
 
-		// Initialise à -1 les cases de la matrice
+		// Initialise i -1 les cases de la matrice
 		for (int i = 0; i < alVertexSize; i++) {
 			for (int j = 0; j < alVertexSize; j++) {
 				if (this.bValued)
@@ -51,9 +51,9 @@ public class Graph {
 			for (int j = 0; j < alVertexSize; j++) {
 				// On parcours les arcs du sommet i
 				for (Arc a : alVertex.get(i).getAlArcs()) {
-					// Si l'un des arcs de i est relié à j
+					// Si l'un des arcs de i est reliÃ© Ã  j
 					if (a.getVertex() == alVertex.get(j)) {
-						// Si la matrice est valué, on affiche la valeur de
+						// Si la matrice est valuÃ©, on affiche la valeur de
 						// l'arc
 						if (bValued)
 							tMatrix[j][i] = a.getIValue();
@@ -111,7 +111,7 @@ public class Graph {
 		alVertex.add(new Vertex(strName, strColor, this));
 	}
 
-	// Methode permettant d'ajouter des arcs et arêtes non valués
+	// Methode permettant d'ajouter des arcs et arÃ¨tes non valuÃ©s
 	public void addArc(Vertex v, Vertex vBis) {
 		if (this.bDirected) {
 			Arc arc = new Arc(vBis);
@@ -147,7 +147,7 @@ public class Graph {
 
 	}
 
-	// Methode permettant d'ajouter des arcs et arêtes valués
+	// Methode permettant d'ajouter des arcs et arÃ¨tes valuÃ©es
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
 		if (this.bDirected) {
 			Arc a = new Arc(vBis, iValue);
@@ -157,10 +157,6 @@ public class Graph {
 			Arc a2 = new Arc(vBis, iValue);
 			v.getAlArcs().add(a2);
 			vBis.getAlArcs().add(a1);
-			/*
-			 * Edge e = new Edge(v, vBis, iValue); v.getAlArcs().add(e);
-			 * vBis.getAlArcs().add(e);
-			 */
 		}
 	}
 

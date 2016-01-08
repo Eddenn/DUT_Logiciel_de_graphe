@@ -93,36 +93,36 @@ public class FormUpdateArc extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Code de gestion de la modification de l'arc.
-				if (e.getSource() == ok) {
-					Vertex vOrigine = null;
-					Vertex vDest = null;
+		if (e.getSource() == ok ) {
+			Vertex vOrigine = null;
+			Vertex vDest = null;
 
-					try {
-						for (Vertex v : ctrl.getGraph().getAlVertex()) {
-							if (v.getName().equals("a")) {
-								vOrigine = v;
-							}
-						}
-						for (Vertex v : ctrl.getGraph().getAlVertex()) {
-							if (v.getName().equals("b")) {
-								vDest = v;
-							}
-						}
-
-						for (Arc a : vOrigine.getAlArcs()) {
-							for (Arc b : vDest.getAlArcs()) {
-								if (a.getVertex() == vDest || b.getVertex() == vOrigine || true) {
-									int value = Integer.parseInt(textfield.getText());
-									a.setValue(value);
-									b.setValue(value);
-								}
-							}
-						}
-					} catch (Exception e1) {
-						e1.printStackTrace();
+			try {
+				for (Vertex v : ctrl.getGraph().getAlVertex()) {
+					if (v.getName().equals("a")) {
+						vOrigine = v;
 					}
-
 				}
+				for (Vertex v : ctrl.getGraph().getAlVertex()) {
+					if (v.getName().equals("b")) {
+						vDest = v;
+					}
+				}
+
+				for (Arc a : vOrigine.getAlArcs()) {
+					for (Arc b : vDest.getAlArcs()) {
+						if (a.getVertex() == vDest || b.getVertex() == vOrigine || true) {
+							int value = Integer.parseInt(textfield.getText());
+							a.setValue(value);
+							b.setValue(value);
+						}
+					}
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+
+		}
 		dispose();
 	}
 }
