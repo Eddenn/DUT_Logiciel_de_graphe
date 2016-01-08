@@ -480,9 +480,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			new Form(this, "Ajouter un sommet", true, ctrl);
 
 		} else if (e.getSource() == popUpEditVertex) {
-			new FormAddArc(this, "Modifier un sommet", true, ctrl);
-
-		} else if (e.getSource() == popUpEditVertex) {
 			new Form(this, "Modifier un sommet", true, ctrl);
 
 		}else if (e.getSource() == popUpDeleteArc) {

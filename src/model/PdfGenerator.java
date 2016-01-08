@@ -2,7 +2,6 @@ package model;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,6 +52,9 @@ public class PdfGenerator {
 				} else {
 					strImagePath = path.substring(0, path.indexOf(".pdf"));
 				}
+				
+				Date date= new java.util.Date();
+				strImagePath += date.getTime();
 			}
 
 			// simple test de commit
@@ -148,30 +150,28 @@ public class PdfGenerator {
 		int iMaxWidth = 520;
 		int iMaxHeight = 446;
 
-		int iNewWidth = 0;
-		int iNewHeight = 0;
+		double iNewWidth = 0.0;
+		double iNewHeight = 0.0;
 
 		if (size.width > iMaxWidth || size.height > iMaxHeight) {
 			double dCoef1 = (double)size.width / (double)iMaxWidth;
 			double dCoef2 = (double)size.height / (double)iMaxWidth;
 
 			if (dCoef1 > dCoef2) {
-				iNewWidth = (int) (size.width / dCoef1);
-				iNewHeight = (int) (size.height / dCoef1);
+				iNewWidth = (double) (size.width / dCoef1);
+				iNewHeight = (double) (size.height / dCoef1);
 			} else {
-				iNewWidth = (int) (size.width / dCoef2);
-				iNewHeight = (int) (size.height / dCoef2);
+				iNewWidth = (double) (size.width / dCoef2);
+				iNewHeight = (double) (size.height / dCoef2);
 			}
 		}
 		
-		new ResizeImage(bi, strImagePath,iNewWidth,iNewHeight);
-
+		ImageIO.write(bi, "png", new File(strImagePath + "_tn.png"));
+				
 		Image image = Image.getInstance(strImagePath + "_tn.png");
-		document.add((Element) image);
+		image.scaleToFit((float)iNewWidth, (float)iNewHeight);
 
-		File file = new File(strImagePath + "_tn.png");
-
-		file.delete();
+		new File(strImagePath + "_tn.png").delete();
 
 		document.newPage();
 		Anchor anchor2 = new Anchor("La ou les structures qui ont permis de generer le graphe : ", catFont);
