@@ -39,7 +39,7 @@ public class FormAddArc extends JDialog implements ActionListener {
 			tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
 		}
 		
-		JLabel text = new JLabel("<html> Saisissez les donn�es de l'arc : <br/><br/> </html>");
+		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
 		
@@ -49,14 +49,14 @@ public class FormAddArc extends JDialog implements ActionListener {
 		// Panel contenant les JComboBox
 		JPanel panelComboBox = new JPanel();
 		
-		// Gestion du sommet de d�part
-		JLabel lDep = new JLabel("D�part : ");
+		// Gestion du sommet de départ
+		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
 		panelComboBox.add(boxDep,"");
 		
-		// Gestion du sommet d'arriv�
-		JLabel lArr = new JLabel("Arriv� : ");
+		// Gestion du sommet d'arrivée
+		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
 		panelComboBox.add(boxArr);
@@ -103,7 +103,7 @@ public class FormAddArc extends JDialog implements ActionListener {
 					dispose();
 				}
 				else
-					valArc.setText("Valeur erron�e");
+					valArc.setText("Valeur erronée");
 			}
 			else {
 				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));

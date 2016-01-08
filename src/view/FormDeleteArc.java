@@ -10,7 +10,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import controller.Controller;
 import model.Vertex;
@@ -39,7 +38,7 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 			tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
 		}
 		
-		JLabel text = new JLabel("<html> Saisissez les donn�es de l'arc : <br/><br/> </html>");
+		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
 		
@@ -49,14 +48,14 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 		// Panel contenant les JComboBox
 		JPanel panelComboBox = new JPanel();
 		
-		// Gestion du sommet de d�part
-		JLabel lDep = new JLabel("Depart : ");
+		// Gestion du sommet de départ
+		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
 		panelComboBox.add(boxDep,"");
 		
-		// Gestion du sommet d'arriv�
-		JLabel lArr = new JLabel("Arrivee : ");
+		// Gestion du sommet d'arrivé
+		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
 		panelComboBox.add(boxArr);

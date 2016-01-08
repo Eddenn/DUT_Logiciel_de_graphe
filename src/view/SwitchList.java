@@ -81,13 +81,13 @@ public class SwitchList extends JPanel{
 			for(Vertex v : graphLoaded.getAlVertex()) {
 				if(graphLoaded.isValued()) {	
 					if (graphLoaded.isDirected()) {
-						//Valué et orienté
+						//ValuÃ© et orientÃ©
 						for(Arc a : v.getAlArcs()) {
 							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"----->"+HCI.centerStr(a.getVertex().getName(),5);
 							cpt++;
 						}
 					} else {
-						//Valué et non orienté
+						//ValuÃ© et non orientÃ©
 						for(Arc a : v.getAlArcs()) {
 							bFound = false;
 							for(String s : tabArc) {
@@ -104,13 +104,13 @@ public class SwitchList extends JPanel{
 					}
 				} else {
 					if (graphLoaded.isDirected()) {
-						//Non valué et orienté
+						//Non valuÃ© et orientÃ©
 						for(Arc a : v.getAlArcs()) {
 							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"-------->"+HCI.centerStr(a.getVertex().getName(),5);
 							cpt++;
 						}
 					} else {
-						//Non valué et non orienté
+						//Non valuÃ© et non orientÃ©
 						for(Arc a : v.getAlArcs()) {
 							bFound = false;
 							for(String s : tabArc) {
