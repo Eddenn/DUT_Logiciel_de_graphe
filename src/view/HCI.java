@@ -53,7 +53,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	// Panel of JButton
 	private JPanel pButton;
-	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut;
+	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonSetting;
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[6];
@@ -321,6 +321,18 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonZoomOut.setToolTipText("Réduire");
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
+		
+		// Zoom out
+		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
+		buttonSetting.setContentAreaFilled(false);
+		buttonSetting.setBorderPainted(false);
+		buttonSetting.setRolloverIcon(new ImageIcon("images/parametre_rollover.png"));
+		buttonSetting.setMargin(new Insets(0, 0, 0, 0));
+		buttonSetting.setBackground(new Color(255,255,255));
+		buttonSetting.setForeground(new Color(255,255,255));
+		buttonSetting.setToolTipText("Paramètres");
+		buttonSetting.addActionListener(this);
+		pButton.add(buttonSetting);
 
 		add(pButton, BorderLayout.NORTH);
 		
