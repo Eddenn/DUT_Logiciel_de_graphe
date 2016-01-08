@@ -12,8 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.itextpdf.text.log.SysoCounter;
-
 import controller.Controller;
 
 public class FormNewGraph extends JDialog implements ActionListener {
