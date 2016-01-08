@@ -1,27 +1,15 @@
 package controller;
 
-import java.io.File;
+import java.awt.Point;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import model.Arc;
 import model.Graph;
 import model.IParcourable;
 import model.Vertex;
 
-import view.FormNewGraph;
 import view.HCI;
 import view.StartFrame;
 
@@ -139,7 +127,7 @@ public class Controller implements IControlable, IIhmable {
 			graph.addArc(v, vBis);
 			provSave();
 		} else {
-			hci.showError("L'arc existe déjà.");
+			hci.showError("L'arc existe dï¿½jï¿½.");
 		}
 	}
 
@@ -148,7 +136,7 @@ public class Controller implements IControlable, IIhmable {
 			graph.addArc(v, vBis, iValue);
 			provSave();
 		} else
-			hci.showError("L'arc existe déjà.");
+			hci.showError("L'arc existe dï¿½jï¿½.");
 	}
 
 	public void delArc(Vertex v, Vertex vBis) {
@@ -171,10 +159,16 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	public void undo() {
+<<<<<<< HEAD
 		if (cptModif > 1) {
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-2)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif-2));
 			cptModif--;
+=======
+		if (cptModif > 0) {
+			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif--)));
+			hci.initHmVertexByTab(saveCoordList.get(cptModif));
+>>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 		}
 		
 	}
@@ -183,52 +177,62 @@ public class Controller implements IControlable, IIhmable {
 		if (cptModif >= 0 && cptModif < saveVertexList.size()) {
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif));
+<<<<<<< HEAD
 			cptModif++;
+=======
+>>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 		}
 	}
 
 	public static void main(String[] args) {
 		new Controller();
 	}
-
-	public Graph getGraph() {
-		return graph;
-	}
-	
+	public Graph getGraph() {return graph;}
 	@Override
-	public char[] listeSommet() {
-		return graph.getListVertex();
-	}
-
+	public char[] listeSommet() {return graph.getListVertex();}
 	@Override
-	public int[][] getMatrice() {
-		return graph.getTMatrix();
-	}
-
+	public int[][] getMatrice() {return graph.getTMatrix();}
 	@Override
-	public void majIHM() {
-		hci.refresh();
-	}
+	public void majIHM() {hci.refresh();}
 	
 	public void provSave() {
+<<<<<<< HEAD
+=======
+		// IncrÃ©mentation du compteur indiquant le nombre de modification (RepÃ¨re utilisÃ© pour savoir notre position dans la ArrayList permettant le retour en arriï¿½re
+		cptModif++;
+>>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 		
-		// Initialisation de la ArrayList contenant la liste d'adjacence du graphe au moment où l'utilisateur effectue une action
+		// Initialisation de la ArrayList contenant la liste d'adjacence du graphe au moment oï¿½ l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
 		alProv.add(0,"Valued="+graph.isValued());
 		alProv.add(0,"Directed="+graph.isDirected());
+<<<<<<< HEAD
 
+=======
+		
+		// Suppression des derniÃ¨res actions effectuÃ©es dans le cas oÃ¹ l'utilisateur effectue une nouvelle action sans redo
+		if (cptModif < saveCoordList.size()) {
+			for (int i = cptModif ; i < saveVertexList.size(); i++) {
+				saveVertexList.remove(cptModif);
+			}
+			for (int i = cptModif; i < saveCoordList.size(); i++) {
+				saveCoordList.remove(cptModif);
+			}
+		}
+>>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 		
 		// Ajout de la liste d'adjacence dans la ArrayList de sauvegarde
 		saveVertexList.add(cptModif, alProv);
 		
-		// Sauvegarde des coordonnées
+		// Sauvegarde des coordonnÃ©es
 		Point[] tabPoint = new Point[graph.getAlVertex().size()];
 		int cpt = 0;
 		for (Point c : hci.getHmVertex().values()) {
-			tabPoint[cpt] = new Point(c);
+			tabPoint[cpt] = new Point( (int)(c.x/hci.getGraphPanel().getZoom()) , (int)(c.y/hci.getGraphPanel().getZoom()) );
 			cpt++;
 		}
 		
+<<<<<<< HEAD
 		saveCoordList.add(cptModif,tabPoint);
 		
 		System.out.println(saveCoordList);
@@ -245,6 +249,9 @@ public class Controller implements IControlable, IIhmable {
 		
 		// Incrémentation du compteur indiquant le nombre de modification (Repère utilisé pour savoir notre position dans la ArrayList permettant le retour en arrière
 		cptModif++;
+=======
+		saveCoordList.add(tabPoint);
+>>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 	}
 	
 	/*MÃ©thodes de l'interface IIhmable */

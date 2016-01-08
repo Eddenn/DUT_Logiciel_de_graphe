@@ -276,20 +276,28 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	}
 	
 	/*--Zoom--*/
+	public void refreshPreferedSize() {
+		int xMax = 0;
+		int yMax = 0;
+		for(Point c : hci.hmVertex.values()) {
+			if(c.getX() > xMax) xMax = c.x;
+			if(c.getY() > yMax) yMax = c.y;
+		}
+		setPreferredSize(new Dimension((int)((xMax+iWidthEdge*iZoom)),(int)((yMax+iHeightEdge*iZoom))));
+	}
 	public double zoomIn() {
-		if(iZoom<2) {
+		if(iZoom<1.8) {
 			for(Point c : hci.hmVertex.values()) {
 				c.x = (int) (c.x/iZoom*(iZoom+0.1));
 				c.y = (int) (c.y/iZoom*(iZoom+0.1));
 				iZoom = iZoom+0.1;
 			}
 		}
-
 		refreshPreferedSize();
 		return iZoom;
 	}
 	public double zoomOut() {
-		if(iZoom>0.5) {
+		if(iZoom>0.7) {
 			for(Point c : hci.hmVertex.values()) {
 				c.x = (int) (c.x/iZoom*(iZoom-0.1));
 				c.y = (int) (c.y/iZoom*(iZoom-0.1));
@@ -323,16 +331,6 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		if ((mod & InputEvent.BUTTON3_MASK) != 0)
 			hci.getPopMenu().show(this, e.getX(), e.getY());
 		/*------------*/
-		/* Clic droit sur la liste*/
-		System.out.println(e.getSource());
-		if(e.getSource()==hci.getSlObject().getListOfObject()) {
-			System.out.println("slObject");
-		}
-		if ((mod & InputEvent.BUTTON3_MASK) != 0 && e.getSource()==hci.getSlObject().getListOfObject()){
-			System.out.println("test");
-			hci.getPopMenu().show(this, e.getX(), e.getY());
-		}
-		/*------------------------*/
 		
 		/* Sélection */
 		if(e.getClickCount() > 0) {
@@ -498,14 +496,4 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	}	
 	@Override
 	public void keyTyped(KeyEvent e) {}
-
-	public void refreshPreferedSize() {
-		int xMax = 0;
-		int yMax = 0;
-		for(Point c : hci.hmVertex.values()) {
-			if(c.getX() > xMax) xMax = c.x;
-			if(c.getY() > yMax) yMax = c.y;
-		}
-		setPreferredSize(new Dimension((int)((xMax+iWidthEdge*iZoom)),(int)((yMax+iHeightEdge*iZoom))));
-	}
 }

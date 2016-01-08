@@ -414,14 +414,31 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
-			// Enregistrer  et Enregistrer sous
-		} else if (e.getSource()==tabMenuItemFile[2] || e.getSource() == tabMenuItemFile[3] || e.getSource()==buttonSave) {
+			// Enregistrer
+		} else if (e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave) {
 			if(ctrl.getFile().equals("")){
 				JFileChooser dial = new JFileChooser(new File("."));
-				if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-					ctrl.saveFile(dial.getSelectedFile().getAbsolutePath() + ".txt");
+				if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+					String path = dial.getSelectedFile().getAbsolutePath();
+					if(path.substring(path.lastIndexOf("\\")).lastIndexOf(".")!=-1) {
+						ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt");
+					} else {
+						ctrl.saveFile(path + ".txt");
+					}
+				}
 			}else{
 				ctrl.saveFile("");
+			}
+			// Enregistrer sous
+		} else if (e.getSource()==tabMenuItemFile[3]) {
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+				String path = dial.getSelectedFile().getAbsolutePath();
+				if(path.substring(path.lastIndexOf("\\")).lastIndexOf(".")!=-1) {
+					ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt");
+				} else {
+					ctrl.saveFile(path + ".txt");
+				}
 			}
 			// Quitter
 		} else if (e.getSource() == tabMenuItemFile[5]) {
@@ -553,19 +570,14 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public static String centerStr(String str, int size) {
 		if (str == null || size <= str.length())
 			return str;
-
 		StringBuilder sb = new StringBuilder();
-
 		for (int i = 0; i < (size - str.length()) / 2; i++) {
 			sb.append(" ");
 		}
-
 		sb.append(str);
-
 		while (sb.length() < size) {
 			sb.append(" ");
 		}
-
 		return sb.toString();
 	}
 

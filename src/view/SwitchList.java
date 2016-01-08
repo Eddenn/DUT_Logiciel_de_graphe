@@ -3,6 +3,10 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -46,9 +50,10 @@ public class SwitchList extends JPanel{
 	    
 	    //JList
 	    listOfObject = new JList();
-	    listOfObject.addMouseListener(hci.getGraphPanel());
 	    DefaultListCellRenderer renderer =  (DefaultListCellRenderer)listOfObject.getCellRenderer();  //Center string in the list
-	    renderer.setHorizontalAlignment(JLabel.CENTER); 											  // -----------------------
+	    renderer.setHorizontalAlignment(JLabel.CENTER); 	
+	    // -----------------------
+	    listOfObject.addMouseListener(new ListMouseListener(hci));
 	    listOfObject.addListSelectionListener(hci);
 	    JScrollPane jscrPanel = new JScrollPane(listOfObject);
 	    add(jscrPanel,BorderLayout.CENTER);

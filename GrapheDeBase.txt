@@ -2,6 +2,4 @@ IsMatrix=true
 Directed=true
 Valued=true
 
--1 2 1 
-1 -1 -1 
--1 2 -1 
+-1 
