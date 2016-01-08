@@ -79,10 +79,28 @@ public class Controller implements IControlable, IIhmable {
 			fw = new FileWriter(file, false);
 
 			// écriture des lignes de texte
-			fw.write("IsMatrix=true\n");
+
+			fw.write("IsMatrix=false\n");
+
 			fw.write("Directed=" + graph.isDirected() + "\n");
 			fw.write("Valued=" + graph.isValued() + "\n\n");
-			fw.write(graph.displayMatrix());
+			fw.write(graph.getFormattedList()+"\n");
+			fw.write("[");
+			
+			Point[] tabPoint = new Point[graph.getAlVertex().size()];
+			int cpt = 0;
+			for (Point c : hci.getHmVertex().values()) {
+				tabPoint[cpt] = c;
+				cpt++;
+			}
+			
+			int size = tabPoint.length;
+			for (int i = 0; i < size; i++) {
+				fw.write(tabPoint[i].getX()+","+ tabPoint[i].getY());
+				if (i != size-1) 
+					fw.write(";");
+			}
+			fw.write("]");
 
 			// fermeture du fichier
 			fw.close();
@@ -202,19 +220,28 @@ public class Controller implements IControlable, IIhmable {
 	 * Méthode permettant d'annuler la dernière action
 	 */
 	public void undo() {
-		if (cptModif > 0) {
+		//Ne sait pas lequel gardé
+		/*if (cptModif > 0) {
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif--)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif));
-		}	
+		}*/	
+		if (cptModif > 1) {
+			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-2)));
+			hci.initHmVertexByTab(saveCoordList.get(cptModif-2));
+			cptModif--;
+		}
+		
+
 	}
 
 	/**
 	 * Méthode permettant de rétablir la dernière action supprimer
 	 */
 	public void redo() {
-		if (cptModif >= 0 && cptModif+1 < saveVertexList.size()) {
-			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif++)));
+		if (cptModif >= 0 && cptModif < saveVertexList.size()) {
+			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif));
+			cptModif++;
 		}
 	}
 
@@ -224,8 +251,8 @@ public class Controller implements IControlable, IIhmable {
 	public void initProvSave() {
 		saveVertexList = new ArrayList<ArrayList<String>>();
 		saveCoordList = new ArrayList<Point[]>();
-		provSave();
 		cptModif = 0;
+		provSave();
 	}
 	
 	/**
@@ -234,7 +261,7 @@ public class Controller implements IControlable, IIhmable {
 	public void provSave() {
 		// Incrémentation du compteur indiquant le nombre de modification (Repère utilisé pour savoir notre position dans la ArrayList permettant le retour en arrière
 		cptModif++;
-		
+
 		// Initialisation de la ArrayList contenant la liste d'adjacence du graphe au moment oï¿½ l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
 		alProv.add(0,"Valued="+graph.isValued());
@@ -251,7 +278,7 @@ public class Controller implements IControlable, IIhmable {
 		}
 		
 		// Ajout de la liste d'adjacence dans la ArrayList de sauvegarde
-		saveVertexList.add(alProv);
+		saveVertexList.add(cptModif, alProv);
 		
 		// Sauvegarde des coordonnÃ©es
 		Point[] tabPoint = new Point[graph.getAlVertex().size()];
@@ -261,7 +288,17 @@ public class Controller implements IControlable, IIhmable {
 			cpt++;
 		}
 		
-		saveCoordList.add(tabPoint);
+		saveCoordList.add(cptModif,tabPoint);
+		
+		
+		int i = cptModif+1;
+		while (i < saveVertexList.size()) {
+			saveVertexList.remove(i);
+			saveCoordList.remove(i);
+		}
+		
+		// Incrémentation du compteur indiquant le nombre de modification (Repère utilisé pour savoir notre position dans la ArrayList permettant le retour en arrière
+		cptModif++;
 	}
 	
 	/*--------------------------------------
