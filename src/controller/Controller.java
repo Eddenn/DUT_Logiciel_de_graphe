@@ -159,16 +159,10 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	public void undo() {
-<<<<<<< HEAD
 		if (cptModif > 1) {
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-2)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif-2));
 			cptModif--;
-=======
-		if (cptModif > 0) {
-			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif--)));
-			hci.initHmVertexByTab(saveCoordList.get(cptModif));
->>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 		}
 		
 	}
@@ -177,10 +171,7 @@ public class Controller implements IControlable, IIhmable {
 		if (cptModif >= 0 && cptModif < saveVertexList.size()) {
 			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif)));
 			hci.initHmVertexByTab(saveCoordList.get(cptModif));
-<<<<<<< HEAD
 			cptModif++;
-=======
->>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 		}
 	}
 
@@ -196,19 +187,11 @@ public class Controller implements IControlable, IIhmable {
 	public void majIHM() {hci.refresh();}
 	
 	public void provSave() {
-<<<<<<< HEAD
-=======
-		// IncrÃ©mentation du compteur indiquant le nombre de modification (RepÃ¨re utilisÃ© pour savoir notre position dans la ArrayList permettant le retour en arriï¿½re
-		cptModif++;
->>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 		
 		// Initialisation de la ArrayList contenant la liste d'adjacence du graphe au moment oï¿½ l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
 		alProv.add(0,"Valued="+graph.isValued());
 		alProv.add(0,"Directed="+graph.isDirected());
-<<<<<<< HEAD
-
-=======
 		
 		// Suppression des derniÃ¨res actions effectuÃ©es dans le cas oÃ¹ l'utilisateur effectue une nouvelle action sans redo
 		if (cptModif < saveCoordList.size()) {
@@ -219,7 +202,6 @@ public class Controller implements IControlable, IIhmable {
 				saveCoordList.remove(cptModif);
 			}
 		}
->>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 		
 		// Ajout de la liste d'adjacence dans la ArrayList de sauvegarde
 		saveVertexList.add(cptModif, alProv);
@@ -232,11 +214,8 @@ public class Controller implements IControlable, IIhmable {
 			cpt++;
 		}
 		
-<<<<<<< HEAD
 		saveCoordList.add(cptModif,tabPoint);
 		
-		System.out.println(saveCoordList);
-		System.out.println(cptModif);
 		
 		int i = cptModif+1;
 		while (i < saveVertexList.size()) {
@@ -244,14 +223,8 @@ public class Controller implements IControlable, IIhmable {
 			saveCoordList.remove(i);
 		}
 		
-		System.out.println("APRES SUPP " + saveCoordList);
-		System.out.println("APRES SUPP " + cptModif);
-		
 		// Incrémentation du compteur indiquant le nombre de modification (Repère utilisé pour savoir notre position dans la ArrayList permettant le retour en arrière
 		cptModif++;
-=======
-		saveCoordList.add(tabPoint);
->>>>>>> 1da16bb49f78c113831c686d34a97abae2db68cc
 	}
 	
 	/*MÃ©thodes de l'interface IIhmable */
