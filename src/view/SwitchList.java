@@ -46,6 +46,7 @@ public class SwitchList extends JPanel{
 	    
 	    //JList
 	    listOfObject = new JList();
+	    listOfObject.addMouseListener(hci.getGraphPanel());
 	    DefaultListCellRenderer renderer =  (DefaultListCellRenderer)listOfObject.getCellRenderer();  //Center string in the list
 	    renderer.setHorizontalAlignment(JLabel.CENTER); 											  // -----------------------
 	    listOfObject.addListSelectionListener(hci);

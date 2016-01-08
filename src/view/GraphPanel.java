@@ -320,12 +320,21 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void mouseClicked(MouseEvent e) {
 		/* Clic droit */
 		int mod = e.getModifiers();
-
 		if ((mod & InputEvent.BUTTON3_MASK) != 0)
 			hci.getPopMenu().show(this, e.getX(), e.getY());
 		/*------------*/
+		/* Clic droit sur la liste*/
+		System.out.println(e.getSource());
+		if(e.getSource()==hci.getSlObject().getListOfObject()) {
+			System.out.println("slObject");
+		}
+		if ((mod & InputEvent.BUTTON3_MASK) != 0 && e.getSource()==hci.getSlObject().getListOfObject()){
+			System.out.println("test");
+			hci.getPopMenu().show(this, e.getX(), e.getY());
+		}
+		/*------------------------*/
 		
-		/* Double clic */
+		/* Sélection */
 		if(e.getClickCount() > 0) {
 			double centerX, centerY;
 			boolean bFind=false;

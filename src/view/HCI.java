@@ -67,7 +67,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		this.setSize(900, 700);
 		this.setPreferredSize(new Dimension(900, 700));
-		ImageIcon img = new ImageIcon("images/PetitLogo.png");
+		ImageIcon img = new ImageIcon("images/Logo_32x32_LGP.png");
 		this.setIconImage(img.getImage());
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -267,33 +267,64 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// New file
 		buttonNew = new JButton(new ImageIcon("images/nouveau.png"));
+		buttonNew.setContentAreaFilled(false);
+		buttonNew.setBorderPainted(false);
+		buttonNew.setRolloverIcon(new ImageIcon("images/nouveau_rollover.png"));
+		buttonNew.setMargin(new Insets(0, 0, 0, 0));
+		buttonNew.setBackground(new Color(255,255,255));
+		buttonNew.setForeground(new Color(255,255,255));
+		//buttonNew.setSize(1, height);
 		buttonNew.setToolTipText("Nouveau");
 		buttonNew.addActionListener(this);
 		pButton.add(buttonNew);
 		// Open file
 		buttonOpen = new JButton(new ImageIcon("images/ouvrir.png"));
+		buttonOpen.setContentAreaFilled(false);
+		buttonOpen.setBorderPainted(false);
+		buttonOpen.setRolloverIcon(new ImageIcon("images/ouvrir_rollover.png"));
+		buttonOpen.setMargin(new Insets(0, 0, 0, 0));
+		buttonOpen.setBackground(new Color(255,255,255));
+		buttonOpen.setForeground(new Color(255,255,255));
 		buttonOpen.setToolTipText("Ouvrir");
 		buttonOpen.addActionListener(this);
 		pButton.add(buttonOpen);
 		// Save file
 		buttonSave = new JButton(new ImageIcon("images/enregistrer.png"));
+		buttonSave.setContentAreaFilled(false);
+		buttonSave.setBorderPainted(false);
+		buttonSave.setRolloverIcon(new ImageIcon("images/enregistrer_rollover.png"));
+		buttonSave.setMargin(new Insets(0, 0, 0, 0));
+		buttonSave.setBackground(new Color(255,255,255));
+		buttonSave.setForeground(new Color(255,255,255));
 		buttonSave.setToolTipText("Enregistrer");
 		buttonSave.addActionListener(this);
 		pButton.add(buttonSave);
 		// Zoom in
 		buttonZoomIn = new JButton(new ImageIcon("images/zoom_In.png"));
+		buttonZoomIn.setContentAreaFilled(false);
+		buttonZoomIn.setBorderPainted(false);
+		buttonZoomIn.setRolloverIcon(new ImageIcon("images/zoom_In_rollover.png"));
+		buttonZoomIn.setMargin(new Insets(0, 0, 0, 0));
+		buttonZoomIn.setBackground(new Color(255,255,255));
+		buttonZoomIn.setForeground(new Color(255,255,255));
 		buttonZoomIn.setToolTipText("Agrandir");
 		buttonZoomIn.addActionListener(this);
 		pButton.add(buttonZoomIn);
 		// Zoom out
 		buttonZoomOut = new JButton(new ImageIcon("images/zoom_Out.png"));
-		buttonZoomOut.setToolTipText("R�duire");
+		buttonZoomOut.setContentAreaFilled(false);
+		buttonZoomOut.setBorderPainted(false);
+		buttonZoomOut.setRolloverIcon(new ImageIcon("images/zoom_Out_rollover.png"));
+		buttonZoomOut.setMargin(new Insets(0, 0, 0, 0));
+		buttonZoomOut.setBackground(new Color(255,255,255));
+		buttonZoomOut.setForeground(new Color(255,255,255));
+		buttonZoomOut.setToolTipText("Réduire");
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 
 		add(pButton, BorderLayout.NORTH);
 		
-		// Instancitation du menu contextuel et de ses �l�ments
+		// Instancitation du menu contextuel et de ses éléments
 		popMenu = new JPopupMenu();
 		// MenuItem - Ajouter un sommet
 		popUpItem[0] = new JMenuItem("<html>Ajouter un sommet</html>");
@@ -565,6 +596,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		return graph;
 	}
 
+	public SwitchList getSlObject() {
+		return this.slObject;
+	}
 	public GraphPanel getGraphPanel() {
 		return pGraph;
 	}
