@@ -58,6 +58,8 @@ public class Controller implements IControlable, IIhmable {
 	 */
 	public void newGraph(boolean bOriented, boolean bValued) {
 		graph = new Graph(bOriented, bValued);
+		hci.setGraph(graph);
+		hci.permitModifArc(graph.isValued());
 		hci.initHmVertex();
 		hci.refresh();
 	}
@@ -125,6 +127,8 @@ public class Controller implements IControlable, IIhmable {
 			hci.showError("Format du fichier invalide.");
 		}
 
+		hci.setGraph(graph);
+		hci.permitModifArc(graph.isValued());
 		hci.initHmVertex();
 		initProvSave();
 		provSave();
@@ -352,6 +356,24 @@ public class Controller implements IControlable, IIhmable {
 	public String getMessage() {
 		return parcours.getMessage();
 	}
+	
+	
+	public boolean updateVertex(String oldName , String newName) {
+		boolean bUpdate=true;
+		if (graph.getVertex(newName) != null) {
+			hci.showError("Un sommet avec le nom " + newName + " existe déjà.");
+			bUpdate = false;
+		} else if (newName.replaceAll(" ", "").equals("")) {
+			hci.showError("Le nom de votre sommet ne peut pas être vide");
+			bUpdate = false;
+		} else {
+			graph.updateVertex(oldName, newName);
+			provSave();
+		}
+		return bUpdate;
+	}
+	
+//	public boolean updateArc()
 	
 	/*------------------
 	 * Getter / Setter

@@ -96,7 +96,7 @@ public class PopupAddArc extends Popup implements ActionListener {
 					dispose();
 				}
 				else
-					valArc.setText("Valeur erronÃ©e");
+					valArc.setText("Valeur erronée");
 			}
 			else {
 				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));

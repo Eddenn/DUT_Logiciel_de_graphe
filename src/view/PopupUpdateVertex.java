@@ -59,45 +59,20 @@ public class PopupUpdateVertex extends Popup implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ok && !nom.getText().isEmpty()) {
-			for (Vertex v : ctrl.getGraph().getAlVertex()) {
-				if (v.getName().equals(hci.getAlSelected().get(0))) {
-					v.setName(nom.getText());
+			
+			if (ctrl.updateVertex(hci.getAlSelected().get(0), nom.getText()))
+			{
 					hci.hmVertex.put(nom.getText(), hci.hmVertex.get(hci.getAlSelected().get(0)));
 					hci.hmVertex.remove(hci.getAlSelected().get(0));
 					hci.getAlSelected().clear();
 					hci.getAlSelected().add(nom.getText());
 					hci.refresh();
-				}
+					dispose();
 			}
+		}
+		if (e.getSource() == annuler) {
 			dispose();
 		}
-<<<<<<< HEAD:src/view/Form.java
-
-		else if (this.getTitle().equals("Modifier un sommet")) {
-			if (e.getSource() == ok && !nom.getText().isEmpty()) {
-				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-					if (v.getName().equals(hci.getAlSelected().get(0))) {
-						v.setName(nom.getText());
-						hci.hmVertex.put(nom.getText(), hci.hmVertex.get(hci.getAlSelected().get(0)));
-						hci.hmVertex.remove(hci.getAlSelected().get(0));
-						hci.getAlSelected().clear();
-						hci.getAlSelected().add(nom.getText());
-						hci.refresh();
-					}
-				}
-				dispose();
-			}
-			else if (e.getSource() == annuler)
-				dispose();
-			else
-				JOptionPane.showMessageDialog(null, "Le nom du sommet ne doit pas être vide", "Erreur", JOptionPane.ERROR_MESSAGE);
-		}
-=======
-		if (e.getSource() == annuler) {
-			setVisible(false);
-		}
-		dispose();
->>>>>>> 6b2fc14b19b8ae6e71e30e7185a318164173fb6b:src/view/PopupUpdateVertex.java
 	}
 
 }
