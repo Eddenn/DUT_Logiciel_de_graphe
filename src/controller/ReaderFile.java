@@ -73,6 +73,25 @@ public class ReaderFile {
 		generateTabPoints();
 	}
 	
+	public ReaderFile(ArrayList<String> alStr, boolean bDirected, boolean bValued) {
+		this.alStr = alStr;
+		this.bDirected = bDirected;
+		this.bValued = bValued;
+		
+		for (int i = 0; i < alStr.size(); i++) {
+			if (alStr.get(i).equals("")) {
+				alStr.remove(i);
+			}
+		}
+		
+		alStr.remove(0);
+		
+		rm = new ReaderMatrix(alStr,bDirected,bValued);
+		graph = rm.getGraph();
+		
+		generateTabPoints();
+	}
+	
 	public Graph getGraph() {
 		return graph;
 	}
@@ -136,7 +155,7 @@ public class ReaderFile {
 	
 	private int getCoordinatesIndice() {
 		for (int i = 0; i < alStr.size(); i++) {
-			if (alStr.get(i).indexOf("Coordonnées") >= 0) {
+			if (alStr.get(i).indexOf("Coordonn") >= 0) {
 				return i;
 			}
 		}

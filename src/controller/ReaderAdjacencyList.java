@@ -6,8 +6,8 @@ import model.Graph;
 import model.Vertex;
 
 /**
- * Classe qui génère le graphe correspondant à la liste d'adjacent contenue dans
- * le fichier à lire
+ * Classe qui gï¿½nï¿½re le graphe correspondant ï¿½ la liste d'adjacent contenue dans
+ * le fichier ï¿½ lire
  * 
  * @author Groupe 3
  * @version 2016-01-08
@@ -37,8 +37,8 @@ public class ReaderAdjacencyList {
 	private void generateVertex() {
 		alVertexName = new ArrayList<String>();
 
-		for (int i = 0; i < alStr.size() && alStr.get(i).indexOf("Coordonnées") < 0; i++) {
-			if (alStr.get(i).indexOf("Coordonnées") < 0) {
+		for (int i = 0; i < alStr.size() && alStr.get(i).indexOf("Coordonn") < 0; i++) {
+			if (alStr.get(i).indexOf("Coordonn") < 0) {
 				String str = alStr.get(i).substring(0, alStr.get(i).indexOf("="));
 
 				graph.addVertex(str);
@@ -88,7 +88,7 @@ public class ReaderAdjacencyList {
 
 						String[] tStrVertexValue = strVertexValue.split(",");
 
-						// On vérifie s'il est bien valué.
+						// On vï¿½rifie s'il est bien valuï¿½.
 						if (tStrVertexValue.length < 2) {
 							graph.setValued(false);
 
@@ -129,7 +129,7 @@ public class ReaderAdjacencyList {
 
 						String[] tStrVertexValue = strVertexValue.split(",");
 
-						// On vérifie s'il est bien valué.
+						// On vï¿½rifie s'il est bien valuï¿½.
 						if (tStrVertexValue.length > 1) {
 							graph.setValued(true);
 
@@ -171,7 +171,7 @@ public class ReaderAdjacencyList {
 
 						String[] tStrVertexValue = strVertexValue.split(",");
 
-						// On vérifie s'il est bien valué.
+						// On vï¿½rifie s'il est bien valuï¿½.
 						if (tStrVertexValue.length < 2) {
 							graph.setValued(false);
 
@@ -217,7 +217,7 @@ public class ReaderAdjacencyList {
 
 						String[] tStrVertexValue = strVertexValue.split(",");
 
-						// On vérifie s'il est bien valué.
+						// On vï¿½rifie s'il est bien valuï¿½.
 						if (tStrVertexValue.length > 1) {
 							graph.setValued(true);
 
