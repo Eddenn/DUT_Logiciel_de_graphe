@@ -6,38 +6,31 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import controller.Controller;
-import model.Vertex;
 
-public class FormDeleteArc extends JDialog implements ActionListener {
+public class PopupAddArc extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = 2869913711173398321L;
 	private JButton ok, annuler;
 	@SuppressWarnings("rawtypes")
 	private JComboBox boxDep, boxArr;
-	private Controller ctrl;
+	private JTextField valArc;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public FormDeleteArc(HCI parent, String title, boolean modal, Controller ctrl){
-		super(parent,title,modal);
+	public PopupAddArc(String title, boolean modal, Controller ctrl, HCI hci) {
+		super(title, modal, ctrl, hci);
 		this.setSize(300, 165);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setResizable(false);
-		
-		this.ctrl=ctrl;
 		
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
 		
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
 			tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
 		}
-		
+
 		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
@@ -54,7 +47,7 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 		boxDep = new JComboBox(tabVertex);
 		panelComboBox.add(boxDep,"");
 		
-		// Gestion du sommet d'arrivé
+		// Gestion du sommet d'arrivée
 		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
@@ -62,7 +55,16 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 		
 		// Panel contenant le textField
 		JPanel panelTextField = new JPanel(new BorderLayout());
-
+		
+		// Gestion du TextField
+		panelTextField.add(new JLabel("Valeur de l'arc : "),"West");
+		valArc = new JTextField();
+		
+		if (! hci.getGraph().isValued())
+			valArc.setEditable(false);
+		
+		panelTextField.add(valArc);
+		
 		// Ajout des comboBox et textField a la fenetre
 		content.add(panelComboBox,"North");
 		content.add(panelTextField);
@@ -87,34 +89,22 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 			int vertexDep = boxDep.getSelectedIndex();
 			int vertexArr = boxArr.getSelectedIndex();
 			
-			System.out.println("vertexDep : " + vertexDep + " ; vertexArr : " + vertexArr );
-			
-			Vertex vDep = ctrl.getGraph().getAlVertex().get(vertexDep);
-			Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexDep);
-			
-			int indiceDep = -1;
-			int indiceArr = -1;
-			
-			System.out.println("indiceDep : " + indiceDep + " ; indiceArr : " + indiceArr );
-			
-			for (int i = 0; i < vDep.getAlArcs().size(); i++){
-				if (vDep.getAlArcs().get(i).equals(vArr)){
-					indiceDep = i;
-					break;
+			if (this.ctrl.getGraph().isValued()) {
+				if (valArc.getText().matches("[0-9]+")) {
+					ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
+					dispose();
 				}
-				if (vArr.getAlArcs().get(i).equals(vDep)){
-					indiceArr = i;
-					break;
-				}
+				else
+					valArc.setText("Valeur erronée");
 			}
-			
-			if (indiceDep != -1 && indiceArr != -1) {
-				ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().remove(ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().get(indiceArr));
-				ctrl.getGraph().getAlVertex().get(vertexArr).getAlArcs().remove(ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().get(indiceDep));
+			else {
+				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));
+				dispose();
 			}
 		}
 		
-		dispose();
+		else
+			dispose();
 	}
 	
 

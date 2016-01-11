@@ -7,36 +7,29 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Controller;
 
-public class FormNewGraph extends JDialog implements ActionListener {
+public class PopupNewGraph extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = -1023319410573124162L;
 	private JButton ok, annuler;
 	@SuppressWarnings("rawtypes")
 	private JComboBox boxOriented, boxValued;
-	private Controller ctrl;
 	private boolean bEnd;
 	private boolean bClose;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public FormNewGraph(HCI parent, String title, boolean modal, Controller ctrl){
-		super(parent,title,modal);
+	public PopupNewGraph(String title, boolean modal, Controller ctrl, HCI hci) {
+		super(title, modal, ctrl, hci);
 		this.bEnd = false;
 		this.bClose = false;
 		this.setSize(300, 165);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setResizable(false);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {bEnd=true;bClose=true;} 
          } ) ; 
-		this.ctrl=ctrl;
 		
 		String[] tabRep = {"Oui","Non"};
 		

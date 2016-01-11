@@ -318,7 +318,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonZoomOut.setMargin(new Insets(0, 0, 0, 0));
 		buttonZoomOut.setBackground(new Color(255,255,255));
 		buttonZoomOut.setForeground(new Color(255,255,255));
-		buttonZoomOut.setToolTipText("RÃ©duire");
+		buttonZoomOut.setToolTipText("Réduire");
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 		
@@ -330,7 +330,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonSetting.setMargin(new Insets(0, 0, 0, 0));
 		buttonSetting.setBackground(new Color(255,255,255));
 		buttonSetting.setForeground(new Color(255,255,255));
-		buttonSetting.setToolTipText("ParamÃ¨tres");
+		buttonSetting.setToolTipText("Paramètres");
 		buttonSetting.addActionListener(this);
 		pButton.add(buttonSetting);
 
@@ -420,7 +420,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		/*-- FICHIER --*/
 			// Nouveau
 		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
-			new FormNewGraph(this, "CrÃ©ation d'un nouveau graphe", true, ctrl);
+			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
@@ -477,7 +477,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		/*-- GRAPH --*/
 			// Ajouter un sommet
 		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0]) {
-			new Form(this, "Ajouter un sommet", true, ctrl);
+			new PopupAddVertex("Ajouter un sommet", true, ctrl, this);
 			
 			// Modifier un sommet
 		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1]) {
@@ -486,7 +486,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			} else if (pGraph.getAlSelected().size() == 0) {
 				showError("Veuilliez sÃ©lectionnÃ© un sommet.");
 			} else {
-				new Form(this, "Modifier un sommet", true, ctrl);
+				new PopupUpdateVertex("Modifier un sommet", true, ctrl, this);
 			}
 			
 			// Supprimer un sommet
@@ -506,15 +506,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			
 			// Ajouter un arc
 		} else if (e.getSource() == tabMenuItemGraph[3] || e.getSource() == popUpItem[3]) {
-			new FormAddArc(this, "Ajout d'un arc", true, ctrl);
+			new PopupAddArc("Ajout d'un arc", true, ctrl, this);
 			
 			// Mofidier un arc
 		} else if (e.getSource() == tabMenuItemGraph[4] || e.getSource() == popUpItem[4]) {
-			new FormUpdateArc(this, "Modifier un arc", true, ctrl);
+			new PopupUpdateArc("Modifier un arc", true, ctrl, this);
 
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5]) {
-			new FormDeleteArc(this, "Supprimer un arc", true, ctrl);
+			new PopupDeleteArc("Supprimer un arc", true, ctrl, this);
 		}
 
 		/*-- AIDE --*/
@@ -535,6 +535,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			pGraph.zoomOut();
 			pGraph.repaint();
 			pGraph.revalidate();
+			// Paramètres
+		} else if (e.getSource() == buttonSetting) {
+			new PopupSetting("Paramètres",true,ctrl,this);
 		} 
 		refresh();
 	}

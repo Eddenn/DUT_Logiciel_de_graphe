@@ -6,37 +6,26 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import com.itextpdf.text.pdf.TextField;
 
 import controller.Controller;
 import model.Arc;
 import model.Vertex;
 
-public class FormUpdateArc extends JDialog implements ActionListener {
+public class PopupUpdateArc extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = 2869913711173398321L;
 	private JButton ok, annuler;
 	@SuppressWarnings("rawtypes")
 	private JComboBox boxDep, boxArr;
 	private JTextField valArc;
-	private Controller ctrl;
 	private JTextField textfield;
 
-	public FormUpdateArc(HCI parent, String title, boolean modal, Controller ctrl) {
-		super(parent, title, modal);
+	public PopupUpdateArc(String title, boolean modal, Controller ctrl, HCI hci) {
+		super(title, modal, ctrl, hci);
 		this.setSize(300, 165);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setResizable(false);
-		JComboBox boxDep, boxArr;
-		
-		this.ctrl = ctrl;
 
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
 

@@ -42,7 +42,7 @@ public class StartFrame {
 		logoFrame.setBackground(new Color(0,0,0,0));
 		
 		logoFrame.setVisible(true);
-		FormNewGraph nouveauGraph = new FormNewGraph(hci, "Création d'un nouveau graphe", true, ctrl);
+		PopupNewGraph nouveauGraph = new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
 		//Attend la fin de la saisie des parametres du graphe
 		while(!nouveauGraph.getBEnd()){}
 		if(nouveauGraph.getBClose()) {
