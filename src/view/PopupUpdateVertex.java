@@ -63,8 +63,8 @@ public class PopupUpdateVertex extends Popup implements ActionListener {
 			for (Vertex v : ctrl.getGraph().getAlVertex()) {
 				if (v.getName().equals(hci.getAlSelected().get(0))) {
 					v.setName(nom.getText());
-					hci.hmVertex.put(nom.getText(), hci.hmVertex.get(hci.getAlSelected().get(0)));
-					hci.hmVertex.remove(hci.getAlSelected().get(0));
+					hci.getHmVertex().put(nom.getText(), hci.getHmVertex().get(hci.getAlSelected().get(0)));
+					hci.getHmVertex().remove(hci.getAlSelected().get(0));
 					hci.getAlSelected().clear();
 					hci.getAlSelected().add(nom.getText());
 					hci.refresh();
