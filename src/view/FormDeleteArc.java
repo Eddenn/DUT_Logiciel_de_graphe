@@ -3,16 +3,18 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import controller.Controller;
+import model.Arc;
 import model.Vertex;
 
 public class FormDeleteArc extends JDialog implements ActionListener {
@@ -39,7 +41,7 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 			tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
 		}
 		
-		JLabel text = new JLabel("<html> Saisissez les donn�es de l'arc : <br/><br/> </html>");
+		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
 		
@@ -49,14 +51,14 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 		// Panel contenant les JComboBox
 		JPanel panelComboBox = new JPanel();
 		
-		// Gestion du sommet de d�part
-		JLabel lDep = new JLabel("Depart : ");
+		// Gestion du sommet de départ
+		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
 		panelComboBox.add(boxDep,"");
 		
-		// Gestion du sommet d'arriv�
-		JLabel lArr = new JLabel("Arrivee : ");
+		// Gestion du sommet d'arrivé
+		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
 		panelComboBox.add(boxArr);
@@ -91,35 +93,16 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 			System.out.println("vertexDep : " + vertexDep + " ; vertexArr : " + vertexArr );
 			
 			Vertex vDep = ctrl.getGraph().getAlVertex().get(vertexDep);
-			Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexDep);
+			Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexArr);
 			
-			int indiceDep = 0;
-			int indiceArr = 0;
-			
-			System.out.println("indiceDep : " + indiceDep + " ; indiceArr : " + indiceArr );
-			
-			for (int i = 0; i < vDep.getAlArcs().size(); i++){
-				if (vDep.getAlArcs().get(i).equals(vArr)){
-					indiceDep = i;
-					break;
-				}
+			if (! ctrl.delArc(vDep, vArr)) {
+				JOptionPane.showMessageDialog(null, "Il n'existe pas d'arc entre les sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			for (int i = 0; i < vArr.getAlArcs().size(); i++){
-				if (vArr.getAlArcs().get(i).equals(vDep)){
-					indiceArr = i;
-					break;
-				}
-			}
-			
-			try{
-				ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().remove(ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().get(indiceArr));
-				ctrl.getGraph().getAlVertex().get(vertexArr).getAlArcs().remove(ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().get(indiceDep));
-			} catch (Exception e1){e1.printStackTrace();}
-
+			else
+				dispose();
 		}
-		
-		dispose();
+		else
+			dispose();
 	}
 	
 

@@ -12,8 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.itextpdf.text.log.SysoCounter;
-
 import controller.Controller;
 
 public class FormNewGraph extends JDialog implements ActionListener {
@@ -69,18 +67,21 @@ public class FormNewGraph extends JDialog implements ActionListener {
 		ok.addActionListener(this);
 		annuler = new JButton ("Annuler");
 		annuler.addActionListener(this);
-		control.add(annuler);
 		control.add(ok);
+		control.add(annuler);
 		add(control, "South");
 		
 		setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == ok ){
+		if(e.getSource() == ok ){
 			boolean bValued = boxValued.getSelectedItem().equals("Oui");
 			boolean bOriented = boxOriented.getSelectedItem().equals("Oui");
 			ctrl.newGraph(bOriented, bValued);
+		}
+		if(e.getSource() == annuler){
+			bClose=true;
 		}
 		this.bEnd=true;
 		dispose();

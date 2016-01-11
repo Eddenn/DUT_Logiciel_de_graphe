@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,6 +37,7 @@ public class SwitchList extends JPanel{
 		ImageIcon iSwitch = new ImageIcon( getClass().getResource( "/Farm-Fresh_arrow_refresh_16.png"));
 		jbSwitch = new JButton(iSwitch);
 		jbSwitch.setContentAreaFilled(false);
+		jbSwitch.setToolTipText("Changer de liste");
 		jbSwitch.addActionListener(hci);
 		jpTop.add(jbSwitch);
 		lTitle = new JLabel("Liste des Sommets");
@@ -46,7 +48,9 @@ public class SwitchList extends JPanel{
 	    //JList
 	    listOfObject = new JList();
 	    DefaultListCellRenderer renderer =  (DefaultListCellRenderer)listOfObject.getCellRenderer();  //Center string in the list
-	    renderer.setHorizontalAlignment(JLabel.CENTER); 											  // -----------------------
+	    renderer.setHorizontalAlignment(JLabel.CENTER); 	
+	    // -----------------------
+	    listOfObject.addMouseListener(new ListMouseListener(hci));
 	    listOfObject.addListSelectionListener(hci);
 	    JScrollPane jscrPanel = new JScrollPane(listOfObject);
 	    add(jscrPanel,BorderLayout.CENTER);
@@ -54,6 +58,7 @@ public class SwitchList extends JPanel{
 	    this.setPreferredSize(new Dimension(200,500));
 	}
 	//Getters and Setters
+	@SuppressWarnings("unchecked")
 	public JList<String> getListOfObject() {return this.listOfObject;}
 	public JButton getJBSwitch()   {return this.jbSwitch;}
 	
@@ -71,7 +76,7 @@ public class SwitchList extends JPanel{
 		} else if(state == 1) { 	//State of the SwitchList (1 = Arcs)
 			int nbArc = 0;
 			for(Vertex v : graphLoaded.getAlVertex()) {
-				for(Arc a : v.getAlArcs()) {
+				for(@SuppressWarnings("unused") Arc a : v.getAlArcs()) {
 					nbArc++;
 				}
 			}
@@ -81,13 +86,13 @@ public class SwitchList extends JPanel{
 			for(Vertex v : graphLoaded.getAlVertex()) {
 				if(graphLoaded.isValued()) {	
 					if (graphLoaded.isDirected()) {
-						//Valué et orienté
+						//ValuÃ© et orientÃ©
 						for(Arc a : v.getAlArcs()) {
 							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"----->"+HCI.centerStr(a.getVertex().getName(),5);
 							cpt++;
 						}
 					} else {
-						//Valué et non orienté
+						//ValuÃ© et non orientÃ©
 						for(Arc a : v.getAlArcs()) {
 							bFound = false;
 							for(String s : tabArc) {
@@ -104,13 +109,13 @@ public class SwitchList extends JPanel{
 					}
 				} else {
 					if (graphLoaded.isDirected()) {
-						//Non valué et orienté
+						//Non valuÃ© et orientÃ©
 						for(Arc a : v.getAlArcs()) {
 							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"-------->"+HCI.centerStr(a.getVertex().getName(),5);
 							cpt++;
 						}
 					} else {
-						//Non valué et non orienté
+						//Non valuÃ© et non orientÃ©
 						for(Arc a : v.getAlArcs()) {
 							bFound = false;
 							for(String s : tabArc) {
