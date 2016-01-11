@@ -14,6 +14,7 @@ public class ListMouseListener extends MouseAdapter {
 		this.hci = hci;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void mouseClicked(MouseEvent e){
 		JList list = (JList)e.getSource();
 		int mod = e.getModifiers();

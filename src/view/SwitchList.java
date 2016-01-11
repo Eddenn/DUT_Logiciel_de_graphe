@@ -3,9 +3,6 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
@@ -61,6 +58,7 @@ public class SwitchList extends JPanel{
 	    this.setPreferredSize(new Dimension(200,500));
 	}
 	//Getters and Setters
+	@SuppressWarnings("unchecked")
 	public JList<String> getListOfObject() {return this.listOfObject;}
 	public JButton getJBSwitch()   {return this.jbSwitch;}
 	
@@ -78,7 +76,7 @@ public class SwitchList extends JPanel{
 		} else if(state == 1) { 	//State of the SwitchList (1 = Arcs)
 			int nbArc = 0;
 			for(Vertex v : graphLoaded.getAlVertex()) {
-				for(Arc a : v.getAlArcs()) {
+				for(@SuppressWarnings("unused") Arc a : v.getAlArcs()) {
 					nbArc++;
 				}
 			}

@@ -14,6 +14,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import controller.Controller;
 import model.Arc;
@@ -35,7 +36,7 @@ public class Form extends JDialog implements ActionListener {
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
+		
 		// Contenu
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
