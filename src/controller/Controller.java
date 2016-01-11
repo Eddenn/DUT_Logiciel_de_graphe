@@ -188,13 +188,11 @@ public class Controller implements IControlable, IIhmable {
 	 * @param v le nom du premier sommet
 	 * @param vBis le nom du deuxième sommet
 	 */
-	public void delArc(Vertex v, Vertex vBis) {
-		for (int i = 0; i < v.getAlArcs().size(); i++) {
-			if (v.getAlArcs().get(i).getVertex() == vBis) {
-				graph.deleteArc(v.getAlArcs().get(i));
-				provSave();
-			}
+	public boolean delArc(Vertex v, Vertex vBis) {
+		if (graph.getAlVertex().contains(v) && graph.getAlVertex().contains(vBis)) {
+			return (graph.deleteArc(v, vBis));
 		}
+		return false;
 	}
 
 	/**
@@ -259,9 +257,6 @@ public class Controller implements IControlable, IIhmable {
 	 * Méthode permettant de sauvegarder l'état du graphe à une instant t. Utiliser pour sauvegarder les actions effectuées.
 	 */
 	public void provSave() {
-		// Incrémentation du compteur indiquant le nombre de modification (Repère utilisé pour savoir notre position dans la ArrayList permettant le retour en arrière
-		cptModif++;
-
 		// Initialisation de la ArrayList contenant la liste d'adjacence du graphe au moment oï¿½ l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
 		alProv.add(0,"Valued="+graph.isValued());

@@ -3,15 +3,18 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Controller;
+import model.Arc;
 import model.Vertex;
 
 public class FormDeleteArc extends JDialog implements ActionListener {
@@ -90,31 +93,16 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 			System.out.println("vertexDep : " + vertexDep + " ; vertexArr : " + vertexArr );
 			
 			Vertex vDep = ctrl.getGraph().getAlVertex().get(vertexDep);
-			Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexDep);
+			Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexArr);
 			
-			int indiceDep = -1;
-			int indiceArr = -1;
-			
-			System.out.println("indiceDep : " + indiceDep + " ; indiceArr : " + indiceArr );
-			
-			for (int i = 0; i < vDep.getAlArcs().size(); i++){
-				if (vDep.getAlArcs().get(i).equals(vArr)){
-					indiceDep = i;
-					break;
-				}
-				if (vArr.getAlArcs().get(i).equals(vDep)){
-					indiceArr = i;
-					break;
-				}
+			if (! ctrl.delArc(vDep, vArr)) {
+				JOptionPane.showMessageDialog(null, "Il n'existe pas d'arc entre les sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			if (indiceDep != -1 && indiceArr != -1) {
-				ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().remove(ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().get(indiceArr));
-				ctrl.getGraph().getAlVertex().get(vertexArr).getAlArcs().remove(ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().get(indiceDep));
-			}
+			else
+				dispose();
 		}
-		
-		dispose();
+		else
+			dispose();
 	}
 	
 

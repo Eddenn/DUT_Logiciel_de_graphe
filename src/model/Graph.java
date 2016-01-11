@@ -135,16 +135,14 @@ public class Graph {
 		this.alVertex.remove(v);
 	}
 
-	public void deleteArc(Arc a) {
-		for (int i = 0; i < alVertex.size(); i++) {
-			ArrayList<Arc> alArcRef = alVertex.get(i).getAlArcs();
-			for (int j = 0; j < alArcRef.size(); i++) {
-				if (alArcRef.get(j) == a) {
-					alArcRef.remove(j);
-				}
+	public boolean deleteArc(Vertex v, Vertex vBis)  {
+		for (int i = 0; i < v.getAlArcs().size(); i++) {
+			if (v.getAlArcs().get(i).getVertex() == vBis) {
+				v.getAlArcs().remove(v.getAlArcs().get(i));
+				return true;
 			}
 		}
-
+		return false;
 	}
 
 	// Methode permettant d'ajouter des arcs et arètes valuées
