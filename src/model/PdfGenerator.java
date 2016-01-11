@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.BaseColor;
+//import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -29,18 +29,30 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import view.HCI;
 
+/**
+ * Classe permettant de générer un PDF avec toutes les informations du Graphe
+ * @author Groupe 3
+ * @version 2016-01-11 *
+ */
 public class PdfGenerator {
 
 	private static String FILE = "/root/Documents/test.pdf";
 	private static String strImagePath = "/root/Documents/test.png";
 
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
-	private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);
-	private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
+	//private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);
+	//private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
 	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 	private static Graph g;
 	private static HCI hci;
 
+	/**
+	 * 
+	 * @param g
+	 * @param name
+	 * @param path
+	 * @param hci
+	 */
 	public static void generer(Graph g, String name, String path, HCI hci) {
 		try {
 			if (path != null) {
@@ -73,9 +85,13 @@ public class PdfGenerator {
 		}
 	}
 
-	// iText allows to add metadata to the PDF which can be viewed in your Adobe
-	// Reader
-	// under File -> Properties
+	/**
+	 * Méthode qui ajouter les MétaDonnées au document passé en paramètre
+	 * iTex permet d'ajouter les métadonnée au fichier PDF pour qu'il puisse être lu par ADOBE
+	 * Reader
+	 * under File->Properties
+	 * @param document
+	 */
 	private static void addMetaData(Document document) {
 		document.addTitle("My first PDF");
 		document.addSubject("Using iText");
@@ -84,6 +100,12 @@ public class PdfGenerator {
 		document.addCreator("Groupe 3 Projet Tuteurï¿½");
 	}
 
+	/**
+	 * 
+	 * @param document
+	 * @param name
+	 * @throws DocumentException
+	 */
 	private static void addTitlePage(Document document, String name) throws DocumentException {
 		Paragraph preface = new Paragraph();
 		// We add one empty line
@@ -132,6 +154,13 @@ public class PdfGenerator {
 		document.newPage();
 	}
 
+	/**
+	 * 
+	 * @param document
+	 * @throws DocumentException
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 */
 	private static void addContent(Document document) throws DocumentException, MalformedURLException, IOException {
 		Anchor anchor = new Anchor("Image du graphe :", catFont);
 		anchor.setName("1 - Image du graphe :");
@@ -212,6 +241,11 @@ public class PdfGenerator {
 
 	}
 
+	/**
+	 * 
+	 * @param subCatPart
+	 * @throws BadElementException
+	 */
 	private static void createTable(Section subCatPart) throws BadElementException {
 		PdfPTable table = new PdfPTable(3);
 
@@ -252,6 +286,11 @@ public class PdfGenerator {
 
 	}
 
+	/**
+	 * 
+	 * @param paragraph
+	 * @param number
+	 */
 	private static void addEmptyLine(Paragraph paragraph, int number) {
 		for (int i = 0; i < number; i++) {
 			paragraph.add(new Paragraph(" "));

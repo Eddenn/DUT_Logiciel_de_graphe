@@ -5,8 +5,9 @@ import java.util.ArrayList;
 
 /**
  * Classe permettant de gérer les sommets
+ * @author Groupe 3
+ * @version 2016-01-11
  */
-
 public class Vertex {
 
 	private String strName;
@@ -16,19 +17,32 @@ public class Vertex {
 	@SuppressWarnings("unused")
 	private Graph graph;
 
+	/**
+	 * Constructeur qui instancie un sommet 
+	 * @param strName nom du sommet
+	 * @param graph graphe associé
+	 */
 	public Vertex(String strName, Graph graph) {
 		this.alArcs = new ArrayList<Arc>();
 		this.strName = strName;
 		this.graph = graph;
 	}
 
+	/**
+	 * Constructeur qui instancie un sommet
+	 * @param strName nom du sommet
+	 * @param strColor couleur du sommet
+	 * @param graph graphe associé
+	 */
 	public Vertex(String strName, String strColor, Graph graph) {
 		this.alArcs = new ArrayList<Arc>();
 		this.strName = strName;
 		this.graph = graph;
 	}
 
-	// Getters and Setters
+	/*---------------------
+	 * Getters et Setters
+	 *--------------------*/
 	public String getName() {
 		return this.strName;
 	}
@@ -40,7 +54,9 @@ public class Vertex {
 		return this.alArcs;
 	}
 
-	// Display
+	/*------------
+	 * Affichage
+	 *-----------*/
 	public String toString() {
 		String sRet = this.strName + " : ";
 		for (Arc a : alArcs) {

@@ -1,27 +1,36 @@
 package model;
 
 /**
- * Classe permettant de gï¿½rer les arcs entre les sommets
- * 
+ * Classe permettant de gérer les arcs et arrête entre les sommets
  * @author Groupe 3
- * 
+ * @version 2016-01-11
  */
-
 public class Arc {
 
 	private Vertex vertex;
 	private Integer iValue;
 
+	/**
+	 * Constructeur qui crée un arc
+	 * @param vertex le sommet que pointe l'arc
+	 */
 	public Arc(Vertex vertex) {
 		this.vertex = vertex;
 	}
 
+	/**
+	 * Constructeur qui crée un arc valué
+	 * @param vertex le sommet que pointe l'arc
+	 * @param iValue la valeur de l'arc
+	 */
 	public Arc(Vertex vertex, int iValue) {
 		this.vertex = vertex;
 		this.iValue = new Integer(iValue);
 	}
 
-	// Getters and Setters
+	/*----------------------
+	 * Getters et Setters
+	 *---------------------*/
 	public Vertex getVertex() {
 		return this.vertex;
 	}
@@ -38,7 +47,10 @@ public class Arc {
 		this.iValue = a;
 	}
 
-	// Equivalent toString
+	/**
+	 *  Méthode équivalente au toString
+	 *  @param vertex le nom du sommet pour lequel on veut écrire les arcs
+	 */
 	public String displayVertex(Vertex vertex) {
 		String str = this.vertex.getName();
 
