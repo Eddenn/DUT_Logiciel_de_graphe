@@ -35,6 +35,12 @@ public class Vertex {
 	public void setName(String s) {
 		this.strName = s;
 	}
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
 	public ArrayList<Arc> getAlArcs() {
 		return this.alArcs;

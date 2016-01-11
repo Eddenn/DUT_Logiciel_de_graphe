@@ -6,32 +6,25 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.Controller;
 
-public class FormAddArc extends JDialog implements ActionListener {
+public class PopupAddArc extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = 2869913711173398321L;
 	private JButton ok, annuler;
 	@SuppressWarnings("rawtypes")
 	private JComboBox boxDep, boxArr;
 	private JTextField valArc;
-	private Controller ctrl;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public FormAddArc(HCI parent, String title, boolean modal, Controller ctrl){
-		super(parent,title,modal);
+	public PopupAddArc(String title, boolean modal, Controller ctrl, HCI hci) {
+		super(title, modal, ctrl, hci);
 		this.setSize(300, 165);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setResizable(false);
-		
-		this.ctrl=ctrl;
+		setLocationRelativeTo(null);
 		
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
 		
@@ -68,7 +61,7 @@ public class FormAddArc extends JDialog implements ActionListener {
 		panelTextField.add(new JLabel("Valeur de l'arc : "),"West");
 		valArc = new JTextField();
 		
-		if (! parent.getGraph().isValued())
+		if (! hci.getGraph().isValued())
 			valArc.setEditable(false);
 		
 		panelTextField.add(valArc);
@@ -103,7 +96,7 @@ public class FormAddArc extends JDialog implements ActionListener {
 					dispose();
 				}
 				else
-					valArc.setText("Valeur erronÃ©e");
+					valArc.setText("Valeur erronée");
 			}
 			else {
 				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));
