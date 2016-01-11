@@ -38,6 +38,7 @@ public class PopupUpdateVertex extends Popup implements ActionListener {
 			content.setBorder(BorderFactory.createTitledBorder("Sommet"));
 		JLabel nomL = new JLabel("Nom:");
 		nom = new JTextField();
+		nom.setText(hci.getAlSelected().get(0));
 		nom.setPreferredSize(new Dimension(100, 25));
 		content.add(nomL);
 		content.add(nom);
