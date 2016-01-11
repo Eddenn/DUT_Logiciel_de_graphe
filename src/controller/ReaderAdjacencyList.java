@@ -4,23 +4,40 @@ import java.util.ArrayList;
 import model.Graph;
 import model.Vertex;
 
+/**
+ * Classe qui génère le graphe correspondant à la liste d'adjacent contenue dans le fichier à lire
+ * @author Groupe 3
+ * @version 2016-01-08
+ */
 public class ReaderAdjacencyList extends Reader {
+	
+	/**
+	 * Méthode qui crée un graphe correspondant à la liste d'adjacent du fichier
+	 * @param alStr Contient la liste des adjacents
+	 * @return un graphe correspondant à la liste d'adjacence
+	 */
 	public static Graph ReadAdjacencyList(ArrayList<String> alStr) {
+
+		/* Vérification des paramètres du graphe*/
 		boolean bIsDirected = checkDirection(alStr.get(0));
 		boolean bIsValued = checkValue(alStr.get(1));
 
+		/*Suppression des informations sur le graphe*/
 		alStr.remove(0);
 		alStr.remove(0);
 
+		/*Suppression des lignes vides*/
 		for (int i = 0; i < alStr.size() && alStr.get(i).equals(""); i++) {
 			alStr.remove(i);
 		}
 
 		try {
-			Graph graph = new Graph(bIsDirected, bIsValued);
+			/*Création d'un graphe avec les paramètres enregistrés*/
+			Graph graph = new Graph(bIsDirected, bIsValued);	
 			
-			String[] tVertexName = new String[alStr.size()];
+			String[] tVertexName = new String[alStr.size()];	//Tableau contenant les noms des sommets
 
+			/*Extraction des noms des sommets et ajout des sommets au graphe*/
 			for (int i = 0; i < alStr.size(); i++) {
 				String[] tStr = alStr.get(i).split("=");
 
@@ -28,6 +45,7 @@ public class ReaderAdjacencyList extends Reader {
 				tVertexName[i] = tStr[0];
 			}
 
+			/*---Appelle une méthode pour ajouter les arcs selon les paramètres du graphe--*/
 			if (bIsDirected && bIsValued) {
 				return createDirectedValuedGraph(graph, alStr, tVertexName);
 			}
@@ -41,12 +59,21 @@ public class ReaderAdjacencyList extends Reader {
 			}
 
 			return createNotDirectedNotValuedGraph(graph, alStr, tVertexName);
+			/*-----------------*/
 		} catch (Exception e) {
 			return null;
 		}
 	}
-
+	
+	/**
+	 * Méthode qui crée les arcs d'un graphe orienté et valué
+	 * @param graph le graphe en création contenant seulement les sommets
+	 * @param alStr la liste d'adjacence
+	 * @param tVertexName le tableau contenant le nom des sommets
+	 * @return le graphe généré
+	 */
 	private static Graph createDirectedValuedGraph(Graph graph, ArrayList<String> alStr, String[] tVertexName) {
+		/*On filtre les informations en retirant le surplus de symbole*/
 		for (String str : alStr) {
 			str = str.replaceAll("\\{", "");
 			str = str.replaceAll("\\}", "");
@@ -82,8 +109,16 @@ public class ReaderAdjacencyList extends Reader {
 
 		return graph;
 	}
-
+	
+	/**
+	 * Méthode qui crée les arcs d'un graphe orienté et non valué
+	 * @param graph le graphe en création contenant seulement les sommets
+	 * @param alStr la liste d'adjacence
+	 * @param tVertexName le tableau contenant le nom des sommets
+	 * @return le graphe généré
+	 */
 	private static Graph createDirectedNotValuedGraph(Graph graph, ArrayList<String> alStr, String[] tVertexName) {
+		/*On filtre les informations en retirant le surplus de symbole*/
 		for (String str : alStr) {
 			str = str.replaceAll("\\{", "");
 			str = str.replaceAll("\\}", "");
@@ -118,10 +153,17 @@ public class ReaderAdjacencyList extends Reader {
 
 		return graph;
 	}
-
+	
+	/**
+	 * Méthode qui crée les arcs d'un graphe non orienté et valué
+	 * @param graph le graphe en création contenant seulement les sommets
+	 * @param alStr la liste d'adjacence
+	 * @param tVertexName le tableau contenant le nom des sommets
+	 * @return le graphe généré
+	 */
 	private static Graph createNotDirectedValuedGraph(Graph graph, ArrayList<String> alStr, String[] tVertexName) {
 		ArrayList<String> alVertexAlreadyProcessed = new ArrayList<String>();
-
+		/*On filtre les informations en retirant le surplus de symbole*/
 		for (String str : alStr) {
 			str = str.replaceAll("\\{", "");
 			str = str.replaceAll("\\}", "");
@@ -159,10 +201,17 @@ public class ReaderAdjacencyList extends Reader {
 
 		return graph;
 	}
-
+	
+	/**
+	 * Méthode qui crée les arcs d'un graphe non orienté et non valué
+	 * @param graph le graphe en création contenant seulement les sommets
+	 * @param alStr la liste d'adjacence
+	 * @param tVertexName le tableau contenant le nom des sommets
+	 * @return le graphe généré
+	 */
 	private static Graph createNotDirectedNotValuedGraph(Graph graph, ArrayList<String> alStr, String[] tVertexName) {
 		ArrayList<String> alVertexAlreadyProcessed = new ArrayList<String>();
-
+		/*On filtre les informations en retirant le surplus de symbole*/
 		for (String str : alStr) {
 			str = str.replaceAll("\\{", "");
 			str = str.replaceAll("\\}", "");
