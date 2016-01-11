@@ -173,25 +173,15 @@ public class Graph {
 		this.alVertex.remove(v);
 	}
 
-<<<<<<< HEAD
+	/**
+	 * Méthode permettant de supprimer un arc
+	 * @param a l'arc à supprimer
+	 */
 	public boolean deleteArc(Vertex v, Vertex vBis)  {
 		for (int i = 0; i < v.getAlArcs().size(); i++) {
 			if (v.getAlArcs().get(i).getVertex() == vBis) {
 				v.getAlArcs().remove(v.getAlArcs().get(i));
 				return true;
-=======
-	/**
-	 * Méthode permettant de supprimer un arc
-	 * @param a l'arc à supprimer
-	 */
-	public void deleteArc(Arc a) {
-		for (int i = 0; i < alVertex.size(); i++) {
-			ArrayList<Arc> alArcRef = alVertex.get(i).getAlArcs();
-			for (int j = 0; j < alArcRef.size(); i++) {
-				if (alArcRef.get(j) == a) {
-					alArcRef.remove(j);
-				}
->>>>>>> e6d21b169b346f81d420246c81acfa0a66f10203
 			}
 		}
 		return false;
