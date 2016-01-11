@@ -63,7 +63,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.graph = controller.getGraph();
 		
 		// basic parameters of this frame
-		this.setTitle("Logiciel pÃ©dagogique d'Ã©dition de graphe");
+		this.setTitle("Logiciel pédagogique d'édition de graphe");
 
 		this.setSize(900, 700);
 		this.setPreferredSize(new Dimension(900, 700));
@@ -140,8 +140,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemEdition[0].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[0]);
 
-		// MenuItem - RÃ©pÃ©ter
-		tabMenuItemEdition[1] = new JMenuItem("<html>RÃ©pÃ©ter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
+		// MenuItem - Répéter
+		tabMenuItemEdition[1] = new JMenuItem("<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
 		tabMenuItemEdition[1].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[1]);
 
@@ -169,7 +169,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		menuEdition.addSeparator();
 
 		// MenuItem - Selectionner tout
-		tabMenuItemEdition[5] = new JMenuItem("<html>SÃ©lectionner tout&emsp;&nbsp;&nbsp;<i>Ctrl+A</i></html>");
+		tabMenuItemEdition[5] = new JMenuItem("<html>Sélectionner tout&emsp;&nbsp;&nbsp;<i>Ctrl+A</i></html>");
 		tabMenuItemEdition[5].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[5]);
 
@@ -482,9 +482,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Modifier un sommet
 		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1]) {
 			if(pGraph.getAlSelected().size() > 1 ) {
-				showError("Veuilliez sÃ©lectionnÃ© un seul sommet.");
+				showError("Veuilliez sélectionné un seul sommet.");
 			} else if (pGraph.getAlSelected().size() == 0) {
-				showError("Veuilliez sÃ©lectionnÃ© un sommet.");
+				showError("Veuilliez sélectionné un sommet.");
 			} else {
 				new PopupUpdateVertex("Modifier un sommet", true, ctrl, this);
 			}
@@ -520,7 +520,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		/*-- AIDE --*/
 		else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
-					"<html>Projet tuteurÃ© de deuxiÃ¨me annÃ©e de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
+					"<html>Projet tuteuré de deuxiÃ¨me année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
 
 		/*-- BUTTON --*/

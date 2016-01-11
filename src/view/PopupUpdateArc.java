@@ -89,12 +89,12 @@ public class PopupUpdateArc extends Popup implements ActionListener {
 
 			try {
 				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-					if (v.getName().equals("a")) {
+					if (v.getName().equals(boxDep.getSelectedItem())) {
 						vOrigine = v;
 					}
 				}
 				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-					if (v.getName().equals("b")) {
+					if (v.getName().equals(boxArr.getSelectedItem())) {
 						vDest = v;
 					}
 				}

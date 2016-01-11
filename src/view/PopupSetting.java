@@ -36,7 +36,7 @@ public class PopupSetting extends Popup implements ActionListener{
 		style = hci.getGraphPanel().getStyle();
 		
 		//Styles prédéfinis
-		boxStyle = new JComboBox<GraphStyle>(GraphStyle.values());
+		boxStyle = new JComboBox(GraphStyle.values());
 		boxStyle.setSelectedItem(style);
 		boxStyle.addActionListener(this);
 		pStyle.add(boxStyle,BorderLayout.NORTH);
