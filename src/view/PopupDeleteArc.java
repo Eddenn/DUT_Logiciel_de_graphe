@@ -26,6 +26,7 @@ public class PopupDeleteArc extends Popup implements ActionListener {
 	public PopupDeleteArc(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		this.setSize(300, 165);
+		setLocationRelativeTo(null);
 		
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
 		

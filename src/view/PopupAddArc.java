@@ -24,6 +24,7 @@ public class PopupAddArc extends Popup implements ActionListener {
 	public PopupAddArc(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		this.setSize(300, 165);
+		setLocationRelativeTo(null);
 		
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
 		

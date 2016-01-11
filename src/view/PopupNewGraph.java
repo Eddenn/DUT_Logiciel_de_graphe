@@ -27,6 +27,8 @@ public class PopupNewGraph extends Popup implements ActionListener {
 		this.bEnd = false;
 		this.bClose = false;
 		this.setSize(300, 165);
+		setLocationRelativeTo(null);
+		
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {bEnd=true;bClose=true;} 
          } ) ; 

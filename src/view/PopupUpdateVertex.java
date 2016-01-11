@@ -25,6 +25,7 @@ public class PopupUpdateVertex extends Popup implements ActionListener {
 		this.hci = hci;
 		this.ctrl = ctrl;
 		this.setSize(300, 150);
+		setLocationRelativeTo(null);
 		
 		// Contenu
 		JPanel content = new JPanel();

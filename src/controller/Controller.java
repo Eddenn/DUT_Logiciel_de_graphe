@@ -257,12 +257,6 @@ public class Controller implements IControlable, IIhmable {
 	 * Méthode permettant de sauvegarder l'état du graphe à une instant t. Utiliser pour sauvegarder les actions effectuées.
 	 */
 	public void provSave() {
-<<<<<<< HEAD
-//		// Incrémentation du compteur indiquant le nombre de modification (Repère utilisé pour savoir notre position dans la ArrayList permettant le retour en arrière
-//		cptModif++;
-
-=======
->>>>>>> 56a532d09dce8a6baa172292f9fea3a433fcbffb
 		// Initialisation de la ArrayList contenant la liste d'adjacence du graphe au moment oï¿½ l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
 		alProv.add(0,"Valued="+graph.isValued());
