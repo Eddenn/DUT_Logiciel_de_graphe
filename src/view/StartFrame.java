@@ -21,6 +21,7 @@ public class StartFrame {
 		JFrame logoFrame = new JFrame();
 		logoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
+		@SuppressWarnings("serial")
 		JPanel pLogo = new JPanel(){
 			public void paintComponent(Graphics g){
 				Image logo = null;

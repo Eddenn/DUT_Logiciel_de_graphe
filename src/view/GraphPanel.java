@@ -35,11 +35,13 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	private double iHeightEdge; //Hauteur
 	private double iZoom;		//Zoom
 	private HCI hci;
+	private GraphStyle style;
 
 	/*--Constructeur du panel de dessin--*/
 	public GraphPanel(HCI hci) {
 		super();
 		this.hci = hci;
+		this.style = GraphStyle.BASIC;
 		this.clipBoardEdge = new HashMap<String,Point>();
 		this.saveMousePosition= new Point(0,0);
 		this.bCtrlPressed = false;
@@ -109,15 +111,15 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	/*--Dessin en fonction de hmVertex--*/
 	public void drawEdges(Graphics2D g2d) {
 		for(Point c : hci.hmVertex.values()) {
-			g2d.setColor(Color.BLACK);
+			g2d.setColor(style.getEdgeBorder());
 			g2d.setStroke(new BasicStroke((float)iZoom));
 			g2d.drawOval((int)(c.getX()-1), (int)(c.getY()-1), (int)((iWidthEdge+2)*iZoom), (int)((iHeightEdge+2)*iZoom));
-			g2d.setColor(Color.WHITE);
+			g2d.setColor(style.getEdgeBackground());
 			g2d.fillOval((int)(c.getX())  , (int)(c.getY())  , (int)((iWidthEdge)*iZoom)  , (int)((iHeightEdge)*iZoom  ));
 			// Find the key of this coordinate
 			for (String s : hci.hmVertex.keySet()) {
 				if (hci.hmVertex.get(s) == c) {
-					g2d.setColor(Color.BLACK);
+					g2d.setColor(style.getEdgeText());
 					g2d.drawString(HCI.centerStr(s,(int)((iWidthEdge*iZoom)/(3.5*iZoom))), (int)(c.getX()), (int)(c.getY()+(iHeightEdge/2+(iHeightEdge/10))*iZoom));
 				}
 			}
