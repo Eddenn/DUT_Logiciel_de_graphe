@@ -1,8 +1,10 @@
-IsMatrix=true
+IsMatrix=false
 Directed=true
 Valued=true
 
--1 2 1 -1 
-1 -1 -1 -1 
--1 2 -1 -1 
--1 -1 -1 -1 
+A={(B,1)}
+B={(A,2),(C,2)}
+C={(A,1)}
+D={}
+
+[0.0,0.0;202.0,273.0;200.0,0.0;300.0,0.0]

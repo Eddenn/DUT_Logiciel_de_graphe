@@ -1,42 +1,32 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 import controller.Controller;
-import model.Arc;
 import model.Vertex;
 
-public class Form extends JDialog implements ActionListener {
+public class PopupUpdateVertex extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
 	private JButton ok, annuler;
-	private Controller ctrl;
-	private HCI hci;
 
-	public Form(HCI hci, String title, boolean modal, Controller ctrl) {
-		super(hci, title, modal);
+	public PopupUpdateVertex(String title, boolean modal, Controller ctrl, HCI hci) {
+		super(title, modal, ctrl, hci);
 		this.hci = hci;
 		this.ctrl = ctrl;
 		this.setSize(300, 150);
-		this.setLocationRelativeTo(null);
-		this.setResizable(false);
-		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 		
 		// Contenu
 		JPanel content = new JPanel();
@@ -68,19 +58,20 @@ public class Form extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (this.getTitle().equals("Ajouter un sommet")) {
-			if (e.getSource() == ok) {
-				if(!ctrl.addVertex(nom.getText())){
-					hci.hmVertex.put(nom.getText(), new Point(0, 0));
+		if (e.getSource() == ok && !nom.getText().isEmpty()) {
+			for (Vertex v : ctrl.getGraph().getAlVertex()) {
+				if (v.getName().equals(hci.getAlSelected().get(0))) {
+					v.setName(nom.getText());
+					hci.hmVertex.put(nom.getText(), hci.hmVertex.get(hci.getAlSelected().get(0)));
+					hci.hmVertex.remove(hci.getAlSelected().get(0));
 					hci.getAlSelected().clear();
 					hci.getAlSelected().add(nom.getText());
+					hci.refresh();
 				}
-				dispose();
 			}
-			if (e.getSource() == annuler) {
-				dispose();
-			}
+			dispose();
 		}
+<<<<<<< HEAD:src/view/Form.java
 
 		else if (this.getTitle().equals("Modifier un sommet")) {
 			if (e.getSource() == ok && !nom.getText().isEmpty()) {
@@ -101,6 +92,12 @@ public class Form extends JDialog implements ActionListener {
 			else
 				JOptionPane.showMessageDialog(null, "Le nom du sommet ne doit pas être vide", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
+=======
+		if (e.getSource() == annuler) {
+			setVisible(false);
+		}
+		dispose();
+>>>>>>> 6b2fc14b19b8ae6e71e30e7185a318164173fb6b:src/view/PopupUpdateVertex.java
 	}
 
 }
