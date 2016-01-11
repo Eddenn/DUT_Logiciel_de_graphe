@@ -14,7 +14,9 @@ import view.HCI;
 import view.StartFrame;
 
 /**
- * Classe qui fait le lien entre l'IHM et le métier et qui vérifie les actions effectuées
+ * Classe qui fait le lien entre l'IHM et le mï¿½tier et qui vï¿½rifie les actions
+ * effectuï¿½es
+ * 
  * @author Groupe 3
  * @version 2016-01-08
  */
@@ -24,9 +26,9 @@ public class Controller implements IControlable, IIhmable {
 	private ArrayList<ArrayList<String>> saveVertexList;
 	private ArrayList<Point[]> saveCoordList;
 	private int cptModif;
-	private static String file="";
-	
-	private IParcourable parcours; 
+	private static String file = "";
+
+	private IParcourable parcours;
 
 	public static void main(String[] args) {
 		new Controller();
@@ -36,15 +38,16 @@ public class Controller implements IControlable, IIhmable {
 	 * Constructeur qui instancie un graphe et l'ihm
 	 */
 	public Controller() {
-		// Création du graphe
+		// Crï¿½ation du graphe
 		graph = new Graph(true, true);
 
 		// Initialisation de la frame
 		hci = new HCI(this);
-		
-		new StartFrame(this,hci);
-		
-		// Initialisation de l'arrayList qui permet d'implémenter les fonctions annuler et rétablir
+
+		new StartFrame(this, hci);
+
+		// Initialisation de l'arrayList qui permet d'implï¿½menter les fonctions
+		// annuler et rï¿½tablir
 		initProvSave();
 	}
 
@@ -52,100 +55,130 @@ public class Controller implements IControlable, IIhmable {
 	 * Gestion du graphe 
 	 * -----------------*/
 	/**
-	 * Méthode qui crée un nouveau graphe vide avec les paramètres choisis par l'utilisateur.
-	 * @param bOriented true s'il est orienté, false sinon.
-	 * @param bValued true s'il est valué, false sinon.
+	 * Mï¿½thode qui crï¿½e un nouveau graphe vide avec les paramï¿½tres choisis par
+	 * l'utilisateur.
+	 * 
+	 * @param bOriented
+	 *            true s'il est orientï¿½, false sinon.
+	 * @param bValued
+	 *            true s'il est valuï¿½, false sinon.
 	 */
 	public void newGraph(boolean bOriented, boolean bValued) {
 		graph = new Graph(bOriented, bValued);
+		hci.setGraph(graph);
+		hci.permitModifArc(graph.isValued());
 		hci.initHmVertex();
 		hci.refresh();
 	}
-	
+
 	/**
-	 * Méthode permettant de sauvegarder le graphe dans un fichier texte
-	 * @param strFileName le chemin où le fichier doit être enregistrer, 
-	 * 		  si null, on reprend le chemin sauvegardé pour écraser l'ancienne sauvegarde
+	 * Mï¿½thode permettant de sauvegarder le graphe dans un fichier texte
+	 * 
+	 * @param strFileName
+	 *            le chemin oï¿½ le fichier doit ï¿½tre enregistrer, si null, on
+	 *            reprend le chemin sauvegardï¿½ pour ï¿½craser l'ancienne
+	 *            sauvegarde
 	 */
 	public void saveFile(String strFileName) {
-		//Si strFileName contient quelque chose, il s'agit d'enregistrer sous sinon il s'agit d'enregistrer
-		if(!strFileName.equals("")){
-			file=strFileName;
+		// Si strFileName contient quelque chose, il s'agit d'enregistrer sous
+		// sinon il s'agit d'enregistrer
+		if (!strFileName.equals("")) {
+			file = strFileName;
 		}
 		FileWriter fw = null;
 
 		try {
-			// ouverture du fichier en mode écriture
+			// ouverture du fichier en mode ï¿½criture
 			fw = new FileWriter(file, false);
 
-			// écriture des lignes de texte
+			// ï¿½criture des lignes de texte
 
 			fw.write("IsMatrix=false\n");
 
 			fw.write("Directed=" + graph.isDirected() + "\n");
 			fw.write("Valued=" + graph.isValued() + "\n\n");
-			fw.write(graph.getFormattedList()+"\n");
+			fw.write("-- Liste d'adjacence :\n");
+			fw.write(graph.getFormattedList() + "\n");
+			fw.write("-- CoordonnÃ©es des points :\n");
 			fw.write("[");
-			
+
 			Point[] tabPoint = new Point[graph.getAlVertex().size()];
 			int cpt = 0;
 			for (Point c : hci.getHmVertex().values()) {
 				tabPoint[cpt] = c;
 				cpt++;
 			}
-			
+
 			int size = tabPoint.length;
 			for (int i = 0; i < size; i++) {
-				fw.write(tabPoint[i].getX()+","+ tabPoint[i].getY());
-				if (i != size-1) 
+				fw.write(tabPoint[i].getX() + "," + tabPoint[i].getY());
+				if (i != size - 1)
 					fw.write(";");
 			}
 			fw.write("]");
 
 			// fermeture du fichier
 			fw.close();
-			
-			// Remise à zero des sauvegardes provisoires
+
+			// Remise ï¿½ zero des sauvegardes provisoires
 			initProvSave();
-			
+
 		} catch (IOException e) {
-			hci.showError("Problème d'enregistrement du fichier " + file+ ".");
+			hci.showError("ProblÃ¨me d'enregistrement du fichier " + file + ".");
 		}
 	}
 
 	/**
-	 * Méthode permettant de charger un fichier texte
-	 * @param strFileName le chemin du fichier à charger
+	 * Mï¿½thode permettant de charger un fichier texte
+	 * 
+	 * @param strFileName
+	 *            le chemin du fichier ï¿½ charger
 	 */
 	public void loadFile(String strFileName) {
-		graph = Reader.read(strFileName);
+		ReaderFile rf = new ReaderFile(strFileName);
+
+		graph = rf.getGraph();
+
+		boolean bGraphWasNull = false;
 
 		if (graph == null) {
-			graph = new Graph(true,true);
+			bGraphWasNull = true;
+			graph = new Graph(true, true);
 			hci.showError("Format du fichier invalide.");
 		}
 
-		hci.initHmVertex();
+		hci.setGraph(graph);
+		hci.permitModifArc(graph.isValued());
+
+		if (!bGraphWasNull) {
+			Point[] tPoints = rf.getPoints();
+			hci.initHmVertexByTab(tPoints);
+		} else {
+			hci.initHmVertex();
+		}
+		
 		initProvSave();
 		provSave();
 		hci.refresh();
 	}
-	
+
 	/*-----------------------
 	 * Gestion des composants
 	 *------------------------*/
 	/**
-	 * Méthode permettant d'ajouter un sommet au graphe
-	 * @param strVertexName le nom du sommet
-	 * @return true si le nom est déja utilisé, false sinon
+	 * Mï¿½thode permettant d'ajouter un sommet au graphe
+	 * 
+	 * @param strVertexName
+	 *            le nom du sommet
+	 * @return true si le nom est dï¿½ja utilisï¿½, false sinon
 	 */
 	public boolean addVertex(String strVertexName) {
-		boolean bExist=false;
+		boolean bExist = false;
 		if (graph.getVertex(strVertexName) != null) {
-			hci.showError("Un sommet avec le nom " + strVertexName + " existe déjà.");
+			hci.showError("Un sommet avec le nom " + strVertexName + " existe dï¿½jï¿½.");
 			bExist = true;
 		} else if (strVertexName.replaceAll(" ", "").equals("")) {
-			hci.showError("Le nom de votre sommet ne peut pas être vide");
+			hci.showError("Le nom de votre sommet ne peut pas ï¿½tre vide");
 			bExist = true;
 		} else {
 			graph.addVertex(strVertexName);
@@ -156,37 +189,47 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/**
-	 * Méthode permettant d'ajouter un arc ou une arrête non valué
-	 * @param v le nom du premier sommet
-	 * @param vBis le nom du deuxième sommet
+	 * Mï¿½thode permettant d'ajouter un arc ou une arrï¿½te non valuï¿½
+	 * 
+	 * @param v
+	 *            le nom du premier sommet
+	 * @param vBis
+	 *            le nom du deuxiï¿½me sommet
 	 */
 	public void addArc(Vertex v, Vertex vBis) {
-		if (checkArcAlreadyExist(v,vBis)) {
+		if (checkArcAlreadyExist(v, vBis)) {
 			graph.addArc(v, vBis);
 			provSave();
 		} else {
-			hci.showError("L'arc existe déjà.");
+			hci.showError("L'arc existe dï¿½jï¿½.");
 		}
 	}
 
 	/**
-	 * Méthode permettant d'ajouter un arc ou une arrête valué
-	 * @param v le nom du premier sommet
-	 * @param vBis le nom du deuxième sommet
-	 * @param iValue la valeur de l'arc
+	 * Mï¿½thode permettant d'ajouter un arc ou une arrï¿½te valuï¿½
+	 * 
+	 * @param v
+	 *            le nom du premier sommet
+	 * @param vBis
+	 *            le nom du deuxiï¿½me sommet
+	 * @param iValue
+	 *            la valeur de l'arc
 	 */
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
-		if (checkArcAlreadyExist(v,vBis)) {
+		if (checkArcAlreadyExist(v, vBis)) {
 			graph.addArc(v, vBis, iValue);
 			provSave();
 		} else
-			hci.showError("L'arc existe déjà.");
+			hci.showError("L'arc existe dï¿½jï¿½.");
 	}
 
 	/**
-	 * Méthode permettant de supprimer un arc ou une arrête
-	 * @param v le nom du premier sommet
-	 * @param vBis le nom du deuxième sommet
+	 * Mï¿½thode permettant de supprimer un arc ou une arrï¿½te
+	 * 
+	 * @param v
+	 *            le nom du premier sommet
+	 * @param vBis
+	 *            le nom du deuxiï¿½me sommet
 	 */
 	public boolean delArc(Vertex v, Vertex vBis) {
 		if (graph.getAlVertex().contains(v) && graph.getAlVertex().contains(vBis)) {
@@ -196,9 +239,12 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/**
-	 * Méthode qui vérifie si un arc ou une arrête existe déjà
-	 * @param v nom du premier sommet
-	 * @param vBis nom du deuxième sommet
+	 * Mï¿½thode qui vï¿½rifie si un arc ou une arrï¿½te existe dï¿½jï¿½
+	 * 
+	 * @param v
+	 *            nom du premier sommet
+	 * @param vBis
+	 *            nom du deuxiï¿½me sommet
 	 * @return true s'il existe, false sinon
 	 */
 	private boolean checkArcAlreadyExist(Vertex v, Vertex vBis) {
@@ -212,39 +258,41 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/*---------------------
-	 * Annuler / Rétablir
+	 * Annuler / Rï¿½tablir
 	 *--------------------*/
 	/**
-	 * Méthode permettant d'annuler la dernière action
+	 * Mï¿½thode permettant d'annuler la derniï¿½re action
 	 */
 	public void undo() {
-		//Ne sait pas lequel gardé
-		/*if (cptModif > 0) {
-			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif--)));
-			hci.initHmVertexByTab(saveCoordList.get(cptModif));
-		}*/	
-		if (cptModif > 1) {
-			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-2)));
-			hci.initHmVertexByTab(saveCoordList.get(cptModif-2));
-			cptModif--;
-		}
-		
+		// Ne sait pas lequel gardï¿½
+		/*
+		 * if (cptModif > 0) { graph = ReaderAdjacencyList.ReadAdjacencyList(new
+		 * ArrayList<String>(saveVertexList.get(cptModif--)));
+		 * hci.initHmVertexByTab(saveCoordList.get(cptModif)); }
+		 */
+		/*
+		 * if (cptModif > 1) { graph = ReaderAdjacencyList.ReadAdjacencyList(new
+		 * ArrayList<String>(saveVertexList.get(cptModif-2)), hci);
+		 * hci.initHmVertexByTab(saveCoordList.get(cptModif-2)); cptModif--; }
+		 */
 
 	}
 
 	/**
-	 * Méthode permettant de rétablir la dernière action supprimer
+	 * Mï¿½thode permettant de rï¿½tablir la derniï¿½re action supprimer
 	 */
 	public void redo() {
-		if (cptModif >= 0 && cptModif < saveVertexList.size()) {
-			graph = ReaderAdjacencyList.ReadAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif)));
-			hci.initHmVertexByTab(saveCoordList.get(cptModif));
-			cptModif++;
-		}
+		/*
+		 * if (cptModif >= 0 && cptModif < saveVertexList.size()) { graph =
+		 * ReaderAdjacencyList.ReadAdjacencyList(new
+		 * ArrayList<String>(saveVertexList.get(cptModif)), hci);
+		 * hci.initHmVertexByTab(saveCoordList.get(cptModif)); cptModif++; }
+		 */
 	}
 
 	/**
-	 * Méthode qui met à zéro les arrayList contenant les actions effectués depuis la dernière sauvegarde.
+	 * Mï¿½thode qui met ï¿½ zï¿½ro les arrayList contenant les actions effectuï¿½s
+	 * depuis la derniï¿½re sauvegarde.
 	 */
 	public void initProvSave() {
 		saveVertexList = new ArrayList<ArrayList<String>>();
@@ -252,63 +300,75 @@ public class Controller implements IControlable, IIhmable {
 		cptModif = 0;
 		provSave();
 	}
-	
+
 	/**
-	 * Méthode permettant de sauvegarder l'état du graphe à une instant t. Utiliser pour sauvegarder les actions effectuées.
+	 * Mï¿½thode permettant de sauvegarder l'ï¿½tat du graphe ï¿½ une instant t.
+	 * Utiliser pour sauvegarder les actions effectuï¿½es.
 	 */
 	public void provSave() {
-		// Initialisation de la ArrayList contenant la liste d'adjacence du graphe au moment oï¿½ l'utilisateur effectue une action
+		// Initialisation de la ArrayList contenant la liste d'adjacence du
+		// graphe au moment oï¿½ l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
-		alProv.add(0,"Valued="+graph.isValued());
-		alProv.add(0,"Directed="+graph.isDirected());
-		
-		// Suppression des derniÃ¨res actions effectuÃ©es dans le cas oÃ¹ l'utilisateur effectue une nouvelle action sans redo
+		alProv.add(0, "Valued=" + graph.isValued());
+		alProv.add(0, "Directed=" + graph.isDirected());
+
+		// Suppression des derniÃ¨res actions effectuÃ©es dans le cas oÃ¹
+		// l'utilisateur effectue une nouvelle action sans redo
 		if (cptModif < saveCoordList.size()) {
-			for (int i = cptModif ; i < saveVertexList.size(); i++) {
+			for (int i = cptModif; i < saveVertexList.size(); i++) {
 				saveVertexList.remove(cptModif);
 			}
 			for (int i = cptModif; i < saveCoordList.size(); i++) {
 				saveCoordList.remove(cptModif);
 			}
 		}
-		
+
 		// Ajout de la liste d'adjacence dans la ArrayList de sauvegarde
 		saveVertexList.add(cptModif, alProv);
-		
+
 		// Sauvegarde des coordonnÃ©es
 		Point[] tabPoint = new Point[graph.getAlVertex().size()];
 		int cpt = 0;
 		for (Point c : hci.getHmVertex().values()) {
-			tabPoint[cpt] = new Point( (int)(c.x/hci.getGraphPanel().getZoom()) , (int)(c.y/hci.getGraphPanel().getZoom()) );
+			tabPoint[cpt] = new Point((int) (c.x / hci.getGraphPanel().getZoom()),
+					(int) (c.y / hci.getGraphPanel().getZoom()));
 			cpt++;
 		}
-		
-		saveCoordList.add(cptModif,tabPoint);
-		
-		
-		int i = cptModif+1;
+
+		saveCoordList.add(cptModif, tabPoint);
+
+		int i = cptModif + 1;
 		while (i < saveVertexList.size()) {
 			saveVertexList.remove(i);
 			saveCoordList.remove(i);
 		}
-		
-		// Incrémentation du compteur indiquant le nombre de modification (Repère utilisé pour savoir notre position dans la ArrayList permettant le retour en arrière
+
+		// Incrï¿½mentation du compteur indiquant le nombre de modification
+		// (Repï¿½re utilisï¿½ pour savoir notre position dans la ArrayList
+		// permettant le retour en arriï¿½re
 		cptModif++;
 	}
-	
+
 	/*--------------------------------------
-	 * Méthodes de l'interface IControlable
+	 * Mï¿½thodes de l'interface IControlable
 	 *-------------------------------------*/
 
-	public char[] listeSommet() {return graph.getListVertex();}
+	public char[] listeSommet() {
+		return graph.getListVertex();
+	}
 
-	public int[][] getMatrice() {return graph.getTMatrix();}
+	public int[][] getMatrice() {
+		return graph.getTMatrix();
+	}
 
-	public void majIHM() {hci.refresh();}
-	
-	/* --------------------------------
-	 * Méthodes de l'interface IIhmable 
-	 * ---------------------------------*/
+	public void majIHM() {
+		hci.refresh();
+	}
+
+	/*
+	 * -------------------------------- Mï¿½thodes de l'interface IIhmable
+	 * ---------------------------------
+	 */
 	@Override
 	public int getNbSommet() {
 		return graph.getAlVertex().size();
@@ -352,12 +412,34 @@ public class Controller implements IControlable, IIhmable {
 	public String getMessage() {
 		return parcours.getMessage();
 	}
-	
+
+	public boolean updateVertex(String oldName, String newName) {
+		boolean bUpdate = true;
+		if (graph.getVertex(newName) != null) {
+			hci.showError("Un sommet avec le nom " + newName + " existe dï¿½jï¿½.");
+			bUpdate = false;
+		} else if (newName.replaceAll(" ", "").equals("")) {
+			hci.showError("Le nom de votre sommet ne peut pas ï¿½tre vide");
+			bUpdate = false;
+		} else {
+			graph.updateVertex(oldName, newName);
+			provSave();
+		}
+		return bUpdate;
+	}
+
+	// public boolean updateArc()
+
 	/*------------------
 	 * Getter / Setter
 	 * ----------------*/
-	 
-	public Graph getGraph() {return graph;}
-	public String getFile() {return file; }
-	
+
+	public Graph getGraph() {
+		return graph;
+	}
+
+	public String getFile() {
+		return file;
+	}
+
 }

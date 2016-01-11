@@ -189,7 +189,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		menuBarMain.add(menuExport);
 
-		menuGraph = new JMenu("Graph");
+		menuGraph = new JMenu("Graphe");
 
 		// MenuItem - Ajouter un sommet
 		tabMenuItemGraph[0] = new JMenuItem("<html>Ajouter un sommet</html>");
@@ -674,4 +674,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
 	
+	public void setGraph(Graph g) {
+		this.graph = g;
+	}
+	
+	public void permitModifArc (boolean b) {
+		tabMenuItemGraph[5].setEnabled(b);
+		popUpItem[5].setEnabled(b);
+	}
 }

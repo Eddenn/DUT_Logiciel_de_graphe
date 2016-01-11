@@ -1,192 +1,100 @@
 package controller;
 
 import java.util.ArrayList;
+
 import model.Graph;
 import model.Vertex;
 
 /**
- * Classe qui génère le graphe correspondant à la liste d'adjacent contenue dans le fichier à lire
+ * Classe qui gï¿½nï¿½re le graphe correspondant ï¿½ la liste d'adjacent contenue dans
+ * le fichier ï¿½ lire
+ * 
  * @author Groupe 3
  * @version 2016-01-08
  */
-public class ReaderAdjacencyList extends Reader {
+public class ReaderAdjacencyList {
+	private ArrayList<String> alStr;
+	private boolean bDirected;
+	private boolean bValued;
+	private Graph graph;
+	private ArrayList<String> alVertexName;
+
+	public ReaderAdjacencyList(ArrayList<String> alStr, boolean bDirected, boolean bValued) {
+		this.alStr = alStr;
+		this.bDirected = bDirected;
+		this.bValued = bValued;
+
+		graph = new Graph(bDirected, bValued);
+		generateVertex();
+
+		graph = createGraph();
+	}
+
+	public Graph getGraph() {
+		return graph;
+	}
 	
-	/**
-	 * Méthode qui crée un graphe correspondant à la liste d'adjacent du fichier
-	 * @param alStr Contient la liste des adjacents
-	 * @return un graphe correspondant à la liste d'adjacence
-	 */
-	public static Graph ReadAdjacencyList(ArrayList<String> alStr) {
+	private void generateVertex() {
+		alVertexName = new ArrayList<String>();
 
-		/* Vérification des paramètres du graphe*/
-		boolean bIsDirected = checkDirection(alStr.get(0));
-		boolean bIsValued = checkValue(alStr.get(1));
+		for (int i = 0; i < alStr.size() && alStr.get(i).indexOf("Coordonn") < 0; i++) {
+			if (alStr.get(i).indexOf("Coordonn") < 0) {
+				String str = alStr.get(i).substring(0, alStr.get(i).indexOf("="));
 
-		/*Suppression des informations sur le graphe*/
-		alStr.remove(0);
-		alStr.remove(0);
-
-		/*Suppression des lignes vides*/
-		for (int i = 0; i < alStr.size() && alStr.get(i).equals(""); i++) {
-			alStr.remove(i);
+				graph.addVertex(str);
+				alVertexName.add(str);
+			}
 		}
+	}
 
+	private Graph createGraph() {
 		try {
-			/*Création d'un graphe avec les paramètres enregistrés*/
-			Graph graph = new Graph(bIsDirected, bIsValued);	
-			
-			String[] tVertexName = new String[alStr.size()];	//Tableau contenant les noms des sommets
-
-			/*Extraction des noms des sommets et ajout des sommets au graphe*/
-			for (int i = 0; i < alStr.size(); i++) {
-				String[] tStr = alStr.get(i).split("=");
-
-				graph.addVertex(tStr[0]);
-				tVertexName[i] = tStr[0];
+			if (bDirected && bValued) {
+				return createDirectedValuedGraph();
 			}
 
-			/*---Appelle une méthode pour ajouter les arcs selon les paramètres du graphe--*/
-			if (bIsDirected && bIsValued) {
-				return createDirectedValuedGraph(graph, alStr, tVertexName);
+			if (bDirected && !bValued) {
+				return createDirectedNotValuedGraph();
 			}
 
-			if (bIsDirected && !bIsValued) {
-				return createDirectedNotValuedGraph(graph, alStr, tVertexName);
+			if (!bDirected && bValued) {
+				return createNotDirectedValuedGraph();
 			}
 
-			if (!bIsDirected && bIsValued) {
-				return createNotDirectedValuedGraph(graph, alStr, tVertexName);
+			if (!bDirected && !bValued) {
+				return createNotDirectedNotValuedGraph();
 			}
-
-			return createNotDirectedNotValuedGraph(graph, alStr, tVertexName);
-			/*-----------------*/
-		} catch (Exception e) {
-			return null;
-		}
+		} catch (Exception e) {}
+		
+		return null;
 	}
-	
-	/**
-	 * Méthode qui crée les arcs d'un graphe orienté et valué
-	 * @param graph le graphe en création contenant seulement les sommets
-	 * @param alStr la liste d'adjacence
-	 * @param tVertexName le tableau contenant le nom des sommets
-	 * @return le graphe généré
-	 */
-	private static Graph createDirectedValuedGraph(Graph graph, ArrayList<String> alStr, String[] tVertexName) {
-		/*On filtre les informations en retirant le surplus de symbole*/
-		for (String str : alStr) {
-			str = str.replaceAll("\\{", "");
-			str = str.replaceAll("\\}", "");
 
-			String[] tStr = str.split("=");
+	private Graph createDirectedValuedGraph() {
+		boolean bContinue = true;
 
-			if (tStr.length > 1) {
-				String[] tLinkedVertex = tStr[1].split("\\),\\(");
+		for (int i = 0; i < alStr.size() && bContinue; i++) {
+			if (!alStr.get(i).equals("")) {
+				String str = alStr.get(i).replaceAll("\\{", "");
+				str = str.replaceAll("\\}", "");
 
-				for (int i = 0; i < tLinkedVertex.length; i++) {
-					String strVertexValue = tLinkedVertex[i].replaceAll("\\(", "");
-					strVertexValue = strVertexValue.replaceAll("\\)", "");
+				String[] tStr = str.split("=");
 
-					String[] tStrVertexValue = strVertexValue.split(",");
+				if (tStr.length > 1) {
+					String[] tLinkedVertex = tStr[1].split("\\),\\(");
 
-					// On vérifie s'il est bien valué.
-					if (tStrVertexValue.length < 2) {
-						graph.setValued(false);
-						
-						return createDirectedNotValuedGraph(graph,alStr,tVertexName);
-					}
-					
-					Vertex v = graph.getVertex(tStr[0]);
+					for (int j = 0; j < tLinkedVertex.length; j++) {
+						String strVertexValue = tLinkedVertex[j].replaceAll("\\(", "");
+						strVertexValue = strVertexValue.replaceAll("\\)", "");
 
-					Vertex vBis = graph.getVertex(tStrVertexValue[0]);
+						String[] tStrVertexValue = strVertexValue.split(",");
 
-					graph.addArc(v, vBis, Integer.parseInt(tStrVertexValue[1]));
+						// On vï¿½rifie s'il est bien valuï¿½.
+						if (tStrVertexValue.length < 2) {
+							graph.setValued(false);
 
-				}
-			}
+							return createDirectedNotValuedGraph();
+						}
 
-		}
-
-		return graph;
-	}
-	
-	/**
-	 * Méthode qui crée les arcs d'un graphe orienté et non valué
-	 * @param graph le graphe en création contenant seulement les sommets
-	 * @param alStr la liste d'adjacence
-	 * @param tVertexName le tableau contenant le nom des sommets
-	 * @return le graphe généré
-	 */
-	private static Graph createDirectedNotValuedGraph(Graph graph, ArrayList<String> alStr, String[] tVertexName) {
-		/*On filtre les informations en retirant le surplus de symbole*/
-		for (String str : alStr) {
-			str = str.replaceAll("\\{", "");
-			str = str.replaceAll("\\}", "");
-
-			String[] tStr = str.split("=");
-
-			if (tStr.length > 1) {
-				String[] tLinkedVertex = tStr[1].split("\\),\\(");
-
-				for (int i = 0; i < tLinkedVertex.length; i++) {
-					String strVertexValue = tLinkedVertex[i].replaceAll("\\(", "");
-					strVertexValue = strVertexValue.replaceAll("\\)", "");
-
-					// On fait un test pour vérifier si la liste est bien non-valuée
-					String[] tStrVertexValue = strVertexValue.split(",");
-					
-					// Si c'est valué, on retourne avec la méthode valué
-					if (tStrVertexValue.length > 1) {
-						graph.setValued(true);
-						
-						return createDirectedValuedGraph(graph, alStr, tVertexName);
-					}
-					
-					Vertex v = graph.getVertex(tStr[0]);
-
-					Vertex vBis = graph.getVertex(strVertexValue);
-
-					graph.addArc(v, vBis);
-				}
-			}
-		}
-
-		return graph;
-	}
-	
-	/**
-	 * Méthode qui crée les arcs d'un graphe non orienté et valué
-	 * @param graph le graphe en création contenant seulement les sommets
-	 * @param alStr la liste d'adjacence
-	 * @param tVertexName le tableau contenant le nom des sommets
-	 * @return le graphe généré
-	 */
-	private static Graph createNotDirectedValuedGraph(Graph graph, ArrayList<String> alStr, String[] tVertexName) {
-		ArrayList<String> alVertexAlreadyProcessed = new ArrayList<String>();
-		/*On filtre les informations en retirant le surplus de symbole*/
-		for (String str : alStr) {
-			str = str.replaceAll("\\{", "");
-			str = str.replaceAll("\\}", "");
-
-			String[] tStr = str.split("=");
-
-			if (tStr.length > 1) {
-				String[] tLinkedVertex = tStr[1].split("\\),\\(");
-
-				for (int i = 0; i < tLinkedVertex.length; i++) {
-					String strVertexValue = tLinkedVertex[i].replaceAll("\\(", "");
-					strVertexValue = strVertexValue.replaceAll("\\)", "");
-
-					String[] tStrVertexValue = strVertexValue.split(",");
-
-					// On vérifie s'il est bien valué.
-					if (tStrVertexValue.length < 2) {
-						graph.setValued(false);
-						
-						return createNotDirectedNotValuedGraph(graph,alStr,tVertexName);
-					}
-					
-					if (!alVertexAlreadyProcessed.contains(tStrVertexValue[0])) {
 						Vertex v = graph.getVertex(tStr[0]);
 
 						Vertex vBis = graph.getVertex(tStrVertexValue[0]);
@@ -194,48 +102,40 @@ public class ReaderAdjacencyList extends Reader {
 						graph.addArc(v, vBis, Integer.parseInt(tStrVertexValue[1]));
 					}
 				}
+			} else {
+				bContinue = false;
 			}
-
-			alVertexAlreadyProcessed.add(tStr[0]);
 		}
-
+		
 		return graph;
 	}
-	
-	/**
-	 * Méthode qui crée les arcs d'un graphe non orienté et non valué
-	 * @param graph le graphe en création contenant seulement les sommets
-	 * @param alStr la liste d'adjacence
-	 * @param tVertexName le tableau contenant le nom des sommets
-	 * @return le graphe généré
-	 */
-	private static Graph createNotDirectedNotValuedGraph(Graph graph, ArrayList<String> alStr, String[] tVertexName) {
-		ArrayList<String> alVertexAlreadyProcessed = new ArrayList<String>();
-		/*On filtre les informations en retirant le surplus de symbole*/
-		for (String str : alStr) {
-			str = str.replaceAll("\\{", "");
-			str = str.replaceAll("\\}", "");
 
-			String[] tStr = str.split("=");
+	private Graph createDirectedNotValuedGraph() {
+		boolean bContinue = true;
 
-			if (tStr.length > 1) {
-				String[] tLinkedVertex = tStr[1].split("\\),\\(");
+		for (int i = 0; i < alStr.size() && bContinue; i++) {
+			if (!alStr.get(i).equals("")) {
+				String str = alStr.get(i).replaceAll("\\{", "");
+				str = str.replaceAll("\\}", "");
 
-				for (int i = 0; i < tLinkedVertex.length; i++) {
-					String strVertexValue = tLinkedVertex[i].replaceAll("\\(", "");
-					strVertexValue = strVertexValue.replaceAll("\\)", "");
+				String[] tStr = str.split("=");
 
-					// On fait un test pour vérifier si la liste est bien non-valuée
-					String[] tStrVertexValue = strVertexValue.split(",");
-					
-					// Si c'est valué, on retourne avec la méthode valué
-					if (tStrVertexValue.length > 1) {
-						graph.setValued(true);
+				if (tStr.length > 1) {
+					String[] tLinkedVertex = tStr[1].split("\\),\\(");
 
-						return createNotDirectedValuedGraph(graph, alStr, tVertexName);
-					}
-					
-					if (!alVertexAlreadyProcessed.contains(strVertexValue)) {
+					for (int j = 0; j < tLinkedVertex.length; j++) {
+						String strVertexValue = tLinkedVertex[j].replaceAll("\\(", "");
+						strVertexValue = strVertexValue.replaceAll("\\)", "");
+
+						String[] tStrVertexValue = strVertexValue.split(",");
+
+						// On vï¿½rifie s'il est bien valuï¿½.
+						if (tStrVertexValue.length > 1) {
+							graph.setValued(true);
+
+							return createDirectedValuedGraph();
+						}
+
 						Vertex v = graph.getVertex(tStr[0]);
 
 						Vertex vBis = graph.getVertex(strVertexValue);
@@ -243,11 +143,103 @@ public class ReaderAdjacencyList extends Reader {
 						graph.addArc(v, vBis);
 					}
 				}
+			} else {
+				bContinue = false;
 			}
-
-			alVertexAlreadyProcessed.add(tStr[0]);
 		}
+		
+		return graph;
+	}
 
+	private Graph createNotDirectedValuedGraph() {
+		ArrayList<String> alVertexAlreadyProcessed = new ArrayList<String>();
+		boolean bContinue = true;
+
+		for (int i = 0; i < alStr.size() && bContinue; i++) {
+			if (!alStr.get(i).equals("")) {
+				String str = alStr.get(i).replaceAll("\\{", "");
+				str = str.replaceAll("\\}", "");
+
+				String[] tStr = str.split("=");
+
+				if (tStr.length > 1) {
+					String[] tLinkedVertex = tStr[1].split("\\),\\(");
+
+					for (int j = 0; j < tLinkedVertex.length; j++) {
+						String strVertexValue = tLinkedVertex[j].replaceAll("\\(", "");
+						strVertexValue = strVertexValue.replaceAll("\\)", "");
+
+						String[] tStrVertexValue = strVertexValue.split(",");
+
+						// On vï¿½rifie s'il est bien valuï¿½.
+						if (tStrVertexValue.length < 2) {
+							graph.setValued(false);
+
+							return createNotDirectedNotValuedGraph();
+						}
+
+						if (!alVertexAlreadyProcessed.contains(tStrVertexValue[0])) {
+							Vertex v = graph.getVertex(tStr[0]);
+
+							Vertex vBis = graph.getVertex(tStrVertexValue[0]);
+
+							graph.addArc(v, vBis, Integer.parseInt(tStrVertexValue[1]));
+						}
+					}
+				}
+				
+				alVertexAlreadyProcessed.add(tStr[0]);
+			} else {
+				bContinue = false;
+			}
+		}
+		
+		return graph;
+	}
+
+	private Graph createNotDirectedNotValuedGraph() {
+		ArrayList<String> alVertexAlreadyProcessed = new ArrayList<String>();
+		boolean bContinue = true;
+
+		for (int i = 0; i < alStr.size() && bContinue; i++) {
+			if (!alStr.get(i).equals("")) {
+				String str = alStr.get(i).replaceAll("\\{", "");
+				str = str.replaceAll("\\}", "");
+
+				String[] tStr = str.split("=");
+
+				if (tStr.length > 1) {
+					String[] tLinkedVertex = tStr[1].split("\\),\\(");
+
+					for (int j = 0; j < tLinkedVertex.length; j++) {
+						String strVertexValue = tLinkedVertex[j].replaceAll("\\(", "");
+						strVertexValue = strVertexValue.replaceAll("\\)", "");
+
+						String[] tStrVertexValue = strVertexValue.split(",");
+
+						// On vï¿½rifie s'il est bien valuï¿½.
+						if (tStrVertexValue.length > 1) {
+							graph.setValued(true);
+
+							return createNotDirectedValuedGraph();
+						}
+
+						if (!alVertexAlreadyProcessed.contains(strVertexValue)) {
+							Vertex v = graph.getVertex(tStr[0]);
+
+							Vertex vBis = graph.getVertex(strVertexValue);
+
+							graph.addArc(v, vBis);
+						}
+					}
+				}
+				
+				alVertexAlreadyProcessed.add(tStr[0]);
+			} else {
+				bContinue = false;
+			}
+		}
+		
 		return graph;
 	}
 }

@@ -60,21 +60,28 @@ public class PopupUpdateVertex extends Popup implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ok && !nom.getText().isEmpty()) {
+<<<<<<< HEAD
 			for (Vertex v : ctrl.getGraph().getAlVertex()) {
 				if (v.getName().equals(hci.getAlSelected().get(0))) {
 					v.setName(nom.getText());
 					hci.getHmVertex().put(nom.getText(), hci.getHmVertex().get(hci.getAlSelected().get(0)));
 					hci.getHmVertex().remove(hci.getAlSelected().get(0));
+=======
+			
+			if (ctrl.updateVertex(hci.getAlSelected().get(0), nom.getText()))
+			{
+					hci.hmVertex.put(nom.getText(), hci.hmVertex.get(hci.getAlSelected().get(0)));
+					hci.hmVertex.remove(hci.getAlSelected().get(0));
+>>>>>>> 63be1e8e78c8cd97a92d9ce0db68e45bea23c9e5
 					hci.getAlSelected().clear();
 					hci.getAlSelected().add(nom.getText());
 					hci.refresh();
-				}
+					dispose();
 			}
 		}
 		if (e.getSource() == annuler) {
-			setVisible(false);
+			dispose();
 		}
-		dispose();
 	}
 
 }

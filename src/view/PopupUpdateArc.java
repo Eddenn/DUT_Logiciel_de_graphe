@@ -84,34 +84,33 @@ public class PopupUpdateArc extends Popup implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// Code de gestion de la modification de l'arc.
 		if (e.getSource() == ok ) {
-			Vertex vOrigine = null;
-			Vertex vDest = null;
+			
+			int vertexDep = boxDep.getSelectedIndex();
+			int vertexArr = boxArr.getSelectedIndex();
+			
+//			ctrl.updateArc
+			
 
-			try {
-				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-					if (v.getName().equals(boxDep.getSelectedItem())) {
-						vOrigine = v;
-					}
-				}
-				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-					if (v.getName().equals(boxArr.getSelectedItem())) {
-						vDest = v;
-					}
-				}
-
-				for (Arc a : vOrigine.getAlArcs()) {
-					for (Arc b : vDest.getAlArcs()) {
-						if (a.getVertex() == vDest || b.getVertex() == vOrigine || true) {
-							int value = Integer.parseInt(textfield.getText());
-							a.setValue(value);
-							b.setValue(value);
-						}
-					}
-				}
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-
+//				for (Vertex v : ctrl.getGraph().getAlVertex()) {
+//					if (v.getName().equals(boxDep.getSelectedItem())) {
+//						vOrigine = v;
+//					}
+//				}
+//				for (Vertex v : ctrl.getGraph().getAlVertex()) {
+//					if (v.getName().equals(boxArr.getSelectedItem())) {
+//						vDest = v;
+//					}
+//				}
+//
+//				for (Arc a : vOrigine.getAlArcs()) {
+//					for (Arc b : vDest.getAlArcs()) {
+//						if (a.getVertex() == vDest || b.getVertex() == vOrigine || true) {
+//							int value = Integer.parseInt(textfield.getText());
+//							a.setValue(value);
+//							b.setValue(value);
+//						}
+//					}
+//				}
 		}
 		dispose();
 	}

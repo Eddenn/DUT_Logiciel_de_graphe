@@ -5,70 +5,63 @@ import java.util.ArrayList;
 import model.Graph;
 import model.Vertex;
 
-/**
- *  Classe qui génère le graphe correspondant à la matrice contenue dans le fichier à lire
- * @author Groupe 3
- * @version 2016-01-08
- */
-public class ReaderMatrix extends Reader {
+public class ReaderMatrix {
+	private ArrayList<String> alStr;
+	private boolean bDirected;
+	private boolean bValued;
+	private int[][] tMatrix;
+	private Graph graph;
+
+	public ReaderMatrix(ArrayList<String> alStr, boolean bDirected, boolean bValued) {
+		this.alStr = alStr;
+		this.bDirected = bDirected;
+		this.bValued = bValued;
+
+		graph = new Graph(bDirected, bValued);
+
+		graph = createGraph();
+	}
+
+	public Graph getGraph() {
+		return graph;
+	}
 	
-	/**
-	 * Méthode qui crée un graphe correspondant à la matrice du fichier
-	 * @param alStr Contient les différentes lignes de la matrice
-	 * @return le graphe correspondant à la matrice
-	 */
-	public static Graph readMatrix(ArrayList<String> alStr) {
-		/* Vérification des paramètres du graphe*/
-		boolean bIsDirected = checkDirection(alStr.get(0));
-		boolean bIsValued = checkValue(alStr.get(1));
-		
-		/*Suppression des informations sur le graphe*/
-		alStr.remove(0);
-		alStr.remove(0);
-
-		/*Suppression des lignes vides*/
+	private Graph createGraph() {
 		try {
-			for (int i = 0; i < alStr.size() && alStr.get(i).equals(""); i++) {
-				alStr.remove(i);
-			}
-			
-			/*Création d'un tableau contenant la matrice*/
-			int[][] tMatrix = new int[alStr.size()][alStr.size()];
-
-			for (int i = 0; i < alStr.size(); i++) {
-				String tValuesMatrix[] = alStr.get(i).split(" ");
-
-				for (int j = 0; j < tValuesMatrix.length; j++) {
-					tMatrix[i][j] = Integer.parseInt(tValuesMatrix[j]);
-				}
+			if (bDirected && bValued) {
+				return createDirectedValuedGraph();
 			}
 
-			/*---Appelle une méthode pour ajouter les arcs selon les paramètres du graphe--*/
-			if (bIsDirected && bIsValued) {
-				return createDirectedValuatedGraph(tMatrix);
+			if (bDirected && !bValued) {
+				return createDirectedNotValuedGraph();
 			}
 
-			if (bIsDirected && !bIsValued) {
-				return createDirectedNotValuatedGraph(tMatrix);
+			if (!bDirected && bValued) {
+				return createNotDirectedValuedGraph();
 			}
 
-			if (!bIsDirected && bIsValued) {
-				return createNotDirectedValuatedGraph(tMatrix);
+			if (!bDirected && !bValued) {
+				return createNotDirectedNotValuedGraph();
 			}
-
-			return createNotDirectedNotValuatedGraph(tMatrix);
-			/*----------------------*/
 		} catch (Exception e) {
-			return null;
+		}
+
+		return null;
+	}
+
+	private void generateMatrix() {
+		int[][] tMatrix = new int[alStr.size()][alStr.size()];
+
+		for (int i = 0; i < alStr.size(); i++) {
+			String tValuesMatrix[] = alStr.get(i).split(" ");
+
+			for (int j = 0; j < tValuesMatrix.length; j++) {
+				tMatrix[i][j] = Integer.parseInt(tValuesMatrix[j]);
+			}
 		}
 	}
 
-	/**
-	 * Méthode qui crée les arcs d'un graphe orienté et valué
-	 * @param tMatrix
-	 * @return le graphe completé
-	 */
-	private static Graph createDirectedValuatedGraph(int[][] tMatrix) {
+	private Graph createDirectedValuedGraph() {
 		Graph graph = new Graph(true, true);
 
 		String strVertexName = "A";
@@ -93,12 +86,7 @@ public class ReaderMatrix extends Reader {
 		return graph;
 	}
 
-	/**
-	 * Méthode qui crée les arcs d'un graphe orienté et non valué
-	 * @param tMatrix
-	 * @return  le graphe completé
-	 */
-	private static Graph createDirectedNotValuatedGraph(int[][] tMatrix) {
+	private Graph createDirectedNotValuedGraph() {
 		Graph graph = new Graph(true, false);
 
 		String strVertexName = "A";
@@ -123,12 +111,7 @@ public class ReaderMatrix extends Reader {
 		return graph;
 	}
 
-	/**
-	 * Méthode qui crée les arcs d'un graphe non orienté et valué
-	 * @param tMatrix
-	 * @return le graphe completé
-	 */
-	private static Graph createNotDirectedValuatedGraph(int[][] tMatrix) {
+	private Graph createNotDirectedNotValuedGraph() {
 		Graph graph = new Graph(true, false);
 
 		String strVertexName = "A";
@@ -157,12 +140,7 @@ public class ReaderMatrix extends Reader {
 		return graph;
 	}
 
-	/**
-	 * Méthode qui crée les arcs d'un graphe non orienté et non valué
-	 * @param tMatrix
-	 * @return  le graphe completé
-	 */
-	private static Graph createNotDirectedNotValuatedGraph(int[][] tMatrix) {
+	private Graph createNotDirectedValuedGraph() {
 		Graph graph = new Graph(false, false);
 
 		String strVertexName = "A";
@@ -193,7 +171,9 @@ public class ReaderMatrix extends Reader {
 
 	/**
 	 * Méthode qui incrémente le nom des sommets
-	 * @param str le nom du dernier sommet
+	 * 
+	 * @param str
+	 *            le nom du dernier sommet
 	 * @return le nom du prochain sommet
 	 */
 	private static String incrementeName(String str) {
@@ -224,7 +204,9 @@ public class ReaderMatrix extends Reader {
 
 	/**
 	 * Méhtode qui vérifie si le nom est égal à Z
-	 * @param str nom du sommet
+	 * 
+	 * @param str
+	 *            nom du sommet
 	 * @return true ou false
 	 */
 	private static boolean isOnlyComposedOfZ(String str) {
