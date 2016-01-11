@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -41,7 +42,10 @@ public class Form extends JDialog implements ActionListener {
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
 		content.setPreferredSize(new Dimension(300, 70));
-		content.setBorder(BorderFactory.createTitledBorder("Sommet"));
+		if (this.getTitle().equals("Modifier un sommet"))
+			content.setBorder(BorderFactory.createTitledBorder("Modification du Sommet " + hci.getAlSelected().get(0)));
+		else
+			content.setBorder(BorderFactory.createTitledBorder("Sommet"));
 		JLabel nomL = new JLabel("Nom:");
 		nom = new JTextField();
 		nom.setPreferredSize(new Dimension(100, 25));
@@ -92,12 +96,11 @@ public class Form extends JDialog implements ActionListener {
 				}
 				dispose();
 			}
-			if (e.getSource() == annuler) {
-				setVisible(false);
-			}
+			else if (e.getSource() == annuler)
+				dispose();
+			else
+				JOptionPane.showMessageDialog(null, "Le nom du sommet ne doit pas être vide", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
-		
-		dispose();
 	}
 
 }
