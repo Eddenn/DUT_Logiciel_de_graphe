@@ -102,9 +102,6 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 					indiceDep = i;
 					break;
 				}
-			}
-			
-			for (int i = 0; i < vArr.getAlArcs().size(); i++){
 				if (vArr.getAlArcs().get(i).equals(vDep)){
 					indiceArr = i;
 					break;
