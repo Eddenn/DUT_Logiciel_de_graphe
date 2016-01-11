@@ -21,7 +21,7 @@ public class PopupNewGraph extends Popup implements ActionListener {
 	private boolean bEnd;
 	private boolean bClose;
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("rawtypes")
 	public PopupNewGraph(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		this.bEnd = false;

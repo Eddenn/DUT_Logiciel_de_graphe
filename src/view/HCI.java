@@ -39,7 +39,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenuItem[] tabMenuItemFile = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemExport = new JMenuItem[2];
-	private JMenuItem[] tabMenuItemGraph = new JMenuItem[6];
+	private JMenuItem[] tabMenuItemGraph = new JMenuItem[7];
 	private JMenuItem[] tabMenuItemAide = new JMenuItem[1];
 
 	// List of "Object"
@@ -56,7 +56,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonSetting;
 
 	// Items du menu contextuel
-	private JMenuItem[] popUpItem = new JMenuItem[6];
+	private JMenuItem[] popUpItem = new JMenuItem[7];
 
 	public HCI(Controller controller) {
 		this.ctrl = controller;
@@ -205,24 +205,32 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemGraph[2] = new JMenuItem("<html>Supprimer un sommet</html>");
 		tabMenuItemGraph[2].addActionListener(this);
 		menuGraph.add(tabMenuItemGraph[2]);
+		
+		// Separator
+		menuGraph.addSeparator();
+		
+		// MenuItem - Coloriser un sommet
+		tabMenuItemGraph[3] = new JMenuItem("<html>Coloriser un sommet</html>");
+		tabMenuItemGraph[3].addActionListener(this);
+		menuGraph.add(tabMenuItemGraph[3]);
 
 		// Separator
 		menuGraph.addSeparator();
 
 		// MenuItem - Ajouter un arc
-		tabMenuItemGraph[3] = new JMenuItem("<html>Ajouter un arc</html>");
-		tabMenuItemGraph[3].addActionListener(this);
-		menuGraph.add(tabMenuItemGraph[3]);
-
-		// MenuItem - Modifier un arc
-		tabMenuItemGraph[4] = new JMenuItem("<html>Modifier un arc</html>");
+		tabMenuItemGraph[4] = new JMenuItem("<html>Ajouter un arc</html>");
 		tabMenuItemGraph[4].addActionListener(this);
 		menuGraph.add(tabMenuItemGraph[4]);
-		
-		// MenuItem - Supprimer un arc
-		tabMenuItemGraph[5] = new JMenuItem("<html>Supprimer un arc</html>");
+
+		// MenuItem - Modifier un arc
+		tabMenuItemGraph[5] = new JMenuItem("<html>Modifier un arc</html>");
 		tabMenuItemGraph[5].addActionListener(this);
 		menuGraph.add(tabMenuItemGraph[5]);
+		
+		// MenuItem - Supprimer un arc
+		tabMenuItemGraph[6] = new JMenuItem("<html>Supprimer un arc</html>");
+		tabMenuItemGraph[6].addActionListener(this);
+		menuGraph.add(tabMenuItemGraph[6]);
 
 		// Add menuGraph to this frame
 		menuBarMain.add(menuGraph);
@@ -355,21 +363,29 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// Separator
 		popMenu.addSeparator();
-
-		// MenuItem - Ajouter un arc
-		popUpItem[3] = new JMenuItem("<html>Ajouter un arc</html>");
+		
+		// MenuItem - Coloriser un sommet
+		popUpItem[3] = new JMenuItem("<html>Coloriser un sommet</html>");
 		popUpItem[3].addActionListener(this);
 		popMenu.add(popUpItem[3]);
+		
+		// Separator
+		popMenu.addSeparator();
 
-		// MenuItem - Modifier un arc
-		popUpItem[4] = new JMenuItem("<html>Modifier un arc</html>");
+		// MenuItem - Ajouter un arc
+		popUpItem[4] = new JMenuItem("<html>Ajouter un arc</html>");
 		popUpItem[4].addActionListener(this);
 		popMenu.add(popUpItem[4]);
-		
-		// MenuItem - Supprimer un arc
-		popUpItem[5] = new JMenuItem("<html>Supprimer un arc</html>");
+
+		// MenuItem - Modifier un arc
+		popUpItem[5] = new JMenuItem("<html>Modifier un arc</html>");
 		popUpItem[5].addActionListener(this);
 		popMenu.add(popUpItem[5]);
+		
+		// MenuItem - Supprimer un arc
+		popUpItem[6] = new JMenuItem("<html>Supprimer un arc</html>");
+		popUpItem[6].addActionListener(this);
+		popMenu.add(popUpItem[6]);
 
 		// ----------------------//
 
@@ -503,17 +519,20 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 			setAlSelected(new ArrayList<String>());
 			refresh();
-			
-			// Ajouter un arc
+			// Coloriser un sommet
 		} else if (e.getSource() == tabMenuItemGraph[3] || e.getSource() == popUpItem[3]) {
+			new PopupColorizeVertex("Coloriser un sommet", true, ctrl, this);
+
+			// Ajouter un arc
+		} else if (e.getSource() == tabMenuItemGraph[4] || e.getSource() == popUpItem[4]) {
 			new PopupAddArc("Ajout d'un arc", true, ctrl, this);
 			
 			// Mofidier un arc
-		} else if (e.getSource() == tabMenuItemGraph[4] || e.getSource() == popUpItem[4]) {
+		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5]) {
 			new PopupUpdateArc("Modifier un arc", true, ctrl, this);
 
 			// Supprimer un arc
-		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5]) {
+		} else if (e.getSource() == tabMenuItemGraph[6] || e.getSource() == popUpItem[6]) {
 			new PopupDeleteArc("Supprimer un arc", true, ctrl, this);
 		}
 

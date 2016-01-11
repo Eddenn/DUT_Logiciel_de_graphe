@@ -26,14 +26,14 @@ import model.Vertex;
 @SuppressWarnings("serial")
 public class GraphPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener {
 
-	private ArrayList<String> alSelected;		//SÃ©lection
+	private ArrayList<String> alSelected;		//Sélection
 	private HashMap<String,Point> clipBoardEdge;//Presse-Papier
-	private Point saveMousePosition;			//Sauvegarde de la derniÃ©re position de la souris (Voir MouseDragged)
+	private Point saveMousePosition;			//Sauvegarde de la dernière position de la souris (Voir MouseDragged)
 	private boolean bDragged;
 	private boolean bCtrlPressed;
-	private double iWidthEdge;	//Largeur
-	private double iHeightEdge; //Hauteur
-	private double iZoom;		//Zoom
+	private double iWidthEdge;		//Largeur
+	private double iHeightEdge; 	//Hauteur
+	private double iZoom;			//Zoom
 	private HCI hci;
 	private GraphStyle style;
 
@@ -63,7 +63,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		Graphics2D g2d = (Graphics2D) g;
 		
 		drawArcs(g2d);
-		drawEdges(g2d);
+		drawVertex(g2d);
 		for(Vertex v : hci.getGraph().getAlVertex()) {
 			for(String s : alSelected) {
 				if(v.getName().equals(s)) {
@@ -80,6 +80,18 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void setAlSelected(ArrayList<String> s) 	{this.alSelected = s;}
 	public GraphStyle getStyle() {return style;}
 	public void setStyle(GraphStyle style) {this.style = style;}
+	public Vertex getVertex(Point p) {
+		for(String s : hci.getHmVertex().keySet()) {
+			if(hci.getHmVertex().get(s)==p) {
+				for(Vertex v : hci.getGraph().getAlVertex()) {
+					if(v.getName().equals(s)) {
+						return v;
+					}
+				}
+			}
+		}
+		return null;
+	}
 	
 	/*--Surlignage--*/
 	public void highlightEdge(Graphics2D g2d, Vertex v) {
@@ -112,12 +124,18 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	}
 	
 	/*--Dessin en fonction de hmVertex--*/
-	public void drawEdges(Graphics2D g2d) {
+	public void drawVertex(Graphics2D g2d) {
 		for(Point c : hci.hmVertex.values()) {
 			g2d.setColor(style.getEdgeBorder());
 			g2d.setStroke(new BasicStroke((float)iZoom));
 			g2d.drawOval((int)(c.getX()-1), (int)(c.getY()-1), (int)((iWidthEdge+2)*iZoom), (int)((iHeightEdge+2)*iZoom));
-			g2d.setColor(style.getEdgeBackground());
+			
+			if( getVertex(c).getColor()==null ) { 
+				g2d.setColor(style.getEdgeBackground());
+			} else {
+				g2d.setColor(getVertex(c).getColor());
+			}
+			
 			g2d.fillOval((int)(c.getX())  , (int)(c.getY())  , (int)((iWidthEdge)*iZoom)  , (int)((iHeightEdge)*iZoom  ));
 			// Find the key of this coordinate
 			for (String s : hci.hmVertex.keySet()) {
@@ -138,7 +156,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	   * @param d  largeur de la flï¿½che
 	   * @param h  hauteur de la flï¿½che
 	   */
-    private void drawArrow(Graphics g, int x1, int y1, int x2, int y2, int d, int h){    	
+    public void drawArrow(Graphics g, int x1, int y1, int x2, int y2, int d, int h){    	
     	//Distance entre les points
         int dx = x2 - x1, dy = y2 - y1;
         double D = Math.sqrt(dx*dx + dy*dy);
@@ -339,7 +357,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		/*------------*/
 		
 		/* SÃ©lection */
-		if(e.getClickCount() > 0) {
+		if(e.getClickCount() > 0 && e.getButton()==MouseEvent.BUTTON1) {
 			double centerX, centerY;
 			boolean bFind=false;
 			for (Point c : hci.hmVertex.values()) {
