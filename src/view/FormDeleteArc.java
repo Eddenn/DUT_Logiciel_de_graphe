@@ -92,8 +92,8 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 			Vertex vDep = ctrl.getGraph().getAlVertex().get(vertexDep);
 			Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexDep);
 			
-			int indiceDep = 0;
-			int indiceArr = 0;
+			int indiceDep = -1;
+			int indiceArr = -1;
 			
 			System.out.println("indiceDep : " + indiceDep + " ; indiceArr : " + indiceArr );
 			
@@ -111,11 +111,10 @@ public class FormDeleteArc extends JDialog implements ActionListener {
 				}
 			}
 			
-			try{
+			if (indiceDep != -1 && indiceArr != -1) {
 				ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().remove(ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().get(indiceArr));
 				ctrl.getGraph().getAlVertex().get(vertexArr).getAlArcs().remove(ctrl.getGraph().getAlVertex().get(vertexDep).getAlArcs().get(indiceDep));
-			} catch (Exception e1){e1.printStackTrace();}
-
+			}
 		}
 		
 		dispose();
