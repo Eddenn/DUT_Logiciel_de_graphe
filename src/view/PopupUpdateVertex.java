@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -31,9 +32,13 @@ public class PopupUpdateVertex extends Popup implements ActionListener {
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
 		content.setPreferredSize(new Dimension(300, 70));
-		content.setBorder(BorderFactory.createTitledBorder("Sommet"));
+		if (this.getTitle().equals("Modifier un sommet"))
+			content.setBorder(BorderFactory.createTitledBorder("Modification du Sommet " + hci.getAlSelected().get(0)));
+		else
+			content.setBorder(BorderFactory.createTitledBorder("Sommet"));
 		JLabel nomL = new JLabel("Nom:");
 		nom = new JTextField();
+		nom.setText(hci.getAlSelected().get(0));
 		nom.setPreferredSize(new Dimension(100, 25));
 		content.add(nomL);
 		content.add(nom);
@@ -55,22 +60,20 @@ public class PopupUpdateVertex extends Popup implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ok && !nom.getText().isEmpty()) {
-			for (Vertex v : ctrl.getGraph().getAlVertex()) {
-				if (v.getName().equals(hci.getAlSelected().get(0))) {
-					v.setName(nom.getText());
+			
+			if (ctrl.updateVertex(hci.getAlSelected().get(0), nom.getText()))
+			{
 					hci.hmVertex.put(nom.getText(), hci.hmVertex.get(hci.getAlSelected().get(0)));
 					hci.hmVertex.remove(hci.getAlSelected().get(0));
 					hci.getAlSelected().clear();
 					hci.getAlSelected().add(nom.getText());
 					hci.refresh();
-				}
+					dispose();
 			}
-			dispose();
 		}
 		if (e.getSource() == annuler) {
-			setVisible(false);
+			dispose();
 		}
-		dispose();
 	}
 
 }

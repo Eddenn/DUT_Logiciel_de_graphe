@@ -353,6 +353,14 @@ public class Graph {
 
 		return sRet;
 	}
+	
+	public void updateVertex(String oldName, String newName) {
+		for (Vertex v : alVertex) {
+			if (v.getName().equals(oldName)) {
+				v.setName(newName);
+			}
+		}
+	}
 
 	
 }
