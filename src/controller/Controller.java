@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import controller.IControlable;
+import controller.IIhmable;
 import model.Arc;
 import model.Graph;
 import model.IParcourable;

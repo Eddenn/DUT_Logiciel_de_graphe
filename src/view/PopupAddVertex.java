@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,21 +16,21 @@ import javax.swing.JTextField;
 import controller.Controller;
 
 /**
- * Classe qui gère la fenêtre utilisateur pour ajouter un sommet.
+ * Classe qui gï¿½re la fenï¿½tre utilisateur pour ajouter un sommet.
  * @author Groupe 3
  * @version 2016-01-12
  */
-public class PopupAddVertex extends Popup implements ActionListener {
+public class PopupAddVertex extends Popup  {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
 	private JButton ok, annuler;
 
-	/** Méthode qui instancie la pop-up pour ajouter un sommet.
+	/** Mï¿½thode qui instancie la pop-up pour ajouter un sommet.
 	 * @param title le titre de la pop-up.
 	 * @param modal 
-	 * @param ctrl le controleur utilisé.
-	 * @param hci le hci utilisé.
+	 * @param ctrl le controleur utilisï¿½.
+	 * @param hci le hci utilisï¿½.
 	 */
 	public PopupAddVertex(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
@@ -45,6 +46,7 @@ public class PopupAddVertex extends Popup implements ActionListener {
 		content.setBorder(BorderFactory.createTitledBorder("Sommet"));
 		JLabel nomL = new JLabel("Nom:");
 		nom = new JTextField();
+		nom.addKeyListener(this);
 		nom.setPreferredSize(new Dimension(100, 25));
 		content.add(nomL);
 		content.add(nom);
@@ -52,7 +54,7 @@ public class PopupAddVertex extends Popup implements ActionListener {
 
 		// Panel Bouton
 		JPanel control = new JPanel();
-		ok = new JButton("Ok");
+		ok = new JButton("Valider");
 		ok.addActionListener(this);
 		annuler = new JButton("Annuler");
 		annuler.addActionListener(this);
@@ -62,20 +64,40 @@ public class PopupAddVertex extends Popup implements ActionListener {
 
 		setVisible(true);
 	}
+	
+	
+	private void valider() {
+		if(!ctrl.addVertex(nom.getText())){
+			hci.getHmVertex().put(nom.getText(), new Point(0, 0));
+			hci.getAlSelected().clear();
+			hci.getAlSelected().add(nom.getText());
+			dispose();
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == ok) {
-			if(!ctrl.addVertex(nom.getText())){
-				hci.getHmVertex().put(nom.getText(), new Point(0, 0));
-				hci.getAlSelected().clear();
-				hci.getAlSelected().add(nom.getText());
-				dispose();
-			}
-		}
-		if (e.getSource() == annuler) {
+		if (e.getSource() == ok)
+			valider();
+		if (e.getSource() == annuler)
 			dispose();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
+			valider();
 		}
+		else if (arg0.getKeyCode() == 27)
+			dispose();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
 	}
 
 }

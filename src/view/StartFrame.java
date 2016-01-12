@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -36,8 +39,9 @@ public class StartFrame {
 			public void paintComponent(Graphics g){
 				Image logo = null;
 				try {
-					logo = ImageIO.read(new File("images/Logo_LGP.png"));
-				} catch (IOException e) {}
+					URL url = getClass().getResource( "/Logo_LGP.png");
+					logo = ImageIO.read(new File(url.toURI()));
+				} catch (IOException e) {} catch (URISyntaxException e) {}
 				g.drawImage(logo, 0, 0, null);
 			}
 		};

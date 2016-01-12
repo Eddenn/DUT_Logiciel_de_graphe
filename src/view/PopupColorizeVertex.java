@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,7 +20,7 @@ import model.Vertex;
  * @author Groupe 3
  * @version 2016-01-12
  */
-public class PopupColorizeVertex extends Popup implements ActionListener {
+public class PopupColorizeVertex extends Popup {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JButton buttonChoice,buttonDelete;
@@ -60,7 +61,7 @@ public class PopupColorizeVertex extends Popup implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == buttonChoice) {
-			c = JColorChooser.showDialog(null,"SÃ©lection de couleur", null);
+			c = JColorChooser.showDialog(null,"Sélection de couleur", null);
 			for (String s : hci.getGraphPanel().getAlSelected()) {
 				for(Vertex v : hci.getGraph().getAlVertex()) {
 					if(v.getName().equals(s)) {
@@ -82,6 +83,18 @@ public class PopupColorizeVertex extends Popup implements ActionListener {
 			}
 		}
 		dispose();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
 	}
 
 }

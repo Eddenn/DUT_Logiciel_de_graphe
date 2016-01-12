@@ -174,6 +174,13 @@ public class ReaderFile {
 	private void generateStyle() {
 		int iIndiceStyle = getStyleIndice();
 		
+		style.Personnalise.setEdgeBorder(Color.BLACK);
+		style.Personnalise.setEdgeBackground(Color.WHITE);
+		style.Personnalise.setEdgeText(Color.BLACK);
+		style.Personnalise.setArcLine(Color.GRAY);
+		style.Personnalise.setArcText(Color.BLACK);
+		style.Personnalise.setBackground(new Color(238,238,238));
+		
 		if (iIndiceStyle != -1) {
 			alStr.remove(iIndiceStyle);
 			

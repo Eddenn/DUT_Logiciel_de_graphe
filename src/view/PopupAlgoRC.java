@@ -2,32 +2,28 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.Controller;
 
 /**
- * Classe gérant la fenêtre utilisateur d'ajout d'arc
+ * Classe qui gère la fenêtre utilisateur pour lancer l'algorithme de rechercher de chemin
  * @author Groupe 3
  * @version 2016-01-12
+ *
  */
-public class PopupAddArc extends Popup {
+public class PopupAlgoRC extends Popup {
 
-	private static final long serialVersionUID = 2869913711173398321L;
+	private static final long serialVersionUID = 1L;
 	private JButton ok, annuler;
-	@SuppressWarnings("rawtypes")
 	private JComboBox boxDep, boxArr;
-	private JTextField valArc;
-	
-	
+
 	/**
 	 * Constructeur qui instancie la fenêtre pop-up pour ajouter un arc
 	 * @param title le titre de la fenêtre
@@ -35,10 +31,9 @@ public class PopupAddArc extends Popup {
 	 * @param ctrl le controleur lancé
 	 * @param hci  le hci lancé
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PopupAddArc(String title, boolean modal, Controller ctrl, HCI hci) {
+	public PopupAlgoRC(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
-		this.setSize(300, 165);
+		this.setSize(300, 120);
 		setLocationRelativeTo(null);
 		
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
@@ -47,12 +42,9 @@ public class PopupAddArc extends Popup {
 			tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
 		}
 
-		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
+		JLabel text = new JLabel("<html> Choisissez le sommet de départ et le sommet d'arrivé : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
-		
-		// Panel contenant les JComboBox et le textfield
-		JPanel content = new JPanel(new BorderLayout());
 		
 		// Panel contenant les JComboBox
 		JPanel panelComboBox = new JPanel();
@@ -68,24 +60,9 @@ public class PopupAddArc extends Popup {
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
 		panelComboBox.add(boxArr);
-		
-		// Panel contenant le textField
-		JPanel panelTextField = new JPanel(new BorderLayout());
-		
-		// Gestion du TextField
-		panelTextField.add(new JLabel("Valeur de l'arc : "),"West");
-		valArc = new JTextField();
-		valArc.addKeyListener(this);
-		
-		if (! hci.getGraph().isValued())
-			valArc.setEditable(false);
-		
-		panelTextField.add(valArc);
-		
-		// Ajout des comboBox et textField a la fenetre
-		content.add(panelComboBox,"North");
-		content.add(panelTextField);
-		add(content);
+				
+		// Ajout des comboBox à la fenetre
+		add(panelComboBox,"North");
 		
 		// Panel contenant les boutons
 		JPanel control =new JPanel();
@@ -100,29 +77,10 @@ public class PopupAddArc extends Popup {
 		setVisible(true);
 	}
 	
-	private void valider() {
-		int vertexDep = boxDep.getSelectedIndex();
-		int vertexArr = boxArr.getSelectedIndex();
-		
-		if (this.ctrl.getNbSommet() > 0) {
-			if (this.ctrl.getGraph().isValued()) {
-				if (valArc.getText().matches("[0-9]+")) {
-					ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
-					dispose();
-				}
-				else
-					valArc.setText("Valeur erronée");
-			}
-			else {
-				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));
-				dispose();
-			}
-		}
-		else
-			JOptionPane.showMessageDialog(null, "Un arc doit appartenir à deux sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
+	public void valider(){
+		//Ajouter la méthode à appeler en lui donnant en paramètre les valeurs des checkbox -> boxDep.getSelectedIndex(); boxArr.getSelectedIndex();
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ok )
 			valider();
@@ -141,11 +99,14 @@ public class PopupAddArc extends Popup {
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
-	
 
 }

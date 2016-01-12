@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,7 +19,7 @@ import controller.Controller;
  * @author Groupe 3
  * @version 2016-01-12
  */
-public class PopupUpdateArc extends Popup implements ActionListener {
+public class PopupUpdateArc extends Popup  {
 
 	private static final long serialVersionUID = 2869913711173398321L;
 	private JButton ok, annuler;
@@ -69,6 +70,7 @@ public class PopupUpdateArc extends Popup implements ActionListener {
 		// Panel contenant le textField
 		JPanel panelTextField = new JPanel(new BorderLayout());
 		textfield = new JTextField();
+		textfield.addKeyListener(this);
 		panelTextField.add(textfield);
 
 		// Ajout des comboBox et textField a la fenetre
@@ -90,14 +92,11 @@ public class PopupUpdateArc extends Popup implements ActionListener {
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// Code de gestion de la modification de l'arc.
-		if (e.getSource() == ok ) {
-			
-			int vertexDep = boxDep.getSelectedIndex();
-			int vertexArr = boxArr.getSelectedIndex();
-			
+	private void valider() {
+		int vertexDep = boxDep.getSelectedIndex();
+		int vertexArr = boxArr.getSelectedIndex();
+		
+		if (this.ctrl.getNbSommet() > 0) {
 			int value;
 			try {
 				value = Integer.parseInt(textfield.getText());
@@ -109,9 +108,34 @@ public class PopupUpdateArc extends Popup implements ActionListener {
 			catch(Exception exc) {
 				textfield.setText("Valeur Erronée");
 			}
-
 		}
 		else
+			JOptionPane.showMessageDialog(null, "Un arc doit appartenir à deux sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// Code de gestion de la modification de l'arc.
+		if (e.getSource() == ok ) 
+			valider();
+		else
 			dispose();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
+			valider();
+		}
+		else if (arg0.getKeyCode() == 27)
+			dispose();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
 	}
 }
