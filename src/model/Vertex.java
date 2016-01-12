@@ -11,7 +11,6 @@ public class Vertex {
 
 	private String strName;
 	private ArrayList<Arc> alArcs;
-	@SuppressWarnings("unused")
 	private Color color;
 	@SuppressWarnings("unused")
 	private Graph graph;

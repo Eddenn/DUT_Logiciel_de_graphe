@@ -28,6 +28,16 @@ header h1{
 	font-style: italic;
 	
 }
+
+@media screen and (max-width:540px) {
+	header div {
+		float: none !important;
+		width: 100% !important;
+		text-align: center !important;
+	}
+}
+
+
 /****************************/
 /*			footer			*/
 /****************************/
@@ -62,9 +72,6 @@ nav a:hover{
 	text-decoration: underline;
 	color: #4682B4; 
 }
-
-
-
 
 
 
