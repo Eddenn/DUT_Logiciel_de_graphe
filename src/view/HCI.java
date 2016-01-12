@@ -56,8 +56,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JLabel lCoord;
 
 	// Panel of JButton
-	private JPanel pButton;
+ 	private JPanel pButton,pTopButton,pBottomButton;
 	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonUndo, buttonRedo, buttonSetting;
+	private JButton buttonAddVertex,buttonUpdateVertex,buttonDeleteVertex,buttonAddArc,buttonUpdateArc,buttonDeleteArc;
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
@@ -278,105 +279,70 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// ----------------------//
 
 		// -------ButtonBar------//
-		pButton = new JPanel();
+		pButton = new JPanel(new GridLayout(2,1));
 		pButton.setBackground(Color.WHITE);
-		pButton.setLayout(new FlowLayout(FlowLayout.LEFT));
 		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
+		pTopButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pTopButton.setBorder(BorderFactory.createLineBorder(Color.gray));
+
 		// New file
-		buttonNew = new JButton(new ImageIcon("images/nouveau.png"));
-		buttonNew.setContentAreaFilled(false);
-		buttonNew.setBorderPainted(false);
-		buttonNew.setRolloverIcon(new ImageIcon("images/nouveau_rollover.png"));
-		buttonNew.setMargin(new Insets(0, 0, 0, 0));
-		buttonNew.setBackground(new Color(255,255,255));
-		buttonNew.setForeground(new Color(255,255,255));
-		//buttonNew.setSize(1, height);
-		buttonNew.setToolTipText("Nouveau");
-		buttonNew.addActionListener(this);
-		pButton.add(buttonNew);
+		buttonNew = initSmoothButton("Nouveau","/nouveau.png","/nouveau_rollover.png");
+		pTopButton.add(buttonNew);
 		// Open file
-		buttonOpen = new JButton(new ImageIcon("images/ouvrir.png"));
-		buttonOpen.setContentAreaFilled(false);
-		buttonOpen.setBorderPainted(false);
-		buttonOpen.setRolloverIcon(new ImageIcon("images/ouvrir_rollover.png"));
-		buttonOpen.setMargin(new Insets(0, 0, 0, 0));
-		buttonOpen.setBackground(new Color(255,255,255));
-		buttonOpen.setForeground(new Color(255,255,255));
-		buttonOpen.setToolTipText("Ouvrir");
-		buttonOpen.addActionListener(this);
-		pButton.add(buttonOpen);
+		buttonOpen = initSmoothButton("Ouvrir","/ouvrir.png","/ouvrir_rollover.png");
+		pTopButton.add(buttonOpen);
 		// Save file
-		buttonSave = new JButton(new ImageIcon("images/enregistrer.png"));
-		buttonSave.setContentAreaFilled(false);
-		buttonSave.setBorderPainted(false);
-		buttonSave.setRolloverIcon(new ImageIcon("images/enregistrer_rollover.png"));
-		buttonSave.setMargin(new Insets(0, 0, 0, 0));
-		buttonSave.setBackground(new Color(255,255,255));
-		buttonSave.setForeground(new Color(255,255,255));
-		buttonSave.setToolTipText("Enregistrer");
-		buttonSave.addActionListener(this);
-		pButton.add(buttonSave);
+		buttonSave = initSmoothButton("Enregistrer","/enregistrer.png","/enregistrer_rollover.png");
+		pTopButton.add(buttonSave);
 		// Zoom in
-		buttonZoomIn = new JButton(new ImageIcon("images/zoom_In.png"));
-		buttonZoomIn.setContentAreaFilled(false);
-		buttonZoomIn.setBorderPainted(false);
-		buttonZoomIn.setRolloverIcon(new ImageIcon("images/zoom_In_rollover.png"));
-		buttonZoomIn.setMargin(new Insets(0, 0, 0, 0));
-		buttonZoomIn.setBackground(new Color(255,255,255));
-		buttonZoomIn.setForeground(new Color(255,255,255));
-		buttonZoomIn.setToolTipText("Agrandir");
-		buttonZoomIn.addActionListener(this);
-		pButton.add(buttonZoomIn);
+		buttonZoomIn = initSmoothButton("Agrandir","/zoom_In.png","/zoom_In_rollover.png");
+		pTopButton.add(buttonZoomIn);
 		// Zoom out
-		buttonZoomOut = new JButton(new ImageIcon("images/zoom_Out.png"));
-		buttonZoomOut.setContentAreaFilled(false);
-		buttonZoomOut.setBorderPainted(false);
-		buttonZoomOut.setRolloverIcon(new ImageIcon("images/zoom_Out_rollover.png"));
-		buttonZoomOut.setMargin(new Insets(0, 0, 0, 0));
-		buttonZoomOut.setBackground(new Color(255,255,255));
-		buttonZoomOut.setForeground(new Color(255,255,255));
-		buttonZoomOut.setToolTipText("Réduire");
-		buttonZoomOut.addActionListener(this);
-		pButton.add(buttonZoomOut);
-		
+		buttonZoomOut = initSmoothButton("Réduire","/zoom_Out.png","/zoom_Out_rollover.png");
+		pTopButton.add(buttonZoomOut);
 		// Undo
-		buttonUndo = new JButton(new ImageIcon("images/undo.png"));
-		buttonUndo.setContentAreaFilled(false);
-		buttonUndo.setBorderPainted(false);
-		buttonUndo.setRolloverIcon(new ImageIcon("images/undo_rollover.png"));
-		buttonUndo.setMargin(new Insets(0, 0, 0, 0));
-		buttonUndo.setBackground(new Color(255,255,255));
-		buttonUndo.setForeground(new Color(255,255,255));
-		buttonUndo.setToolTipText("Undo");
-		buttonUndo.addActionListener(this);
-		pButton.add(buttonUndo);
-		
+		buttonUndo = initSmoothButton("Défaire","/undo.png","/undo_rollover.png");
+		pTopButton.add(buttonUndo);
 		// Redo
-		buttonRedo = new JButton(new ImageIcon("images/redo.png"));
-		buttonRedo.setContentAreaFilled(false);
-		buttonRedo.setBorderPainted(false);
-		buttonRedo.setRolloverIcon(new ImageIcon("images/redo_rollover.png"));
-		buttonRedo.setMargin(new Insets(0, 0, 0, 0));
-		buttonRedo.setBackground(new Color(255,255,255));
-		buttonRedo.setForeground(new Color(255,255,255));
-		buttonRedo.setToolTipText("Redo");
-		buttonRedo.addActionListener(this);
-		pButton.add(buttonRedo);
+		buttonRedo = initSmoothButton("Refaire","/redo.png","/redo_rollover.png");
+		pTopButton.add(buttonRedo);
+		// Parametre
+		buttonSetting = initSmoothButton("Paramètres","/parametre.png","/parametre_rollover.png");
+		pTopButton.add(buttonSetting);
+
+		pButton.add(pTopButton);
 		
+		pBottomButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pBottomButton.setBorder(BorderFactory.createLineBorder(Color.gray));
 
-		// Settings
-		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
-		buttonSetting.setContentAreaFilled(false);
-		buttonSetting.setBorderPainted(false);
-		buttonSetting.setRolloverIcon(new ImageIcon("images/parametre_rollover.png"));
-		buttonSetting.setMargin(new Insets(0, 0, 0, 0));
-		buttonSetting.setBackground(new Color(255,255,255));
-		buttonSetting.setForeground(new Color(255,255,255));
-		buttonSetting.setToolTipText("Paramètres");
-		buttonSetting.addActionListener(this);
-		pButton.add(buttonSetting);
-
+		// Ajouter un sommet
+		buttonAddVertex = initSmoothButton("Ajouter un sommet","/ajoutersommet.png","/ajoutersommet_rollover.png");
+		pBottomButton.add(buttonAddVertex);
+		// Modifier un sommet
+		buttonUpdateVertex = initSmoothButton("Modifier un sommet","/modifiersommet.png","/modifiersommet_rollover.png");
+		pBottomButton.add(buttonUpdateVertex);
+		// Supprimer un sommet
+		buttonDeleteVertex = initSmoothButton("Supprimer un sommet","/supprimersommet.png","/supprimersommet_rollover.png");
+		pBottomButton.add(buttonDeleteVertex);
+		
+		//Separator
+		JButton buttonSeparator = initSmoothButton("","/separator.png","/separator.png");
+		buttonSeparator.setEnabled(false);;
+		pBottomButton.add(buttonSeparator);
+		
+		// Ajouter un sommet
+		buttonAddArc = initSmoothButton("Ajouter un arc","/ajouterarc.png","/ajouterarc_rollover.png");
+		pBottomButton.add(buttonAddArc);
+		// Modifier un sommet
+		buttonUpdateArc = initSmoothButton("Modifier un arc","/modifierarc.png","/modifierarc_rollover.png");
+		pBottomButton.add(buttonUpdateArc);
+		// Supprimer un sommet
+		buttonDeleteArc = initSmoothButton("Supprimer un arc","/supprimerarc.png","/supprimerarc_rollover.png");
+		pBottomButton.add(buttonDeleteArc);
+		
+		pButton.add(pBottomButton);
+		
 		add(pButton, BorderLayout.NORTH);
 		
 		// Instancitation du menu contextuel et de ses Ã©lÃ©ments
@@ -435,6 +401,20 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.addKeyListener(pGraph);
 	}
 
+	public JButton initSmoothButton(String toolTipsText,String icon, String icon_rollover) {
+		// Parametre
+		JButton button = new JButton(new ImageIcon(getClass().getResource(icon)));
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		button.setRolloverIcon(new ImageIcon(getClass().getResource(icon_rollover)));
+		button.setMargin(new Insets(0, 0, 0, 0));
+		button.setBackground(new Color(255,255,255));
+		button.setForeground(new Color(255,255,255));
+		button.setToolTipText(toolTipsText);
+		button.addActionListener(this);
+		return button;
+	}
+	
 	/**
 	 * Méthode qui initialise l'HashMap de sommet
 	 */
@@ -530,11 +510,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			
 		/*-- GRAPH --*/
 			// Ajouter un sommet
-		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0]) {
+		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0] || e.getSource() == buttonAddVertex) {
 			new PopupAddVertex("Ajouter un sommet", true, ctrl, this);
 			
 			// Modifier un sommet
-		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1]) {
+		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1] || e.getSource() == buttonUpdateVertex) {
 			if(pGraph.getAlSelected().size() > 1 ) {
 				showError("Veuillez sélectionner un seul sommet.");
 			} else if (pGraph.getAlSelected().size() == 0) {
@@ -544,7 +524,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 			
 			// Supprimer un sommet
-		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2]) {
+		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2] || e.getSource() == buttonDeleteVertex) {
 			for(String s : pGraph.getAlSelected()) {
 				Vertex tmpVertex = null;
 				for (Vertex v : ctrl.getGraph().getAlVertex()) {
@@ -562,22 +542,22 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			new PopupColorizeVertex("Coloriser un sommet", true, ctrl, this);
 
 			// Ajouter un arc
-		} else if (e.getSource() == tabMenuItemGraph[4] || e.getSource() == popUpItem[4]) {
+		} else if (e.getSource() == tabMenuItemGraph[4] || e.getSource() == popUpItem[4] || e.getSource() == buttonAddArc) {
 			new PopupAddArc("Ajout d'un arc", true, ctrl, this);
 			
 			// Mofidier un arc
-		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5]) {
+		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5] || e.getSource() == buttonUpdateArc) {
 			new PopupUpdateArc("Modifier un arc", true, ctrl, this);
 
 			// Supprimer un arc
-		} else if (e.getSource() == tabMenuItemGraph[6] || e.getSource() == popUpItem[6]) {
+		} else if (e.getSource() == tabMenuItemGraph[6] || e.getSource() == popUpItem[6] || e.getSource() == buttonDeleteArc) {
 			new PopupDeleteArc("Supprimer un arc", true, ctrl, this);
 		}
 
 		/*-- AIDE --*/
 		else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
-					"<html>Projet tuteuré de deuxiÃ¨me année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
+					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
 		}else if(e.getSource()==tabMenuItemAide[1]){
 			ctrl.openHelp();
