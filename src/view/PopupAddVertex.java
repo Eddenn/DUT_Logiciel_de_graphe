@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,7 +20,7 @@ import controller.Controller;
  * @author Groupe 3
  * @version 2016-01-12
  */
-public class PopupAddVertex extends Popup implements ActionListener {
+public class PopupAddVertex extends Popup  {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
@@ -45,6 +46,7 @@ public class PopupAddVertex extends Popup implements ActionListener {
 		content.setBorder(BorderFactory.createTitledBorder("Sommet"));
 		JLabel nomL = new JLabel("Nom:");
 		nom = new JTextField();
+		nom.addKeyListener(this);
 		nom.setPreferredSize(new Dimension(100, 25));
 		content.add(nomL);
 		content.add(nom);
@@ -62,20 +64,40 @@ public class PopupAddVertex extends Popup implements ActionListener {
 
 		setVisible(true);
 	}
+	
+	
+	private void valider() {
+		if(!ctrl.addVertex(nom.getText())){
+			hci.getHmVertex().put(nom.getText(), new Point(0, 0));
+			hci.getAlSelected().clear();
+			hci.getAlSelected().add(nom.getText());
+			dispose();
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == ok) {
-			if(!ctrl.addVertex(nom.getText())){
-				hci.getHmVertex().put(nom.getText(), new Point(0, 0));
-				hci.getAlSelected().clear();
-				hci.getAlSelected().add(nom.getText());
-				dispose();
-			}
-		}
-		if (e.getSource() == annuler) {
+		if (e.getSource() == ok)
+			valider();
+		if (e.getSource() == annuler)
 			dispose();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
+			valider();
 		}
+		else if (arg0.getKeyCode() == 27)
+			dispose();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
 	}
 
 }

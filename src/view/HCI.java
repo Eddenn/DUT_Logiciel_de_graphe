@@ -305,11 +305,37 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonUndo = initSmoothButton("Défaire","/undo.png","/undo_rollover.png");
 		pTopButton.add(buttonUndo);
 		// Redo
+<<<<<<< HEAD
 		buttonRedo = initSmoothButton("Refaire","/redo.png","/redo_rollover.png");
 		pTopButton.add(buttonRedo);
 		// Parametre
 		buttonSetting = initSmoothButton("Paramètres","/parametre.png","/parametre_rollover.png");
 		pTopButton.add(buttonSetting);
+=======
+		buttonRedo = new JButton(new ImageIcon("images/redo.png"));
+		buttonRedo.setContentAreaFilled(false);
+		buttonRedo.setBorderPainted(false);
+		buttonRedo.setRolloverIcon(new ImageIcon("images/redo_rollover.png"));
+		buttonRedo.setMargin(new Insets(0, 0, 0, 0));
+		buttonRedo.setBackground(new Color(255,255,255));
+		buttonRedo.setForeground(new Color(255,255,255));
+		buttonRedo.setToolTipText("Redo");
+		buttonRedo.addActionListener(this);
+		pButton.add(buttonRedo);
+		
+
+		// Settings
+		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
+		buttonSetting.setContentAreaFilled(false);
+		buttonSetting.setBorderPainted(false);
+		buttonSetting.setRolloverIcon(new ImageIcon("images/parametre_rollover.png"));
+		buttonSetting.setMargin(new Insets(0, 0, 0, 0));
+		buttonSetting.setBackground(new Color(255,255,255));
+		buttonSetting.setForeground(new Color(255,255,255));
+		buttonSetting.setToolTipText("Paramètres");
+		buttonSetting.addActionListener(this);
+		pButton.add(buttonSetting);
+>>>>>>> 9ec5b5a73a0477af4bf3bd9d5c8cc91361ee17f4
 
 		pButton.add(pTopButton);
 		
@@ -708,6 +734,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public JLabel getLabelCoord() {
 		return this.lCoord;
+	}
+
+	
+	public Controller getController() {
+		return this.ctrl;
 	}
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}

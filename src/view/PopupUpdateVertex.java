@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,7 +20,7 @@ import controller.Controller;
  * @author Groupe 3 
  * @version 2016-01-12
  */
-public class PopupUpdateVertex extends Popup implements ActionListener {
+public class PopupUpdateVertex extends Popup  {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
@@ -49,6 +50,7 @@ public class PopupUpdateVertex extends Popup implements ActionListener {
 			content.setBorder(BorderFactory.createTitledBorder("Sommet"));
 		JLabel nomL = new JLabel("Nom:");
 		nom = new JTextField();
+		nom.addKeyListener(this);
 		nom.setText(hci.getAlSelected().get(0));
 		nom.setPreferredSize(new Dimension(100, 25));
 		content.add(nomL);
@@ -68,22 +70,42 @@ public class PopupUpdateVertex extends Popup implements ActionListener {
 		setVisible(true);
 	}
 
+	private void valider() {
+		if (ctrl.updateVertex(hci.getAlSelected().get(0), nom.getText()))
+		{
+			hci.getHmVertex().put(nom.getText(), hci.getHmVertex().get(hci.getAlSelected().get(0)));
+			hci.getHmVertex().remove(hci.getAlSelected().get(0));
+			hci.getAlSelected().clear();
+			hci.getAlSelected().add(nom.getText());
+			hci.refresh();
+			dispose();
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == ok && !nom.getText().isEmpty()) {
-			if (ctrl.updateVertex(hci.getAlSelected().get(0), nom.getText()))
-			{
-					hci.getHmVertex().put(nom.getText(), hci.getHmVertex().get(hci.getAlSelected().get(0)));
-					hci.getHmVertex().remove(hci.getAlSelected().get(0));
-					hci.getAlSelected().clear();
-					hci.getAlSelected().add(nom.getText());
-					hci.refresh();
-					dispose();
-			}
-		}
+		if (e.getSource() == ok && !nom.getText().isEmpty()) 
+			valider();
 		if (e.getSource() == annuler) {
 			dispose();
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
+			valider();
+		}
+		else if (arg0.getKeyCode() == 27)
+			dispose();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
 	}
 
 }
