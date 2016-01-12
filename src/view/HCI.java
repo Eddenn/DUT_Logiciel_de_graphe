@@ -496,20 +496,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Enregistrer
 		} else if (e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave) {
 			if(ctrl.getFile().equals("")){
-				JFileChooser dial = new JFileChooser(new File("."));
-				if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-					String path = dial.getSelectedFile().getAbsolutePath();
-					if(path.substring(path.lastIndexOf("\\")).lastIndexOf(".")!=-1) {
-						ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt");
-					} else {
-						ctrl.saveFile(path + ".txt");
-					}
-				}
+				saveDialog();
 			}else{
 				ctrl.saveFile("", "adjacence");
 			}
 			// Enregistrer sous
-		} else if (e.getSource()==tabMenuItemFile[3])
+		} else if (e.getSource()==tabMenuItemFile[3]) {
 			saveDialog();
 			// Quitter
 		} else if (e.getSource() == tabMenuItemFile[5]) {
