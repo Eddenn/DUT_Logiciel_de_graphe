@@ -16,6 +16,7 @@ import model.Arc;
 import model.Graph;
 import model.IParcourable;
 import model.Parcours;
+import model.ParcoursDijkstra;
 import model.Vertex;
 import view.GraphStyle;
 import view.HCI;
@@ -391,6 +392,11 @@ public class Controller implements IControlable, IIhmable {
 		this.parcours = new Parcours(this);
 		this.parcours.lancer();
 		hci.showInfo(parcours.getMessage());
+	}
+	
+	public void startParcoursDijkstra(int iSommet) {
+		this.parcours = new ParcoursDijkstra(this,iSommet);
+		this.parcours.lancer();
 	}
 	
 	/*

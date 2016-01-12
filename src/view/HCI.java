@@ -3,6 +3,7 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.awt.event.WindowEvent;
 
 import controller.Controller;
 import model.Arc;
@@ -574,6 +577,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		/*--ALGORITHMES--*/
 			//Plus grande valeur
 		}else if(e.getSource()== tabMenuItemAlgo[0]){
+			showInfo("Lancement de l'algorithme");
 			ctrl.startParcours();
 			//Rechercher chemin
 		}else if(e.getSource()==tabMenuItemAlgo[1]){

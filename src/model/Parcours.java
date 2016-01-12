@@ -79,7 +79,7 @@ public class Parcours implements IParcourable {
 		return this.message;
 	}
 
-	public void pauseSynchro() {
+	private void pauseSynchro() {
 		try {
 			Thread.sleep(1000);
 		} catch (Exception e) {
