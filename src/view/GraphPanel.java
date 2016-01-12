@@ -51,16 +51,8 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	private GraphStyle style;
 	private Controller ctrl;
 
-<<<<<<< HEAD
 	/*--Constructeur du panel de dessin--*/
 	public GraphPanel(HCI hci, Controller ctrl) {
-=======
-	/**
-	 * Constructeur du panel de dessin.
-	 * @param hci
-	 */
-	public GraphPanel(HCI hci) {
->>>>>>> 5ec5ed9ac6a43285e49b5ada6191e8562e7ae5cb
 		super();
 		this.hci = hci;
 		this.ctrl = ctrl;
