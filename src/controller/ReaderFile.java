@@ -17,7 +17,6 @@ public class ReaderFile {
 	private Graph graph;
 	private ReaderMatrix rm;
 	private ReaderAdjacencyList ral;
-	private boolean bIsMatrix;
 	private boolean bValued;
 	private boolean bDirected;
 	private boolean bHaveCoord;
@@ -65,7 +64,7 @@ public class ReaderFile {
 		alStr.remove(0);
 		
 		
-		if (bIsMatrix = isMatrix(strFirstLine)) {
+		if (isMatrix(strFirstLine)) {
 			rm = new ReaderMatrix(alStr,bDirected,bValued);
 			graph = rm.getGraph();
 		}

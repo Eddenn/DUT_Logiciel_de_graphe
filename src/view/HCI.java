@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
+import model.Arc;
 import model.Graph;
 import model.PdfGenerator;
 import model.Vertex;
@@ -485,6 +486,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 			else if (val == 1) new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			
+		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
+			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
@@ -493,12 +496,20 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Enregistrer
 		} else if (e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave) {
 			if(ctrl.getFile().equals("")){
-				saveDialog();
+				JFileChooser dial = new JFileChooser(new File("."));
+				if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+					String path = dial.getSelectedFile().getAbsolutePath();
+					if(path.substring(path.lastIndexOf("\\")).lastIndexOf(".")!=-1) {
+						ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt");
+					} else {
+						ctrl.saveFile(path + ".txt");
+					}
+				}
 			}else{
 				ctrl.saveFile("", "adjacence");
 			}
 			// Enregistrer sous
-		} else if (e.getSource()==tabMenuItemFile[3]) {
+		} else if (e.getSource()==tabMenuItemFile[3])
 			saveDialog();
 			// Quitter
 		} else if (e.getSource() == tabMenuItemFile[5]) {
@@ -570,8 +581,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		/*--ALGORITHMES--*/
 			//Plus grande valeur
 		}else if(e.getSource()== tabMenuItemAlgo[0]){
-			//Ajouter la méthode à appeler pour lancer l'algorithme
-			
+			ctrl.startParcours();
 			//Rechercher chemin
 		}else if(e.getSource()==tabMenuItemAlgo[1]){
 			new PopupAlgoRC("Algorithme de recherche de chemin", true, ctrl, this);
@@ -706,6 +716,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 	
+	public void showInfo(String strInfo) {
+		JOptionPane.showMessageDialog(null, strInfo, "Information", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	/*--------------------
 	 * Getters et Setters 
 	 *-------------------*/
@@ -752,7 +766,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		popUpItem[5].setEnabled(b);
 		buttonUpdateArc.setEnabled(b);
 	}
-	
+
 	public void saveDialog() {
 		
 		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Export en matrice", ".txt");
@@ -780,6 +794,24 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt", format);
 			} else {
 				ctrl.saveFile(path + ".txt", format);
+			}
+		}
+	}
+
+	public void startParcours() {
+		ctrl.startParcours();
+	}
+
+	public void showHiLightAlgorithm() {
+		for (Vertex vertex : graph.getAlVertex()) {
+			if (ctrl.sommetActif(vertex.getName().charAt(0))) {
+				pGraph.highlightEdge((Graphics2D) pGraph.getGraphics(), vertex);
+			}
+
+			for (Arc arc : vertex.getAlArcs()) {
+				if (ctrl.arcActif(vertex.getName().charAt(0), arc.getVertex().getName().charAt(0))) {
+					pGraph.highlightArc((Graphics2D) pGraph.getGraphics(), vertex, arc);
+				}
 			}
 		}
 	}

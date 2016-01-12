@@ -113,7 +113,7 @@ public class ParcoursDijkstra implements IParcourable {
 						}
 					}
 				} else {
-					if (tChemins[i][iSommet] == -1 && tChemins[i - 1][iSommet] != -1) {
+					if (tChemins[i - 1][iSommet] != -1) {
 						tChemins[i][iSommet] = tChemins[i - 1][iSommet];
 					}
 				}
@@ -121,7 +121,6 @@ public class ParcoursDijkstra implements IParcourable {
 			
 			// On détermine le nouveau sommet actif
 			int min = -1;
-			int indice = sommetActif;
 
 			for (int j = 0; j < tChemins.length; j++) {
 				if ((min == -1 && !sommetsTraites[j] && tChemins[i][j] != -1)

@@ -15,6 +15,7 @@ import controller.IIhmable;
 import model.Arc;
 import model.Graph;
 import model.IParcourable;
+import model.Parcours;
 import model.Vertex;
 import view.GraphStyle;
 import view.HCI;
@@ -371,7 +372,6 @@ public class Controller implements IControlable, IIhmable {
 		// (Rep�re utilis� pour savoir notre position dans la ArrayList
 		// permettant le retour en arri�re
 		cptModif++;
-		
 	}
 
 	/*--------------------------------------
@@ -383,13 +383,26 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	public int[][] getMatrice() {
+		graph.generateMatrix();
 		return graph.getTMatrix();
 	}
 
 	public void majIHM() {
-		hci.refresh();
+		if (parcours != null) {
+			hci.showHiLightAlgorithm();
+		}
+	}
+	
+	public void repaintVertex() {
+		hci.repaint();
 	}
 
+	public void startParcours() {
+		this.parcours = new Parcours(this);
+		this.parcours.lancer();
+		hci.showInfo(parcours.getMessage());
+	}
+	
 	/*
 	 * -------------------------------- 
 	 * M�thodes de l'interface IIhmable
@@ -477,5 +490,4 @@ public class Controller implements IControlable, IIhmable {
 	public String getFile() {
 		return file;
 	}
-
 }
