@@ -338,7 +338,7 @@ public class Controller implements IControlable, IIhmable {
 		for (Point c : hci.getHmVertex().values()) {
 			sCoord+= (c.getX() + "," + c.getY());
 			cpt++;
-			if (cpt != nbSommet - 1)
+			if (cpt != nbSommet)
 				sCoord+=";";
 		}
 		sCoord+="]";
@@ -359,6 +359,8 @@ public class Controller implements IControlable, IIhmable {
 		// (Repère utilisé pour savoir notre position dans la ArrayList
 		// permettant le retour en arrière
 		cptModif++;
+		
+		System.out.println(saveGraphList + "\n" + cptModif);
 	}
 
 	/*--------------------------------------
