@@ -284,9 +284,9 @@ public class Controller implements IControlable, IIhmable {
 	public void undo() {
 		
 		 if (cptModif > 1) { 
-			ReaderAdjacencyList rAL = new ReaderAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif-2)), graph.isDirected(), graph.isValued());
-		 	graph = rAL.getGraph();
-		 	hci.initHmVertexByTab(saveCoordList.get(cptModif-2)); 
+			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveVertexList.get(cptModif-2)), graph.isDirected(), graph.isValued());
+		 	graph = rF.getGraph();
+		 	hci.initHmVertexByTab(rF.getPoints()); 
 		 	cptModif--; 
 		 }
 		 
@@ -300,9 +300,9 @@ public class Controller implements IControlable, IIhmable {
 		
 		
 		if (cptModif >= 0 && cptModif < saveVertexList.size()) { 
-			ReaderAdjacencyList rAL = new ReaderAdjacencyList(new ArrayList<String>(saveVertexList.get(cptModif)), graph.isDirected(), graph.isValued());
-			graph = rAL.getGraph();
-		  	hci.initHmVertexByTab(saveCoordList.get(cptModif)); 
+			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveVertexList.get(cptModif)), graph.isDirected(), graph.isValued());
+			graph = rF.getGraph();
+		  	hci.initHmVertexByTab(rF.getPoints()); 
 		  	cptModif++; 
 		  }
 		 
@@ -326,30 +326,42 @@ public class Controller implements IControlable, IIhmable {
 	public void provSave() {
 		
 		// Initialisation de la ArrayList contenant la liste d'adjacence du
-		// graphe au moment oé l'utilisateur effectue une action
+		// graphe au moment où l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
 //		alProv.add(0, "Valued=" + graph.isValued());
 //		alProv.add(0, "Directed=" + graph.isDirected());
+		
+		// Sauvegarde des coordonnÃ©es
+		alProv.add("-- Coordonnées des points :\n");
+		String sCoord = "[";
+		
+		Point[] tabPoint = new Point[graph.getAlVertex().size()];
+		int cpt = 0;
+		for (Point c : hci.getHmVertex().values()) {
+			tabPoint[cpt] = c;
+			cpt++;
+		}
 
+		int size = tabPoint.length;
+		for (int j = 0; j < size; j++) {
+			sCoord+= (tabPoint[j].getX() + "," + tabPoint[j].getY());
+			if (j != size - 1)
+				sCoord+=";";
+		}
+		sCoord+="]";
+		
+		System.out.println(sCoord);
+		alProv.add(sCoord);
+		
+		
+		// Ajout de la liste d'adjacence dans la ArrayList de sauvegarde
+		saveVertexList.add(cptModif, alProv);
+		
 		int i = cptModif + 1;
 		while (i < saveVertexList.size()) {
 			saveVertexList.remove(i);
 			saveCoordList.remove(i);
 		}
-		
-		
-		// Ajout de la liste d'adjacence dans la ArrayList de sauvegarde
-		saveVertexList.add(cptModif, alProv);
-
-		// Sauvegarde des coordonnÃ©es
-		Point[] tabPoint = new Point[graph.getAlVertex().size()];
-		int cpt = 0;
-		for (Point c : hci.getHmVertex().values()) {
-			tabPoint[cpt] = new Point((int) (c.x / hci.getGraphPanel().getZoom()), (int) (c.y / hci.getGraphPanel().getZoom()));
-			cpt++;
-		}
-
-		saveCoordList.add(cptModif, tabPoint);
 
 		// Incrémentation du compteur indiquant le nombre de modification
 		// (Repère utilisé pour savoir notre position dans la ArrayList
@@ -437,7 +449,16 @@ public class Controller implements IControlable, IIhmable {
 		return bUpdate;
 	}
 
-	// public boolean updateArc()
+	public boolean updateArc(Vertex v, Vertex vBis, int value) {
+		for (Arc a : v.getAlArcs()) {
+			if (a.getVertex() == vBis) {
+				graph.updateArc(a, value);
+				return true;
+			}
+				
+		}
+		return false;
+	}
 
 	/*------------------
 	 * Getter / Setter

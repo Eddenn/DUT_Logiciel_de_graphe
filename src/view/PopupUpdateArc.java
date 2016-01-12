@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -88,30 +89,20 @@ public class PopupUpdateArc extends Popup implements ActionListener {
 			int vertexDep = boxDep.getSelectedIndex();
 			int vertexArr = boxArr.getSelectedIndex();
 			
-//			ctrl.updateArc
-			
+			int value;
+			try {
+				value = Integer.parseInt(textfield.getText());
+				if (ctrl.updateArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), value))
+					dispose();
+				else
+					JOptionPane.showMessageDialog(null, "Il n'existe pas d'arc entre les sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+			catch(Exception exc) {
+				textfield.setText("Valeur Erronée");
+			}
 
-//				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-//					if (v.getName().equals(boxDep.getSelectedItem())) {
-//						vOrigine = v;
-//					}
-//				}
-//				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-//					if (v.getName().equals(boxArr.getSelectedItem())) {
-//						vDest = v;
-//					}
-//				}
-//
-//				for (Arc a : vOrigine.getAlArcs()) {
-//					for (Arc b : vDest.getAlArcs()) {
-//						if (a.getVertex() == vDest || b.getVertex() == vOrigine || true) {
-//							int value = Integer.parseInt(textfield.getText());
-//							a.setValue(value);
-//							b.setValue(value);
-//						}
-//					}
-//				}
 		}
-		dispose();
+		else
+			dispose();
 	}
 }

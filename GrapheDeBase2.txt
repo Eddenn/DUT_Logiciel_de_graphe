@@ -2,9 +2,10 @@ IsMatrix=false
 Directed=true
 Valued=true
 
-A={(B,1)}
-B={(A,2),(C,2)}
-C={(A,1)}
-D={}
+-- Liste d'adjacence :
+A={(B,1),(A,4)}
+B={(C,3)}
+C={(A,6)}
 
-[0.0,0.0;202.0,273.0;200.0,0.0;300.0,0.0]
+-- Coordonnées des points :
+[406.0,256.0;111.0,186.0;221.0,60.0]
