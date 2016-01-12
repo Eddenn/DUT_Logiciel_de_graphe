@@ -20,8 +20,6 @@ public class ParcoursDijkstra implements IParcourable {
 	private boolean[] sommetsTraites;
 	private int[][] filsPere;
 
-	private String message;
-
 	public ParcoursDijkstra(IControlable ctrl, int sommetDepart) {
 		this.ctrl = ctrl;
 
@@ -30,8 +28,6 @@ public class ParcoursDijkstra implements IParcourable {
 		this.colArcActif = -1;
 
 		this.sommetDepart = sommetDepart;
-
-		this.message = "";
 
 		matrice = ctrl.getMatrice();
 		lstSommet = ctrl.listeSommet();
@@ -173,4 +169,5 @@ public class ParcoursDijkstra implements IParcourable {
 	private int getValeurArc(int sommetA, int sommetB) {
 		return matrice[sommetB][sommetA];
 	}
+
 }

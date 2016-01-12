@@ -75,6 +75,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.addMouseWheelListener(this);
+	
 	}
 	
 	/**
@@ -698,10 +699,10 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		
 		//CTRL Pressed pour la sélection
-		if(e.getKeyCode()==17) bCtrlPressed = true;
+		else if(e.getKeyCode()==17) bCtrlPressed = true;
 		
 		//CTRL+C
-		if(e.getModifiersEx()==128 && e.getKeyCode()==67 ) {
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==67 ) {
 			clipBoardEdge.clear();
 			for(String s : alSelected) {
 				int cpt = 1;
@@ -712,7 +713,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			}
 		}
 		//CTRL+V
-		if(e.getModifiersEx()==128 && e.getKeyCode()==86 ) {
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==86 ) {
 			for(String s : clipBoardEdge.keySet()) {
 				hci.getGraph().addVertex(s);
 				hci.getHmVertex().put(s, clipBoardEdge.get(s));
@@ -721,18 +722,23 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			clipBoardEdge.clear();
 		}
 		//CTRL+Z
-		if(e.getModifiersEx()==128 && e.getKeyCode()==90 ) {
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==90 ) {
 			ctrl.undo();
 			hci.refresh();
 		}
 		//CTRL+Y
-		if(e.getModifiersEx()==128 && e.getKeyCode()==89 ) {
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==89 ) {
 			ctrl.redo();
 			hci.refresh();
 		}
-		if(e.getKeyCode()==KeyEvent.VK_F1 ) {
+		else if(e.getKeyCode()==KeyEvent.VK_F1 ) {
 			hci.startParcours();
 		}
+		
+		else if (e.getKeyCode() == 27){
+			System.exit(0);
+		}
+		
 		refreshPreferedSize();
 		repaint();
 		revalidate();
