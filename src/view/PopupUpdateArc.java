@@ -12,18 +12,27 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.Controller;
-import model.Arc;
-import model.Vertex;
 
+/**
+ * Classe qui gèrent la fenêtre utilisateur pour modifier un arc.
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class PopupUpdateArc extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = 2869913711173398321L;
 	private JButton ok, annuler;
 	@SuppressWarnings("rawtypes")
 	private JComboBox boxDep, boxArr;
-	private JTextField valArc;
 	private JTextField textfield;
 
+	/**
+	 * Méthode qui instancie la pop-up pour modifier un arc.
+	 * @param title le titre de la pop-up.
+	 * @param modal 
+	 * @param ctrl le controleur utilisé.
+	 * @param hci le hci utilisé.
+	 */
 	public PopupUpdateArc(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		this.setSize(300, 165);

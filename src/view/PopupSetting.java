@@ -15,6 +15,11 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
+/**
+ * Classe qui gère la fenêtre utilisateur pour choisir et modifier le style d'un graphe
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class PopupSetting extends Popup implements ActionListener{
 
 	private static final long serialVersionUID = 7294187771970061680L;
@@ -27,7 +32,13 @@ public class PopupSetting extends Popup implements ActionListener{
 	private JButton buttonBackground;
 	private GraphStyle style;
 	   
-	
+	/**
+	 * Méthode qui instancie la pop-up pour modifier le style du graphe.
+	 * @param title le titre de la pop-up
+	 * @param modal 
+	 * @param ctrl le controleur utilisé
+	 * @param hci le hci utilisé
+	 */
 	public PopupSetting(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		JPanel pStyle = new JPanel(new BorderLayout());
@@ -87,6 +98,9 @@ public class PopupSetting extends Popup implements ActionListener{
 		setVisible(true);
 	}
 
+	/**
+	 * Méthode qui modifie les couleurs sur le graphe selon les couleurs du style séléctionner.
+	 */
 	public void refreshColor() {
 		hci.getGraphPanel().setStyle(style);
 		hci.getGraphPanel().setBackground(style.getBackground());

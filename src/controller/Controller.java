@@ -122,7 +122,7 @@ public class Controller implements IControlable, IIhmable {
 			}
 			fw.write("]\n");
 			fw.write("-- Style :\n");
-			fw.write(hci.getGraphPanel().getStyle().toString());
+			fw.write(hci.getGraphPanel().getStyle().toStringSave());
 
 			// fermeture du fichier
 			fw.close();

@@ -12,6 +12,11 @@ import javax.swing.JTextField;
 
 import controller.Controller;
 
+/**
+ * Classe gérant la fenêtre utilisateur d'ajout d'arc
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class PopupAddArc extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = 2869913711173398321L;
@@ -20,6 +25,14 @@ public class PopupAddArc extends Popup implements ActionListener {
 	private JComboBox boxDep, boxArr;
 	private JTextField valArc;
 	
+	
+	/**
+	 * Constructeur qui instancie la fenêtre pop-up pour ajouter un arc
+	 * @param title le titre de la fenêtre
+	 * @param modal
+	 * @param ctrl le controleur lancé
+	 * @param hci  le hci lancé
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PopupAddArc(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
@@ -32,7 +45,7 @@ public class PopupAddArc extends Popup implements ActionListener {
 			tabVertex[i] = ctrl.getGraph().getAlVertex().get(i).getName();
 		}
 
-		JLabel text = new JLabel("<html> Saisissez les donnÃ©es de l'arc : <br/><br/> </html>");
+		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
 		
@@ -42,14 +55,14 @@ public class PopupAddArc extends Popup implements ActionListener {
 		// Panel contenant les JComboBox
 		JPanel panelComboBox = new JPanel();
 		
-		// Gestion du sommet de dÃ©part
-		JLabel lDep = new JLabel("DÃ©part : ");
+		// Gestion du sommet de départ
+		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
 		panelComboBox.add(boxDep,"");
 		
-		// Gestion du sommet d'arrivÃ©e
-		JLabel lArr = new JLabel("ArrivÃ©e : ");
+		// Gestion du sommet d'arrivée
+		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
 		panelComboBox.add(boxArr);

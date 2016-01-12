@@ -6,10 +6,15 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JList;
 
+/**
+ * Classe qui gère le clique droit sur le liste des composants
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class ListMouseListener extends MouseAdapter {
 	
 	private HCI hci;
-	
+
 	public ListMouseListener(HCI hci) {
 		this.hci = hci;
 	}

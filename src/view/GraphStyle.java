@@ -2,6 +2,11 @@ package view;
 
 import java.awt.Color;
 
+/**
+ * Classe qui gère les différents style possible pour un graphe
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public enum GraphStyle {
 	//Objets directement construits
 	Basique (Color.BLACK,Color.WHITE,Color.BLACK,Color.GRAY,Color.BLACK,new Color(238,238,238)),
@@ -42,7 +47,7 @@ public enum GraphStyle {
 		this.background = background;
 	}
 	
-	public String toString() {
+	public String toStringSave() {
 		return edgeBackground.getRed()+","+edgeBackground.getGreen()+","+edgeBackground.getBlue()+";"+
 			   edgeBorder.getRed()+","+edgeBorder.getGreen()+","+edgeBorder.getBlue()+";"+
 			   edgeText.getRed()+","+edgeText.getGreen()+","+edgeText.getBlue()+";"+

@@ -19,7 +19,11 @@ import model.Graph;
 import model.PdfGenerator;
 import model.Vertex;
 
-
+/**
+ * Classe principale de l'IHM
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class HCI extends JFrame implements ActionListener, ListSelectionListener {
 	/**
 	 * Serial Version
@@ -29,7 +33,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private Graph graph;
 	private JPopupMenu popMenu;
 
-	// Data of Vertex
+	// Données du sommet
 	private HashMap<String, Point> hmVertex;
 	int xInitialize = 0, yInitialize = 0; // Used for the preferedsize of pGraph
 
@@ -53,10 +57,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	// Panel of JButton
 	private JPanel pButton;
-	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonSetting;
+	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonUndo, buttonRedo, buttonSetting;
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
+
 
 	public HCI(Controller controller) {
 		this.ctrl = controller;
@@ -335,7 +340,34 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 		
+<<<<<<< HEAD
+		// Undo
+		buttonUndo = new JButton(new ImageIcon("images/undo.png"));
+		buttonUndo.setContentAreaFilled(false);
+		buttonUndo.setBorderPainted(false);
+		buttonUndo.setRolloverIcon(new ImageIcon("images/undo_rollover.png"));
+		buttonUndo.setMargin(new Insets(0, 0, 0, 0));
+		buttonUndo.setBackground(new Color(255,255,255));
+		buttonUndo.setForeground(new Color(255,255,255));
+		buttonUndo.setToolTipText("Undo");
+		buttonUndo.addActionListener(this);
+		pButton.add(buttonUndo);
+		// Redo
+		buttonRedo = new JButton(new ImageIcon("images/redo.png"));
+		buttonRedo.setContentAreaFilled(false);
+		buttonRedo.setBorderPainted(false);
+		buttonRedo.setRolloverIcon(new ImageIcon("images/redo_rollover.png"));
+		buttonRedo.setMargin(new Insets(0, 0, 0, 0));
+		buttonRedo.setBackground(new Color(255,255,255));
+		buttonRedo.setForeground(new Color(255,255,255));
+		buttonRedo.setToolTipText("Redo");
+		buttonRedo.addActionListener(this);
+		pButton.add(buttonRedo);
+		
+		// Parametre
+=======
 		// Settings
+>>>>>>> ca678b9a068dcb296a23288a2b0e0777c70e72fa
 		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
 		buttonSetting.setContentAreaFilled(false);
 		buttonSetting.setBorderPainted(false);
@@ -405,6 +437,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.addKeyListener(pGraph);
 	}
 
+	/**
+	 * Méthode qui initialise l'HashMap de sommet
+	 */
 	public void initHmVertex() {
 		xInitialize = 0;
 		yInitialize = 0;
@@ -478,10 +513,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			this.dispose();
 
 		/*-- EDITION --*/
-		} else if (e.getSource() == tabMenuItemEdition[0]) {
+		} else if (e.getSource() == tabMenuItemEdition[0] || e.getSource() == buttonUndo) {
 				ctrl.undo();
 				this.refresh();
-		} else if (e.getSource() == tabMenuItemEdition[1]) {
+		} else if (e.getSource() == tabMenuItemEdition[1] || e.getSource() == buttonRedo) {
 				ctrl.redo();
 				this.refresh();
 		
@@ -568,6 +603,20 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		refresh();
 	}
 
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (e.getSource() == slObject.getListOfObject()) {
+			pGraph.getAlSelected().clear();
+			for( String s : slObject.getListOfObject().getSelectedValuesList() ) {
+				pGraph.getAlSelected().add(s);
+			}
+			repaint();
+		}
+	}
+	
+	/**
+	 * Méthode permettant d'exporter le grpahe en image.
+	 */
 	private void expImage() {
 		FileNameExtensionFilter filterPNG = new FileNameExtensionFilter("PNG (*.png)", ".png");
 		FileNameExtensionFilter filterJPG = new FileNameExtensionFilter("JPEG (*.jpg;*.jpeg;*.jpe;*.jfif)", ".jpg");
@@ -607,7 +656,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		}
 	}
 
-	// Utiliser pour centrer une chaine de caractere
+	/**
+	 * Méthode utiliser pour centrer une chaine de caractère
+	 * @param str
+	 * @param size
+	 * @return
+	 */
 	public static String centerStr(String str, int size) {
 		if (str == null || size <= str.length())
 			return str;
@@ -622,17 +676,35 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		return sb.toString();
 	}
 
+	/**
+	 * Méthode permettant d'ajouter un sommet
+	 * @param strName le nom du sommet
+	 */
 	public void addVertex(String strName) {
 		hmVertex.put(strName, new Point(1, 1));
 		slObject.refresh();
 	}
 
+	/**
+	 * Méthode qui met à jour le panneau principal et la liste des composants
+	 */
 	public void refresh() {
 		graph = ctrl.getGraph();
 		slObject.refresh();
 		repaint();
 	}
 
+	/**
+	 * Méthode utiliser pour afficher un message d'erreur
+	 * @param strError le chaine de caractère à afficher
+	 */
+	public void showError(String strError) {
+		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	/*--------------------
+	 * Getters et Setters 
+	 *-------------------*/
 	public ArrayList<String> getAlSelected() {
 		return pGraph.getAlSelected();
 	}
@@ -659,6 +731,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public JLabel getLabelCoord() {
 		return this.lCoord;
 	}
+<<<<<<< HEAD
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
@@ -675,6 +748,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
+=======
+	
+	public Controller getController() {
+		return this.ctrl;
+	}
+>>>>>>> 5ec5ed9ac6a43285e49b5ada6191e8562e7ae5cb
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
 	
