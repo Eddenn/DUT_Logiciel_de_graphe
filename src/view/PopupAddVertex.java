@@ -56,7 +56,7 @@ public class PopupAddVertex extends Popup implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ok) {
 			if(!ctrl.addVertex(nom.getText())){
-				hci.hmVertex.put(nom.getText(), new Point(0, 0));
+				hci.getHmVertex().put(nom.getText(), new Point(0, 0));
 				hci.getAlSelected().clear();
 				hci.getAlSelected().add(nom.getText());
 			}

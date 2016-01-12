@@ -30,7 +30,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JPopupMenu popMenu;
 
 	// Data of Vertex
-	protected HashMap<String, Point> hmVertex;
+	private HashMap<String, Point> hmVertex;
 	int xInitialize = 0, yInitialize = 0; // Used for the preferedsize of pGraph
 
 	// Menu bar of this frame
@@ -189,7 +189,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		menuBarMain.add(menuExport);
 
-		menuGraph = new JMenu("Graph");
+		menuGraph = new JMenu("Graphe");
 
 		// MenuItem - Ajouter un sommet
 		tabMenuItemGraph[0] = new JMenuItem("<html>Ajouter un sommet</html>");

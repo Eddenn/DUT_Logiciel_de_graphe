@@ -156,7 +156,7 @@ public class Controller implements IControlable, IIhmable {
 		} else {
 			hci.initHmVertex();
 		}
-
+		
 		initProvSave();
 		provSave();
 		hci.refresh();
