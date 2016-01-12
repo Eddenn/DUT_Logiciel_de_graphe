@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
+import model.Arc;
 import model.Graph;
 import model.PdfGenerator;
 import model.Vertex;
@@ -573,8 +574,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		/*--ALGORITHMES--*/
 			//Plus grande valeur
 		}else if(e.getSource()== tabMenuItemAlgo[0]){
-			//Ajouter la méthode à appeler pour lancer l'algorithme
-			
+			ctrl.startParcours();
 			//Rechercher chemin
 		}else if(e.getSource()==tabMenuItemAlgo[1]){
 			new PopupAlgoRC("Algorithme de recherche de chemin", true, ctrl, this);
@@ -709,6 +709,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 	
+	public void showInfo(String strInfo) {
+		JOptionPane.showMessageDialog(null, strInfo, "Information", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	/*--------------------
 	 * Getters et Setters 
 	 *-------------------*/
@@ -754,5 +758,23 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemGraph[5].setEnabled(b);
 		popUpItem[5].setEnabled(b);
 		buttonUpdateArc.setEnabled(b);
+	}
+
+	public void startParcours() {
+		ctrl.startParcours();
+	}
+
+	public void showHiLightAlgorithm() {
+		for (Vertex vertex : graph.getAlVertex()) {
+			if (ctrl.sommetActif(vertex.getName().charAt(0))) {
+				pGraph.highlightEdge((Graphics2D) pGraph.getGraphics(), vertex);
+			}
+
+			for (Arc arc : vertex.getAlArcs()) {
+				if (ctrl.arcActif(vertex.getName().charAt(0), arc.getVertex().getName().charAt(0))) {
+					pGraph.highlightArc((Graphics2D) pGraph.getGraphics(), vertex, arc);
+				}
+			}
+		}
 	}
 }
