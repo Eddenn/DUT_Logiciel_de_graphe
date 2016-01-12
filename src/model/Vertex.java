@@ -54,4 +54,5 @@ public class Vertex {
 		}
 		return sRet;
 	}
+
 }
