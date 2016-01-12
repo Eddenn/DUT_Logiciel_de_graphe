@@ -340,7 +340,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 		
-<<<<<<< HEAD
 		// Undo
 		buttonUndo = new JButton(new ImageIcon("images/undo.png"));
 		buttonUndo.setContentAreaFilled(false);
@@ -352,6 +351,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonUndo.setToolTipText("Undo");
 		buttonUndo.addActionListener(this);
 		pButton.add(buttonUndo);
+		
 		// Redo
 		buttonRedo = new JButton(new ImageIcon("images/redo.png"));
 		buttonRedo.setContentAreaFilled(false);
@@ -365,9 +365,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pButton.add(buttonRedo);
 		
 		// Parametre
-=======
-		// Settings
->>>>>>> ca678b9a068dcb296a23288a2b0e0777c70e72fa
 		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
 		buttonSetting.setContentAreaFilled(false);
 		buttonSetting.setBorderPainted(false);
