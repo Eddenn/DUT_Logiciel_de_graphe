@@ -390,6 +390,7 @@ public class Controller implements IControlable, IIhmable {
 	public void startParcours() {
 		this.parcours = new Parcours(this);
 		this.parcours.lancer();
+		hci.showInfo(parcours.getMessage());
 	}
 	
 	/*

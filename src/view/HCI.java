@@ -574,8 +574,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		/*--ALGORITHMES--*/
 			//Plus grande valeur
 		}else if(e.getSource()== tabMenuItemAlgo[0]){
-			//Ajouter la méthode à appeler pour lancer l'algorithme
-			
+			ctrl.startParcours();
 			//Rechercher chemin
 		}else if(e.getSource()==tabMenuItemAlgo[1]){
 			new PopupAlgoRC("Algorithme de recherche de chemin", true, ctrl, this);
@@ -708,6 +707,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	 */
 	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void showInfo(String strInfo) {
+		JOptionPane.showMessageDialog(null, strInfo, "Information", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	/*--------------------
