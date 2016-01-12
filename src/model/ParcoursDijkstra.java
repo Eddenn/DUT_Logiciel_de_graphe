@@ -85,38 +85,40 @@ public class ParcoursDijkstra implements IParcourable {
 
 		// On parcourt le tableau ligne par ligne
 		for (int i = 1; i < tChemins.length; i++) {
-			// On parcourt les arcs voisins du sommet actif
-			for (Integer iVoisins : getVoisins(sommetActif)) {
-				// On vérifie que le sommet n'a pas été traité.
-				if (!sommetsTraites[iVoisins.intValue()]) {
-					// On vérifie qu'il n'y a aucun chemin existant
-					if (tChemins[i - 1][iVoisins.intValue()] == -1) {
-						// S'il n'y en a pas, on lui ajoute une valeur
-						tChemins[i][iVoisins.intValue()] = getValeurArc(sommetActif, iVoisins.intValue())
-								+ tChemins[i - 1][sommetActif];
-						
-						filsPere[1][iVoisins.intValue()] = sommetActif;
-					} else {
-						if (tChemins[i - 1][sommetActif] + getValeurArc(sommetActif,
-								iVoisins.intValue()) < tChemins[i - 1][iVoisins.intValue()]) {
-							tChemins[i][iVoisins.intValue()] = tChemins[i - 1][sommetActif]
-									+ getValeurArc(sommetActif, iVoisins.intValue());
+			// On récupére les voisins du sommet actif
+			ArrayList<Integer> alVoisins = getVoisins(sommetActif);
+			
+			// On parcourt chaque sommet
+			for (int iSommet = 0; iSommet < tChemins.length; iSommet++) {
+				if (alVoisins.contains(iSommet)) {
+					if (!sommetsTraites[iSommet]) {
+						// On vérifie qu'il n'y a aucun chemin existant
+						if (tChemins[i - 1][iSommet] == -1) {
+							// S'il n'y en a pas, on lui ajoute une valeur
+							tChemins[i][iSommet] = getValeurArc(sommetActif, iSommet)
+									+ tChemins[i - 1][sommetActif];
 							
-							filsPere[1][iVoisins.intValue()] = sommetActif;
-
+							filsPere[1][iSommet] = sommetActif;
 						} else {
-							tChemins[i][iVoisins.intValue()] = tChemins[i - 1][iVoisins.intValue()];
+							if (tChemins[i - 1][sommetActif] + getValeurArc(sommetActif,
+									iSommet) < tChemins[i - 1][iSommet]) {
+								tChemins[i][iSommet] = tChemins[i - 1][sommetActif]
+										+ getValeurArc(sommetActif, iSommet);
+								
+								filsPere[1][iSommet] = sommetActif;
+
+							} else {
+								tChemins[i][iSommet] = tChemins[i - 1][iSommet];
+							}
 						}
+					}
+				} else {
+					if (tChemins[i][iSommet] == -1 && tChemins[i - 1][iSommet] != -1) {
+						tChemins[i][iSommet] = tChemins[i - 1][iSommet];
 					}
 				}
 			}
-
-			for (int iRow = 0; iRow < tChemins.length; iRow++) {
-				if (tChemins[i][iRow] == -1 && tChemins[i - 1][iRow] != -1) {
-					tChemins[i][iRow] = tChemins[i - 1][iRow];
-				}
-			}
-
+			
 			// On détermine le nouveau sommet actif
 			int min = -1;
 			int indice = sommetActif;
