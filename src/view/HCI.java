@@ -298,12 +298,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// ----------------------//
 
 		// -------ButtonBar------//
-		pButton = new JPanel(new GridLayout(2,1));
+		pButton = new JPanel(new GridLayout(1,2));
 		pButton.setBackground(Color.WHITE);
 		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		pTopButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		pTopButton.setBorder(BorderFactory.createLineBorder(Color.gray));
 
 		// New file
 		buttonNew = initSmoothButton("Nouveau","/nouveau.png","/nouveau_rollover.png");
@@ -332,17 +331,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		pButton.add(pTopButton);
 		
-		pBottomButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		pBottomButton.setBorder(BorderFactory.createLineBorder(Color.gray));
+		pBottomButton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		// Ajouter un sommet
-		buttonAddVertex = initSmoothButton("Ajouter un sommet","/ajoutersommet.png","/ajoutersommet_rollover.png");
+		buttonAddVertex = initSmoothButton("Ajouter un sommet","/ajouterSommet.png","/ajouterSommet_rollover.png");
 		pBottomButton.add(buttonAddVertex);
 		// Modifier un sommet
-		buttonUpdateVertex = initSmoothButton("Modifier un sommet","/modifiersommet.png","/modifiersommet_rollover.png");
+		buttonUpdateVertex = initSmoothButton("Modifier un sommet","/modifierSommet.png","/modifierSommet_rollover.png");
 		pBottomButton.add(buttonUpdateVertex);
 		// Supprimer un sommet
-		buttonDeleteVertex = initSmoothButton("Supprimer un sommet","/supprimersommet.png","/supprimersommet_rollover.png");
+		buttonDeleteVertex = initSmoothButton("Supprimer un sommet","/supprimerSommet.png","/supprimerSommet_rollover.png");
 		pBottomButton.add(buttonDeleteVertex);
 		
 		//Separator
@@ -351,13 +349,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pBottomButton.add(buttonSeparator);
 		
 		// Ajouter un sommet
-		buttonAddArc = initSmoothButton("Ajouter un arc","/ajouterarc.png","/ajouterarc_rollover.png");
+		buttonAddArc = initSmoothButton("Ajouter un arc","/ajouterArc.png","/ajouterArc_rollover.png");
 		pBottomButton.add(buttonAddArc);
 		// Modifier un sommet
-		buttonUpdateArc = initSmoothButton("Modifier un arc","/modifierarc.png","/modifierarc_rollover.png");
+		buttonUpdateArc = initSmoothButton("Modifier un arc","/modifierArc.png","/modifierArc_rollover.png");
 		pBottomButton.add(buttonUpdateArc);
 		// Supprimer un sommet
-		buttonDeleteArc = initSmoothButton("Supprimer un arc","/supprimerarc.png","/supprimerarc_rollover.png");
+		buttonDeleteArc = initSmoothButton("Supprimer un arc","/supprimerArc.png","/supprimerArc_rollover.png");
 		pBottomButton.add(buttonDeleteArc);
 		
 		pButton.add(pBottomButton);
@@ -536,7 +534,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1] || e.getSource() == buttonUpdateVertex) {
 			if(pGraph.getAlSelected().size() > 1 ) {
 				showError("Veuillez sélectionner un seul sommet.");
-			} else if (pGraph.getAlSelected().size() == 0) {
+			} else if (pGraph.getAlSelected().size() == 0 || pGraph.getAlSelected().get(0).charAt(0) == ' ') {
 				showError("Veuillez sélectionner un sommet.");
 			} else {
 				new PopupUpdateVertex("Modifier un sommet", true, ctrl, this);
@@ -624,7 +622,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 	
 	/**
-	 * Méthode permettant d'exporter le grpahe en image.
+	 * Méthode permettant d'exporter le graphe en image.
 	 */
 	private void expImage() {
 		FileNameExtensionFilter filterPNG = new FileNameExtensionFilter("PNG (*.png)", ".png");
@@ -755,5 +753,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void permitModifArc (boolean b) {
 		tabMenuItemGraph[5].setEnabled(b);
 		popUpItem[5].setEnabled(b);
+		buttonUpdateArc.setEnabled(b);
 	}
 }
