@@ -423,6 +423,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		
 		ArrayList<Vertex> alVertex = ctrl.getGraph().getAlVertex();
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
+			System.out.println(ctrl.getGraph().getAlVertex().size());
 			hmVertex.put(alVertex.get(i).getName(), tab[i]);
 		}
 	}
@@ -498,9 +499,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Modifier un sommet
 		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1]) {
 			if(pGraph.getAlSelected().size() > 1 ) {
-				showError("Veuilliez sélectionné un seul sommet.");
+				showError("Veuillez sélectionner un seul sommet.");
 			} else if (pGraph.getAlSelected().size() == 0) {
-				showError("Veuilliez sélectionné un sommet.");
+				showError("Veuillez sélectionner un sommet.");
 			} else {
 				new PopupUpdateVertex("Modifier un sommet", true, ctrl, this);
 			}
