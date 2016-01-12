@@ -8,19 +8,30 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.Controller;
-import model.Vertex;
 
+
+/**
+ * Classe gérant la fenêtre utilisateur pour modifier un sommet.
+ * @author Groupe 3 
+ * @version 2016-01-12
+ */
 public class PopupUpdateVertex extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
 	private JButton ok, annuler;
 
+	/**
+	 * Méthode qui instancie la pop-up pour modifier un sommet.
+	 * @param title le titre de la pop-up.
+	 * @param modal 
+	 * @param ctrl le controleur utilisé.
+	 * @param hci le hci utilisé.
+	 */
 	public PopupUpdateVertex(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		this.hci = hci;
