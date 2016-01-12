@@ -317,13 +317,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pBottomButton.setBorder(BorderFactory.createLineBorder(Color.gray));
 
 		// Ajouter un sommet
-		buttonAddVertex = initSmoothButton("Ajouter un sommet","/ajoutersommet.png","/ajoutersommet_rollover.png");
+		buttonAddVertex = initSmoothButton("Ajouter un sommet","/ajouterSommet.png","/ajouterSommet_rollover.png");
 		pBottomButton.add(buttonAddVertex);
 		// Modifier un sommet
-		buttonUpdateVertex = initSmoothButton("Modifier un sommet","/modifiersommet.png","/modifiersommet_rollover.png");
+		buttonUpdateVertex = initSmoothButton("Modifier un sommet","/modifierSommet.png","/modifierSommet_rollover.png");
 		pBottomButton.add(buttonUpdateVertex);
 		// Supprimer un sommet
-		buttonDeleteVertex = initSmoothButton("Supprimer un sommet","/supprimersommet.png","/supprimersommet_rollover.png");
+		buttonDeleteVertex = initSmoothButton("Supprimer un sommet","/supprimerSommet.png","/supprimerSommet_rollover.png");
 		pBottomButton.add(buttonDeleteVertex);
 		
 		//Separator
@@ -332,13 +332,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pBottomButton.add(buttonSeparator);
 		
 		// Ajouter un sommet
-		buttonAddArc = initSmoothButton("Ajouter un arc","/ajouterarc.png","/ajouterarc_rollover.png");
+		buttonAddArc = initSmoothButton("Ajouter un arc","/ajouterArc.png","/ajouterArc_rollover.png");
 		pBottomButton.add(buttonAddArc);
 		// Modifier un sommet
-		buttonUpdateArc = initSmoothButton("Modifier un arc","/modifierarc.png","/modifierarc_rollover.png");
+		buttonUpdateArc = initSmoothButton("Modifier un arc","/modifierArc.png","/modifierArc_rollover.png");
 		pBottomButton.add(buttonUpdateArc);
 		// Supprimer un sommet
-		buttonDeleteArc = initSmoothButton("Supprimer un arc","/supprimerarc.png","/supprimerarc_rollover.png");
+		buttonDeleteArc = initSmoothButton("Supprimer un arc","/supprimerArc.png","/supprimerArc_rollover.png");
 		pBottomButton.add(buttonDeleteArc);
 		
 		pButton.add(pBottomButton);
