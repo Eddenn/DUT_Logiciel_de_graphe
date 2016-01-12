@@ -364,11 +364,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonRedo.addActionListener(this);
 		pButton.add(buttonRedo);
 		
-<<<<<<< HEAD
+
 		// Settings
-=======
-		// Parametre
->>>>>>> f3f7af7545534a181c4a9f2fe9b529c09bbef2cf
 		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
 		buttonSetting.setContentAreaFilled(false);
 		buttonSetting.setBorderPainted(false);
@@ -732,15 +729,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public JLabel getLabelCoord() {
 		return this.lCoord;
 	}
-<<<<<<< HEAD
-
 
 	
 	public Controller getController() {
 		return this.ctrl;
 	}
-=======
->>>>>>> f3f7af7545534a181c4a9f2fe9b529c09bbef2cf
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
 	
