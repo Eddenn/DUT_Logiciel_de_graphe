@@ -14,24 +14,24 @@ public enum GraphStyle {
 	Personnalise (Color.BLACK,Color.WHITE,Color.BLACK,Color.GRAY,Color.BLACK,new Color(238,238,238));
 	
 	//Getters
-	public Color getEdgeBackground() {return edgeBackground;}
 	public Color getEdgeBorder() {return edgeBorder;}
+	public Color getEdgeBackground() {return edgeBackground;}
 	public Color getEdgeText() {return edgeText;}
 	public Color getArcLine() {return arcLine;}
 	public Color getArcText() {return arcText;}
 	public Color getBackground() {return background;}
 
 	//Setters
-	public void setEdgeBackground(Color edgeBackground) {this.edgeBackground = edgeBackground;}
 	public void setEdgeBorder(Color edgeBorder) {this.edgeBorder = edgeBorder;}
+	public void setEdgeBackground(Color edgeBackground) {this.edgeBackground = edgeBackground;}
 	public void setEdgeText(Color edgeText) {this.edgeText = edgeText;}
 	public void setArcLine(Color arcLine) {this.arcLine = arcLine;}
 	public void setArcText(Color arcText) {this.arcText = arcText;}
 	public void setBackground(Color background) {this.background = background;}
 	
 	//Arguments
-	private Color edgeBackground;
 	private Color edgeBorder;
+	private Color edgeBackground;
 	private Color edgeText;
 	private Color arcLine;
 	private Color arcText;
