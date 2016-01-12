@@ -12,8 +12,18 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
+/**
+ * Classe qui gère la fenêtre de démarrage du programme
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class StartFrame {
 	
+	/**
+	 * Constructeur qui instancie la fenêtre de démarrage
+	 * @param ctrl le controleur utilisé
+	 * @param hci le hci utilisé
+	 */
 	public StartFrame(Controller ctrl, HCI hci) {
 	
 		/*-----Choix de l'utilisateur----*/

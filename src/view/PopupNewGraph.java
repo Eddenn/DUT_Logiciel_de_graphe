@@ -12,6 +12,11 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 
+/**
+ * 
+ * @author Utilisateur
+ *
+ */
 public class PopupNewGraph extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = -1023319410573124162L;
@@ -21,6 +26,13 @@ public class PopupNewGraph extends Popup implements ActionListener {
 	private boolean bEnd;
 	private boolean bClose;
 	
+	/**
+	* Méthode qui instancie la pop-up pour créer un nouveau graphe.
+	 * @param title le titre de la pop-up
+	 * @param modal 
+	 * @param ctrl le controleur utilisé
+	 * @param hci le hci utilisé
+	 */
 	@SuppressWarnings("rawtypes")
 	public PopupNewGraph(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
@@ -82,6 +94,7 @@ public class PopupNewGraph extends Popup implements ActionListener {
 		dispose();
 	}
 	
+	/*--Getters et Setters--*/
 	public boolean getBEnd() {return this.bEnd;}
 	public boolean getBClose() {return this.bClose;}
 

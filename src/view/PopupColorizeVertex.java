@@ -9,20 +9,29 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import controller.Controller;
 import model.Vertex;
 
+/**
+ * Classe qui gèrent la fenêtre utilisateur pour changer la couleur d'un sommet
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class PopupColorizeVertex extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JButton buttonChoice,buttonDelete;
-	private JButton ok, annuler;
 	private Color c;
 
+	/**
+	* Méthode qui instancie la pop-up pour choisir le style d'un sommet.
+	 * @param title le titre de la pop-up.
+	 * @param modal 
+	 * @param ctrl le controleur utilisé.
+	 * @param hci le hci utilisé.
+	 */
 	public PopupColorizeVertex(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		this.hci = hci;

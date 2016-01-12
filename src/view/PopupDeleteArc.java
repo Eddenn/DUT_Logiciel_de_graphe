@@ -3,7 +3,6 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,9 +11,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Controller;
-import model.Arc;
 import model.Vertex;
 
+/**
+ * Classe gérant le fenêtre utilisateur pour supprimer un arc.
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class PopupDeleteArc extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = 2869913711173398321L;
@@ -22,6 +25,13 @@ public class PopupDeleteArc extends Popup implements ActionListener {
 	@SuppressWarnings("rawtypes")
 	private JComboBox boxDep, boxArr;
 	
+	/**
+	 * Constructeur qui ouvre une fenêtre pop-up pour supprimer un arc.
+	 * @param title le titre de la fenêtre
+	 * @param modal
+	 * @param ctrl le constructeur lancé
+	 * @param hci le constructeur lancé
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PopupDeleteArc(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);

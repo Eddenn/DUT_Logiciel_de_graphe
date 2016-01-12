@@ -25,6 +25,11 @@ import model.Arc;
 import model.Vertex;
 
 @SuppressWarnings("serial")
+/**
+ * Classe qui gère le panneau contenant la représentation graphique du graphe.
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class GraphPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener {
 
 	final static float dash1[] = {5.0f};
@@ -43,7 +48,10 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	private HCI hci;
 	private GraphStyle style;
 
-	/*--Constructeur du panel de dessin--*/
+	/**
+	 * Constructeur du panel de dessin.
+	 * @param hci
+	 */
 	public GraphPanel(HCI hci) {
 		super();
 		this.hci = hci;
@@ -64,7 +72,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		this.addMouseMotionListener(this);
 	}
 	
-	/*--Méthode principale de dessin--*/
+	/**
+	 * Méthode principale de dessin
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -112,23 +122,34 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		return null;
 	}
 	
-	/*--Surlignage--*/
+	/**
+	 * Méthode gérant le surlignage d'un sommet
+	 * @param g2d 
+	 * @param v le sommet à surligner
+	 */
 	public void highlightEdge(Graphics2D g2d, Vertex v) {
 		g2d.setColor(new Color(20,20,255,50));
 		g2d.fillOval((int)(hci.getHmVertex().get(v.getName()).x-5*iZoom) , (int)(hci.getHmVertex().get(v.getName()).y-5*iZoom) , (int)((iWidthEdge+10)*iZoom)  , (int)((iHeightEdge+10)*iZoom  ));
 		g2d.setColor(Color.BLACK);
 	}
+	
+	/**
+	 * Méthode gérant le surlignage d'un arc
+	 * @param g2d
+	 * @param v 
+	 * @param arc
+	 */
 	public void highlightArc(Graphics2D g2d, Vertex v, Arc arc) {
 		Point c1 = hci.getHmVertex().get(v.getName());
 		Point c2 = hci.getHmVertex().get(arc.getVertex().getName());
 		
-		//Coordonnï¿½es centrale des deux points en fonction du zoom
+		//Coordonnées centrale des deux points en fonction du zoom
 		Point pCenter1 = new Point( (int)(c1.getX()+iWidthEdge/2*iZoom) , (int)(c1.getY()+iHeightEdge/2*iZoom) );
 		Point pCenter2 = new Point( (int)(c2.getX()+iWidthEdge/2*iZoom) , (int)(c2.getY()+iHeightEdge/2*iZoom) );		
 		
 		g2d.setColor(new Color(20,20,255,50));
 		g2d.setStroke(new BasicStroke((float)iZoom+2));
-		if(arc.getVertex() == v) {	//Arc sur lui mï¿½me
+		if(arc.getVertex() == v) {	//Arc partant d'un sommet et  pointant sur lui-même
 			g2d.drawArc((int)(c2.getX()+12.5*iZoom), (int)(c2.getY()+40*iZoom), (int)(25*iZoom), (int)(25*iZoom), 150, 240);
 	    	if(  hci.getGraph().isDirected() ) {	
 				drawArrow(g2d, pCenter1.x-35, pCenter1.y+80, pCenter2.x, pCenter2.y, (int)(25*iZoom), (int)(10*iZoom));
@@ -142,7 +163,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		g2d.setColor(Color.BLACK);
 	}
 	
-	/*--Dessin en fonction de hmVertex--*/
+	/**
+	 * Méthode qui dessine en fonction de hmVertex
+	 */
 	public void drawVertex(Graphics2D g2d) {
 		for(Point c : hci.getHmVertex().values()) {
 			g2d.setColor(style.getEdgeBorder());
@@ -165,8 +188,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			}
 		}
 	}
+	
 	 /**
-	   * Dessine une fleche du point 1 vers le point 2 
+	   * Méthode qui dessine une fleche du point 1 vers le point 2 
 	   * @param g Graphic component
 	   * @param x1 x-position du point 1
 	   * @param y1 y-position du point 1
@@ -220,7 +244,12 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	        g.drawLine((int)x3, (int)y3, (int)(xn), (int)(yn));
         }
     }
-	public void drawArcs(Graphics2D g2d) {	
+
+    /**
+     * Méthode qui dessine un arc
+     * @param g2d
+     */
+    public void drawArcs(Graphics2D g2d) {	
 		Point pCenter1;
 		Point pCenter2;
 		boolean bMirroir=false;
@@ -318,7 +347,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 	}
 	
-	/*--Zoom--*/
+	/**
+	 * Méthode qui met à jour la taille du zoom
+	 */
 	public void refreshPreferedSize() {
 		int xMax = 0;
 		int yMax = 0;
@@ -328,6 +359,11 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		setPreferredSize(new Dimension((int)((xMax+iWidthEdge*iZoom)),(int)((yMax+iHeightEdge*iZoom))));
 	}
+	
+	/**
+	 * Méthode qui gère l'agrandissement
+	 * @return
+	 */
 	public double zoomIn() {
 		if(iZoom<1.8) {
 			for(Point c : hci.getHmVertex().values()) {
@@ -339,6 +375,11 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		refreshPreferedSize();
 		return iZoom;
 	}
+	
+	/**
+	 * Méthoque qui gère le rétrécissement
+	 * @return
+	 */
 	public double zoomOut() {
 		if(iZoom>0.7) {
 			for(Point c : hci.getHmVertex().values()) {
@@ -350,6 +391,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		refreshPreferedSize();
 		return iZoom;
 	}
+	
 	public double getZoom() { return iZoom; }
 	
 	/*--Fonctions utiles--*/

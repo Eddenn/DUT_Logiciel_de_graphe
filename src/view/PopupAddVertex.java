@@ -14,12 +14,23 @@ import javax.swing.JTextField;
 
 import controller.Controller;
 
+/**
+ * Classe qui gère la fenêtre utilisateur pour ajouter un sommet.
+ * @author Groupe 3
+ * @version 2016-01-12
+ */
 public class PopupAddVertex extends Popup implements ActionListener {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
 	private JButton ok, annuler;
 
+	/** Méthode qui instancie la pop-up pour ajouter un sommet.
+	 * @param title le titre de la pop-up.
+	 * @param modal 
+	 * @param ctrl le controleur utilisé.
+	 * @param hci le hci utilisé.
+	 */
 	public PopupAddVertex(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		this.hci = hci;
@@ -59,13 +70,12 @@ public class PopupAddVertex extends Popup implements ActionListener {
 				hci.getHmVertex().put(nom.getText(), new Point(0, 0));
 				hci.getAlSelected().clear();
 				hci.getAlSelected().add(nom.getText());
+				dispose();
 			}
-			dispose();
 		}
 		if (e.getSource() == annuler) {
 			dispose();
 		}
-		dispose();
 	}
 
 }
