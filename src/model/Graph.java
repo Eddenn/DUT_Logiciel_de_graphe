@@ -290,6 +290,7 @@ public class Graph {
 		HashMap<String, ArrayList<String>> hm = generateAdjacencyList();
 
 		ArrayList<String> alRet = new ArrayList<String>();
+		alRet.add("-- Liste d'adjacence :\n");
 		String sProv = "";
 		
 		Set<String> setKey = hm.keySet();
@@ -361,6 +362,12 @@ public class Graph {
 			}
 		}
 	}
+	
+	public void updateArc(Arc a, int value) {
+		a.setValue(value);
+	}
+	
+	
 
 	
 }
