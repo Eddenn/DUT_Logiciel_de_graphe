@@ -88,7 +88,7 @@ public class ReaderAdjacencyList {
 
 						String[] tStrVertexValue = strVertexValue.split(",");
 
-						// On vï¿½rifie s'il est bien valuï¿½.
+						// On vérifie s'il est bien valué.
 						if (tStrVertexValue.length < 2) {
 							graph.setValued(false);
 

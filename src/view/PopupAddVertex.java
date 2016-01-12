@@ -54,7 +54,7 @@ public class PopupAddVertex extends Popup  {
 
 		// Panel Bouton
 		JPanel control = new JPanel();
-		ok = new JButton("Ok");
+		ok = new JButton("Valider");
 		ok.addActionListener(this);
 		annuler = new JButton("Annuler");
 		annuler.addActionListener(this);

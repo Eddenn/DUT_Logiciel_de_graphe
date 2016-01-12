@@ -360,7 +360,6 @@ public class Controller implements IControlable, IIhmable {
 		// permettant le retour en arrière
 		cptModif++;
 		
-		System.out.println(saveGraphList + "\n" + cptModif);
 	}
 
 	/*--------------------------------------
