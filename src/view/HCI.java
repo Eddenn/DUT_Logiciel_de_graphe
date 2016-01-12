@@ -262,7 +262,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// ----------------------//
 
 		// ---------Graph--------//
-		pGraph = new GraphPanel(this);
+		pGraph = new GraphPanel(this, ctrl);
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
@@ -674,10 +674,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
-	
-	public Controller getController() {
-		return this.ctrl;
-	}
+
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
 	

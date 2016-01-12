@@ -21,6 +21,7 @@ import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import controller.Controller;
 import model.Arc;
 import model.Vertex;
 
@@ -36,17 +37,20 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	private Point rectSelectionStartPoint;
 	private Rectangle2D rectSelection;
 	private boolean bDragged;
+	private boolean bMoved;
 	private boolean bCtrlPressed;
 	private double iWidthEdge;		//Largeur
 	private double iHeightEdge; 	//Hauteur
 	private double iZoom;			//Zoom
 	private HCI hci;
 	private GraphStyle style;
+	private Controller ctrl;
 
 	/*--Constructeur du panel de dessin--*/
-	public GraphPanel(HCI hci) {
+	public GraphPanel(HCI hci, Controller ctrl) {
 		super();
 		this.hci = hci;
+		this.ctrl = ctrl;
 		rectSelection = new Rectangle2D.Double();
 		this.rectSelection.setRect(-1, -1, 0, 0);
 		this.style = GraphStyle.Basique;
@@ -415,9 +419,10 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if(bDragged == true) {
-			hci.getController().provSave();
+		if(bDragged == true && bMoved == true) {
+			ctrl.provSave();
 			bDragged = false;
+			bMoved = false;
 		}
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		
@@ -463,8 +468,11 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				rectSelectionStartPoint = e.getPoint();
 			}
 			bDragged = false;
+			bMoved = false;
 			setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
+		else
+			bMoved = true;
 		
 		if(alSelected.size() != 0 && bDragged==true) {			
 			double centerX, centerY;
@@ -591,12 +599,12 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		//CTRL+Z
 		if(e.getModifiersEx()==128 && e.getKeyCode()==90 ) {
-			hci.getController().undo();
+			ctrl.undo();
 			hci.refresh();
 		}
 		//CTRL+Y
 		if(e.getModifiersEx()==128 && e.getKeyCode()==89 ) {
-			hci.getController().redo();
+			ctrl.redo();
 			hci.refresh();
 		}
 		refreshPreferedSize();

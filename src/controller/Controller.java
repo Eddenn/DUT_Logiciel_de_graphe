@@ -338,15 +338,12 @@ public class Controller implements IControlable, IIhmable {
 		for (Point c : hci.getHmVertex().values()) {
 			sCoord+= (c.getX() + "," + c.getY());
 			cpt++;
-			if (cpt != nbSommet - 1)
+			if (cpt != nbSommet)
 				sCoord+=";";
 		}
 		sCoord+="]";
-		
-<<<<<<< HEAD
-=======
+
 		// Ajout des coordonnées
->>>>>>> 44a0be0b4a3e939234d6e898d6b825c168bbc4cd
 		alProv.add(sCoord);
 		
 		// Ajout de la liste d'adjacence et des coordonnées dans la ArrayList de sauvegarde
@@ -362,6 +359,8 @@ public class Controller implements IControlable, IIhmable {
 		// (Repère utilisé pour savoir notre position dans la ArrayList
 		// permettant le retour en arrière
 		cptModif++;
+		
+		System.out.println(saveGraphList + "\n" + cptModif);
 	}
 
 	/*--------------------------------------
