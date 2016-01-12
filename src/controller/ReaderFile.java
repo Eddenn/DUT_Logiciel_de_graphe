@@ -50,7 +50,7 @@ public class ReaderFile {
 		bDirected = checkDirection(alStr.get(0));
 		alStr.remove(0);
 		
-		bValued = checkDirection(alStr.get(0));
+		bValued = checkValue(alStr.get(0));
 		alStr.remove(0);
 		
 		for (int i = 0; i < alStr.size(); i++) {

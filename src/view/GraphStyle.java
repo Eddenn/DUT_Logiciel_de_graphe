@@ -41,4 +41,13 @@ public enum GraphStyle {
 		this.arcText = arcText;
 		this.background = background;
 	}
+	
+	public String toString() {
+		return "edgeBackground="+edgeBackground.getRed()+","+edgeBackground.getGreen()+","+edgeBackground.getBlue()+
+			   "edgeBorder="+edgeBorder.getRed()+","+edgeBorder.getGreen()+","+edgeBorder.getBlue()+
+			   "edgeText="+edgeText.getRed()+","+edgeText.getGreen()+","+edgeText.getBlue()+
+			   "arcLine="+arcLine.getRed()+","+arcLine.getGreen()+","+arcLine.getBlue()+
+			   "arcText="+arcText.getRed()+","+arcText.getGreen()+","+arcText.getBlue()+
+			   "background="+background.getRed()+","+background.getGreen()+","+background.getBlue();
+	}
 }
