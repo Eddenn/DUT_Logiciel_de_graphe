@@ -118,7 +118,6 @@ public class ReaderFile {
 		bHaveCoord = (iIndiceCoord != -1);
 		
 		if (bHaveCoord) {
-			System.out.println(graph.getAlVertex());
 			int iNbVertex = graph.getAlVertex().size();
 			tPoints = new Point[iNbVertex];
 			

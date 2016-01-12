@@ -122,7 +122,7 @@ public class Controller implements IControlable, IIhmable {
 			}
 			fw.write("]\n");
 			fw.write("-- Style :\n");
-			fw.write(hci.getGraphPanel().getStyle().toString());
+			fw.write(hci.getGraphPanel().getStyle().toStringSave());
 
 			// fermeture du fichier
 			fw.close();
@@ -342,11 +342,8 @@ public class Controller implements IControlable, IIhmable {
 				sCoord+=";";
 		}
 		sCoord+="]";
-		
-<<<<<<< HEAD
-=======
+
 		// Ajout des coordonnées
->>>>>>> 44a0be0b4a3e939234d6e898d6b825c168bbc4cd
 		alProv.add(sCoord);
 		
 		// Ajout de la liste d'adjacence et des coordonnées dans la ArrayList de sauvegarde

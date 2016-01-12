@@ -42,7 +42,7 @@ public enum GraphStyle {
 		this.background = background;
 	}
 	
-	public String toString() {
+	public String toStringSave() {
 		return edgeBackground.getRed()+","+edgeBackground.getGreen()+","+edgeBackground.getBlue()+";"+
 			   edgeBorder.getRed()+","+edgeBorder.getGreen()+","+edgeBorder.getBlue()+";"+
 			   edgeText.getRed()+","+edgeText.getGreen()+","+edgeText.getBlue()+";"+

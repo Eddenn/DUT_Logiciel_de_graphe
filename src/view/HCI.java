@@ -53,7 +53,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	// Panel of JButton
 	private JPanel pButton;
-	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonSetting;
+	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonUndo, buttonRedo, buttonSetting;
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
@@ -335,7 +335,30 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 		
-		// Zoom out
+		// Undo
+		buttonUndo = new JButton(new ImageIcon("images/undo.png"));
+		buttonUndo.setContentAreaFilled(false);
+		buttonUndo.setBorderPainted(false);
+		buttonUndo.setRolloverIcon(new ImageIcon("images/undo_rollover.png"));
+		buttonUndo.setMargin(new Insets(0, 0, 0, 0));
+		buttonUndo.setBackground(new Color(255,255,255));
+		buttonUndo.setForeground(new Color(255,255,255));
+		buttonUndo.setToolTipText("Undo");
+		buttonUndo.addActionListener(this);
+		pButton.add(buttonUndo);
+		// Redo
+		buttonRedo = new JButton(new ImageIcon("images/redo.png"));
+		buttonRedo.setContentAreaFilled(false);
+		buttonRedo.setBorderPainted(false);
+		buttonRedo.setRolloverIcon(new ImageIcon("images/redo_rollover.png"));
+		buttonRedo.setMargin(new Insets(0, 0, 0, 0));
+		buttonRedo.setBackground(new Color(255,255,255));
+		buttonRedo.setForeground(new Color(255,255,255));
+		buttonRedo.setToolTipText("Redo");
+		buttonRedo.addActionListener(this);
+		pButton.add(buttonRedo);
+		
+		// Parametre
 		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
 		buttonSetting.setContentAreaFilled(false);
 		buttonSetting.setBorderPainted(false);
@@ -478,10 +501,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			this.dispose();
 
 		/*-- EDITION --*/
-		} else if (e.getSource() == tabMenuItemEdition[0]) {
+		} else if (e.getSource() == tabMenuItemEdition[0] || e.getSource() == buttonUndo) {
 				ctrl.undo();
 				this.refresh();
-		} else if (e.getSource() == tabMenuItemEdition[1]) {
+		} else if (e.getSource() == tabMenuItemEdition[1] || e.getSource() == buttonRedo) {
 				ctrl.redo();
 				this.refresh();
 		
