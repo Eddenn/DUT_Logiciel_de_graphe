@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -103,18 +104,22 @@ public class PopupAddArc extends Popup {
 		int vertexDep = boxDep.getSelectedIndex();
 		int vertexArr = boxArr.getSelectedIndex();
 		
-		if (this.ctrl.getGraph().isValued()) {
-			if (valArc.getText().matches("[0-9]+")) {
-				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
+		if (this.ctrl.getNbSommet() > 0) {
+			if (this.ctrl.getGraph().isValued()) {
+				if (valArc.getText().matches("[0-9]+")) {
+					ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
+					dispose();
+				}
+				else
+					valArc.setText("Valeur erronée");
+			}
+			else {
+				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));
 				dispose();
 			}
-			else
-				valArc.setText("Valeur erronée");
 		}
-		else {
-			ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));
-			dispose();
-		}
+		else
+			JOptionPane.showMessageDialog(null, "Un arc doit appartenir à deux sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override

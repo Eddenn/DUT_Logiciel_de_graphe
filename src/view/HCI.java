@@ -517,7 +517,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1] || e.getSource() == buttonUpdateVertex) {
 			if(pGraph.getAlSelected().size() > 1 ) {
 				showError("Veuillez sélectionner un seul sommet.");
-			} else if (pGraph.getAlSelected().size() == 0) {
+			} else if (pGraph.getAlSelected().size() == 0 || pGraph.getAlSelected().get(0).charAt(0) == ' ') {
 				showError("Veuillez sélectionner un sommet.");
 			} else {
 				new PopupUpdateVertex("Modifier un sommet", true, ctrl, this);
@@ -593,7 +593,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 	
 	/**
-	 * Méthode permettant d'exporter le grpahe en image.
+	 * Méthode permettant d'exporter le graphe en image.
 	 */
 	private void expImage() {
 		FileNameExtensionFilter filterPNG = new FileNameExtensionFilter("PNG (*.png)", ".png");
@@ -724,5 +724,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void permitModifArc (boolean b) {
 		tabMenuItemGraph[5].setEnabled(b);
 		popUpItem[5].setEnabled(b);
+		buttonUpdateArc.setEnabled(b);
 	}
 }
