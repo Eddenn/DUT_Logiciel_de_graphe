@@ -31,8 +31,8 @@ import view.HCI;
 
 public class PdfGenerator {
 
-	private static String FILE = "/root/Documents/test.pdf";
-	private static String strImagePath = "/root/Documents/test.png";
+	private static String strFile;
+	private static String strImagePath;
 
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
 	private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);
@@ -44,16 +44,16 @@ public class PdfGenerator {
 	public static void generer(Graph g, String name, String path, HCI hci) {
 		try {
 			if (path != null) {
-				FILE = path;
+				strFile = path;
 				strImagePath = path;
 
 				if (path.indexOf(".pdf") < 0) {
-					FILE += ".pdf";
+					strFile += ".pdf";
 				} else {
 					strImagePath = path.substring(0, path.indexOf(".pdf"));
 				}
-				
-				Date date= new java.util.Date();
+
+				Date date = new java.util.Date();
 				strImagePath += date.getTime();
 			}
 
@@ -62,7 +62,7 @@ public class PdfGenerator {
 			PdfGenerator.g = g;
 			PdfGenerator.hci = hci;
 			Document document = new Document();
-			PdfWriter.getInstance(document, new FileOutputStream(FILE));
+			PdfWriter.getInstance(document, new FileOutputStream(strFile));
 			document.open();
 			addMetaData(document);
 			addTitlePage(document, name);
@@ -154,8 +154,8 @@ public class PdfGenerator {
 		double iNewHeight = 0.0;
 
 		if (size.width > iMaxWidth || size.height > iMaxHeight) {
-			double dCoef1 = (double)size.width / (double)iMaxWidth;
-			double dCoef2 = (double)size.height / (double)iMaxWidth;
+			double dCoef1 = (double) size.width / (double) iMaxWidth;
+			double dCoef2 = (double) size.height / (double) iMaxWidth;
 
 			if (dCoef1 > dCoef2) {
 				iNewWidth = (double) (size.width / dCoef1);
@@ -165,11 +165,11 @@ public class PdfGenerator {
 				iNewHeight = (double) (size.height / dCoef2);
 			}
 		}
-		
+
 		ImageIO.write(bi, "png", new File(strImagePath + "_tn.png"));
-				
+
 		Image image = Image.getInstance(strImagePath + "_tn.png");
-		image.scaleToFit((float)iNewWidth, (float)iNewHeight);
+		image.scaleToFit((float) iNewWidth, (float) iNewHeight);
 
 		new File(strImagePath + "_tn.png").delete();
 
