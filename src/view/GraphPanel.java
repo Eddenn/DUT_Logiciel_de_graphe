@@ -103,6 +103,14 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		return null;
 	}
+	public Vertex getVertex(String s) {
+		for(Vertex v : hci.getGraph().getAlVertex()) {
+			if(v.getName().equals(s)) {
+				return v;
+			}
+		}
+		return null;
+	}
 	
 	/*--Surlignage--*/
 	public void highlightEdge(Graphics2D g2d, Vertex v) {
@@ -430,15 +438,12 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			
 			Point p1 = new Point(xMin,yMin);
 			Point p2 = new Point(xMax,yMax);
-		
-//			Point p1 = new Point((int)rectSelectionStartPoint.getX(),(int)rectSelectionStartPoint.getY());
-//			Point p2 = e.getPoint();
-						
+								
 			hci.getGraphPanel().getGraphics().drawRect(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
 			for(Point p : hci.getHmVertex().values()) {
 				
 				//Si p est dans le carré défini par p1 et p2
-				if(p.x+iWidthEdge*iZoom>p1.x && p.x+iWidthEdge*iZoom<p2.x && p.y+iHeightEdge*iZoom>p1.y && p.y+iHeightEdge*iZoom<p2.y) {
+				if(p.x+iWidthEdge/2*iZoom>p1.x && p.x+iWidthEdge/2*iZoom<p2.x && p.y+iHeightEdge/2*iZoom>p1.y && p.y+iHeightEdge/2*iZoom<p2.y) {
 					for(String s : hci.getHmVertex().keySet()) {
 						if( hci.getHmVertex().get(s).equals(p) ){
 							alSelected.add(s);
@@ -545,7 +550,23 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	/*--KeyListener--*/
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//CTRL Pressed pour la sÃ©lection
+		//Suppr Pressed pour la supression des sommets sélectionnés
+		if(e.getKeyCode()==127) {
+			for(String s : this.getAlSelected()) {
+				Vertex tmpVertex = null;
+				for (Vertex v : hci.getGraph().getAlVertex()) {
+					if (v.getName().equals(s)) {
+						tmpVertex = v;
+					}
+				}
+				hci.getGraph().deleteVertex(tmpVertex);
+				hci.getHmVertex().remove(s);
+			}
+			setAlSelected(new ArrayList<String>());
+			hci.refresh();
+		}
+		
+		//CTRL Pressed pour la sélection
 		if(e.getKeyCode()==17) bCtrlPressed = true;
 		
 		//CTRL+C
