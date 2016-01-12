@@ -340,7 +340,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 		
-<<<<<<< HEAD
 		// Undo
 		buttonUndo = new JButton(new ImageIcon("images/undo.png"));
 		buttonUndo.setContentAreaFilled(false);
@@ -364,10 +363,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonRedo.addActionListener(this);
 		pButton.add(buttonRedo);
 		
-		// Parametre
-=======
 		// Settings
->>>>>>> ca678b9a068dcb296a23288a2b0e0777c70e72fa
 		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
 		buttonSetting.setContentAreaFilled(false);
 		buttonSetting.setBorderPainted(false);
@@ -731,29 +727,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public JLabel getLabelCoord() {
 		return this.lCoord;
 	}
-<<<<<<< HEAD
 
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		if (e.getSource() == slObject.getListOfObject()) {
-			pGraph.getAlSelected().clear();
-			for( String s : slObject.getListOfObject().getSelectedValuesList() ) {
-				pGraph.getAlSelected().add(s);
-			}
-			repaint();
-		}
-	}
 
-	public void showError(String strError) {
-		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
-
-=======
 	
 	public Controller getController() {
 		return this.ctrl;
 	}
->>>>>>> 5ec5ed9ac6a43285e49b5ada6191e8562e7ae5cb
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
 	

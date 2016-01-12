@@ -1,4 +1,8 @@
+package model;
+
 import java.util.ArrayList;
+
+import controller.IControlable;
 
 public class ParcoursDijkstra implements IParcourable {
 	private IControlable ctrl;
