@@ -27,6 +27,9 @@ import model.Vertex;
 @SuppressWarnings("serial")
 public class GraphPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener {
 
+	final static float dash1[] = {5.0f};
+	final static BasicStroke pointille = new BasicStroke(1.0f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,10.0f, dash1, 0.0f);
+	
 	private ArrayList<String> alSelected;		//Sélection
 	private HashMap<String,Point> clipBoardEdge;//Presse-Papier
 	private Point saveMousePosition;			//Sauvegarde de la dernière position de la souris (Voir MouseDragged)
@@ -76,7 +79,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 			}
 		}
+		g2d.setStroke(pointille);
 		g2d.draw(rectSelection);
+		g2d.setStroke(new BasicStroke((float)iZoom+2));
 	}
 	
 	/*--Getters and Setters--*/
@@ -412,22 +417,22 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		if(rectSelectionStartPoint!=null) {
 			alSelected.clear();
 			
-//			int xMin,yMin;
-//			int xMax,yMax;
-//			if( rectSelection.getX() < e.getPoint().x) {xMin = (int) rectSelection.getX();}
-//			else {xMin = e.getPoint().x;}
-//			if( rectSelection.getY() < e.getPoint().y) {yMin = (int) rectSelection.getY();}
-//			else {yMin = e.getPoint().y;}
-//			if( rectSelection.getX() > e.getPoint().x) {xMax = (int) rectSelection.getX();}
-//			else {xMax = e.getPoint().x;}
-//			if( rectSelection.getY() > e.getPoint().y) {yMax = (int) rectSelection.getY();}
-//			else {yMax = e.getPoint().y;}
-//			
-//			Point p1 = new Point(xMin,yMin);
-//			Point p2 = new Point(xMax,yMax);
+			int xMin,yMin;
+			int xMax,yMax;
+			if( rectSelectionStartPoint.getX() < e.getPoint().x) {xMin = (int) rectSelectionStartPoint.getX();}
+			else {xMin = e.getPoint().x;}
+			if( rectSelectionStartPoint.getY() < e.getPoint().y) {yMin = (int) rectSelectionStartPoint.getY();}
+			else {yMin = e.getPoint().y;}
+			if( rectSelectionStartPoint.getX() > e.getPoint().x) {xMax = (int) rectSelectionStartPoint.getX();}
+			else {xMax = e.getPoint().x;}
+			if( rectSelectionStartPoint.getY() > e.getPoint().y) {yMax = (int) rectSelectionStartPoint.getY();}
+			else {yMax = e.getPoint().y;}
+			
+			Point p1 = new Point(xMin,yMin);
+			Point p2 = new Point(xMax,yMax);
 		
-			Point p1 = new Point((int)rectSelectionStartPoint.getX(),(int)rectSelectionStartPoint.getY());
-			Point p2 = e.getPoint();
+//			Point p1 = new Point((int)rectSelectionStartPoint.getX(),(int)rectSelectionStartPoint.getY());
+//			Point p2 = e.getPoint();
 						
 			hci.getGraphPanel().getGraphics().drawRect(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
 			for(Point p : hci.getHmVertex().values()) {
@@ -473,16 +478,16 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 							if( hci.getHmVertex().get(edgeSelected).x < minPosition.x) {minPosition.x = (int) (hci.getHmVertex().get(edgeSelected).x);}
 							if( hci.getHmVertex().get(edgeSelected).y < minPosition.y) {minPosition.y = (int) (hci.getHmVertex().get(edgeSelected).y);}
 						}
-						//Coordonnï¿½es maximales des points sï¿½lectionnï¿½s
+						//Coordonnées maximales des points sélectionnés
 						Point maxPosition = new Point((int) (c.x+iWidthEdge*iZoom),(int) (c.y+iHeightEdge*iZoom));
 						for(String edgeSelected : alSelected) {
 							if( (hci.getHmVertex().get(edgeSelected).x+iWidthEdge)  > maxPosition.x) {maxPosition.x = (int) ((hci.getHmVertex().get(edgeSelected).x+iWidthEdge));}
 							if( (hci.getHmVertex().get(edgeSelected).y+iHeightEdge) > maxPosition.y) {maxPosition.y = (int) ((hci.getHmVertex().get(edgeSelected).y+iHeightEdge));}
 						}
-						//Calcul de la diffï¿½rence entre la derniï¿½re position de la souris et l'actuelle
+						//Calcul de la différence entre la derniï¿½re position de la souris et l'actuelle
 						Point deplacement = new Point(e.getPoint().x-saveMousePosition.x,e.getPoint().y-saveMousePosition.y);
 						
-						/*--Dï¿½placement--*/
+						/*--Déplacement--*/
 						if( (minPosition.x<=0 && deplacement.x>=0 || minPosition.x>0) && 
 							(minPosition.y<=0 && deplacement.y>=0 || minPosition.y>0) &&
 							(maxPosition.x>=this.getWidth()  && deplacement.x<=0 || maxPosition.x<this.getWidth() ) && 
@@ -502,8 +507,24 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 			}	
 		}
-		if(rectSelectionStartPoint!=null)
-			rectSelection.setRect(rectSelectionStartPoint.getX(), rectSelectionStartPoint.getY(), e.getX()-rectSelectionStartPoint.getX(), e.getY()-rectSelectionStartPoint.getY());
+		if(rectSelectionStartPoint!=null) {
+
+			int xMin,yMin;
+			int xMax,yMax;
+			if( rectSelectionStartPoint.getX() < e.getPoint().x) {xMin = (int) rectSelectionStartPoint.getX();}
+			else {xMin = e.getPoint().x;}
+			if( rectSelectionStartPoint.getY() < e.getPoint().y) {yMin = (int) rectSelectionStartPoint.getY();}
+			else {yMin = e.getPoint().y;}
+			if( rectSelectionStartPoint.getX() > e.getPoint().x) {xMax = (int) rectSelectionStartPoint.getX();}
+			else {xMax = e.getPoint().x;}
+			if( rectSelectionStartPoint.getY() > e.getPoint().y) {yMax = (int) rectSelectionStartPoint.getY();}
+			else {yMax = e.getPoint().y;}
+			
+			Point p1 = new Point(xMin,yMin);
+			Point p2 = new Point(xMax,yMax);
+			
+			rectSelection.setRect(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
+		}
 		repaint();
 		saveMousePosition = e.getPoint();
 	}
