@@ -59,13 +59,12 @@ public class PopupAddVertex extends Popup implements ActionListener {
 				hci.getHmVertex().put(nom.getText(), new Point(0, 0));
 				hci.getAlSelected().clear();
 				hci.getAlSelected().add(nom.getText());
+				dispose();
 			}
-			dispose();
 		}
 		if (e.getSource() == annuler) {
 			dispose();
 		}
-		dispose();
 	}
 
 }

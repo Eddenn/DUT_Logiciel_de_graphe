@@ -335,7 +335,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonZoomOut.addActionListener(this);
 		pButton.add(buttonZoomOut);
 		
-		// Zoom out
+		// Settings
 		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
 		buttonSetting.setContentAreaFilled(false);
 		buttonSetting.setBorderPainted(false);
