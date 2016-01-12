@@ -17,6 +17,7 @@ import model.Graph;
 import model.IParcourable;
 import model.Parcours;
 import model.ParcoursDijkstra;
+import model.ParcoursLienExiste;
 import model.Vertex;
 import view.GraphStyle;
 import view.HCI;
@@ -118,7 +119,7 @@ public class Controller implements IControlable, IIhmable {
 				fw.write("-- Liste d'adjacence :\n");
 				fw.write(graph.getFormattedList() + "\n");
 			}
-			fw.write("-- Coordonnées des points :\n");
+			fw.write("-- Coordonnï¿½es des points :\n");
 			fw.write("[");
 
 			Point[] tabPoint = new Point[graph.getAlVertex().size()];
@@ -404,9 +405,15 @@ public class Controller implements IControlable, IIhmable {
 		hci.showInfo(parcours.getMessage());
 	}
 	
-	public void startParcoursDijkstra(int iSommet) {
-		this.parcours = new ParcoursDijkstra(this,iSommet);
+	public void startParcoursDijkstra(int iVertex) {
+		this.parcours = new ParcoursDijkstra(this,iVertex);
 		this.parcours.lancer();
+	}
+	
+	public void startParcoursLienExiste(int iStartVertex, int iEndVertex) {
+		this.parcours = new ParcoursLienExiste(this,iStartVertex,iEndVertex);
+		this.parcours.lancer();
+		hci.showInfo(parcours.getMessage());
 	}
 	
 	/*

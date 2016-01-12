@@ -69,6 +69,9 @@ public class ParcoursLienExiste implements IParcourable {
 	public void lancer() {
 		sommetActif = sommetDepart;
 
+		ligArcActif = sommetActif;
+		colArcActif = sommetActif;
+		
 		ListeFilsDuPere lfdp = new ListeFilsDuPere(sommetActif, null);
 
 		boolean bContinu = true;
@@ -100,7 +103,7 @@ public class ParcoursLienExiste implements IParcourable {
 		}
 	}
 
-	public boolean recurr(ListeFilsDuPere lfdp) {
+	private boolean recurr(ListeFilsDuPere lfdp) {
 		boolean bContinu = true;
 
 		for (Integer integer : getFils(sommetActif)) {
@@ -108,6 +111,8 @@ public class ParcoursLienExiste implements IParcourable {
 		}
 
 		while (!lfdp.filsTousTraites() && bContinu) {
+			this.pauseSynchro();
+			
 			if (sommetArrive == lfdp.getFilsCourant().getSommet()) {
 				lfdpArrive = lfdp.getFilsCourant();
 
@@ -116,10 +121,12 @@ public class ParcoursLienExiste implements IParcourable {
 				sommetActif = lfdp.getFilsCourant().getSommet();
 				ligArcActif = lfdp.getFilsCourant().getSommet();
 				colArcActif = lfdp.getSommet();
+				
 				lfdp = lfdp.getFilsCourant();
 				lfdp.getPere().incrementeFilsTraite();
 				recurr(lfdp);
 			}
+			ctrl.majIHM();
 		}
 
 		lfdp = lfdp.getFilsCourant();
@@ -127,7 +134,7 @@ public class ParcoursLienExiste implements IParcourable {
 		return bContinu;
 	}
 
-	public ArrayList<Integer> getFils(int iSommet) {
+	private ArrayList<Integer> getFils(int iSommet) {
 		alSommetsTraites.add(new Integer(iSommet));
 		ArrayList<Integer> alInteger = new ArrayList<Integer>();
 
@@ -140,5 +147,12 @@ public class ParcoursLienExiste implements IParcourable {
 		}
 
 		return alInteger;
+	}
+	
+	private void pauseSynchro() {
+		try {
+			Thread.sleep(1000);
+		} catch (Exception e) {
+		}
 	}
 }
