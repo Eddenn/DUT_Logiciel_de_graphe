@@ -40,7 +40,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemExport = new JMenuItem[2];
 	private JMenuItem[] tabMenuItemGraph = new JMenuItem[7];
-	private JMenuItem[] tabMenuItemAide = new JMenuItem[1];
+	private JMenuItem[] tabMenuItemAide = new JMenuItem[2];
 
 	// List of "Object"
 	private SwitchList slObject;
@@ -241,6 +241,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemAide[0] = new JMenuItem("<html>&Agrave; propos</html>");
 		tabMenuItemAide[0].addActionListener(this);
 		menuAide.add(tabMenuItemAide[0]);
+		
+		//Menu Item - Manuel Utilisateur
+		tabMenuItemAide[1]=new JMenuItem("Manuel Utilisateur");
+		tabMenuItemAide[1].addActionListener(this);
+		menuAide.add(tabMenuItemAide[1]);
 
 		// Add menuAide to this frame
 		menuBarMain.add(menuAide);
@@ -423,7 +428,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		
 		ArrayList<Vertex> alVertex = ctrl.getGraph().getAlVertex();
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
-			System.out.println(ctrl.getGraph().getAlVertex().size());
 			hmVertex.put(alVertex.get(i).getName(), tab[i]);
 		}
 	}
@@ -542,6 +546,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			JOptionPane.showMessageDialog(this,
 					"<html>Projet tuteuré de deuxiÃ¨me année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
+		}else if(e.getSource()==tabMenuItemAide[1]){
+			ctrl.openHelp();
 
 		/*-- BUTTON --*/
 			// Zoom in

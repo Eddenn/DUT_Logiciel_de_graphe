@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<link href= "DocUtilCss.css" type='text/css' rel='stylesheet'>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<title>"Utilisation LPG</title>
+<meta name="author" content="DUMONT Melanie">
+</head>
+
+<body>
+	<div class="corp">
+		<header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+				<img src="image/Logo.jpg" alt="LGP">
+			</div>
+			<div class="col-lg-10 col-md-10 col-sm-8 col-xs-8">
+				<h1>Logiciel pédagogique de graphe </h1> 
+				<h1> Manuel Utilisateur </h1>
+			</div> 
+		</header>
+	
+		<nav class="col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
+			<ul>
+				<li><a href="Index.html">Acceuil</a></li>
+				<ul>
+					<li><a href="barre.html">Barre d'outils</a></li>
+					<li><a href="graphe.html">Graphe</a></li>
+					<li><a href="composant.html">Composant</a></li>
+					<li><a href="algo.html">Algorithme</a></li>
+					<li><a href="export.html">Exporter</a></li>
+					<li><a href="style.html">Style</a></li>
+				</ul>
+			</ul>
+		</nav>
+		
+		<article class="col-lg-9 col-md-9 col-sm-12">
+			<h2>Les composants</h2>
+			<h3 id="menu"> Menu des composants </h3>
+			<img class=centrer src="image/menu.png" alt="Menu des composants"/>
+			<p> Il y a plusieurs moyen d'accéder au menu des composants: <br/>
+				<ul>
+					<li> Cliquer sur Graphe </li>
+					<li> Faire un clique droit sur la fenêtre contenant le graphe</li>
+					<li> Faire un clique droit sur la liste des composants </li>
+				</ul>
+			</p>	
+			<h3 id="ajout">Ajout d'un composant: Sommet</h3>
+			<table>
+				<tr>
+					<td><img class=centrer src="image/ajSFenetre.png" alt="Fenetre ajout sommet"/></td>
+					<td>Accéder au <a href="#menu">menu</a> et cliquer sur ajouter un sommet.<br/>
+						La fenêtre d'ajout s'ouvre. Entrer le nom du sommet et cliquer sur valider. </br>
+						Le sommet s'ajoute dans le coin suppérieur gauche de la fenêtre. </td>
+				</tr>		
+			</table>
+			<h3> Ajout d'un composant: Arc </h3>
+			<table>
+				<tr>
+					<td><img src="image/ajArc.png" alt="Ajouter arc"/></td>
+					<td>Accéder au <a href="#menu">menu</a> et cliquer sur ajouter un arc.<br/>
+						La fenêtre d'ajout s'ouvre. Selectionner le sommet de départ et le sommet d'arrivée de l'arc.<br/>
+						S'il s'agit d'un graphe non orienté, l'ordre n'a pas d'importance.<br/>
+						S'il s'agit d'un graphe valué, entrer la valeur de l'arc. S'il est non valué, la saisie du texte est grisée. <br/>
+						</td>
+				</tr>
+			</table>
+			<p> </p>
+			<h3 id="modif">Modification d'un composant: Sommet</h3>
+			<table>
+				<tr>
+					<td><img src="image/modS.png" alt="Modifier Sommet"/></td>
+					<td>Cliquer sur le sommet à modifier, accéder au menu et cliquer sur modifier un sommet. <br/>
+						Entrer le nouveau nom du sommet et cliquer sur ok.</td>
+				</tr>
+			</table>
+			<p> </p>
+			<h3> Modification d'un composant: Arc</h3>
+			<table>
+				<tr>
+					<td><img src="image/modArcF.png" alt="Modification d'un arc"/></td>
+					<td>Accéder au <a href="#menu">menu</a> et cliquer sur modifier un arc. <br/>
+						Selectionner le premier sommet puis le deuxième sommet et entrer la nouvelle valeur de l'arc.</td>
+				</tr>
+			</table>
+			<p> </p>
+			<h3 id="sup">Suppression d'un composant: Sommet </h3>
+			<table>
+				<tr>
+					<td><img src="image/supS.png" alt="Supprimer Sommet"/></td>
+					<td>Cliquer sur le sommet à supprimer. <br/>Accéder au <a href="#menu">menu</a> et cliquer sur supprimer un sommet. <br/>
+						La suppression se fait automatiquement.</td>
+				</tr>
+			</table>
+			<h3> Suppression d'un composant: Arc</h3>
+			<table>
+				<tr>
+					<td><img src="image/supA.png" alt="Supprimer Arc"/></td>
+					<td>Accéder au <a href="#menu">menu</a> et cliquer sur supprimer un arc. <br/>
+						Entrer les sommets de l'arc et cliquer sur valider.</td>
+				</tr>
+			</table>
+		</article>
+		
+		
+		
+	</div>
+	<footer>
+	
+	</footer>
+</body>
+</html>

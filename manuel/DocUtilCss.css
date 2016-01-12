@@ -1,0 +1,120 @@
+
+.corp{
+	margin:auto;
+}
+
+p, table, ul{
+	font-size: 18px;
+}
+
+/****************************/
+/*			header			*/
+/****************************/
+
+header{
+	background-color: #87CEFA;
+	box-shadow: 5px 5px 5px #ADD8E6;
+}
+
+header img{
+	border-radius:0.5em;
+	margin: 0.5em;
+	box-shadow: 5px 5px 5px #4169E1;
+}
+
+header h1{
+	text-align: center;
+	font-family: Georgia, Arial, sans-serif;
+	font-style: italic;
+	
+}
+/****************************/
+/*			footer			*/
+/****************************/
+
+/****************************/
+/*			nav				*/
+/****************************/
+
+nav{
+	background-color: #ADD8E6;
+	margin-top: 1em;
+	border-radius: 1em;
+}
+
+nav ul{
+	list-style : none;
+}
+
+nav ul a{
+	text-decoration: none;
+}
+
+
+nav a:link { 
+	color: #4682B4; 
+}
+nav a:visited {
+	color: purple;
+}
+
+nav a:hover{
+	text-decoration: underline;
+	color: #4682B4; 
+}
+
+
+
+
+
+
+/****************************/
+/*			article			*/
+/****************************/
+
+article{
+	padding: 1em;
+	overflow : auto;
+}
+
+article h2{
+	/*background-color: #EE9B00;*/
+	color: #B22222;
+	width: 100%;
+	border-radius: 0.5em;
+	padding-left: 3em;
+	font-style: italic;
+}
+
+article h3{
+	padding-left: 1em;
+	color: red;
+}
+article a:link{
+	color: blue;
+}
+article a:visited{
+	color: purple;
+}
+article  a:hover{
+	text-decoration: underline;
+	color: #4682B4; 
+}
+
+.centrer{
+	display: block;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+article td {
+	padding-left: 1em;
+}
+
+article table{
+	margin-bottom: 2em;
+}
+
+
+
+

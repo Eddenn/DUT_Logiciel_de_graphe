@@ -3,9 +3,9 @@ Directed=true
 Valued=true
 
 -- Liste d'adjacence :
-A={(B,2)}
-B={(A,4)}
-C={(A,1)}
+A={(B,1),(A,4)}
+B={(C,3)}
+C={(A,6)}
 
 -- Coordonnées des points :
-[100.0,69.0;320.0,68.0;201.0,253.0]
+[324.0,204.0;90.0,152.0;182.0,50.0]

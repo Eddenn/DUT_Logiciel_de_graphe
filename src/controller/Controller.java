@@ -1,15 +1,19 @@
 package controller;
 
+import java.awt.Desktop;
+import java.awt.Menu;
 import java.awt.Point;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.Arc;
 import model.Graph;
 import model.IParcourable;
 import model.Vertex;
-
 import view.HCI;
 import view.StartFrame;
 
@@ -161,6 +165,20 @@ public class Controller implements IControlable, IIhmable {
 		hci.refresh();
 	}
 
+	/**
+	 * Méthode permettant d'ouvrir le manuel utilisateur sur un navigateur web
+	 */
+	public void openHelp(){
+		Desktop desktop = null; 
+		try { 
+			if (Desktop.isDesktopSupported()) { 
+				desktop = Desktop.getDesktop(); 
+				desktop.open(new File("manuel/index.html"));
+			} 
+		} 
+		catch (Exception ex) { Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex); }
+	}
+	
 	/*-----------------------
 	 * Gestion des composants
 	 *------------------------*/
