@@ -50,7 +50,7 @@ public class ReaderFile {
 		bDirected = checkDirection(alStr.get(0));
 		alStr.remove(0);
 		
-		bValued = checkDirection(alStr.get(0));
+		bValued = checkValue(alStr.get(0));
 		alStr.remove(0);
 		
 		for (int i = 0; i < alStr.size(); i++) {
@@ -77,6 +77,8 @@ public class ReaderFile {
 		this.alStr = alStr;
 		this.bDirected = bDirected;
 		this.bValued = bValued;
+
+		alStr.remove(0);
 		
 		for (int i = 0; i < alStr.size(); i++) {
 			if (alStr.get(i).equals("")) {
@@ -84,10 +86,8 @@ public class ReaderFile {
 			}
 		}
 		
-		alStr.remove(0);
-		
-		rm = new ReaderMatrix(alStr,bDirected,bValued);
-		graph = rm.getGraph();
+		ral = new ReaderAdjacencyList(alStr,bDirected,bValued);
+		graph = ral.getGraph();
 		
 		generateTabPoints();
 	}
@@ -110,6 +110,7 @@ public class ReaderFile {
 		bHaveCoord = (iIndiceCoord != -1);
 		
 		if (bHaveCoord) {
+			System.out.println(graph.getAlVertex());
 			int iNbVertex = graph.getAlVertex().size();
 			tPoints = new Point[iNbVertex];
 			

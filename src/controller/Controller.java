@@ -23,8 +23,7 @@ import view.StartFrame;
 public class Controller implements IControlable, IIhmable {
 	private HCI hci;
 	private Graph graph;
-	private ArrayList<ArrayList<String>> saveVertexList;
-	private ArrayList<Point[]> saveCoordList;
+	private ArrayList<ArrayList<String>> saveGraphList;
 	private int cptModif;
 	private static String file = "";
 
@@ -65,6 +64,7 @@ public class Controller implements IControlable, IIhmable {
 	 */
 	public void newGraph(boolean bOriented, boolean bValued) {
 		graph = new Graph(bOriented, bValued);
+		initProvSave();
 		hci.setGraph(graph);
 		hci.permitModifArc(graph.isValued());
 		hci.initHmVertex();
@@ -120,11 +120,11 @@ public class Controller implements IControlable, IIhmable {
 			// fermeture du fichier
 			fw.close();
 
-			// Remise é zero des sauvegardes provisoires
+			// Remise à zero des sauvegardes provisoires
 			initProvSave();
 
 		} catch (IOException e) {
-			hci.showError("ProblÃ¨me d'enregistrement du fichier " + file + ".");
+			hci.showError("Problème d'enregistrement du fichier " + file + ".");
 		}
 	}
 
@@ -132,7 +132,7 @@ public class Controller implements IControlable, IIhmable {
 	 * Méthode permettant de charger un fichier texte
 	 * 
 	 * @param strFileName
-	 *            le chemin du fichier é charger
+	 *            le chemin du fichier à charger
 	 */
 	public void loadFile(String strFileName) {
 		ReaderFile rf = new ReaderFile(strFileName);
@@ -158,7 +158,6 @@ public class Controller implements IControlable, IIhmable {
 		}
 		
 		initProvSave();
-		provSave();
 		hci.refresh();
 	}
 
@@ -175,7 +174,7 @@ public class Controller implements IControlable, IIhmable {
 	public boolean addVertex(String strVertexName) {
 		boolean bExist = false;
 		if (graph.getVertex(strVertexName) != null) {
-			hci.showError("Un sommet avec le nom " + strVertexName + " existe déjé.");
+			hci.showError("Un sommet avec le nom " + strVertexName + " existe déjà.");
 			bExist = true;
 		} else if (strVertexName.replaceAll(" ", "").equals("")) {
 			hci.showError("Le nom de votre sommet ne peut pas étre vide");
@@ -189,29 +188,29 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/**
-	 * Méthode permettant d'ajouter un arc ou une arréte non valué
+	 * Méthode permettant d'ajouter un arc ou une arête non valué
 	 * 
 	 * @param v
 	 *            le nom du premier sommet
 	 * @param vBis
-	 *            le nom du deuxiéme sommet
+	 *            le nom du deuxième sommet
 	 */
 	public void addArc(Vertex v, Vertex vBis) {
 		if (checkArcAlreadyExist(v, vBis)) {
 			graph.addArc(v, vBis);
 			provSave();
 		} else {
-			hci.showError("L'arc existe déjé.");
+			hci.showError("L'arc existe déjà.");
 		}
 	}
 
 	/**
-	 * Méthode permettant d'ajouter un arc ou une arréte valué
+	 * Méthode permettant d'ajouter un arc ou une arête valué
 	 * 
 	 * @param v
 	 *            le nom du premier sommet
 	 * @param vBis
-	 *            le nom du deuxiéme sommet
+	 *            le nom du deuxième sommet
 	 * @param iValue
 	 *            la valeur de l'arc
 	 */
@@ -220,20 +219,23 @@ public class Controller implements IControlable, IIhmable {
 			graph.addArc(v, vBis, iValue);
 			provSave();
 		} else
-			hci.showError("L'arc existe déjé.");
+			hci.showError("L'arc existe déjà.");
 	}
 
 	/**
-	 * Méthode permettant de supprimer un arc ou une arréte
+	 * Méthode permettant de supprimer un arc ou une arête
 	 * 
 	 * @param v
 	 *            le nom du premier sommet
 	 * @param vBis
-	 *            le nom du deuxiéme sommet
+	 *            le nom du deuxième sommet
 	 */
 	public boolean delArc(Vertex v, Vertex vBis) {
 		if (graph.getAlVertex().contains(v) && graph.getAlVertex().contains(vBis)) {
-			return (graph.deleteArc(v, vBis));
+			if (graph.deleteArc(v, vBis)) {
+				provSave();
+				return true;
+			}
 		}
 		return false;
 	}
@@ -244,7 +246,7 @@ public class Controller implements IControlable, IIhmable {
 	 * @param v
 	 *            nom du premier sommet
 	 * @param vBis
-	 *            nom du deuxiéme sommet
+	 *            nom du deuxième sommet
 	 * @return true s'il existe, false sinon
 	 */
 	private boolean checkArcAlreadyExist(Vertex v, Vertex vBis) {
@@ -264,87 +266,71 @@ public class Controller implements IControlable, IIhmable {
 	 * Méthode permettant d'annuler la dernière action
 	 */
 	public void undo() {
-		
 		 if (cptModif > 1) { 
-			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveVertexList.get(cptModif-2)), graph.isDirected(), graph.isValued());
+			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveGraphList.get(cptModif-2)), graph.isDirected(), graph.isValued());
 		 	graph = rF.getGraph();
 		 	hci.initHmVertexByTab(rF.getPoints()); 
 		 	cptModif--; 
 		 }
-		 
-
 	}
 
 	/**
-	 * Méthode permettant de rétablir la derniére action supprimer
+	 * Méthode permettant de rétablir la dernière action effectuée
 	 */
 	public void redo() {
-		
-		
-		if (cptModif >= 0 && cptModif < saveVertexList.size()) { 
-			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveVertexList.get(cptModif)), graph.isDirected(), graph.isValued());
+		if (cptModif >= 0 && cptModif < saveGraphList.size()) { 
+			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveGraphList.get(cptModif)), graph.isDirected(), graph.isValued());
 			graph = rF.getGraph();
 		  	hci.initHmVertexByTab(rF.getPoints()); 
 		  	cptModif++; 
 		  }
-		 
 	}
 
 	/**
-	 * Méthode qui met é zéro les arrayList contenant les actions effectués
-	 * depuis la derniére sauvegarde.
+	 * Méthode qui met à zéro les arrayList contenant les actions effectuées
+	 * depuis la dernière sauvegarde.
 	 */
 	public void initProvSave() {
-		saveVertexList = new ArrayList<ArrayList<String>>();
-		saveCoordList = new ArrayList<Point[]>();
+		saveGraphList = new ArrayList<ArrayList<String>>();
 		cptModif = 0;
 		provSave();
 	}
 
 	/**
-	 * Méthode permettant de sauvegarder l'état du graphe é une instant t.
-	 * Utiliser pour sauvegarder les actions effectuées.
+	 * Méthode permettant de sauvegarder l'état du graphe à un instant t.
+	 * Utilisé pour sauvegarder les actions effectuées.
 	 */
 	public void provSave() {
 		
 		// Initialisation de la ArrayList contenant la liste d'adjacence du
-		// graphe au moment où l'utilisateur effectue une action
+		// graphe + les coordonnées des points au moment où l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
-//		alProv.add(0, "Valued=" + graph.isValued());
-//		alProv.add(0, "Directed=" + graph.isDirected());
 		
-		// Sauvegarde des coordonnÃ©es
+		// Sauvegarde des coordonnées
 		alProv.add("-- Coordonnées des points :\n");
 		String sCoord = "[";
-		
-		Point[] tabPoint = new Point[graph.getAlVertex().size()];
 		int cpt = 0;
+		int nbSommet = getNbSommet();
 		for (Point c : hci.getHmVertex().values()) {
-			tabPoint[cpt] = c;
+			sCoord+= (c.getX() + "," + c.getY());
 			cpt++;
-		}
-
-		int size = tabPoint.length;
-		for (int j = 0; j < size; j++) {
-			sCoord+= (tabPoint[j].getX() + "," + tabPoint[j].getY());
-			if (j != size - 1)
+			if (cpt != nbSommet - 1)
 				sCoord+=";";
 		}
 		sCoord+="]";
 		
-		System.out.println(sCoord);
+		// Ajout des coordonnées
 		alProv.add(sCoord);
 		
+		// Ajout de la liste d'adjacence et des coordonnées dans la ArrayList de sauvegarde
+		saveGraphList.add(cptModif, alProv);
 		
-		// Ajout de la liste d'adjacence dans la ArrayList de sauvegarde
-		saveVertexList.add(cptModif, alProv);
-		
+		// Suppression des dernières actions effectuées dans le cas où l'utilisateur est revenu plusieurs fois et a effectué une nouvelle action.
 		int i = cptModif + 1;
-		while (i < saveVertexList.size()) {
-			saveVertexList.remove(i);
-			saveCoordList.remove(i);
+		while (i < saveGraphList.size()) {
+			saveGraphList.remove(i);
 		}
-
+		
 		// Incrémentation du compteur indiquant le nombre de modification
 		// (Repère utilisé pour savoir notre position dans la ArrayList
 		// permettant le retour en arrière
@@ -435,6 +421,7 @@ public class Controller implements IControlable, IIhmable {
 		for (Arc a : v.getAlArcs()) {
 			if (a.getVertex() == vBis) {
 				graph.updateArc(a, value);
+				provSave();
 				return true;
 			}
 				
