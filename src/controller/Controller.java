@@ -88,7 +88,7 @@ public class Controller implements IControlable, IIhmable {
 	 *            reprend le chemin sauvegardï¿½ pour ï¿½craser l'ancienne
 	 *            sauvegarde
 	 */
-	public void saveFile(String strFileName) {
+	public void saveFile(String strFileName, String format) {
 		// Si strFileName contient quelque chose, il s'agit d'enregistrer sous
 		// sinon il s'agit d'enregistrer
 		if (!strFileName.equals("")) {
@@ -102,13 +102,23 @@ public class Controller implements IControlable, IIhmable {
 
 			// ï¿½criture des lignes de texte
 
-			fw.write("IsMatrix=false\n");
-
-			fw.write("Directed=" + graph.isDirected() + "\n");
-			fw.write("Valued=" + graph.isValued() + "\n\n");
-			fw.write("-- Liste d'adjacence :\n");
-			fw.write(graph.getFormattedList() + "\n");
-			fw.write("-- Coordonnï¿½es des points :\n");
+			if (format.equals("matrice")) {
+				fw.write("IsMatrix=true\n");
+				
+				fw.write("Directed=" + graph.isDirected() + "\n");
+				fw.write("Valued=" + graph.isValued() + "\n\n");
+				fw.write("-- Matrice :\n");
+				fw.write(graph.displayMatrix() + "\n");
+			}
+			else {
+				fw.write("IsMatrix=false\n");
+	
+				fw.write("Directed=" + graph.isDirected() + "\n");
+				fw.write("Valued=" + graph.isValued() + "\n\n");
+				fw.write("-- Liste d'adjacence :\n");
+				fw.write(graph.getFormattedList() + "\n");
+			}
+			fw.write("-- Coordonnées des points :\n");
 			fw.write("[");
 
 			Point[] tabPoint = new Point[graph.getAlVertex().size()];
@@ -164,7 +174,7 @@ public class Controller implements IControlable, IIhmable {
 		hci.setGraph(graph);
 		hci.permitModifArc(graph.isValued());
 
-		if (!bGraphWasNull) {
+		if (!bGraphWasNull && rf.haveCoord()) {
 			Point[] tPoints = rf.getPoints();
 			hci.initHmVertexByTab(tPoints);
 		} else {

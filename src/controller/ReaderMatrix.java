@@ -19,6 +19,8 @@ public class ReaderMatrix {
 
 		graph = new Graph(bDirected, bValued);
 
+		generateMatrix();
+		
 		graph = createGraph();
 	}
 
@@ -50,9 +52,15 @@ public class ReaderMatrix {
 	}
 
 	private void generateMatrix() {
-		int[][] tMatrix = new int[alStr.size()][alStr.size()];
+		
+		int cpt = 0;
+		for (int i = 0; i < alStr.size() && alStr.get(i).indexOf("Coordonn") < 0; i++) {
+			cpt++;
+		}
+		
+		tMatrix = new int[cpt][cpt];
 
-		for (int i = 0; i < alStr.size(); i++) {
+		for (int i = 0; i < cpt; i++) {
 			String tValuesMatrix[] = alStr.get(i).split(" ");
 
 			for (int j = 0; j < tValuesMatrix.length; j++) {

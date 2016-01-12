@@ -474,6 +474,21 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		/*-- FICHIER --*/
 			// Nouveau
+		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {	
+			
+			// On propose à l'utilisateur de sauvegarder son travail avant de continuer
+			String[] tabVal = {"Enregistrer et continuer", "Continuer sans enregistrer", "Annuler" };
+			int val =  JOptionPane.showOptionDialog(this, "La création d'un nouveau graphe entrainera la perte du graphe actuel s'il n'a pas été sauvegardé. \nVoulez vous continuer ?", "Création d'un nouveau graphe",  JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,tabVal,tabVal[0]);
+			
+			if (val == 0) {
+				if(ctrl.getFile().equals(""))
+					saveDialog();
+				else
+					ctrl.saveFile("", "adjacence");
+				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
+			}
+			else if (val == 1) new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
+			
 		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
 			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			// Ouvrir
@@ -484,29 +499,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Enregistrer
 		} else if (e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave) {
 			if(ctrl.getFile().equals("")){
-				JFileChooser dial = new JFileChooser(new File("."));
-				if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-					String path = dial.getSelectedFile().getAbsolutePath();
-					if(path.substring(path.lastIndexOf("\\")).lastIndexOf(".")!=-1) {
-						ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt");
-					} else {
-						ctrl.saveFile(path + ".txt");
-					}
-				}
+				saveDialog();
 			}else{
-				ctrl.saveFile("");
+				ctrl.saveFile("", "adjacence");
 			}
 			// Enregistrer sous
 		} else if (e.getSource()==tabMenuItemFile[3]) {
-			JFileChooser dial = new JFileChooser(new File("."));
-			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-				String path = dial.getSelectedFile().getAbsolutePath();
-				if(path.substring(path.lastIndexOf("\\")).lastIndexOf(".")!=-1) {
-					ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt");
-				} else {
-					ctrl.saveFile(path + ".txt");
-				}
-			}
+			saveDialog();
 			// Quitter
 		} else if (e.getSource() == tabMenuItemFile[5]) {
 			this.dispose();
@@ -762,6 +761,37 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemGraph[5].setEnabled(b);
 		popUpItem[5].setEnabled(b);
 		buttonUpdateArc.setEnabled(b);
+	}
+
+	public void saveDialog() {
+		
+		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Export en matrice", ".txt");
+		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter("Export en liste d'adjacence", ".txt");
+
+		JFileChooser dial = new JFileChooser(new File("."));
+		dial.setAcceptAllFileFilterUsed(false);
+		dial.addChoosableFileFilter(filterMatrix);
+		dial.addChoosableFileFilter(filterAdjacencyList);
+
+		if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			String format = "";
+			String extension = dial.getFileFilter().getDescription();
+
+			if (extension.equals("Export en matrice")) {
+				format = "matrice";
+			}
+
+			if (extension.equals("Export en liste d'adjacence")) {
+				format = "adjacence";
+			}
+			
+			String path = dial.getSelectedFile().getAbsolutePath();
+			if(path.substring(path.lastIndexOf("\\")).lastIndexOf(".")!=-1) {
+				ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt", format);
+			} else {
+				ctrl.saveFile(path + ".txt", format);
+			}
+		}
 	}
 
 	public void startParcours() {
