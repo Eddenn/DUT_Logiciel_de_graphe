@@ -14,6 +14,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +34,7 @@ import model.Vertex;
  * @author Groupe 3
  * @version 2016-01-12
  */
-public class GraphPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener {
+public class GraphPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener,MouseWheelListener  {
 
 	final static float dash1[] = {5.0f};
 	final static BasicStroke pointille = new BasicStroke(1.0f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,10.0f, dash1, 0.0f);
@@ -72,6 +74,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		this.setBackground(style.getBackground());
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+		this.addMouseWheelListener(this);
 	}
 	
 	/**
@@ -737,4 +740,15 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	}	
 	@Override
 	public void keyTyped(KeyEvent e) {}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		if( e.getWheelRotation() == 1 && e.isControlDown() ) {
+			zoomIn();
+		}
+		if( e.getWheelRotation() == -1 && e.isControlDown() ) {
+			zoomOut();
+		}
+		
+	}
 }
