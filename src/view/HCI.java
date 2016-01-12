@@ -268,7 +268,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// ----------------------//
 
 		// ---------Graph--------//
-		pGraph = new GraphPanel(this);
+		pGraph = new GraphPanel(this, ctrl);
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
@@ -772,10 +772,29 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public JLabel getLabelCoord() {
 		return this.lCoord;
 	}
+<<<<<<< HEAD
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (e.getSource() == slObject.getListOfObject()) {
+			pGraph.getAlSelected().clear();
+			for( String s : slObject.getListOfObject().getSelectedValuesList() ) {
+				pGraph.getAlSelected().add(s);
+			}
+			repaint();
+		}
+	}
+
+	public void showError(String strError) {
+		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+=======
 	
 	public Controller getController() {
 		return this.ctrl;
 	}
+>>>>>>> 5ec5ed9ac6a43285e49b5ada6191e8562e7ae5cb
 
 	public JPopupMenu getPopMenu() { return this.popMenu;}
 	
