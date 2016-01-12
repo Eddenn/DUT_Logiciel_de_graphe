@@ -177,12 +177,9 @@ public class PdfGenerator {
 		anchor2.setName("2 - Les Structures :");
 		Chapter catPart2 = new Chapter(new Paragraph(anchor2), 2);
 
-		// Second parameter is the number of the chapter
-		// catPart = new Chapter(new Paragraph(anchor), 1);
 		Paragraph liste = new Paragraph(g.getFormattedList());
 		Paragraph matrix = new Paragraph(g.displayMatrix2());
 
-		// now add all this to the document
 		document.add(catPart2);
 		document.add(new Paragraph(" \nListe d'adjacence : \n", smallBold));
 		document.add(liste);
