@@ -56,8 +56,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JLabel lCoord;
 
 	// Panel of JButton
-	private JPanel pButton;
+	private JPanel pButton,pTopButton,pBottomButton;
 	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonUndo, buttonRedo, buttonSetting;
+	private JButton buttonAddVertex,buttonUpdateVertex,buttonDeleteVertex;
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
@@ -278,11 +279,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// ----------------------//
 
 		// -------ButtonBar------//
-		pButton = new JPanel();
+		pButton = new JPanel(new GridLayout(2,1));
 		pButton.setBackground(Color.WHITE);
-		pButton.setLayout(new FlowLayout(FlowLayout.LEFT));
 		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
+		pTopButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pTopButton.setBorder(BorderFactory.createLineBorder(Color.gray));
 		// New file
 		buttonNew = new JButton(new ImageIcon("images/nouveau.png"));
 		buttonNew.setContentAreaFilled(false);
@@ -294,7 +296,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		//buttonNew.setSize(1, height);
 		buttonNew.setToolTipText("Nouveau");
 		buttonNew.addActionListener(this);
-		pButton.add(buttonNew);
+		pTopButton.add(buttonNew);
 		// Open file
 		buttonOpen = new JButton(new ImageIcon("images/ouvrir.png"));
 		buttonOpen.setContentAreaFilled(false);
@@ -305,7 +307,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonOpen.setForeground(new Color(255,255,255));
 		buttonOpen.setToolTipText("Ouvrir");
 		buttonOpen.addActionListener(this);
-		pButton.add(buttonOpen);
+		pTopButton.add(buttonOpen);
 		// Save file
 		buttonSave = new JButton(new ImageIcon("images/enregistrer.png"));
 		buttonSave.setContentAreaFilled(false);
@@ -316,7 +318,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonSave.setForeground(new Color(255,255,255));
 		buttonSave.setToolTipText("Enregistrer");
 		buttonSave.addActionListener(this);
-		pButton.add(buttonSave);
+		pTopButton.add(buttonSave);
 		// Zoom in
 		buttonZoomIn = new JButton(new ImageIcon("images/zoom_In.png"));
 		buttonZoomIn.setContentAreaFilled(false);
@@ -327,7 +329,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonZoomIn.setForeground(new Color(255,255,255));
 		buttonZoomIn.setToolTipText("Agrandir");
 		buttonZoomIn.addActionListener(this);
-		pButton.add(buttonZoomIn);
+		pTopButton.add(buttonZoomIn);
 		// Zoom out
 		buttonZoomOut = new JButton(new ImageIcon("images/zoom_Out.png"));
 		buttonZoomOut.setContentAreaFilled(false);
@@ -338,7 +340,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonZoomOut.setForeground(new Color(255,255,255));
 		buttonZoomOut.setToolTipText("Réduire");
 		buttonZoomOut.addActionListener(this);
-		pButton.add(buttonZoomOut);
+		pTopButton.add(buttonZoomOut);
 		
 		// Undo
 		buttonUndo = new JButton(new ImageIcon("images/undo.png"));
@@ -350,7 +352,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonUndo.setForeground(new Color(255,255,255));
 		buttonUndo.setToolTipText("Undo");
 		buttonUndo.addActionListener(this);
-		pButton.add(buttonUndo);
+		pTopButton.add(buttonUndo);
 		// Redo
 		buttonRedo = new JButton(new ImageIcon("images/redo.png"));
 		buttonRedo.setContentAreaFilled(false);
@@ -361,7 +363,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonRedo.setForeground(new Color(255,255,255));
 		buttonRedo.setToolTipText("Redo");
 		buttonRedo.addActionListener(this);
-		pButton.add(buttonRedo);
+		pTopButton.add(buttonRedo);
 		
 		// Parametre
 		buttonSetting = new JButton(new ImageIcon("images/parametre.png"));
@@ -373,7 +375,50 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		buttonSetting.setForeground(new Color(255,255,255));
 		buttonSetting.setToolTipText("Paramètres");
 		buttonSetting.addActionListener(this);
-		pButton.add(buttonSetting);
+		pTopButton.add(buttonSetting);
+		
+		pButton.add(pTopButton);
+		
+		pBottomButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pBottomButton.setBorder(BorderFactory.createLineBorder(Color.gray));
+		
+		// Ajouter un sommet
+		buttonAddVertex = new JButton(new ImageIcon("images/ajoutersommet.png"));
+		buttonAddVertex.setContentAreaFilled(false);
+		buttonAddVertex.setBorderPainted(false);
+		buttonAddVertex.setRolloverIcon(new ImageIcon("images/ajoutersommet_rollover.png"));
+		buttonAddVertex.setMargin(new Insets(0, 0, 0, 0));
+		buttonAddVertex.setBackground(new Color(255,255,255));
+		buttonAddVertex.setForeground(new Color(255,255,255));
+		buttonAddVertex.setToolTipText("Ajouter un sommet");
+		buttonAddVertex.addActionListener(this);
+		pBottomButton.add(buttonAddVertex);
+		
+		// Modifier un sommet
+		buttonUpdateVertex = new JButton(new ImageIcon("images/modifiersommet.png"));
+		buttonUpdateVertex.setContentAreaFilled(false);
+		buttonUpdateVertex.setBorderPainted(false);
+		buttonUpdateVertex.setRolloverIcon(new ImageIcon("images/modifiersommet_rollover.png"));
+		buttonUpdateVertex.setMargin(new Insets(0, 0, 0, 0));
+		buttonUpdateVertex.setBackground(new Color(255,255,255));
+		buttonUpdateVertex.setForeground(new Color(255,255,255));
+		buttonUpdateVertex.setToolTipText("Modifier un sommet");
+		buttonUpdateVertex.addActionListener(this);
+		pBottomButton.add(buttonUpdateVertex);
+		
+		// Supprimer un sommet
+		buttonDeleteVertex = new JButton(new ImageIcon("images/supprimersommet.png"));
+		buttonDeleteVertex.setContentAreaFilled(false);
+		buttonDeleteVertex.setBorderPainted(false);
+		buttonDeleteVertex.setRolloverIcon(new ImageIcon("images/supprimersommet_rollover.png"));
+		buttonDeleteVertex.setMargin(new Insets(0, 0, 0, 0));
+		buttonDeleteVertex.setBackground(new Color(255,255,255));
+		buttonDeleteVertex.setForeground(new Color(255,255,255));
+		buttonDeleteVertex.setToolTipText("Ajouter un sommet");
+		buttonDeleteVertex.addActionListener(this);
+		pBottomButton.add(buttonDeleteVertex);
+		
+		pButton.add(pBottomButton);
 
 		add(pButton, BorderLayout.NORTH);
 		
@@ -528,11 +573,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			
 		/*-- GRAPH --*/
 			// Ajouter un sommet
-		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0]) {
+		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0] || e.getSource() == buttonAddVertex) {
 			new PopupAddVertex("Ajouter un sommet", true, ctrl, this);
 			
 			// Modifier un sommet
-		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1]) {
+		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1] || e.getSource() == buttonUpdateVertex) {
 			if(pGraph.getAlSelected().size() > 1 ) {
 				showError("Veuillez sélectionner un seul sommet.");
 			} else if (pGraph.getAlSelected().size() == 0) {
@@ -542,7 +587,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 			
 			// Supprimer un sommet
-		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2]) {
+		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2] || e.getSource() == buttonDeleteVertex) {
 			for(String s : pGraph.getAlSelected()) {
 				Vertex tmpVertex = null;
 				for (Vertex v : ctrl.getGraph().getAlVertex()) {
