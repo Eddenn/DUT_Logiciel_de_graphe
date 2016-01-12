@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import controller.Controller;
 
 /**
- * Classe qui gère la fenêtre utilisateur pour ajouter un sommet.
+ * Classe qui gï¿½re la fenï¿½tre utilisateur pour ajouter un sommet.
  * @author Groupe 3
  * @version 2016-01-12
  */
@@ -25,11 +25,11 @@ public class PopupAddVertex extends Popup implements ActionListener {
 	private JTextField nom;
 	private JButton ok, annuler;
 
-	/** Méthode qui instancie la pop-up pour ajouter un sommet.
+	/** Mï¿½thode qui instancie la pop-up pour ajouter un sommet.
 	 * @param title le titre de la pop-up.
 	 * @param modal 
-	 * @param ctrl le controleur utilisé.
-	 * @param hci le hci utilisé.
+	 * @param ctrl le controleur utilisï¿½.
+	 * @param hci le hci utilisï¿½.
 	 */
 	public PopupAddVertex(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
