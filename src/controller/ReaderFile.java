@@ -64,6 +64,7 @@ public class ReaderFile {
 		
 		alStr.remove(0);
 		
+		
 		if (bIsMatrix = isMatrix(strFirstLine)) {
 			rm = new ReaderMatrix(alStr,bDirected,bValued);
 			graph = rm.getGraph();
@@ -249,5 +250,9 @@ public class ReaderFile {
 		str = str.toLowerCase().replace("valued=", "");
 
 		return (str.toLowerCase().equals("true"));
+	}
+	
+	public boolean haveCoord() {
+		return bHaveCoord;
 	}
 }

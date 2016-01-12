@@ -480,7 +480,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				if(ctrl.getFile().equals(""))
 					saveDialog();
 				else
-					ctrl.saveFile("");
+					ctrl.saveFile("", "adjacence");
 				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			}
 			else if (val == 1) new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
@@ -495,7 +495,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			if(ctrl.getFile().equals("")){
 				saveDialog();
 			}else{
-				ctrl.saveFile("");
+				ctrl.saveFile("", "adjacence");
 			}
 			// Enregistrer sous
 		} else if (e.getSource()==tabMenuItemFile[3]) {
@@ -754,13 +754,32 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 	
 	public void saveDialog() {
+		
+		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Export en matrice", ".txt");
+		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter("Export en liste d'adjacence", ".txt");
+
 		JFileChooser dial = new JFileChooser(new File("."));
+		dial.setAcceptAllFileFilterUsed(false);
+		dial.addChoosableFileFilter(filterMatrix);
+		dial.addChoosableFileFilter(filterAdjacencyList);
+
 		if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			String format = "";
+			String extension = dial.getFileFilter().getDescription();
+
+			if (extension.equals("Export en matrice")) {
+				format = "matrice";
+			}
+
+			if (extension.equals("Export en liste d'adjacence")) {
+				format = "adjacence";
+			}
+			
 			String path = dial.getSelectedFile().getAbsolutePath();
 			if(path.substring(path.lastIndexOf("\\")).lastIndexOf(".")!=-1) {
-				ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt");
+				ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt", format);
 			} else {
-				ctrl.saveFile(path + ".txt");
+				ctrl.saveFile(path + ".txt", format);
 			}
 		}
 	}
