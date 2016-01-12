@@ -40,11 +40,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	// Menu bar of this frame
 	private JMenuBar menuBarMain;
-	private JMenu menuFichier, menuEdition, menuExport, menuGraph, menuAide;
+	private JMenu menuFichier, menuEdition, menuExport, menuGraph, menuAlgo, menuAide;
 	private JMenuItem[] tabMenuItemFile = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemExport = new JMenuItem[2];
 	private JMenuItem[] tabMenuItemGraph = new JMenuItem[7];
+	private JMenuItem[] tabMenuItemAlgo= new JMenuItem[3];
 	private JMenuItem[] tabMenuItemAide = new JMenuItem[2];
 
 	// List of "Object"
@@ -242,6 +243,24 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// Add menuGraph to this frame
 		menuBarMain.add(menuGraph);
 
+		menuAlgo = new JMenu("Algorithme");
+		//MenuItem - PlusGrandeValeur
+		tabMenuItemAlgo[0] = new JMenuItem("PlusGrandeValeur");
+		tabMenuItemAlgo[0].addActionListener(this);
+		menuAlgo.add(tabMenuItemAlgo[0]);
+		
+		//MenuItem - RechercheChemin
+		tabMenuItemAlgo[1] = new JMenuItem("Recherche chemin");
+		tabMenuItemAlgo[1].addActionListener(this);
+		menuAlgo.add(tabMenuItemAlgo[1]);
+		
+		//Menu Item - Dijkstra-Moore
+		tabMenuItemAlgo[2] = new JMenuItem("Dijkstra-Moore");
+		tabMenuItemAlgo[2].addActionListener(this);
+		menuAlgo.add(tabMenuItemAlgo[2]);
+		
+		menuBarMain.add(menuAlgo);
+		
 		menuAide = new JMenu("Aide");
 
 		// MenuItem - A Propos
@@ -344,7 +363,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		
 		add(pButton, BorderLayout.NORTH);
 		
-		// Instancitation du menu contextuel et de ses Ã©lÃ©ments
+		// Instancitation du menu contextuel et de ses éléments
 		popMenu = new JPopupMenu();
 		// MenuItem - Ajouter un sommet
 		popUpItem[0] = new JMenuItem("<html>Ajouter un sommet</html>");
@@ -507,7 +526,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath() + ".pdf", this);
 			
-		/*-- GRAPH --*/
+		/*-- GRAPHE --*/
 			// Ajouter un sommet
 		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0] || e.getSource() == buttonAddVertex) {
 			new PopupAddVertex("Ajouter un sommet", true, ctrl, this);
@@ -551,10 +570,22 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[6] || e.getSource() == popUpItem[6] || e.getSource() == buttonDeleteArc) {
 			new PopupDeleteArc("Supprimer un arc", true, ctrl, this);
-		}
+		
+		/*--ALGORITHMES--*/
+			//Plus grande valeur
+		}else if(e.getSource()== tabMenuItemAlgo[0]){
+			//Ajouter la méthode à appeler pour lancer l'algorithme
+			
+			//Rechercher chemin
+		}else if(e.getSource()==tabMenuItemAlgo[1]){
+			new PopupAlgoRC("Algorithme de recherche de chemin", true, ctrl, this);
+			
+			//Dijkstra-Moore
+		}else if(e.getSource()==tabMenuItemAlgo[2]){
+			new PopupAlgoDM("Algorithme de Dijkstra-Moore", true, ctrl, this);
 
 		/*-- AIDE --*/
-		else if (e.getSource() == tabMenuItemAide[0]) { // A propos
+		}else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
 					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
@@ -670,20 +701,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		slObject.refresh();
 		repaint();
 	}
-	
-	public void showHiLightAlgorithm() {
-		for (Vertex vertex : graph.getAlVertex()) {
-			if (ctrl.sommetActif(vertex.getName().charAt(0))) {
-				pGraph.highlightEdge((Graphics2D) pGraph.getGraphics(), vertex);
-			}
-
-			for (Arc arc : vertex.getAlArcs()) {
-				if (ctrl.arcActif(vertex.getName().charAt(0), arc.getVertex().getName().charAt(0))) {
-					pGraph.highlightArc((Graphics2D) pGraph.getGraphics(), vertex, arc);
-				}
-			}
-		}
-	}
 
 	/**
 	 * Méthode utiliser pour afficher un message d'erreur
@@ -739,8 +756,22 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		popUpItem[5].setEnabled(b);
 		buttonUpdateArc.setEnabled(b);
 	}
-	
+
 	public void startParcours() {
 		ctrl.startParcours();
+	}
+
+	public void showHiLightAlgorithm() {
+		for (Vertex vertex : graph.getAlVertex()) {
+			if (ctrl.sommetActif(vertex.getName().charAt(0))) {
+				pGraph.highlightEdge((Graphics2D) pGraph.getGraphics(), vertex);
+			}
+
+			for (Arc arc : vertex.getAlArcs()) {
+				if (ctrl.arcActif(vertex.getName().charAt(0), arc.getVertex().getName().charAt(0))) {
+					pGraph.highlightArc((Graphics2D) pGraph.getGraphics(), vertex, arc);
+				}
+			}
+		}
 	}
 }
