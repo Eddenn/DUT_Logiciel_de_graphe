@@ -23,6 +23,12 @@ public class ReaderAdjacencyList {
 		this.alStr = alStr;
 		this.bDirected = bDirected;
 		this.bValued = bValued;
+		
+		System.out.println("\n\n\nLecture de l'arraylist");
+		for (String str : alStr) {
+			System.out.println(str);
+		}
+		System.out.println("\n\n\n");
 
 		graph = new Graph(bDirected, bValued);
 		generateVertex();

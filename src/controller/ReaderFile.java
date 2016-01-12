@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.Graph;
+import view.GraphStyle;
 
 public class ReaderFile {
 	private ArrayList<String> alStr;
@@ -20,6 +22,7 @@ public class ReaderFile {
 	private boolean bDirected;
 	private boolean bHaveCoord;
 	private Point[] tPoints;
+	private GraphStyle style;
 	
 	public ReaderFile(String strFilePath) {
 		BufferedReader br = null;
@@ -50,7 +53,7 @@ public class ReaderFile {
 		bDirected = checkDirection(alStr.get(0));
 		alStr.remove(0);
 		
-		bValued = checkDirection(alStr.get(0));
+		bValued = checkValue(alStr.get(0));
 		alStr.remove(0);
 		
 		for (int i = 0; i < alStr.size(); i++) {
@@ -71,12 +74,15 @@ public class ReaderFile {
 		}
 		
 		generateTabPoints();
+		generateStyle();
 	}
 	
 	public ReaderFile(ArrayList<String> alStr, boolean bDirected, boolean bValued) {
 		this.alStr = alStr;
 		this.bDirected = bDirected;
 		this.bValued = bValued;
+
+		alStr.remove(0);
 		
 		for (int i = 0; i < alStr.size(); i++) {
 			if (alStr.get(i).equals("")) {
@@ -84,10 +90,8 @@ public class ReaderFile {
 			}
 		}
 		
-		alStr.remove(0);
-		
-		rm = new ReaderMatrix(alStr,bDirected,bValued);
-		graph = rm.getGraph();
+		ral = new ReaderAdjacencyList(alStr,bDirected,bValued);
+		graph = ral.getGraph();
 		
 		generateTabPoints();
 	}
@@ -100,6 +104,10 @@ public class ReaderFile {
 		return tPoints;
 	}
 	
+	public GraphStyle getStyle() {
+		return style;
+	}
+	
 	public boolean hasCoord() {
 		return bHaveCoord;
 	}
@@ -110,6 +118,7 @@ public class ReaderFile {
 		bHaveCoord = (iIndiceCoord != -1);
 		
 		if (bHaveCoord) {
+			System.out.println(graph.getAlVertex());
 			int iNbVertex = graph.getAlVertex().size();
 			tPoints = new Point[iNbVertex];
 			
@@ -162,6 +171,61 @@ public class ReaderFile {
 		
 		return -1;
 	}
+	
+	/*----- Style -----*/
+	private void generateStyle() {
+		int iIndiceStyle = getStyleIndice();
+		
+		if (iIndiceStyle != -1) {
+			alStr.remove(iIndiceStyle);
+			
+			String str = alStr.get(iIndiceStyle);
+			
+			String[] tStrColor = str.split(";");
+			Color edgeBackground = Color.WHITE;
+			Color edgeBorder = Color.WHITE;
+			Color edgeText = Color.WHITE;
+			Color arcLine = Color.WHITE;
+			Color arcText = Color.WHITE;
+			Color background = Color.WHITE;
+			
+			for (int i = 0; i < tStrColor.length; i++) {
+				String[] tRGB = tStrColor[i].split(",");
+
+				if(i==0)
+					edgeBackground = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
+				if(i==1)
+					edgeBorder = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
+				if(i==2)
+					edgeText = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
+				if(i==3)
+					arcLine = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
+				if(i==4)
+					arcText = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
+				if(i==5)
+					background = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
+			}
+			GraphStyle.Personnalise.setEdgeBackground(edgeBackground);
+			GraphStyle.Personnalise.setEdgeBorder(edgeBorder);
+			GraphStyle.Personnalise.setEdgeText(edgeText);
+			GraphStyle.Personnalise.setArcLine(arcLine);
+			GraphStyle.Personnalise.setArcText(arcText);
+			GraphStyle.Personnalise.setBackground(background);
+			style = GraphStyle.Personnalise;
+		} else {
+			style = GraphStyle.Basique;
+		}
+	}
+	private int getStyleIndice() {
+		for (int i = 0; i < alStr.size(); i++) {
+			if (alStr.get(i).indexOf("Style") >= 0) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	/*----------------*/
 	
 	private boolean isMatrix(String str) {
 		str = str.toLowerCase().replaceAll("ismatrix=", "");
