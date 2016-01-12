@@ -646,6 +646,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			ctrl.redo();
 			hci.refresh();
 		}
+		if(e.getKeyCode()==KeyEvent.VK_F1 ) {
+			hci.startParcours();
+		}
 		refreshPreferedSize();
 		repaint();
 		revalidate();
