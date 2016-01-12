@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<link href= "DocUtilCss.css" type='text/css' rel='stylesheet'>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<title>"Utilisation LPG</title>
+<meta name="author" content="DUMONT Melanie">
+</head>
+
+<body>
+	<div class="corp">
+		<header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+				<img src="image/Logo.jpg" alt="LGP">
+			</div>
+			<div class="col-lg-10 col-md-10 col-sm-8 col-xs-8">
+				<h1>Logiciel pédagogique de graphe </h1> 
+				<h1> Manuel Utilisateur </h1>
+			</div> 
+		</header>
+	
+		<nav class="col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
+			<ul>
+				<li><a href="Index.html">Acceuil</a></li>
+				<ul>
+					<li><a href="barre.html">Barre d'outils</a></li>
+					<li><a href="graphe.html">Graphe</a></li>
+					<li><a href="composant.html">Composant</a></li>
+					<li><a href="algo.html">Algorithme</a></li>
+					<li><a href="export.html">Exporter</a></li>
+					<li><a href="style.html">Style</a></li>
+				</ul>
+			</ul>
+		</nav>
+		
+		<article class="col-lg-9 col-md-9 col-sm-12">
+		<h2>Le graphe</h2>
+		<h3 id="creation">Création d'un graphe</h3>
+		<table>
+			<tr>
+				<td> <img src="image/Nouveau.png" alt="Nouveau Graphe"/> </td>
+				<td class=centrer> 
+				    Fichier -> Nouveau </br>
+					Choix des paramètres: </br>
+						Lors de la création d'un graphe vous pouvez choisir que votre graphe soit valué ou non et orienté ou non. </br>
+						Une fois cliqué sur valider, le graphe est crée et vous pouvez commencer à ajouter des <a href="composant.html">composants</a>
+				</td>
+			</tr>
+		</table>
+		</br>
+		<h3 id="ouvrir"> Ouverture d'un graphe </h3>
+		<table>
+			<tr>
+				<td><img src="image/Ouvrir.png" alt="Ouvrir Graphe"/></td>
+				<td>Cliquer sur l'icone ouvrir ou Fichier -> Ouvrir </br>
+					Choisir un fichier contenant une <a href="#formatM">matrice</a> ou une <a href="#formatL">liste d'adjacence</a> dans le bon format, ou un graphe enregistrer. </br>
+					Cliquer sur ouvrir, le graphe va se charger.</td>
+			</tr>		
+		</table>
+		
+		<h3 id="formatM"> Format de la matrice </h3>
+		<p>Pour ouvrir une matrice écrite à la main dans un fichier texte, le fichier doit respecter le format suivant: <br/>
+		-Pour un graphe non valué: </br></p>
+		<img class=centrer src="image/matrice non valué.png" alt="Matrice non valué"/>
+
+		<p> Mettre 0 quand il s'agit de l'arc lui-même </br>
+			Mettre 1 quand il y a un arc entre les deux sommets </br>
+			Mettre -1 quand il n'y a pas d'arc entre les deux sommets </br>
+			Attention à ne pas mettre d'espace à la fin des lignes ! 
+		</p>
+			
+		<img class=centrer src="image/matrice valué.png" alt="Matrice valué"/>
+		<p>Pour un graphe valué:</p>
+		<p> Mettre 0 quand il s'agit de l'arc lui-même </br>
+			 Mettre la valeur quand il y a un arc entre les sommets </br>
+			 Mettre -1 quand il n'y a pas d'arc entre les sommets </br>
+			 Attention à ne pas mettre d'espace à la fin des lignes !
+		</p>
+
+		<h3 id="formatL"> Format de la liste d'adjacence</h3>
+		<p>Pour ouvrir une liste d'adjacence écrite à la main dans un fichier texte, le fichier doit respecter le format suivant:</p>
+		<img class=centrer src="image/liste.png" alt="Matrice graphe valué"/>
+		<p> Si le graphe est valué, écrire chaque sommet suivis des sommets auquels il est relié et la valeur de l'arc. </br>
+			Si le graphe n'est pas valué, écrire seulement chaque sommmet suivis des sommets auquels il est relié.
+			Que le graphe soit orienté ou non ne change pas la manière d'écrire la liste d'adjacence.
+		</p>
+		
+		<h3 id="enregistrer"> Enregistrer le graphe </h3>
+		<table>
+			<tr>
+				<td> <img src="image/enregistrer.png" alt="Enregistrer"/></td>
+				<td> Cliquer sur l'icone enregistrer ou faire fichier -> enregistrer sous / enregistrer<br/>
+					Choisir le dossier où le fichier sera enregistrer et entrer le nom du document.</br>
+					Si le fichier n'a pas été enregistrer une première fois, cliquer sur enregistrer ouvrira la fenêtre pour enregistrer sous</td>
+			</tr>	
+		</table>
+		<h3 id="consulter"> Consulter les informations du graphe </h3>
+		<table>
+			<tr>
+				<td> <img src="image/Changement Liste.png" alt="Liste composant"/></td>
+				<td><p> Les informations sur le graphe sont stockés dans la liste sur la gauches.</br>
+					On peut y consulter les sommets et les arcs que possèdent le graphe. </br>
+					Pour passer de l'un à l'autre, il suffit de cliquer sur les flèches.
+				</td>
+		</article>
+		
+		
+		
+	</div>
+	<footer>
+	
+	</footer>
+</body>
+</html>
