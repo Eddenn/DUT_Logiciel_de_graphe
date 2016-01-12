@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 import javax.swing.JDialog;
 
@@ -12,7 +13,7 @@ import controller.Controller;
  * @author Groupe 3
  * @version 2016-01-12
  */
-public abstract class Popup extends JDialog implements ActionListener{
+public abstract class Popup extends JDialog implements ActionListener, KeyListener{
 
 	private static final long serialVersionUID = 9144781849668849155L;
 	protected Controller ctrl;
@@ -34,7 +35,5 @@ public abstract class Popup extends JDialog implements ActionListener{
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		
 	}
-	@Override
-	public abstract void actionPerformed(ActionEvent e);
 
 }

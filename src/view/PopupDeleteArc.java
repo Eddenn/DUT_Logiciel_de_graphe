@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,7 +19,7 @@ import model.Vertex;
  * @author Groupe 3
  * @version 2016-01-12
  */
-public class PopupDeleteArc extends Popup implements ActionListener {
+public class PopupDeleteArc extends Popup {
 
 	private static final long serialVersionUID = 2869913711173398321L;
 	private JButton ok, annuler;
@@ -58,12 +59,14 @@ public class PopupDeleteArc extends Popup implements ActionListener {
 		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
+		boxDep.addKeyListener(this);
 		panelComboBox.add(boxDep,"");
 		
 		// Gestion du sommet d'arrivé
 		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
+		boxArr.addKeyListener(this);
 		panelComboBox.add(boxArr);
 		
 		// Panel contenant le textField
@@ -87,26 +90,45 @@ public class PopupDeleteArc extends Popup implements ActionListener {
 		setVisible(true);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == ok ){
-			int vertexDep = boxDep.getSelectedIndex();
-			int vertexArr = boxArr.getSelectedIndex();
-			
-			System.out.println("vertexDep : " + vertexDep + " ; vertexArr : " + vertexArr );
-			
-			Vertex vDep = ctrl.getGraph().getAlVertex().get(vertexDep);
-			Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexArr);
-			
-			if (! ctrl.delArc(vDep, vArr)) {
-				JOptionPane.showMessageDialog(null, "Il n'existe pas d'arc entre les sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
-			}
-			else
-				dispose();
+	
+	private void valider() {
+		int vertexDep = boxDep.getSelectedIndex();
+		int vertexArr = boxArr.getSelectedIndex();
+					
+		Vertex vDep = ctrl.getGraph().getAlVertex().get(vertexDep);
+		Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexArr);
+		
+		if (! ctrl.delArc(vDep, vArr)) {
+			JOptionPane.showMessageDialog(null, "Il n'existe pas d'arc entre les sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
 		else
 			dispose();
 	}
 	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == ok )
+			valider();
+		else
+			dispose();
+	}
 
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		System.out.println(arg0.getKeyCode());
+		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
+			valider();
+		}
+		else if (arg0.getKeyCode() == 27)
+			dispose();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+	}
+	
 }

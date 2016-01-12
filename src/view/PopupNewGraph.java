@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,7 +18,7 @@ import controller.Controller;
  * @author Utilisateur
  *
  */
-public class PopupNewGraph extends Popup implements ActionListener {
+public class PopupNewGraph extends Popup  {
 
 	private static final long serialVersionUID = -1023319410573124162L;
 	private JButton ok, annuler;
@@ -58,12 +59,14 @@ public class PopupNewGraph extends Popup implements ActionListener {
 		JLabel lOriented = new JLabel("Orienté : ");
 		content.add(lOriented);
 		boxOriented = new JComboBox(tabRep);
+		boxOriented.addKeyListener(this);;
 		content.add(boxOriented);
 		
 		// Gestion du valué
 		JLabel lValued = new JLabel("Valué : ");
 		content.add(lValued);
 		boxValued = new JComboBox(tabRep);
+		boxValued.addKeyListener(this);
 		content.add(boxValued);
 		
 		add(content);
@@ -97,5 +100,31 @@ public class PopupNewGraph extends Popup implements ActionListener {
 	/*--Getters et Setters--*/
 	public boolean getBEnd() {return this.bEnd;}
 	public boolean getBClose() {return this.bClose;}
+
+	
+	
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13){
+			boolean bValued = boxValued.getSelectedItem().equals("Oui");
+			boolean bOriented = boxOriented.getSelectedItem().equals("Oui");
+			ctrl.newGraph(bOriented, bValued);
+			this.bEnd=true;
+			dispose();
+		}
+		if(arg0.getKeyCode() == 27){
+			bClose=true;
+			this.bEnd=true;
+			dispose();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+	}
 
 }

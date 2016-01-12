@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,7 +21,7 @@ import controller.Controller;
  * @author Groupe 3
  * @version 2016-01-12
  */
-public class PopupSetting extends Popup implements ActionListener{
+public class PopupSetting extends Popup {
 
 	private static final long serialVersionUID = 7294187771970061680L;
 	private JComboBox<GraphStyle> boxStyle;
@@ -228,6 +229,18 @@ public class PopupSetting extends Popup implements ActionListener{
             }
 		}
 		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
 	}
 
 }
