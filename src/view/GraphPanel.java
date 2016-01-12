@@ -84,17 +84,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		Graph graphLoaded = hci.getGraph();
 		
 		drawArcs(g2d);
-		drawVertex(g2d);
-		Graph graphLoaded = hci.getGraph();
-		for(Vertex v : graphLoaded.getAlVertex()) {
-			for(String s : alSelected) {
-				if(v.getName().equals(s)) {
-					highlightEdge(g2d, v);
-				}
-			}
-		}
 		String strSelected = "";
 		for(Vertex v : graphLoaded.getAlVertex()) {
 			for(Arc a : v.getAlArcs()) {
@@ -123,6 +115,15 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 			}
 		}
+		drawVertex(g2d);
+		for(Vertex v : graphLoaded.getAlVertex()) {
+			for(String s : alSelected) {
+				if(v.getName().equals(s)) {
+					highlightEdge(g2d, v);
+				}
+			}
+		}
+		
 		g2d.setStroke(pointille);
 		g2d.draw(rectSelection);
 		g2d.setStroke(new BasicStroke((float)iZoom+2));
