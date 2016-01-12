@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Insets;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
@@ -34,9 +35,14 @@ public class SwitchList extends JPanel{
 		JPanel jpTop = new JPanel();
 	    jpTop.setBackground(Color.WHITE);
 		//Button used to switch 
-		ImageIcon iSwitch = new ImageIcon( getClass().getResource( "/Farm-Fresh_arrow_refresh_16.png"));
+		ImageIcon iSwitch = new ImageIcon( getClass().getResource( "/switch.png"));
 		jbSwitch = new JButton(iSwitch);
 		jbSwitch.setContentAreaFilled(false);
+		jbSwitch.setBorderPainted(false);
+		jbSwitch.setRolloverIcon(new ImageIcon("images/switch_rollover.png"));
+		jbSwitch.setMargin(new Insets(0, 0, 0, 0));
+		jbSwitch.setBackground(new Color(255,255,255));
+		jbSwitch.setForeground(new Color(255,255,255));
 		jbSwitch.setToolTipText("Changer de liste");
 		jbSwitch.addActionListener(hci);
 		jpTop.add(jbSwitch);

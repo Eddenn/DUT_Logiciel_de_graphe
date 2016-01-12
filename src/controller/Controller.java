@@ -14,6 +14,7 @@ import model.Arc;
 import model.Graph;
 import model.IParcourable;
 import model.Vertex;
+import view.GraphStyle;
 import view.HCI;
 import view.StartFrame;
 
@@ -103,7 +104,7 @@ public class Controller implements IControlable, IIhmable {
 			fw.write("Valued=" + graph.isValued() + "\n\n");
 			fw.write("-- Liste d'adjacence :\n");
 			fw.write(graph.getFormattedList() + "\n");
-			fw.write("-- CoordonnÃ©es des points :\n");
+			fw.write("-- Coordonnées des points :\n");
 			fw.write("[");
 
 			Point[] tabPoint = new Point[graph.getAlVertex().size()];
@@ -119,7 +120,9 @@ public class Controller implements IControlable, IIhmable {
 				if (i != size - 1)
 					fw.write(";");
 			}
-			fw.write("]");
+			fw.write("]\n");
+			fw.write("-- Style :\n");
+			fw.write(hci.getGraphPanel().getStyle().toString());
 
 			// fermeture du fichier
 			fw.close();
@@ -142,6 +145,9 @@ public class Controller implements IControlable, IIhmable {
 		ReaderFile rf = new ReaderFile(strFileName);
 
 		graph = rf.getGraph();
+		GraphStyle style = rf.getStyle();
+		hci.getGraphPanel().setStyle(style);
+		hci.getGraphPanel().setBackground(style.getBackground());
 
 		boolean bGraphWasNull = false;
 
@@ -350,7 +356,6 @@ public class Controller implements IControlable, IIhmable {
 		}
 		sCoord+="]";
 		
-		System.out.println(sCoord);
 		alProv.add(sCoord);
 		
 		
