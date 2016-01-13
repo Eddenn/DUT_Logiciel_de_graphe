@@ -73,7 +73,6 @@ public class PopupAlgoDM extends Popup {
 		//Ajouter la méthode à appeler en lui donnant en paramètre la valeurs du checkbox -> boxDep.getSelectedIndex(); 
 		dispose();
 		super.ctrl.startParcoursDijkstra(boxDep.getSelectedIndex());
-		System.out.println(boxDep.getSelectedIndex());
 	}
 
 	public void actionPerformed(ActionEvent e) {

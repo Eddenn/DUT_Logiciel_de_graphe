@@ -79,6 +79,8 @@ public class PopupAlgoRC extends Popup {
 	
 	public void valider(){
 		//Ajouter la méthode à appeler en lui donnant en paramètre les valeurs des checkbox -> boxDep.getSelectedIndex(); boxArr.getSelectedIndex();
+		dispose();
+		super.ctrl.startParcoursLienExiste(boxDep.getSelectedIndex(),boxArr.getSelectedIndex());
 	}
 
 	public void actionPerformed(ActionEvent e) {
