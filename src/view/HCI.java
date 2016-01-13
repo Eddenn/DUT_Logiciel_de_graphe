@@ -682,12 +682,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		refresh();
 	}
 
-	@Override
+	@SuppressWarnings("deprecation")
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getSource() == slObject.getListOfObject()) {
 			pGraph.getAlSelected().clear();
-			for (String s : slObject.getListOfObject().getSelectedValuesList()) {
-				pGraph.getAlSelected().add(s);
+			for( Object s : slObject.getListOfObject().getSelectedValues() ) {
+				pGraph.getAlSelected().add((String)s);
 			}
 			repaint();
 		}
