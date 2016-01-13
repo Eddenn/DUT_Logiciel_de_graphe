@@ -19,7 +19,7 @@ public class PopupAlgoDM extends Popup {
 
 	private static final long serialVersionUID = 1L;
 	private JButton ok, annuler;
-	private JComboBox boxDep;
+	private JComboBox<String> boxDep;
 	
 	/**
 	 * Constructeur qui instancie la fenêtre pop-up pour lancer l'algorithme
@@ -50,7 +50,7 @@ public class PopupAlgoDM extends Popup {
 		// Gestion du sommet de départ
 		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
-		boxDep = new JComboBox(tabVertex);
+		boxDep = new JComboBox<String>(tabVertex);
 		panelComboBox.add(boxDep,"");
 						
 		// Ajout des comboBox à la fenetre

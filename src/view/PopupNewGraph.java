@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -15,7 +14,7 @@ import controller.Controller;
 
 /**
  * 
- * @author Utilisateur
+ * @author Groupe 3 info
  *
  */
 public class PopupNewGraph extends Popup  {
@@ -58,14 +57,14 @@ public class PopupNewGraph extends Popup  {
 		// Gestion de l'orienté
 		JLabel lOriented = new JLabel("Orienté : ");
 		content.add(lOriented);
-		boxOriented = new JComboBox(tabRep);
+		boxOriented = new JComboBox<String>(tabRep);
 		boxOriented.addKeyListener(this);;
 		content.add(boxOriented);
 		
 		// Gestion du valué
 		JLabel lValued = new JLabel("Valué : ");
 		content.add(lValued);
-		boxValued = new JComboBox(tabRep);
+		boxValued = new JComboBox<String>(tabRep);
 		boxValued.addKeyListener(this);
 		content.add(boxValued);
 		

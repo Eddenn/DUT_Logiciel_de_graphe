@@ -2,7 +2,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
@@ -119,7 +118,7 @@ public class PopupAddArc extends Popup {
 			}
 		}
 		else
-			JOptionPane.showMessageDialog(null, "Un arc doit appartenir à deux sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Un arc doit avoir une origine et une destination.", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override

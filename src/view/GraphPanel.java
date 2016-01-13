@@ -567,6 +567,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			ctrl.provSave();
 			bDragged = false;
 			bMoved = false;
+			hci.setBSaved(false);
 		}
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		
@@ -704,16 +705,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void keyPressed(KeyEvent e) {
 		//Suppr Pressed pour la supression des sommets sélectionnés
 		if(e.getKeyCode()==127) {
-			for(String s : this.getAlSelected()) {
-				Vertex tmpVertex = null;
-				for (Vertex v : hci.getGraph().getAlVertex()) {
-					if (v.getName().equals(s)) {
-						tmpVertex = v;
-					}
-				}
-				hci.getGraph().deleteVertex(tmpVertex);
-				hci.getHmVertex().remove(s);
-			}
+			ctrl.deleteMultipleVertex(alSelected);
 			setAlSelected(new ArrayList<String>());
 			hci.refresh();
 		}
