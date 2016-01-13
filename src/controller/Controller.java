@@ -393,6 +393,11 @@ public class Controller implements IControlable, IIhmable {
 		if (parcours != null) {
 			hci.showHiLightAlgorithm();
 		}
+		if( parcours instanceof ParcoursDijkstra) {
+			if(hci.getMatrixDialog()!=null)hci.getMatrixDialog().dispose();
+			hci.openMatrix(((ParcoursDijkstra)(parcours)).getTChemins());
+			hci.getMatrixDialog().paint(hci.getMatrixDialog().getGraphics());;
+		}
 	}
 	
 	public void repaintVertex() {

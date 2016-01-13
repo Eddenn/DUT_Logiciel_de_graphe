@@ -21,6 +21,7 @@ public class ParcoursDijkstra implements IParcourable {
 	private int[][] filsPere;
 
 	public ParcoursDijkstra(IControlable ctrl, int sommetDepart) {
+		
 		this.ctrl = ctrl;
 
 		this.sommetActif = -1;
@@ -67,7 +68,7 @@ public class ParcoursDijkstra implements IParcourable {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	public void lancer() {
 		sommetActif = sommetDepart;
 		filsPere[1][sommetActif] = sommetActif;
@@ -143,6 +144,10 @@ public class ParcoursDijkstra implements IParcourable {
 		sommetActif = -1;
 		ligArcActif = -1;
 		colArcActif = -1;
+	}
+	
+	public int[][] getTChemins() {
+		return tChemins;
 	}
 	
 	private void pauseSynchro() {

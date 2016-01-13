@@ -67,7 +67,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
-
+	
+	// JDialog de matrice
+	private JDialog matrixDialog;
 
 	public HCI(Controller controller) {
 		this.ctrl = controller;
@@ -87,7 +89,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.setFocusable(true);
 		this.setFocusTraversalKeysEnabled(false);
 
-
+		
 		// **---Contents of this frame---**//
 		// ---Menu bar---//
 		menuBarMain = new JMenuBar();
@@ -422,6 +424,32 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.addKeyListener(pGraph);
 	}
 
+	public void openMatrix(int[][] tMatrix) {
+		String str = "<html><body><table><tbody><tr>";
+		for(Vertex v : this.getGraph().getAlVertex()) {
+			str += "<td style=\"border: 1px solid black;\">"+v.getName().charAt(0)+"</td>";
+		}
+		str += "</tr>";
+		for(int i=0; i<tMatrix.length ;i++) {
+			str += "<tr>";
+			for(int j=0; j<tMatrix[0].length ;j++) {
+				str += "<td style=\"border: 1px solid black;\">"+String.valueOf(tMatrix[i][j])+"</td>";
+			}
+			str += "</tr>";
+		}
+		str += "</tbody></table></body></html>";
+		matrixDialog = new JDialog(this,"Matrice");
+		JPanel pStr = new JPanel();
+		pStr.add(new JLabel(str));
+		matrixDialog.setContentPane(pStr);
+		matrixDialog.pack();
+		matrixDialog.setVisible(true);
+	}
+	
+	public JDialog getMatrixDialog() {
+		return matrixDialog;
+	}
+	
 	public JButton initSmoothButton(String toolTipsText,String icon, String icon_rollover) {
 		// Parametre
 		JButton button = new JButton(new ImageIcon(getClass().getResource(icon)));
