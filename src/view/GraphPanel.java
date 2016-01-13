@@ -39,6 +39,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	final static float dash1[] = {5.0f};
 	final static BasicStroke pointille = new BasicStroke(1.0f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,10.0f, dash1, 0.0f);
 	
+	private boolean bClickOnVoid;
 	private ArrayList<String> alSelected;		//Sélection
 	private HashMap<String,Point> clipBoardEdge;//Presse-Papier
 	private Point saveMousePosition;			//Sauvegarde de la dernière position de la souris (Voir MouseDragged)
@@ -59,8 +60,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		super();
 		this.hci = hci;
 		this.ctrl = ctrl;
-		rectSelection = new Rectangle2D.Double();
+		this.rectSelection = new Rectangle2D.Double();
 		this.rectSelection.setRect(-1, -1, 0, 0);
+		this.bClickOnVoid = false;
 		this.style = GraphStyle.Basique;
 		this.clipBoardEdge = new HashMap<String,Point>();
 		this.saveMousePosition= new Point(0,0);
@@ -147,7 +149,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 						}
 					}
 					
-					if( strSelected.equals(s) ) {
+					if( strSelected.equals(s)) {
 						highlightArc(g2d, v, a);
 					}
 				}
@@ -161,6 +163,11 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 			}
 		}
+		
+		g2d.setColor(getContrastColor(style.getBackground()));
+		g2d.setStroke(pointille);
+		g2d.draw(rectSelection);
+		g2d.setStroke(new BasicStroke((float)iZoom+2));
 	}
 	
 	/**
@@ -170,6 +177,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	 */
 	public void highlightEdge(Graphics2D g2d, Vertex v) {
 		g2d.setColor(new Color(20,20,255,50));
+
 		g2d.fillOval((int)(hci.getHmVertex().get(v.getName()).x-5*iZoom) , (int)(hci.getHmVertex().get(v.getName()).y-5*iZoom) , (int)((iWidthEdge+10)*iZoom)  , (int)((iHeightEdge+10)*iZoom  ));
 		g2d.setColor(Color.BLACK);
 	}
@@ -191,6 +199,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		Point pCenter2 = new Point( (int)(c2.getX()+iWidthEdge/2*iZoom) , (int)(c2.getY()+iHeightEdge/2*iZoom) );		
 		
 		g2d.setColor(new Color(20,20,255,50));
+		
 		g2d.setStroke(new BasicStroke((float)iZoom+2));
 		if(arc.getVertex() == v) {	//Arc partant d'un sommet et  pointant sur lui-même
 			g2d.drawArc((int)(c2.getX()+12.5*iZoom), (int)(c2.getY()+40*iZoom), (int)(25*iZoom), (int)(25*iZoom), 150, 240);
@@ -498,7 +507,10 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		return null;
 	}
-	
+	public static Color getContrastColor(Color color) {
+		  double y = (299 * color.getRed() + 587 * color.getGreen() + 114 * color.getBlue()) / 1000;
+		  return y >= 128 ? Color.black : Color.white;
+		}
 	/*--MouseListener--*/
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -543,11 +555,15 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		if(c!=null){
 			e.translatePoint((int)(c.getX()-e.getX()), (int)(c.getY()-e.getY()));
 			bDragged = true;
+		} else {
+			bClickOnVoid = true;
 		}
 		saveMousePosition = e.getPoint();
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		bClickOnVoid = false;
+		
 		if(bDragged == true && bMoved == true) {
 			ctrl.provSave();
 			bDragged = false;
@@ -649,7 +665,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 			}	
 		}
-		if(rectSelectionStartPoint!=null) {
+		if(rectSelectionStartPoint!=null && bClickOnVoid) {
 
 			int xMin,yMin;
 			int xMax,yMax;
@@ -689,16 +705,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void keyPressed(KeyEvent e) {
 		//Suppr Pressed pour la supression des sommets sélectionnés
 		if(e.getKeyCode()==127) {
-			for(String s : this.getAlSelected()) {
-				Vertex tmpVertex = null;
-				for (Vertex v : hci.getGraph().getAlVertex()) {
-					if (v.getName().equals(s)) {
-						tmpVertex = v;
-					}
-				}
-				hci.getGraph().deleteVertex(tmpVertex);
-				hci.getHmVertex().remove(s);
-			}
+			ctrl.deleteMultipleVertex(alSelected);
 			setAlSelected(new ArrayList<String>());
 			hci.refresh();
 		}

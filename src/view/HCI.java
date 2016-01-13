@@ -545,16 +545,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			
 			// Supprimer un sommet
 		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2] || e.getSource() == buttonDeleteVertex) {
-			for(String s : pGraph.getAlSelected()) {
-				Vertex tmpVertex = null;
-				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-					if (v.getName().equals(s)) {
-						tmpVertex = v;
-					}
-				}
-				ctrl.getGraph().deleteVertex(tmpVertex);
-				this.hmVertex.remove(s);
-			}
+			ctrl.deleteMultipleVertex(pGraph.getAlSelected());
 			setAlSelected(new ArrayList<String>());
 			refresh();
 			// Coloriser un sommet
@@ -765,13 +756,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public void saveDialog() {
 		
-		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Export en matrice", ".txt");
-		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter("Export en liste d'adjacence", ".txt");
+		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Export en matrice (*.txt)", ".txt");
+		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter("Export en liste d'adjacence (*.txt)", ".txt");
 
 		JFileChooser dial = new JFileChooser(new File("."));
 		dial.setAcceptAllFileFilterUsed(false);
-		dial.addChoosableFileFilter(filterMatrix);
 		dial.addChoosableFileFilter(filterAdjacencyList);
+		dial.addChoosableFileFilter(filterMatrix);
 
 		if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 			String format = "";
@@ -800,8 +791,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public void showHiLightAlgorithm() {
 		ArrayList<String> alSelected = pGraph.getAlSelected();
-		alSelected.clear();
 		
+		alSelected.clear();
+
 		for (Vertex vertex : graph.getAlVertex()) {
 			if (ctrl.sommetActif(vertex.getName().charAt(0))) {
 				alSelected.add(vertex.getName());
@@ -830,6 +822,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 		}
 		
+		//System.out.println(alParcours);
+		
 		pGraph.paintVertexAndArc((Graphics2D)pGraph.getGraphics());
+		//pGraph.paintAll(pGraph.getGraphics());
 	}
 }

@@ -226,6 +226,27 @@ public class Controller implements IControlable, IIhmable {
 		}
 		return bExist;
 	}
+	
+	public boolean deleteVertex(String s) {
+		Vertex v = graph.getVertex(s);
+		if (v != null) {
+			graph.deleteVertex(v);
+			provSave();
+			return true;
+		}
+		return false;
+	}
+	
+	public void deleteMultipleVertex(ArrayList<String> s) {
+		for (int i = 0; i < s.size(); i++) {
+			Vertex v = graph.getVertex(s.get(i));
+			if (v != null) {
+				graph.deleteVertex(v);
+				hci.getHmVertex().remove(s.get(i));
+			}
+		}
+		provSave();
+	}
 
 	/**
 	 * M�thode permettant d'ajouter un arc ou une ar�te non valu�
@@ -338,7 +359,7 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * M�thode permettant de sauvegarder l'�tat du graphe � un instant t.
-	 * Utilis� pour sauvegarder les actions effectu�es.
+	 * Utilis�e pour sauvegarder les actions effectu�es.
 	 */
 	public void provSave() {
 		
