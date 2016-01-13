@@ -436,11 +436,7 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/*--------------------------------------
-<<<<<<< HEAD
 	 * Méthodes de l'interface IControlable
-=======
-	 * M�thodes de l'interface IControlable
->>>>>>> 99b6b551c4bf07aeb50c0392ab32d1120c5bf776
 	 *-------------------------------------*/
 
 	public char[] listeSommet() {

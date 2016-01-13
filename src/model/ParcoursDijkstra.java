@@ -266,7 +266,8 @@ public class ParcoursDijkstra implements IParcourable {
 			// On instancie un objet Integer
 			Integer integer = new Integer(i);
 
-			// S'il le sommet actif à un arc vers le somemt parcouru alors on l'ajoute à la liste des voisins
+			// S'il le sommet actif à un arc vers le somemt parcouru alors on
+			// l'ajoute à la liste des voisins
 			if (matrice[i][iSommet] != -1) {
 				alVoisins.add(integer);
 			}
@@ -278,8 +279,11 @@ public class ParcoursDijkstra implements IParcourable {
 
 	/**
 	 * Permet d'obtenir la valeur d'un arc allant du sommetA vers le sommetB
-	 * @param sommetA sommet de départ de l'arc
-	 * @param sommetB sommet d'arrivé de l'arc
+	 * 
+	 * @param sommetA
+	 *            sommet de départ de l'arc
+	 * @param sommetB
+	 *            sommet d'arrivé de l'arc
 	 * @return valeur de l'arc
 	 */
 	private int getValeurArc(int sommetA, int sommetB) {
