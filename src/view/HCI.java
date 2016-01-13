@@ -693,7 +693,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			/*-- AIDE --*/
 		} else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
-					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
+					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre<br/><h3>Copyright</h3>Farm-Fresh Web IconsDate<br/>18 September 2010 <br/>http://www.fatcow.com/free-icons/Author<br/>FatCow Web Hosting</center></html>",
 					"A propos", 1);
 		} else if (e.getSource() == tabMenuItemAide[1]) {
 			ctrl.openHelp();
