@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Controller;
@@ -751,7 +752,34 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 		//CTRL+N
 		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_N ) {
-			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
+			if (hci.bSaved == false) {
+				// On propose à l'utilisateur de sauvegarder son travail avant
+				// de continuer
+				String[] tabVal = { "Enregistrer et continuer", "Continuer sans enregistrer", "Annuler" };
+				int val = JOptionPane.showOptionDialog(this,
+						"La création d'un nouveau graphe entrainera la perte du graphe actuel s'il n'a pas été sauvegardé. \nVoulez vous continuer ?",
+						"Création d'un nouveau graphe", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+						tabVal, tabVal[0]);
+
+				if (val == 0) {
+					if (ctrl.getFile().equals(""))
+						hci.saveDialog();
+					else
+						ctrl.saveFile("", "adjacence");
+					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
+				} else if (val == 1)
+					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
+			} else
+				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
+			
+			//Reset style personnalise
+			GraphStyle.Personnalise.setEdgeBorder(Color.BLACK);
+			GraphStyle.Personnalise.setEdgeBackground(Color.WHITE);
+			GraphStyle.Personnalise.setEdgeText(Color.BLACK);
+			GraphStyle.Personnalise.setArcLine(Color.GRAY);
+			GraphStyle.Personnalise.setArcText(Color.BLACK);
+			GraphStyle.Personnalise.setBackground(new Color(238,238,238));
+			this.setBackground(new Color(238,238,238));
 		}
 		//CTRL+O
 		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_O ) {

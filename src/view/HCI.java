@@ -55,9 +55,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	// Main graph (draw)
 	private GraphPanel pGraph;
 	private JScrollPane jscrPanel;
-	private JPanel pInfo;
 
-	private JLabel lCoord, lInfo;
+	private JLabel lCoord;
 	private JButton buttonMatrix;
 
 	// Panel of JButton
@@ -66,7 +65,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			buttonSetting;
 	private JButton buttonAddVertex, buttonUpdateVertex, buttonDeleteVertex, buttonAddArc, buttonUpdateArc,
 			buttonDeleteArc;
-
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
@@ -338,6 +336,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// Redo
 		buttonRedo = initSmoothButton("Refaire", "/redo.png", "/redo_rollover.png");
 		pTopButton.add(buttonRedo);
+		// Matrice
+		buttonMatrix = initSmoothButton("Afficher la matrice", "/matrice.png", "/matrice_rollover.png");
+		pTopButton.add(buttonMatrix);
 		// Parametre
 		buttonSetting = initSmoothButton("Paramètres", "/parametre.png", "/parametre_rollover.png");
 		pTopButton.add(buttonSetting);
@@ -533,9 +534,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			} else
 				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
+			
+			//Reset style personnalise
+			GraphStyle.Personnalise.setEdgeBorder(Color.BLACK);
+			GraphStyle.Personnalise.setEdgeBackground(Color.WHITE);
+			GraphStyle.Personnalise.setEdgeText(Color.BLACK);
+			GraphStyle.Personnalise.setArcLine(Color.GRAY);
+			GraphStyle.Personnalise.setArcText(Color.BLACK);
+			GraphStyle.Personnalise.setBackground(new Color(238,238,238));
+			getGraphPanel().setBackground(new Color(238,238,238));
 
-		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
-			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
@@ -680,6 +688,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			pGraph.zoomOut();
 			pGraph.repaint();
 			pGraph.revalidate();
+			
+			// Affiche la martrice
+		} else if (e.getSource() == buttonMatrix) {
+			if(matrixDialog!=null)matrixDialog.dispose();
+			openMatrix(graph.generateMatrix(),"Matrice");
+			
 			// Paramètres
 		} else if (e.getSource() == buttonSetting) {
 			new PopupSetting("Paramètres", true, ctrl, this);
