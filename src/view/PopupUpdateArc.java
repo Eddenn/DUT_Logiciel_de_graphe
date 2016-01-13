@@ -57,7 +57,7 @@ public class PopupUpdateArc extends Popup  {
 		// Gestion du sommet de d�part
 		JLabel lDep = new JLabel("Depart : ");
 		panelComboBox.add(lDep, "West");
-		boxDep = new JComboBox<String>(tabVertex);
+		boxDep = new JComboBox(tabVertex);
 		if(hci.getAlSelected().size() == 2) {
 			boxDep.setSelectedItem(hci.getAlSelected().get(0));
 		}
@@ -66,7 +66,7 @@ public class PopupUpdateArc extends Popup  {
 		// Gestion du sommet d'arriv�
 		JLabel lArr = new JLabel("Arrivee : ");
 		panelComboBox.add(lArr);
-		boxArr = new JComboBox<String>(tabVertex);
+		boxArr = new JComboBox(tabVertex);
 		if(hci.getAlSelected().size() == 2) {
 			boxArr.setSelectedItem(hci.getAlSelected().get(1));
 		}
