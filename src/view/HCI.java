@@ -84,7 +84,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		this.setSize(900, 700);
 		this.setPreferredSize(new Dimension(900, 700));
-		ImageIcon img = new ImageIcon("images/Logo_32x32_LGP.png");
+		ImageIcon img = new ImageIcon(getClass().getResource("/Logo_32x32_LGP.png"));
 		this.setIconImage(img.getImage());
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -516,7 +516,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Permet d'initialiser le tableau de coordonnée dans hci en lui passant un tableau de point
-	 * @param tab talbeau de point
+	 * @param tab tableau de point
 	 */
 	public void initHmVertexByTab(Point[] tab) {
 		// Initialization of hmVertex
@@ -693,7 +693,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			/*-- AIDE --*/
 		} else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
-					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
+					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
 		} else if (e.getSource() == tabMenuItemAide[1]) {
 			ctrl.openHelp();
@@ -859,7 +859,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	/**
-	 * Méthode permettant d'afficher les coordonnées du point selectionner
+	 * Méthode permettant d'afficher les coordonnées du point selectionné
 	 * @return un label
 	 */
 	public JLabel getLabelCoord() {
@@ -902,8 +902,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	/**
-	 * Méthode permettant d'empêcher l'utilisateur de modifier un arc s'il n'y en a pas.
-	 * Lorsqu'il y a un arc de créer, l'utilisateur peut de nouveau cliquer sur" modifier un arc".
+	 * Méthode permettant d'empêcher l'utilisateur de modifier un arc si le graphe n'est pas valué.
 	 * @param b vrai s'il peut modifier, false s'il ne peut pas
 	 */
 	public void permitModifArc(boolean b) {

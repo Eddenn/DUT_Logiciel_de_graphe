@@ -229,18 +229,26 @@ public class ReaderFile {
 			for (int i = 0; i < tStrColor.length; i++) {
 				String[] tRGB = tStrColor[i].split(",");
 
-				if(i==0)
+				switch (i){
+				case 0 :
 					edgeBackground = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
-				if(i==1)
+					break;
+				case 1:
 					edgeBorder = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
-				if(i==2)
+					break;
+				case 2:
 					edgeText = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
-				if(i==3)
+					break;
+				case 3:
 					arcLine = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
-				if(i==4)
+					break;
+				case 4:
 					arcText = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
-				if(i==5)
+					break;
+				case 5:
 					background = new Color(Integer.parseInt(tRGB[0]),Integer.parseInt(tRGB[1]),Integer.parseInt(tRGB[2]));
+				}
+				
 			}
 			GraphStyle.Personnalise.setEdgeBackground(edgeBackground);
 			GraphStyle.Personnalise.setEdgeBorder(edgeBorder);

@@ -2,13 +2,15 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -37,10 +39,8 @@ public class StartFrame {
 		JPanel pLogo = new JPanel(){
 			public void paintComponent(Graphics g){
 				Image logo = null;
-				try {
-					URL url = getClass().getResource( "/Logo_LGP.png");
-					logo = ImageIO.read(new File(url.toURI()));
-				} catch (IOException e) {} catch (URISyntaxException e) {}
+				ImageIcon img = new ImageIcon(getClass().getResource("/Logo_LGP.png"));
+				logo = iconToImage(img);
 				g.drawImage(logo, 0, 0, null);
 			}
 		};
@@ -65,5 +65,24 @@ public class StartFrame {
 		hci.setVisible(true);
 		
 	}
+	
+	static Image iconToImage(Icon icon) {
+		   if (icon instanceof ImageIcon) {
+		      return ((ImageIcon)icon).getImage();
+		   } 
+		   else {
+		      int w = icon.getIconWidth();
+		      int h = icon.getIconHeight();
+		      GraphicsEnvironment ge = 
+		        GraphicsEnvironment.getLocalGraphicsEnvironment();
+		      GraphicsDevice gd = ge.getDefaultScreenDevice();
+		      GraphicsConfiguration gc = gd.getDefaultConfiguration();
+		      BufferedImage image = gc.createCompatibleImage(w, h);
+		      Graphics2D g = image.createGraphics();
+		      icon.paintIcon(null, g, 0, 0);
+		      g.dispose();
+		      return image;
+		   }
+		 }
 
 }

@@ -56,14 +56,14 @@ public class PopupNewGraph extends Popup  {
 		// Gestion de l'orienté
 		JLabel lOriented = new JLabel("Orienté : ");
 		content.add(lOriented);
-		boxOriented = new JComboBox<String>(tabRep);
+		boxOriented = new JComboBox(tabRep);
 		boxOriented.addKeyListener(this);;
 		content.add(boxOriented);
 		
 		// Gestion du valué
 		JLabel lValued = new JLabel("Valué : ");
 		content.add(lValued);
-		boxValued = new JComboBox<String>(tabRep);
+		boxValued = new JComboBox(tabRep);
 		boxValued.addKeyListener(this);
 		content.add(boxValued);
 		
@@ -110,7 +110,7 @@ public class PopupNewGraph extends Popup  {
 			this.bEnd=true;
 			dispose();
 		}
-		if(arg0.getKeyCode() == 27){
+		else if(arg0.getKeyCode() == 27){
 			bClose=true;
 			this.bEnd=true;
 			dispose();
