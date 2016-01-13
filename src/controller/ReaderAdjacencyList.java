@@ -6,8 +6,8 @@ import model.Graph;
 import model.Vertex;
 
 /**
- * Classe qui gï¿½nï¿½re le graphe correspondant ï¿½ la liste d'adjacent contenue dans
- * le fichier ï¿½ lire
+ * Classe qui génère le graphe correspondant à la liste d'adjacent contenue dans
+ * le fichier à lire
  * 
  * @author Groupe 3
  * @version 2016-01-08
@@ -19,6 +19,13 @@ public class ReaderAdjacencyList {
 	private Graph graph;
 	private ArrayList<String> alVertexName;
 
+	
+	/**
+	 * Constructeur permettant de générer le graphe
+	 * @param alStr Une ArrayList de String correspondant aux lignes d'un fichier
+	 * @param bDirected true si le graphe est orienté
+	 * @param bValued true si le graphe est valué
+	 */
 	public ReaderAdjacencyList(ArrayList<String> alStr, boolean bDirected, boolean bValued) {
 		this.alStr = alStr;
 		this.bDirected = bDirected;
@@ -30,10 +37,14 @@ public class ReaderAdjacencyList {
 		graph = createGraph();
 	}
 
+	
 	public Graph getGraph() {
 		return graph;
 	}
 	
+	/**
+	 * Méthode permettant d'initialiser les sommets du graphe
+	 */
 	private void generateVertex() {
 		alVertexName = new ArrayList<String>();
 
@@ -47,6 +58,10 @@ public class ReaderAdjacencyList {
 		}
 	}
 
+	/**
+	 * Méthode créant le graphe selon le fait qu'il soit valué ou orienté
+	 * @return null si le format d'écriture du fichier est erroné
+	 */
 	private Graph createGraph() {
 		try {
 			if (bDirected && bValued) {
@@ -69,6 +84,10 @@ public class ReaderAdjacencyList {
 		return null;
 	}
 
+	/**
+	 * Méthode permettant de lire un graphe orienté et valué
+	 * @return null si le graphe n'a pas été correctement créé.
+	 */
 	private Graph createDirectedValuedGraph() {
 		boolean bContinue = true;
 
@@ -110,6 +129,10 @@ public class ReaderAdjacencyList {
 		return graph;
 	}
 
+	/**
+	 * Méthode permettant de lire un graphe orienté non valué
+	 * @return null si le graphe n'a pas été correctement créé.
+	 */
 	private Graph createDirectedNotValuedGraph() {
 		boolean bContinue = true;
 
@@ -129,7 +152,7 @@ public class ReaderAdjacencyList {
 
 						String[] tStrVertexValue = strVertexValue.split(",");
 
-						// On vï¿½rifie s'il est bien valuï¿½.
+						// On vérifie s'il est bien valué.
 						if (tStrVertexValue.length > 1) {
 							graph.setValued(true);
 
@@ -151,6 +174,10 @@ public class ReaderAdjacencyList {
 		return graph;
 	}
 
+	/**
+	 * Méthode permettant de lire un graphe non orienté et valué
+	 * @return null si le graphe n'a pas été correctement créé.
+	 */
 	private Graph createNotDirectedValuedGraph() {
 		ArrayList<String> alVertexAlreadyProcessed = new ArrayList<String>();
 		boolean bContinue = true;
@@ -171,7 +198,7 @@ public class ReaderAdjacencyList {
 
 						String[] tStrVertexValue = strVertexValue.split(",");
 
-						// On vï¿½rifie s'il est bien valuï¿½.
+						// On vérifie s'il est bien valué.
 						if (tStrVertexValue.length < 2) {
 							graph.setValued(false);
 
@@ -197,6 +224,10 @@ public class ReaderAdjacencyList {
 		return graph;
 	}
 
+	/**
+	 * Méthode permettant de lire un graphe non orienté et non valué
+	 * @return null si le graphe n'a pas été correctement créé.
+	 */
 	private Graph createNotDirectedNotValuedGraph() {
 		ArrayList<String> alVertexAlreadyProcessed = new ArrayList<String>();
 		boolean bContinue = true;
@@ -217,7 +248,7 @@ public class ReaderAdjacencyList {
 
 						String[] tStrVertexValue = strVertexValue.split(",");
 
-						// On vï¿½rifie s'il est bien valuï¿½.
+						// On vérifie s'il est bien valué.
 						if (tStrVertexValue.length > 1) {
 							graph.setValued(true);
 

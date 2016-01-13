@@ -755,12 +755,12 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		//CTRL+O
 		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_O ) {
 			JFileChooser dial = new JFileChooser(new File("."));
-			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 				try {
-					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
-				} catch (Exception e1) {
-					e1.printStackTrace();
+				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 				}
+				catch(Exception exp) {}
+			}
 		}
 		//CTRL+S
 		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_S ) {
