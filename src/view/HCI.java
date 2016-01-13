@@ -3,7 +3,6 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -14,8 +13,6 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import java.awt.event.WindowEvent;
 
 import controller.Controller;
 import model.Arc;
@@ -46,7 +43,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenu menuFichier, menuEdition, menuExport, menuGraph, menuAlgo, menuAide;
 	private JMenuItem[] tabMenuItemFile = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
-	private JMenuItem[] tabMenuItemExport = new JMenuItem[2];
+	private JMenuItem[] tabMenuItemExport = new JMenuItem[4];
 	private JMenuItem[] tabMenuItemGraph = new JMenuItem[7];
 	private JMenuItem[] tabMenuItemAlgo= new JMenuItem[3];
 	private JMenuItem[] tabMenuItemAide = new JMenuItem[2];
@@ -197,6 +194,14 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemExport[1] = new JMenuItem("Fichier PDF  ");
 		tabMenuItemExport[1].addActionListener(this);
 		menuExport.add(tabMenuItemExport[1]);
+		//MenuItem - Matrice
+		tabMenuItemExport[2] = new JMenuItem("Matrice  ");
+		tabMenuItemExport[2].addActionListener(this);
+		menuExport.add(tabMenuItemExport[2]);
+		//MenuItem - Liste d'adjacence
+		tabMenuItemExport[3] = new JMenuItem("Liste d'adjacence  ");
+		tabMenuItemExport[3].addActionListener(this);
+		menuExport.add(tabMenuItemExport[3]);
 
 		menuBarMain.add(menuExport);
 
@@ -527,7 +532,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath() + ".pdf", this);
-			
+			//Matrice
+		}else if(e.getSource()==tabMenuItemExport[2]){
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+				ctrl.export(dial.getSelectedFile().getAbsolutePath() + ".txt","matrice");
+			//Liste d'adjacence
+		}else if(e.getSource()==tabMenuItemExport[3]){
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
+				ctrl.export(dial.getSelectedFile().getAbsolutePath() + ".txt","liste");
 		/*-- GRAPHE --*/
 			// Ajouter un sommet
 		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0] || e.getSource() == buttonAddVertex) {
@@ -545,16 +559,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			
 			// Supprimer un sommet
 		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2] || e.getSource() == buttonDeleteVertex) {
-			for(String s : pGraph.getAlSelected()) {
-				Vertex tmpVertex = null;
-				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-					if (v.getName().equals(s)) {
-						tmpVertex = v;
-					}
-				}
-				ctrl.getGraph().deleteVertex(tmpVertex);
-				this.hmVertex.remove(s);
-			}
+			ctrl.deleteMultipleVertex(pGraph.getAlSelected());
 			setAlSelected(new ArrayList<String>());
 			refresh();
 			// Coloriser un sommet
@@ -765,13 +770,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public void saveDialog() {
 		
-		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Export en matrice", ".txt");
-		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter("Export en liste d'adjacence", ".txt");
+		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Enregistrer en matrice (*.txt)", ".txt");
+		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter("Enregistrer en liste d'adjacence (*.txt)", ".txt");
 
 		JFileChooser dial = new JFileChooser(new File("."));
 		dial.setAcceptAllFileFilterUsed(false);
-		dial.addChoosableFileFilter(filterMatrix);
 		dial.addChoosableFileFilter(filterAdjacencyList);
+		dial.addChoosableFileFilter(filterMatrix);
 
 		if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 			String format = "";
