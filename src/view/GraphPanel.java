@@ -779,6 +779,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			GraphStyle.Personnalise.setArcLine(Color.GRAY);
 			GraphStyle.Personnalise.setArcText(Color.BLACK);
 			GraphStyle.Personnalise.setBackground(new Color(238,238,238));
+			this.setBackground(new Color(238,238,238));
 		}
 		//CTRL+O
 		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_O ) {

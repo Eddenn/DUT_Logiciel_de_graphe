@@ -542,9 +542,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			GraphStyle.Personnalise.setArcLine(Color.GRAY);
 			GraphStyle.Personnalise.setArcText(Color.BLACK);
 			GraphStyle.Personnalise.setBackground(new Color(238,238,238));
+			getGraphPanel().setBackground(new Color(238,238,238));
 
-		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
-			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
