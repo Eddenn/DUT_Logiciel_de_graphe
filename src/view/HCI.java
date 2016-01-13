@@ -902,8 +902,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	/**
-	 * Méthode permettant d'empêcher l'utilisateur de modifier un arc s'il n'y en a pas.
-	 * Lorsqu'il y a un arc de créer, l'utilisateur peut de nouveau cliquer sur" modifier un arc".
+	 * Méthode permettant d'empêcher l'utilisateur de modifier un arc si le graphe n'est pas valué.
 	 * @param b vrai s'il peut modifier, false s'il ne peut pas
 	 */
 	public void permitModifArc(boolean b) {
