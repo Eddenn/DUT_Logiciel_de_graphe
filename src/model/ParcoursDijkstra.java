@@ -47,6 +47,8 @@ public class ParcoursDijkstra implements IParcourable {
 
 		this.sommetDepart = sommetDepart;
 
+		message = "";
+		
 		// On récupére la matrice et la liste des sommets
 		matrice = ctrl.getMatrice();
 		lstSommet = ctrl.listeSommet();
@@ -156,7 +158,7 @@ public class ParcoursDijkstra implements IParcourable {
 
 							// On met à jour l'IHM et on fait une pause
 							ctrl.majIHM();
-							this.pauseSynchro();
+							//this.pauseSynchro();
 						} else {
 							// S'il y a un chemin existant, on vérifie que la
 							// nouvelle valeur est inférieure à l'ancienne
@@ -172,7 +174,7 @@ public class ParcoursDijkstra implements IParcourable {
 
 								// On met à jour l'IHM et on fait une pause
 								ctrl.majIHM();
-								this.pauseSynchro();
+								//this.pauseSynchro();
 
 							} else {
 								// Si c'est plus grand, alors on récupère
@@ -227,6 +229,40 @@ public class ParcoursDijkstra implements IParcourable {
 		sommetActif = -1;
 		ligArcActif = -1;
 		colArcActif = -1;
+		
+		ArrayList<String> alStr = new ArrayList<String>();
+		
+		for (int i = 0; i < filsPere.length; i++) {
+			int iSommet = i;
+			String str = "";
+			
+			while (iSommet != sommetDepart) {
+				str += lstSommet[iSommet] + ";";
+				
+				iSommet = filsPere[iSommet];
+			}
+			
+			str += lstSommet[sommetDepart];;
+			alStr.add(str);
+		}
+		
+		message += "<html>";
+		
+		for (String str : alStr) {
+			String[] tStr = str.split(";");
+			
+			for (int i = tStr.length - 1; i >= 0; i--) {
+				message += tStr[i];
+				
+				if (i != 0) {
+					message += " &rarr; ";
+				}
+			}
+			
+			message += "<br />";
+		}
+		
+		message += "</html>";
 	}
 
 	/**

@@ -834,6 +834,20 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
+	
+	/**
+	 * Méthode utiliser pour afficher un message 
+	 * @param strError la chaine de caractère à afficher
+	 */
+	public void showMessage(String strTitle,String strMessage) {
+//		JOptionPane.showMessageDialog(null, strMessage, "Message", JOptionPane.PLAIN_MESSAGE);
+		JDialog messageDialog = new JDialog(this,strTitle);
+		JPanel pStr = new JPanel();
+		pStr.add(new JLabel(strMessage));
+		messageDialog.setContentPane(pStr);
+		messageDialog.pack();
+		messageDialog.setVisible(true);
+	}
 
 	/**
 	 * Méthode utiliser pour afficher un message d'information

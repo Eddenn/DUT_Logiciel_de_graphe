@@ -558,6 +558,8 @@ public class Controller implements IControlable, IIhmable {
 		// On met à jour l'IHM
 		majIHM();
 		
+		hci.showMessage("Chemin Dijkstra",this.parcours.getMessage());
+		
 		// On affiche le message de retour
 		hci.showInfo("L'algorithme est terminé.");
 	}
