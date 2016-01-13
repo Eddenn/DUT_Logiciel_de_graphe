@@ -43,7 +43,6 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	
 	private boolean bClickOnVoid;
 	private ArrayList<String> alSelected;		//Sélection
-	private String highlightParcours;
 	private HashMap<String,Point> clipBoardEdge;//Presse-Papier
 	private Point saveMousePosition;			//Sauvegarde de la dernière position de la souris (Voir MouseDragged)
 	private Point rectSelectionStartPoint;
@@ -75,7 +74,6 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		this.iHeightEdge = 50*iZoom;
 		this.iWidthEdge = 50*iZoom;
 		this.alSelected = new ArrayList<String>();
-		this.highlightParcours = "";
 		this.bDragged = false;
 		this.setBackground(style.getBackground());
 		this.addMouseListener(this);
@@ -91,47 +89,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		Graph graphLoaded = hci.getGraph();
 		
-		drawArcs(g2d);
-		String strSelected = "";
-		for(Vertex v : graphLoaded.getAlVertex()) {
-			for(Arc a : v.getAlArcs()) {
-				for(String s : alSelected) {
-					if(graphLoaded.isValued()) {	
-						if (graphLoaded.isDirected()) {
-							//Valué et orienté
-							strSelected = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"----->"+HCI.centerStr(a.getVertex().getName(),5);
-						} else {
-							//Valué et non orienté
-							strSelected = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"------"+HCI.centerStr(a.getVertex().getName(),5);	
-						}
-					} else {
-						if (graphLoaded.isDirected()) {
-							//Non valué et orienté
-							strSelected = HCI.centerStr(v.getName(),5)+"-------->"+HCI.centerStr(a.getVertex().getName(),5);
-						} else {
-							//Non valué et non orienté
-							strSelected = HCI.centerStr(v.getName(),5)+"---------"+HCI.centerStr(a.getVertex().getName(),5);
-						}
-					}
-					
-					if( strSelected.equals(s) || strSelected.equals(highlightParcours)) {
-						highlightArc(g2d, v, a);
-					}
-				}
-			}
-		}
-		drawVertex(g2d);
-		for(Vertex v : graphLoaded.getAlVertex()) {
-			for(String s : alSelected) {
-				if(v.getName().equals(s) || v.getName().equals(highlightParcours)) {
-					highlightEdge(g2d, v);
-				}
-			}
-		}
-
-		g2d.setColor(getContrastColor(style.getBackground()));
+		paintVertexAndArc(g2d);
+		
 		g2d.setStroke(pointille);
 		g2d.draw(rectSelection);
 		g2d.setStroke(new BasicStroke((float)iZoom+2));
@@ -165,17 +125,61 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		return null;
 	}
 	
+	public void paintVertexAndArc(Graphics2D g2d) {
+		Graph graphLoaded = hci.getGraph();
+		
+		drawArcs(g2d);
+		String strSelected = "";
+		for(Vertex v : graphLoaded.getAlVertex()) {
+			for(Arc a : v.getAlArcs()) {
+				for(String s : alSelected) {
+					if(graphLoaded.isValued()) {	
+						if (graphLoaded.isDirected()) {
+							//Valué et orienté
+							strSelected = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"----->"+HCI.centerStr(a.getVertex().getName(),5);
+						} else {
+							//Valué et non orienté
+							strSelected = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"------"+HCI.centerStr(a.getVertex().getName(),5);	
+						}
+					} else {
+						if (graphLoaded.isDirected()) {
+							//Non valué et orienté
+							strSelected = HCI.centerStr(v.getName(),5)+"-------->"+HCI.centerStr(a.getVertex().getName(),5);
+						} else {
+							//Non valué et non orienté
+							strSelected = HCI.centerStr(v.getName(),5)+"---------"+HCI.centerStr(a.getVertex().getName(),5);
+						}
+					}
+					
+					if( strSelected.equals(s)) {
+						highlightArc(g2d, v, a);
+					}
+				}
+			}
+		}
+		drawVertex(g2d);
+		for(Vertex v : graphLoaded.getAlVertex()) {
+			for(String s : alSelected) {
+				if(v.getName().equals(s)) {
+					highlightEdge(g2d, v);
+				}
+			}
+		}
+		
+		g2d.setColor(getContrastColor(style.getBackground()));
+		g2d.setStroke(pointille);
+		g2d.draw(rectSelection);
+		g2d.setStroke(new BasicStroke((float)iZoom+2));
+	}
+	
 	/**
 	 * Méthode gérant le surlignage d'un sommet
 	 * @param g2d 
 	 * @param v le sommet à surligner
 	 */
 	public void highlightEdge(Graphics2D g2d, Vertex v) {
-		if(v.getName().equals(highlightParcours)) {
-			g2d.setColor(new Color(20,255,20,50));
-		} else {
-			g2d.setColor(new Color(20,20,255,50));
-		}
+		g2d.setColor(new Color(20,20,255,50));
+
 		g2d.fillOval((int)(hci.getHmVertex().get(v.getName()).x-5*iZoom) , (int)(hci.getHmVertex().get(v.getName()).y-5*iZoom) , (int)((iWidthEdge+10)*iZoom)  , (int)((iHeightEdge+10)*iZoom  ));
 		g2d.setColor(Color.BLACK);
 	}
@@ -196,11 +200,8 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		Point pCenter1 = new Point( (int)(c1.getX()+iWidthEdge/2*iZoom) , (int)(c1.getY()+iHeightEdge/2*iZoom) );
 		Point pCenter2 = new Point( (int)(c2.getX()+iWidthEdge/2*iZoom) , (int)(c2.getY()+iHeightEdge/2*iZoom) );		
 		
-		if(v.getName().equals(highlightParcours)) {
-			g2d.setColor(new Color(20,255,20,50));
-		} else {
-			g2d.setColor(new Color(20,20,255,50));
-		}
+		g2d.setColor(new Color(20,20,255,50));
+		
 		g2d.setStroke(new BasicStroke((float)iZoom+2));
 		if(arc.getVertex() == v) {	//Arc partant d'un sommet et  pointant sur lui-même
 			g2d.drawArc((int)(c2.getX()+12.5*iZoom), (int)(c2.getY()+40*iZoom), (int)(25*iZoom), (int)(25*iZoom), 150, 240);
