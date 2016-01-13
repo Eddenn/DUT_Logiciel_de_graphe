@@ -41,7 +41,7 @@ public class PopupDeleteArc extends Popup {
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
 		
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
-			tabVertex[i] = (ctrl.getGraph().getAlVertex().get(i).getName() + "        ").substring(0, 4);
+			tabVertex[i] = (ctrl.getGraph().getAlVertex().get(i).getName());
 		}
 		
 		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
@@ -59,6 +59,9 @@ public class PopupDeleteArc extends Popup {
 		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
 		boxDep.addKeyListener(this);
+		if(hci.getAlSelected().size() == 2) {
+			boxDep.setSelectedItem(hci.getAlSelected().get(0));
+		}
 		panelComboBox.add(boxDep,"");
 		
 		// Gestion du sommet d'arrivé
@@ -66,6 +69,9 @@ public class PopupDeleteArc extends Popup {
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
 		boxArr.addKeyListener(this);
+		if(hci.getAlSelected().size() == 2) {
+			boxArr.setSelectedItem(hci.getAlSelected().get(1));
+		}
 		panelComboBox.add(boxArr);
 		
 		// Panel contenant le textField

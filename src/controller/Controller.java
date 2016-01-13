@@ -153,12 +153,18 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/**
-	 * Mï¿½thode permettant de charger un fichier texte
+	 * Méthode permettant de charger un fichier texte
 	 * 
-	 * @param strFileName
-	 *            le chemin du fichier à charger
+	 * @param strFileName le chemin du fichier à charger
+	 * @throws Exception 
 	 */
-	public void loadFile(String strFileName) {
+	public void loadFile(String strFileName) throws Exception {
+		
+		if(strFileName.indexOf(".txt") < 0){
+			hci.afficherMessage("Format de fichier invalide : .txt uniquement");
+			return;
+		}
+		
 		ReaderFile rf = new ReaderFile(strFileName);
 
 		graph = rf.getGraph();
@@ -177,7 +183,7 @@ public class Controller implements IControlable, IIhmable {
 		hci.setGraph(graph);
 		hci.permitModifArc(graph.isValued());
 
-		if (!bGraphWasNull && rf.haveCoord()) {
+		if (!bGraphWasNull && rf.hasCoord()) {
 			Point[] tPoints = rf.getPoints();
 			hci.initHmVertexByTab(tPoints);
 		} else {
