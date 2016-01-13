@@ -4,7 +4,7 @@
 	<meta charset="ISO-8859-1">
 	<link href= "DocUtilCss.css" type='text/css' rel='stylesheet'>
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<title>"Utilisation LPG</title>
+	<title>Utilisation LPG</title>
 <meta name="author" content="DUMONT Melanie">
 </head>
 
@@ -15,7 +15,7 @@
 				<img src="image/Logo.jpg" alt="LGP">
 			</div>
 			<div class="col-lg-10 col-md-10 col-sm-8 col-xs-8">
-				<h1>Logiciel pédagogique de graphe </h1> 
+				<h1>Logiciel pédagogique d'édition de graphe </h1> 
 				<h1> Manuel Utilisateur </h1>
 			</div> 
 		</header>
@@ -42,9 +42,9 @@
 				<td> <img src="image/Nouveau.png" alt="Nouveau Graphe"/> </td>
 				<td class=centrer> 
 				    Fichier &rarr; Nouveau </br>
-					Choix des paramètres: </br>
+					Choix des paramètres : </br>
 						Lors de la création d'un graphe vous pouvez choisir que votre graphe soit valué ou non et orienté ou non. </br>
-						Une fois cliqué sur valider, le graphe est crée et vous pouvez commencer à ajouter des <a href="composant.html">composants</a>
+						Une fois cliqué sur "Valider", le graphe est crée et vous pouvez commencer à ajouter des <a href="composant.html">composants</a>
 				</td>
 			</tr>
 		</table>
@@ -54,28 +54,26 @@
 			<tr>
 				<td><img src="image/Ouvrir.png" alt="Ouvrir Graphe"/></td>
 				<td>Cliquer sur l'icone ouvrir ou Fichier &rarr; Ouvrir </br>
-					Choisir un fichier contenant une <a href="#formatM">matrice</a> ou une <a href="#formatL">liste d'adjacence</a> dans le bon format, ou un graphe enregistrer. </br>
-					Cliquer sur ouvrir, le graphe va se charger.</td>
+					Choisir un fichier contenant une <a href="#formatM">matrice</a> ou une <a href="#formatL">liste d'adjacence</a> écrite selon le format imposé, ou un graphe enregistré. </br>
+					Cliquer sur ouvrir pour charger le graphe.</td>
 			</tr>		
 		</table>
 		
 		<h3 id="formatM"> Format de la matrice </h3>
-		<p>Pour ouvrir une matrice écrite à la main dans un fichier texte, le fichier doit respecter le format suivant: <br/>
-		-Pour un graphe non valué: </br></p>
+		<p>Pour ouvrir une matrice écrite à la main dans un fichier texte, le fichier doit respecter le format suivant : <br/>
+		- Pour un graphe non valué : </br></p>
 		<img class=centrer src="image/matrice non valué.png" alt="Matrice non valué"/>
 
-		<p> Mettre 0 quand il s'agit de l'arc lui-même </br>
-			Mettre 1 quand il y a un arc entre les deux sommets </br>
-			Mettre -1 quand il n'y a pas d'arc entre les deux sommets </br>
+		<p> Mettre 0 quand il n'y a pas d'arc. </br>
+			Mettre 1 quand il y a un arc entre les deux sommets. </br>
 			Attention à ne pas mettre d'espace à la fin des lignes ! 
 		</p>
 			
 		<img class=centrer src="image/matrice valué.png" alt="Matrice valué"/>
 		<p>Pour un graphe valué:</p>
-		<p> Mettre 0 quand il s'agit de l'arc lui-même </br>
-			 Mettre la valeur quand il y a un arc entre les sommets </br>
-			 Mettre -1 quand il n'y a pas d'arc entre les sommets </br>
-			 Attention à ne pas mettre d'espace à la fin des lignes !
+		<p> Mettre la valeur quand il y a un arc entre les sommets </br>
+			Mettre -1 quand il n'y a pas d'arc entre les sommets </br>
+			Attention à ne pas mettre d'espace à la fin des lignes !
 		</p>
 
 		<h3 id="formatL"> Format de la liste d'adjacence</h3>
@@ -90,8 +88,9 @@
 		<table>
 			<tr>
 				<td> <img src="image/enregistrer.png" alt="Enregistrer"/></td>
-				<td> Cliquer sur l'icone enregistrer ou faire fichier &rarr; enregistrer sous / enregistrer<br/>
-					Choisir le dossier où le fichier sera enregistrer et entrer le nom du document.</br>
+				<td> Cliquer sur l'icone Enregistrer ou faire Fichier &rarr; Enregistrer sous / Enregistrer<br/>
+					Choisir le dossier où le fichier sera enregistré et entrer le nom du document.</br>
+					Choisir le format désiré: matrice ou liste d'adjacence. <br/>
 					Si le fichier n'a pas été enregistrer une première fois, cliquer sur enregistrer ouvrira la fenêtre pour enregistrer sous</td>
 			</tr>	
 		</table>
@@ -99,9 +98,9 @@
 		<table>
 			<tr>
 				<td> <img src="image/Changement Liste.png" alt="Liste composant"/></td>
-				<td><p> Les informations sur le graphe sont stockés dans la liste sur la gauches.</br>
-					On peut y consulter les sommets et les arcs que possèdent le graphe. </br>
-					Pour passer de l'un à l'autre, il suffit de cliquer sur les flèches.
+				<td><p> Les informations sur le graphe sont stockées dans la liste sur la gauche.</br>
+					On peut y consulter les sommets et les arcs que possède le graphe. </br>
+					Pour passer de l'un à l'autre, il suffit de cliquer sur le bouton en haut de la liste.
 				</td>
 		</article>
 		
