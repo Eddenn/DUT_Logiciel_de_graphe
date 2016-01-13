@@ -1,9 +1,10 @@
 package model;
 
 /**
- * Classe permettant de gï¿½rer les arcs entre les sommets
+ * Classe permettant de gérer les arcs entre les sommets
  * 
  * @author Groupe 3
+ * @version 2016-01-13
  * 
  */
 

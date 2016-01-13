@@ -2,12 +2,24 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * Classe permettant de déterminer les sommets qui sont immédiatement atteignable depuis un sommet d'origine.
+ * @author Groupe 3
+ * @version 2016-01-13
+ */
+
 public class ListeFilsDuPere {
 	private int iSommet;
 	private ListeFilsDuPere listePere;
 	private ArrayList<ListeFilsDuPere> alFils;
 	private int iCpt;
 	
+	
+	/**
+	 * Crée une liste des fils du sommet courant
+	 * @param iSommet Le sommet courant
+	 * @param listePere 
+	 */
 	public ListeFilsDuPere(int iSommet, ListeFilsDuPere listePere) {
 		this.iSommet = iSommet;
 
