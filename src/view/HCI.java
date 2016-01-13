@@ -54,13 +54,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	// Main graph (draw)
 	private GraphPanel pGraph;
 	private JScrollPane jscrPanel;
+	private JPanel pInfo;
 
-	private JLabel lCoord;
+	private JLabel lCoord, lInfo;
+	private JButton buttonMatrix;
 
 	// Panel of JButton
  	private JPanel pButton,pTopButton,pBottomButton;
 	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonUndo, buttonRedo, buttonSetting;
 	private JButton buttonAddVertex,buttonUpdateVertex,buttonDeleteVertex,buttonAddArc,buttonUpdateArc,buttonDeleteArc;
+
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
@@ -293,10 +296,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// ---------Graph--------//
 		pGraph = new GraphPanel(this, ctrl);
+		
+		lCoord = new JLabel("");
+		
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
-		lCoord = new JLabel("");
 		panelCenter.add(jscrPanel);
 		panelCenter.add(lCoord, "South");
 		add(panelCenter, BorderLayout.CENTER);
@@ -792,6 +797,22 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public JLabel getLabelCoord() {
 		return this.lCoord;
+	}
+	
+	public void setInfo() {
+		String str;
+		str=("Graphe ");
+		if(graph.isDirected()){
+			str+=("orienté");
+		}else{
+			str+=("non orienté");
+		}
+		if(graph.isValued()){
+			str+=(" et valué");
+		}else{
+			str+=(" et non valué");
+		}
+		slObject.setInfo(str);
 	}
 
 	

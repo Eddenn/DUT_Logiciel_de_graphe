@@ -80,6 +80,7 @@ public class Controller implements IControlable, IIhmable {
 		hci.permitModifArc(graph.isValued());
 		hci.initHmVertex();
 		hci.refresh();
+		hci.setInfo();
 	}
 
 	/**
@@ -185,6 +186,7 @@ public class Controller implements IControlable, IIhmable {
 		
 		initProvSave();
 		hci.refresh();
+		hci.setInfo();
 	}
 
 	/**
