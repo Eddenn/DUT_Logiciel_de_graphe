@@ -119,7 +119,7 @@ public class PopupAddArc extends Popup {
 			}
 		}
 		else
-			JOptionPane.showMessageDialog(null, "Un arc doit appartenir à deux sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Un arc doit avoir une origine et une destination.", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override
