@@ -214,7 +214,7 @@ public class Graph {
 	
 	/**
 	 * Méthode qui retourner la liste des noms des sommets
-	 * @return tableau de charactère
+	 * @return tableau de caractères
 	 */
 	public char[] getListVertex() {
 		char[] tChar = new char[alVertex.size()];
@@ -262,6 +262,10 @@ public class Graph {
 		this.bValued = bValued;
 	}
 
+	/**
+	 * Méthode permettant d'obtenir la liste d'adjacence du graphe
+	 * @return Une string sous la forme "A:{B(6)}...."
+	 */
 	public String getFormattedList() {
 
 		HashMap<String, ArrayList<String>> hm = generateAdjacencyList();
@@ -285,6 +289,10 @@ public class Graph {
 		return sRet;
 	}
 
+	/**
+	 * Méthode permettant d'obtenir la liste d'adjacence du graphe
+	 * @return Une ArrayList de String donc chaque élément correspont à un sommet
+	 */
 	public ArrayList<String> getFormattedListAlString() {
 
 		HashMap<String, ArrayList<String>> hm = generateAdjacencyList();
@@ -355,6 +363,11 @@ public class Graph {
 		return sRet;
 	}
 	
+	/**
+	 * Méthode permettant de mettre à jour un sommet
+	 * @param oldName l'ancien nom du sommet
+	 * @param newName le nouveau nom du sommet
+	 */
 	public void updateVertex(String oldName, String newName) {
 		for (Vertex v : alVertex) {
 			if (v.getName().equals(oldName)) {
@@ -363,6 +376,11 @@ public class Graph {
 		}
 	}
 	
+	/**
+	 * Méthode permettant de modifier la valeur d'un arc
+	 * @param a L'arc à modifier
+	 * @param value la nouvelle valeur de l'arc
+	 */
 	public void updateArc(Arc a, int value) {
 		a.setValue(value);
 	}

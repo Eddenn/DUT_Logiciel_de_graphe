@@ -558,7 +558,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				try {
 					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 				} catch (Exception e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Les fchiers contiennent probablement des erreurs", "Erreur", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			// Enregistrer
@@ -602,7 +602,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource() == tabMenuItemExport[1]) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath() + ".pdf", this);
+				PdfGenerator.generer(graph, dial.getSelectedFile().getAbsolutePath() + ".pdf", this);
 			// Matrice
 		} else if (e.getSource() == tabMenuItemExport[2]) {
 			JFileChooser dial = new JFileChooser(new File("."));
