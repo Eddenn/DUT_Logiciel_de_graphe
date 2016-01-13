@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import controller.Controller;
 
 /**
- * Classe qui gère la fenètre utilisateur pour ajouter un sommet.
+ * Classe qui gère la fenêtre utilisateur pour ajouter un sommet.
  * @author Groupe 3
  * @version 2016-01-12
  */
