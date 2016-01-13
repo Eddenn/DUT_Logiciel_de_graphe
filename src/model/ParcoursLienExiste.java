@@ -70,10 +70,8 @@ public class ParcoursLienExiste implements IParcourable {
 		colArcActif = sommetActif;
 		
 		ListeFilsDuPere lfdp = new ListeFilsDuPere(sommetActif, null);
-
-		boolean bContinu = true;
-
-		bContinu = recurr(lfdp);
+		
+		recurr(lfdp);
 
 		if (lfdpArrive != null) {
 			lfdp = lfdpArrive;

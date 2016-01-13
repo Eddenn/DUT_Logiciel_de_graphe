@@ -33,7 +33,6 @@ public class PopupNewGraph extends Popup  {
 	 * @param ctrl le controleur utilisé
 	 * @param hci le hci utilisé
 	 */
-	@SuppressWarnings("rawtypes")
 	public PopupNewGraph(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		this.bEnd = false;
