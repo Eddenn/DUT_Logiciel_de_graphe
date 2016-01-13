@@ -155,9 +155,20 @@ public class Controller implements IControlable, IIhmable {
 	 * Mï¿½thode permettant de charger un fichier texte
 	 * 
 	 * @param strFileName
+<<<<<<< HEAD
+	 *            le chemin du fichier é charger
+	 * @throws Exception 
+=======
 	 *            le chemin du fichier à charger
+>>>>>>> branch 'master' of https://MagicTruite@bitbucket.org/projettuteur/graphix.git
 	 */
-	public void loadFile(String strFileName) {
+	public void loadFile(String strFileName) throws Exception {
+		
+		if(strFileName.indexOf(".txt") < 0){
+			hci.afficherMessage("Format de fichier invalide : .txt uniquement");
+			return;
+		}
+		
 		ReaderFile rf = new ReaderFile(strFileName);
 
 		graph = rf.getGraph();

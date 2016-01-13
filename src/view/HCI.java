@@ -22,6 +22,7 @@ import model.Vertex;
 
 /**
  * Classe principale de l'IHM
+ * 
  * @author Groupe 3
  * @version 2016-01-12
  */
@@ -45,7 +46,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemExport = new JMenuItem[4];
 	private JMenuItem[] tabMenuItemGraph = new JMenuItem[7];
-	private JMenuItem[] tabMenuItemAlgo= new JMenuItem[3];
+	private JMenuItem[] tabMenuItemAlgo = new JMenuItem[3];
 	private JMenuItem[] tabMenuItemAide = new JMenuItem[2];
 
 	// List of "Object"
@@ -58,23 +59,25 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JLabel lCoord;
 
 	// Panel of JButton
- 	private JPanel pButton,pTopButton,pBottomButton;
-	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonUndo, buttonRedo, buttonSetting;
-	private JButton buttonAddVertex,buttonUpdateVertex,buttonDeleteVertex,buttonAddArc,buttonUpdateArc,buttonDeleteArc;
+	private JPanel pButton, pTopButton, pBottomButton;
+	private JButton buttonNew, buttonOpen, buttonSave, buttonZoomIn, buttonZoomOut, buttonUndo, buttonRedo,
+			buttonSetting;
+	private JButton buttonAddVertex, buttonUpdateVertex, buttonDeleteVertex, buttonAddArc, buttonUpdateArc,
+			buttonDeleteArc;
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
-	
+
 	// JDialog de matrice
 	private JDialog matrixDialog;
-	
+
 	// Booleen permettant de savoir si l'utilisateur vient de sauvegarder
 	boolean bSaved;
 
 	public HCI(Controller controller) {
 		this.ctrl = controller;
 		this.graph = controller.getGraph();
-		
+
 		// basic parameters of this frame
 		this.setTitle("Logiciel pédagogique d'édition de graphe");
 
@@ -89,7 +92,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.setFocusable(true);
 		this.setFocusTraversalKeysEnabled(false);
 
-		
 		// **---Contents of this frame---**//
 		// ---Menu bar---//
 		menuBarMain = new JMenuBar();
@@ -145,7 +147,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		menuEdition.add(tabMenuItemEdition[0]);
 
 		// MenuItem - Répéter
-		tabMenuItemEdition[1] = new JMenuItem("<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
+		tabMenuItemEdition[1] = new JMenuItem(
+				"<html>Répéter&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+Y</i></html>");
 		tabMenuItemEdition[1].addActionListener(this);
 		menuEdition.add(tabMenuItemEdition[1]);
 
@@ -190,11 +193,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemExport[1] = new JMenuItem("Fichier PDF  ");
 		tabMenuItemExport[1].addActionListener(this);
 		menuExport.add(tabMenuItemExport[1]);
-		//MenuItem - Matrice
+		// MenuItem - Matrice
 		tabMenuItemExport[2] = new JMenuItem("Matrice  ");
 		tabMenuItemExport[2].addActionListener(this);
 		menuExport.add(tabMenuItemExport[2]);
-		//MenuItem - Liste d'adjacence
+		// MenuItem - Liste d'adjacence
 		tabMenuItemExport[3] = new JMenuItem("Liste d'adjacence  ");
 		tabMenuItemExport[3].addActionListener(this);
 		menuExport.add(tabMenuItemExport[3]);
@@ -217,10 +220,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemGraph[2] = new JMenuItem("<html>Supprimer un sommet</html>");
 		tabMenuItemGraph[2].addActionListener(this);
 		menuGraph.add(tabMenuItemGraph[2]);
-		
+
 		// Separator
 		menuGraph.addSeparator();
-		
+
 		// MenuItem - Coloriser un sommet
 		tabMenuItemGraph[3] = new JMenuItem("<html>Coloriser un sommet</html>");
 		tabMenuItemGraph[3].addActionListener(this);
@@ -238,7 +241,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemGraph[5] = new JMenuItem("<html>Modifier un arc</html>");
 		tabMenuItemGraph[5].addActionListener(this);
 		menuGraph.add(tabMenuItemGraph[5]);
-		
+
 		// MenuItem - Supprimer un arc
 		tabMenuItemGraph[6] = new JMenuItem("<html>Supprimer un arc</html>");
 		tabMenuItemGraph[6].addActionListener(this);
@@ -248,32 +251,32 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		menuBarMain.add(menuGraph);
 
 		menuAlgo = new JMenu("Algorithme");
-		//MenuItem - PlusGrandeValeur
+		// MenuItem - PlusGrandeValeur
 		tabMenuItemAlgo[0] = new JMenuItem("PlusGrandeValeur");
 		tabMenuItemAlgo[0].addActionListener(this);
 		menuAlgo.add(tabMenuItemAlgo[0]);
-		
-		//MenuItem - RechercheChemin
+
+		// MenuItem - RechercheChemin
 		tabMenuItemAlgo[1] = new JMenuItem("Recherche chemin");
 		tabMenuItemAlgo[1].addActionListener(this);
 		menuAlgo.add(tabMenuItemAlgo[1]);
-		
-		//Menu Item - Dijkstra-Moore
+
+		// Menu Item - Dijkstra-Moore
 		tabMenuItemAlgo[2] = new JMenuItem("Dijkstra-Moore");
 		tabMenuItemAlgo[2].addActionListener(this);
 		menuAlgo.add(tabMenuItemAlgo[2]);
-		
+
 		menuBarMain.add(menuAlgo);
-		
+
 		menuAide = new JMenu("Aide");
 
 		// MenuItem - A Propos
 		tabMenuItemAide[0] = new JMenuItem("<html>&Agrave; propos</html>");
 		tabMenuItemAide[0].addActionListener(this);
 		menuAide.add(tabMenuItemAide[0]);
-		
-		//Menu Item - Manuel Utilisateur
-		tabMenuItemAide[1]=new JMenuItem("Manuel Utilisateur");
+
+		// Menu Item - Manuel Utilisateur
+		tabMenuItemAide[1] = new JMenuItem("Manuel Utilisateur");
 		tabMenuItemAide[1].addActionListener(this);
 		menuAide.add(tabMenuItemAide[1]);
 
@@ -303,70 +306,73 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// ----------------------//
 
 		// -------ButtonBar------//
-		pButton = new JPanel(new GridLayout(1,2));
+		pButton = new JPanel(new GridLayout(1, 2));
 		pButton.setBackground(Color.WHITE);
 		pButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		pTopButton = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		// New file
-		buttonNew = initSmoothButton("Nouveau","/nouveau.png","/nouveau_rollover.png");
+		buttonNew = initSmoothButton("Nouveau", "/nouveau.png", "/nouveau_rollover.png");
 		pTopButton.add(buttonNew);
 		// Open file
-		buttonOpen = initSmoothButton("Ouvrir","/ouvrir.png","/ouvrir_rollover.png");
+		buttonOpen = initSmoothButton("Ouvrir", "/ouvrir.png", "/ouvrir_rollover.png");
 		pTopButton.add(buttonOpen);
 		// Save file
-		buttonSave = initSmoothButton("Enregistrer","/enregistrer.png","/enregistrer_rollover.png");
+		buttonSave = initSmoothButton("Enregistrer", "/enregistrer.png", "/enregistrer_rollover.png");
 		pTopButton.add(buttonSave);
 		// Zoom in
-		buttonZoomIn = initSmoothButton("Agrandir","/zoom_In.png","/zoom_In_rollover.png");
+		buttonZoomIn = initSmoothButton("Agrandir", "/zoom_In.png", "/zoom_In_rollover.png");
 		pTopButton.add(buttonZoomIn);
 		// Zoom out
-		buttonZoomOut = initSmoothButton("Réduire","/zoom_Out.png","/zoom_Out_rollover.png");
+		buttonZoomOut = initSmoothButton("Réduire", "/zoom_Out.png", "/zoom_Out_rollover.png");
 		pTopButton.add(buttonZoomOut);
 		// Undo
-		buttonUndo = initSmoothButton("Défaire","/undo.png","/undo_rollover.png");
+		buttonUndo = initSmoothButton("Défaire", "/undo.png", "/undo_rollover.png");
 		pTopButton.add(buttonUndo);
 		// Redo
-		buttonRedo = initSmoothButton("Refaire","/redo.png","/redo_rollover.png");
+		buttonRedo = initSmoothButton("Refaire", "/redo.png", "/redo_rollover.png");
 		pTopButton.add(buttonRedo);
 		// Parametre
-		buttonSetting = initSmoothButton("Paramètres","/parametre.png","/parametre_rollover.png");
+		buttonSetting = initSmoothButton("Paramètres", "/parametre.png", "/parametre_rollover.png");
 		pTopButton.add(buttonSetting);
 
 		pButton.add(pTopButton);
-		
+
 		pBottomButton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		// Ajouter un sommet
-		buttonAddVertex = initSmoothButton("Ajouter un sommet","/ajouterSommet.png","/ajouterSommet_rollover.png");
+		buttonAddVertex = initSmoothButton("Ajouter un sommet", "/ajouterSommet.png", "/ajouterSommet_rollover.png");
 		pBottomButton.add(buttonAddVertex);
 		// Modifier un sommet
-		buttonUpdateVertex = initSmoothButton("Modifier un sommet","/modifierSommet.png","/modifierSommet_rollover.png");
+		buttonUpdateVertex = initSmoothButton("Modifier un sommet", "/modifierSommet.png",
+				"/modifierSommet_rollover.png");
 		pBottomButton.add(buttonUpdateVertex);
 		// Supprimer un sommet
-		buttonDeleteVertex = initSmoothButton("Supprimer un sommet","/supprimerSommet.png","/supprimerSommet_rollover.png");
+		buttonDeleteVertex = initSmoothButton("Supprimer un sommet", "/supprimerSommet.png",
+				"/supprimerSommet_rollover.png");
 		pBottomButton.add(buttonDeleteVertex);
-		
-		//Separator
-		JButton buttonSeparator = initSmoothButton("","/separator.png","/separator.png");
-		buttonSeparator.setEnabled(false);;
+
+		// Separator
+		JButton buttonSeparator = initSmoothButton("", "/separator.png", "/separator.png");
+		buttonSeparator.setEnabled(false);
+		;
 		pBottomButton.add(buttonSeparator);
-		
+
 		// Ajouter un sommet
-		buttonAddArc = initSmoothButton("Ajouter un arc","/ajouterArc.png","/ajouterArc_rollover.png");
+		buttonAddArc = initSmoothButton("Ajouter un arc", "/ajouterArc.png", "/ajouterArc_rollover.png");
 		pBottomButton.add(buttonAddArc);
 		// Modifier un sommet
-		buttonUpdateArc = initSmoothButton("Modifier un arc","/modifierArc.png","/modifierArc_rollover.png");
+		buttonUpdateArc = initSmoothButton("Modifier un arc", "/modifierArc.png", "/modifierArc_rollover.png");
 		pBottomButton.add(buttonUpdateArc);
 		// Supprimer un sommet
-		buttonDeleteArc = initSmoothButton("Supprimer un arc","/supprimerArc.png","/supprimerArc_rollover.png");
+		buttonDeleteArc = initSmoothButton("Supprimer un arc", "/supprimerArc.png", "/supprimerArc_rollover.png");
 		pBottomButton.add(buttonDeleteArc);
-		
+
 		pButton.add(pBottomButton);
-		
+
 		add(pButton, BorderLayout.NORTH);
-		
+
 		// Instancitation du menu contextuel et de ses éléments
 		popMenu = new JPopupMenu();
 		// MenuItem - Ajouter un sommet
@@ -386,12 +392,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// Separator
 		popMenu.addSeparator();
-		
+
 		// MenuItem - Coloriser un sommet
 		popUpItem[3] = new JMenuItem("<html>Coloriser un sommet</html>");
 		popUpItem[3].addActionListener(this);
 		popMenu.add(popUpItem[3]);
-		
+
 		// Separator
 		popMenu.addSeparator();
 
@@ -404,7 +410,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		popUpItem[5] = new JMenuItem("<html>Modifier un arc</html>");
 		popUpItem[5].addActionListener(this);
 		popMenu.add(popUpItem[5]);
-		
+
 		// MenuItem - Supprimer un arc
 		popUpItem[6] = new JMenuItem("<html>Supprimer un arc</html>");
 		popUpItem[6].addActionListener(this);
@@ -419,50 +425,50 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		pGraph.setPreferredSize(
 				new Dimension((int) (600 + pGraph.getiWidthEdge()), (int) (yInitialize + pGraph.getiHeightEdge())));
 		pack();
-		
+
 		this.addKeyListener(pGraph);
 	}
 
 	public void openMatrix(int[][] tMatrix) {
 		String str = "<html><body><table><tbody><tr>";
-		for(Vertex v : this.getGraph().getAlVertex()) {
-			str += "<td style=\"border: 1px solid black;\">"+v.getName().charAt(0)+"</td>";
+		for (Vertex v : this.getGraph().getAlVertex()) {
+			str += "<td style=\"border: 1px solid black;\">" + v.getName().charAt(0) + "</td>";
 		}
 		str += "</tr>";
-		for(int i=0; i<tMatrix.length ;i++) {
+		for (int i = 0; i < tMatrix.length; i++) {
 			str += "<tr>";
-			for(int j=0; j<tMatrix[0].length ;j++) {
-				str += "<td style=\"border: 1px solid black;\">"+String.valueOf(tMatrix[i][j])+"</td>";
+			for (int j = 0; j < tMatrix[0].length; j++) {
+				str += "<td style=\"border: 1px solid black;\">" + String.valueOf(tMatrix[i][j]) + "</td>";
 			}
 			str += "</tr>";
 		}
 		str += "</tbody></table></body></html>";
-		matrixDialog = new JDialog(this,"Matrice");
+		matrixDialog = new JDialog(this, "Matrice");
 		JPanel pStr = new JPanel();
 		pStr.add(new JLabel(str));
 		matrixDialog.setContentPane(pStr);
 		matrixDialog.pack();
 		matrixDialog.setVisible(true);
 	}
-	
+
 	public JDialog getMatrixDialog() {
 		return matrixDialog;
 	}
-	
-	public JButton initSmoothButton(String toolTipsText,String icon, String icon_rollover) {
+
+	public JButton initSmoothButton(String toolTipsText, String icon, String icon_rollover) {
 		// Parametre
 		JButton button = new JButton(new ImageIcon(getClass().getResource(icon)));
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
 		button.setRolloverIcon(new ImageIcon(getClass().getResource(icon_rollover)));
 		button.setMargin(new Insets(0, 0, 0, 0));
-		button.setBackground(new Color(255,255,255));
-		button.setForeground(new Color(255,255,255));
+		button.setBackground(new Color(255, 255, 255));
+		button.setForeground(new Color(255, 255, 255));
 		button.setToolTipText(toolTipsText);
 		button.addActionListener(this);
 		return button;
 	}
-	
+
 	/**
 	 * Méthode qui initialise l'HashMap de sommet
 	 */
@@ -482,11 +488,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 		}
 	}
-	
+
 	public void initHmVertexByTab(Point[] tab) {
 		// Initialization of hmVertex
 		hmVertex = new HashMap<String, Point>();
-		
+
 		ArrayList<Vertex> alVertex = ctrl.getGraph().getAlVertex();
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
 			hmVertex.put(alVertex.get(i).getName(), tab[i]);
@@ -494,53 +500,62 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {		
+	public void actionPerformed(ActionEvent e) {
 		// Switch the state of the SwitchList
 		if (e.getSource() == slObject.getJBSwitch()) {
 			slObject.switchState();
 
-		/*-- FICHIER --*/
+			/*-- FICHIER --*/
 			// Nouveau
-		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {	
+		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
 			if (bSaved == false) {
-				// On propose à l'utilisateur de sauvegarder son travail avant de continuer
-				String[] tabVal = {"Enregistrer et continuer", "Continuer sans enregistrer", "Annuler" };
-				int val =  JOptionPane.showOptionDialog(this, "La création d'un nouveau graphe entrainera la perte du graphe actuel s'il n'a pas été sauvegardé. \nVoulez vous continuer ?", "Création d'un nouveau graphe",  JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,tabVal,tabVal[0]);
-				
+				// On propose à l'utilisateur de sauvegarder son travail avant
+				// de continuer
+				String[] tabVal = { "Enregistrer et continuer", "Continuer sans enregistrer", "Annuler" };
+				int val = JOptionPane.showOptionDialog(this,
+						"La création d'un nouveau graphe entrainera la perte du graphe actuel s'il n'a pas été sauvegardé. \nVoulez vous continuer ?",
+						"Création d'un nouveau graphe", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+						tabVal, tabVal[0]);
+
 				if (val == 0) {
-					if(ctrl.getFile().equals(""))
+					if (ctrl.getFile().equals(""))
 						saveDialog();
 					else
 						ctrl.saveFile("", "adjacence");
 					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
-				}
-				else if (val == 1) new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
-			}
-			else
+				} else if (val == 1)
+					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
+			} else
 				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
-			
+
 		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
 			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
+				try {
+					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					return;
+				}
 			// Enregistrer
-		} else if (e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave) {
-			if(ctrl.getFile().equals("")){
+		} else if (e.getSource() == tabMenuItemFile[2] || e.getSource() == buttonSave) {
+			if (ctrl.getFile().equals("")) {
 				saveDialog();
-			}else{
+			} else {
 				ctrl.saveFile("", "adjacence");
 			}
 			// Enregistrer sous
-		} else if (e.getSource()==tabMenuItemFile[3]) {
+		} else if (e.getSource() == tabMenuItemFile[3]) {
 			saveDialog();
 			// Quitter
 		} else if (e.getSource() == tabMenuItemFile[4]) {
 			System.exit(0);
-			
-		/*-- EDITION --*/
+
+			/*-- EDITION --*/
 		} else if (e.getSource() == tabMenuItemEdition[0] || e.getSource() == buttonUndo) {
 			ctrl.undo();
 			bSaved = false;
@@ -549,17 +564,17 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			ctrl.redo();
 			bSaved = false;
 			this.refresh();
-		
-		} else if (e.getSource() == tabMenuItemEdition[2] ) {
+
+		} else if (e.getSource() == tabMenuItemEdition[2]) {
 			pGraph.cutEdge();
-		} else if (e.getSource() == tabMenuItemEdition[3] ) {
+		} else if (e.getSource() == tabMenuItemEdition[3]) {
 			pGraph.copyEdge();
-		} else if (e.getSource() == tabMenuItemEdition[4] ) {
+		} else if (e.getSource() == tabMenuItemEdition[4]) {
 			pGraph.pasteEdge();
-		} else if (e.getSource() == tabMenuItemEdition[5] ) {
+		} else if (e.getSource() == tabMenuItemEdition[5]) {
 			pGraph.selectAll();
-			
-		/*-- EXPORTER --*/
+
+			/*-- EXPORTER --*/
 			// Image
 		} else if (e.getSource() == tabMenuItemExport[0]) {
 			expImage();
@@ -568,25 +583,27 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
 				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath() + ".pdf", this);
-			//Matrice
-		}else if(e.getSource()==tabMenuItemExport[2]){
+			// Matrice
+		} else if (e.getSource() == tabMenuItemExport[2]) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.export(dial.getSelectedFile().getAbsolutePath() + ".txt","matrice");
-			//Liste d'adjacence
-		}else if(e.getSource()==tabMenuItemExport[3]){
+				ctrl.export(dial.getSelectedFile().getAbsolutePath() + ".txt", "matrice");
+			// Liste d'adjacence
+		} else if (e.getSource() == tabMenuItemExport[3]) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.export(dial.getSelectedFile().getAbsolutePath() + ".txt","liste");
-		/*-- GRAPHE --*/
+				ctrl.export(dial.getSelectedFile().getAbsolutePath() + ".txt", "liste");
+			/*-- GRAPHE --*/
 			// Ajouter un sommet
-		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0] || e.getSource() == buttonAddVertex) {
+		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0]
+				|| e.getSource() == buttonAddVertex) {
 			new PopupAddVertex("Ajouter un sommet", true, ctrl, this);
 			bSaved = false;
-			
+
 			// Modifier un sommet
-		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1] || e.getSource() == buttonUpdateVertex) {
-			if(pGraph.getAlSelected().size() > 1 ) {
+		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1]
+				|| e.getSource() == buttonUpdateVertex) {
+			if (pGraph.getAlSelected().size() > 1) {
 				showError("Veuillez sélectionner un seul sommet.");
 			} else if (pGraph.getAlSelected().size() == 0 || pGraph.getAlSelected().get(0).charAt(0) == ' ') {
 				showError("Veuillez sélectionner un sommet.");
@@ -594,9 +611,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				new PopupUpdateVertex("Modifier un sommet", true, ctrl, this);
 				bSaved = false;
 			}
-			
+
 			// Supprimer un sommet
-		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2] || e.getSource() == buttonDeleteVertex) {
+		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2]
+				|| e.getSource() == buttonDeleteVertex) {
 			ctrl.deleteMultipleVertex(pGraph.getAlSelected());
 			setAlSelected(new ArrayList<String>());
 			bSaved = false;
@@ -607,48 +625,51 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			bSaved = false;
 
 			// Ajouter un arc
-		} else if (e.getSource() == tabMenuItemGraph[4] || e.getSource() == popUpItem[4] || e.getSource() == buttonAddArc) {
+		} else if (e.getSource() == tabMenuItemGraph[4] || e.getSource() == popUpItem[4]
+				|| e.getSource() == buttonAddArc) {
 			new PopupAddArc("Ajout d'un arc", true, ctrl, this);
 			bSaved = false;
-			
+
 			// Mofidier un arc
-		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5] || e.getSource() == buttonUpdateArc) {
+		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5]
+				|| e.getSource() == buttonUpdateArc) {
 			new PopupUpdateArc("Modifier un arc", true, ctrl, this);
 			bSaved = false;
 
 			// Supprimer un arc
-		} else if (e.getSource() == tabMenuItemGraph[6] || e.getSource() == popUpItem[6] || e.getSource() == buttonDeleteArc) {
+		} else if (e.getSource() == tabMenuItemGraph[6] || e.getSource() == popUpItem[6]
+				|| e.getSource() == buttonDeleteArc) {
 			new PopupDeleteArc("Supprimer un arc", true, ctrl, this);
 			bSaved = false;
-		
-		/*--ALGORITHMES--*/
-			//Plus grande valeur
-		}else if(e.getSource()== tabMenuItemAlgo[0]){
+
+			/*--ALGORITHMES--*/
+			// Plus grande valeur
+		} else if (e.getSource() == tabMenuItemAlgo[0]) {
 			showInfo("Lancement de l'algorithme");
 			ctrl.startParcours();
-			//Rechercher chemin
-		}else if(e.getSource()==tabMenuItemAlgo[1]){
+			// Rechercher chemin
+		} else if (e.getSource() == tabMenuItemAlgo[1]) {
 			new PopupAlgoRC("Algorithme de recherche de chemin", true, ctrl, this);
-			
-			//Dijkstra-Moore
-		}else if(e.getSource()==tabMenuItemAlgo[2]){
+
+			// Dijkstra-Moore
+		} else if (e.getSource() == tabMenuItemAlgo[2]) {
 			new PopupAlgoDM("Algorithme de Dijkstra-Moore", true, ctrl, this);
 
-		/*-- AIDE --*/
-		}else if (e.getSource() == tabMenuItemAide[0]) { // A propos
+			/*-- AIDE --*/
+		} else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
 					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchinï¿½Nicolas<br/>Dumont Mï¿½lanie<br/>Hazard Alexandre</center></html>",
 					"A propos", 1);
-		}else if(e.getSource()==tabMenuItemAide[1]){
+		} else if (e.getSource() == tabMenuItemAide[1]) {
 			ctrl.openHelp();
 
-		/*-- BUTTON --*/
+			/*-- BUTTON --*/
 			// Zoom in
 		} else if (e.getSource() == buttonZoomIn) {
 			pGraph.zoomIn();
 			pGraph.repaint();
 			pGraph.revalidate();
-			
+
 			// Zoom out
 		} else if (e.getSource() == buttonZoomOut) {
 			pGraph.zoomOut();
@@ -656,8 +677,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			pGraph.revalidate();
 			// Paramètres
 		} else if (e.getSource() == buttonSetting) {
-			new PopupSetting("Paramètres",true,ctrl,this);
-		} 
+			new PopupSetting("Paramètres", true, ctrl, this);
+		}
 		refresh();
 	}
 
@@ -665,13 +686,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getSource() == slObject.getListOfObject()) {
 			pGraph.getAlSelected().clear();
-			for( String s : slObject.getListOfObject().getSelectedValuesList() ) {
+			for (String s : slObject.getListOfObject().getSelectedValuesList()) {
 				pGraph.getAlSelected().add(s);
 			}
 			repaint();
 		}
 	}
-	
+
 	/**
 	 * Méthode permettant d'exporter le graphe en image.
 	 */
@@ -716,6 +737,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Méthode utiliser pour centrer une chaine de caractère
+	 * 
 	 * @param str
 	 * @param size
 	 * @return
@@ -736,7 +758,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Méthode permettant d'ajouter un sommet
-	 * @param strName le nom du sommet
+	 * 
+	 * @param strName
+	 *            le nom du sommet
 	 */
 	public void addVertex(String strName) {
 		hmVertex.put(strName, new Point(1, 1));
@@ -754,16 +778,18 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Méthode utiliser pour afficher un message d'erreur
-	 * @param strError le chaine de caractère à afficher
+	 * 
+	 * @param strError
+	 *            le chaine de caractère à afficher
 	 */
 	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	public void showInfo(String strInfo) {
 		JOptionPane.showMessageDialog(null, strInfo, "Information", JOptionPane.INFORMATION_MESSAGE);
 	}
-	
+
 	/*--------------------
 	 * Getters et Setters 
 	 *-------------------*/
@@ -786,6 +812,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public SwitchList getSlObject() {
 		return this.slObject;
 	}
+
 	public GraphPanel getGraphPanel() {
 		return pGraph;
 	}
@@ -794,27 +821,29 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		return this.lCoord;
 	}
 
-	
 	public Controller getController() {
 		return this.ctrl;
 	}
 
-	public JPopupMenu getPopMenu() { return this.popMenu;}
-	
+	public JPopupMenu getPopMenu() {
+		return this.popMenu;
+	}
+
 	public void setGraph(Graph g) {
 		this.graph = g;
 	}
-	
-	public void permitModifArc (boolean b) {
+
+	public void permitModifArc(boolean b) {
 		tabMenuItemGraph[5].setEnabled(b);
 		popUpItem[5].setEnabled(b);
 		buttonUpdateArc.setEnabled(b);
 	}
 
 	public void saveDialog() {
-		
-		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Enregistrer en matrice (*.txt)", ".txt");
-		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter("Enregistrer en liste d'adjacence (*.txt)", ".txt");
+
+		FileNameExtensionFilter filterMatrix = new FileNameExtensionFilter("Enregistrer en matrice (*.txt)", ".txt");
+		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter(
+				"Enregistrer en liste d'adjacence (*.txt)", ".txt");
 
 		JFileChooser dial = new JFileChooser(new File("."));
 		dial.setAcceptAllFileFilterUsed(false);
@@ -832,10 +861,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			if (extension.equals("Export en liste d'adjacence (*.txt)")) {
 				format = "adjacence";
 			}
-			
+
 			String path = dial.getSelectedFile().getAbsolutePath();
-			if(path.substring(path.lastIndexOf("\\")).lastIndexOf(".")!=-1) {
-				ctrl.saveFile(path.substring(0,path.lastIndexOf(".")) + ".txt", format);
+			if (path.substring(path.lastIndexOf("\\")).lastIndexOf(".") != -1) {
+				ctrl.saveFile(path.substring(0, path.lastIndexOf(".")) + ".txt", format);
 			} else {
 				ctrl.saveFile(path + ".txt", format);
 			}
@@ -846,14 +875,18 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void startParcours() {
 		ctrl.startParcours();
 	}
-	
+
+	public void afficherMessage(String s) {
+		javax.swing.JOptionPane.showMessageDialog(null, s);
+	}
+
 	public void setBSaved(boolean b) {
 		bSaved = b;
 	}
 
 	public void showHiLightAlgorithm() {
 		ArrayList<String> alSelected = pGraph.getAlSelected();
-		
+
 		alSelected.clear();
 
 		for (Vertex vertex : graph.getAlVertex()) {
@@ -863,30 +896,36 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 			for (Arc arc : vertex.getAlArcs()) {
 				if (ctrl.arcActif(vertex.getName().charAt(0), arc.getVertex().getName().charAt(0))) {
-					if(graph.isValued()) {	
+					if (graph.isValued()) {
 						if (graph.isDirected()) {
-							//Valué et orienté
-							alSelected.add(HCI.centerStr(vertex.getName(),5)+"------"+HCI.centerStr(""+arc.getIValue(),7)+"----->"+HCI.centerStr(arc.getVertex().getName(),5));
+							// Valué et orienté
+							alSelected.add(HCI.centerStr(vertex.getName(), 5) + "------"
+									+ HCI.centerStr("" + arc.getIValue(), 7) + "----->"
+									+ HCI.centerStr(arc.getVertex().getName(), 5));
 						} else {
-							//Valué et non orienté
-							alSelected.add(HCI.centerStr(vertex.getName(),5)+"------"+HCI.centerStr(""+arc.getIValue(),7)+"------"+HCI.centerStr(arc.getVertex().getName(),5));	
+							// Valué et non orienté
+							alSelected.add(HCI.centerStr(vertex.getName(), 5) + "------"
+									+ HCI.centerStr("" + arc.getIValue(), 7) + "------"
+									+ HCI.centerStr(arc.getVertex().getName(), 5));
 						}
 					} else {
 						if (graph.isDirected()) {
-							//Non valué et orienté
-							alSelected.add(HCI.centerStr(vertex.getName(),5)+"-------->"+HCI.centerStr(arc.getVertex().getName(),5));
+							// Non valué et orienté
+							alSelected.add(HCI.centerStr(vertex.getName(), 5) + "-------->"
+									+ HCI.centerStr(arc.getVertex().getName(), 5));
 						} else {
-							//Non valué et non orienté
-							alSelected.add(HCI.centerStr(vertex.getName(),5)+"---------"+HCI.centerStr(arc.getVertex().getName(),5));
+							// Non valué et non orienté
+							alSelected.add(HCI.centerStr(vertex.getName(), 5) + "---------"
+									+ HCI.centerStr(arc.getVertex().getName(), 5));
 						}
 					}
 				}
 			}
 		}
-		
-		//System.out.println(alParcours);
-		
-		pGraph.paintVertexAndArc((Graphics2D)pGraph.getGraphics());
-		//pGraph.paintAll(pGraph.getGraphics());
+
+		// System.out.println(alParcours);
+
+		pGraph.paintVertexAndArc((Graphics2D) pGraph.getGraphics());
+		// pGraph.paintAll(pGraph.getGraphics());
 	}
 }
