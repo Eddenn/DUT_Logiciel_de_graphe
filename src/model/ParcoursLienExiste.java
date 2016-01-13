@@ -75,6 +75,10 @@ public class ParcoursLienExiste implements IParcourable {
 
 		bContinu = recurr(lfdp);
 
+		sommetActif = lfdpArrive.getSommet();
+		ligArcActif = lfdpArrive.getSommet();
+		colArcActif = lfdpArrive.getPere().getSommet();
+		
 		if (lfdpArrive != null) {
 			lfdp = lfdpArrive;
 
@@ -91,11 +95,13 @@ public class ParcoursLienExiste implements IParcourable {
 			}
 		}
 
+		ctrl.majIHM();
+		
 		if (iValeurChemin == -1) {
 			message = "Il n'y a pas de chemin entre " + lstSommet[sommetDepart] + " et " + lstSommet[sommetArrive]
 					+ ".";
 		} else {
-			message = "Le chemin de " + lstSommet[sommetDepart] + " à " + lstSommet[sommetArrive] + " vaut "
+			message = "Il existe un chemin partant de " + lstSommet[sommetDepart] + " vers " + lstSommet[sommetArrive] + " vallant "
 					+ iValeurChemin;
 		}
 	}
