@@ -69,7 +69,13 @@ public class Parcours implements IParcourable {
 			}
 		}
 
-		this.message = "Le max ainsi trouvé vaut " + max;
+		if (max == -1) {
+			this.message = "Aucune valeur n'a été trouvée";
+		}
+		else {
+			message = "Le max ainsi trouvé vaut " + max;
+		}
+
 		this.sommetActif = -1;
 		this.colArcActif = -1;
 		this.ligArcActif = -1;

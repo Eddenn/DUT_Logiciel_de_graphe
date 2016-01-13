@@ -820,6 +820,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void refresh() {
 		graph = ctrl.getGraph();
 		menuAlgo.setVisible(graph.isValued());
+		
+		menuAlgo.setVisible(graph.getAlVertex().size() != 0);
+		
 		slObject.refresh();
 		repaint();
 	}
