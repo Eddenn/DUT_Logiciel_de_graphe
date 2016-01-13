@@ -500,7 +500,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-				ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
+				try {
+					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					return;
+				}
 			// Enregistrer
 		} else if (e.getSource()==tabMenuItemFile[2] || e.getSource()==buttonSave) {
 			if(ctrl.getFile().equals("")){
@@ -801,6 +807,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public void startParcours() {
 		ctrl.startParcours();
+	}
+	
+	public void afficherMessage(String s){
+		javax.swing.JOptionPane.showMessageDialog(null,s); 
 	}
 
 	public void showHiLightAlgorithm() {

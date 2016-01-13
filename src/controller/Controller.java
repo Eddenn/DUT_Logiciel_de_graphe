@@ -155,8 +155,15 @@ public class Controller implements IControlable, IIhmable {
 	 * 
 	 * @param strFileName
 	 *            le chemin du fichier é charger
+	 * @throws Exception 
 	 */
-	public void loadFile(String strFileName) {
+	public void loadFile(String strFileName) throws Exception {
+		
+		if(strFileName.indexOf(".txt") < 0){
+			hci.afficherMessage("Format de fichier invalide : .txt uniquement");
+			return;
+		}
+		
 		ReaderFile rf = new ReaderFile(strFileName);
 
 		graph = rf.getGraph();
