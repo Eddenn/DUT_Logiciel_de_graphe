@@ -14,7 +14,7 @@ import controller.Controller;
 import model.Vertex;
 
 /**
- * Classe gÃ©rant le fenÃªtre utilisateur pour supprimer un arc.
+ * Classe gérant la fenêtre utilisateur pour supprimer un arc.
  * @author Groupe 3
  * @version 2016-01-12
  */
@@ -26,11 +26,11 @@ public class PopupDeleteArc extends Popup {
 	private JComboBox boxDep, boxArr;
 	
 	/**
-	 * Constructeur qui ouvre une fenÃªtre pop-up pour supprimer un arc.
+	 * Constructeur qui ouvre une fenêtre pop-up pour supprimer un arc.
 	 * @param title le titre de la fenÃªtre
 	 * @param modal
-	 * @param ctrl le constructeur lancÃ©
-	 * @param hci le constructeur lancÃ©
+	 * @param ctrl le constructeur lancé
+	 * @param hci l'IHM du programme
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PopupDeleteArc(String title, boolean modal, Controller ctrl, HCI hci) {
@@ -44,7 +44,7 @@ public class PopupDeleteArc extends Popup {
 			tabVertex[i] = (ctrl.getGraph().getAlVertex().get(i).getName());
 		}
 		
-		JLabel text = new JLabel("<html> Saisissez les donnÃ©es de l'arc : <br/><br/> </html>");
+		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
 		
@@ -55,7 +55,7 @@ public class PopupDeleteArc extends Popup {
 		JPanel panelComboBox = new JPanel();
 		
 		// Gestion du sommet de dÃ©part
-		JLabel lDep = new JLabel("DÃ©part : ");
+		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
 		boxDep.addKeyListener(this);
@@ -65,7 +65,7 @@ public class PopupDeleteArc extends Popup {
 		panelComboBox.add(boxDep,"");
 		
 		// Gestion du sommet d'arrivÃ©
-		JLabel lArr = new JLabel("ArrivÃ©e : ");
+		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
 		boxArr.addKeyListener(this);
