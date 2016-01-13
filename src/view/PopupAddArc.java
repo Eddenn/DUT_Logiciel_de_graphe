@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -43,7 +44,7 @@ public class PopupAddArc extends Popup {
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
 		
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
-			tabVertex[i] = (ctrl.getGraph().getAlVertex().get(i).getName() + "        ").substring(0, 4);
+			tabVertex[i] = (ctrl.getGraph().getAlVertex().get(i).getName());
 		}
 
 		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");

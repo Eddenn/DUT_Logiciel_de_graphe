@@ -537,7 +537,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				try {
 					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					return;
 				}
