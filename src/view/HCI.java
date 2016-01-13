@@ -432,7 +432,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.addKeyListener(pGraph);
 	}
 
-	public void openMatrix(int[][] tMatrix) {
+	public void openMatrix(int[][] tMatrix, String strTitle) {
 		String str = "<html><body><table><tbody><tr>";
 		for(Vertex v : this.getGraph().getAlVertex()) {
 			str += "<td style=\"border: 1px solid black;\">"+v.getName().charAt(0)+"</td>";
@@ -446,7 +446,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			str += "</tr>";
 		}
 		str += "</tbody></table></body></html>";
-		matrixDialog = new JDialog(this,"Matrice");
+		matrixDialog = new JDialog(this,strTitle);
 		JPanel pStr = new JPanel();
 		pStr.add(new JLabel(str));
 		matrixDialog.setContentPane(pStr);
@@ -504,9 +504,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		System.out.println(e.getSource() == null);
-		
+				
 		// Switch the state of the SwitchList
 		if (e.getSource() == slObject.getJBSwitch()) {
 			slObject.switchState();
@@ -751,6 +749,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	 */
 	public void refresh() {
 		graph = ctrl.getGraph();
+		menuAlgo.setVisible(graph.isValued());
 		slObject.refresh();
 		repaint();
 	}
@@ -853,7 +852,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void setBSaved(boolean b) {
 		bSaved = b;
 	}
-
+	
 	public void showHiLightAlgorithm() {
 		ArrayList<String> alSelected = pGraph.getAlSelected();
 		
@@ -887,9 +886,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			}
 		}
 		
-		//System.out.println(alParcours);
-		
 		pGraph.paintVertexAndArc((Graphics2D)pGraph.getGraphics());
-		//pGraph.paintAll(pGraph.getGraphics());
 	}
 }
