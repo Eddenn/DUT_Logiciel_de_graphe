@@ -65,14 +65,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
 	
-<<<<<<< HEAD
 	// JDialog de matrice
 	private JDialog matrixDialog;
-=======
+	
 	// Booleen permettant de savoir si l'utilisateur vient de sauvegarder
 	boolean bSaved;
-
->>>>>>> b2b1d30c16a4e8d4062e35ea307bce6d3a5cd62d
 
 	public HCI(Controller controller) {
 		this.ctrl = controller;
