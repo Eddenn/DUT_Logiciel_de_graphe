@@ -64,6 +64,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
+	
+	// Booleen permettant de savoir si l'utilisateur vient de sauvegarder
+	boolean bSaved;
 
 
 	public HCI(Controller controller) {
@@ -473,6 +476,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		System.out.println(e.getSource() == null);
+		
 		// Switch the state of the SwitchList
 		if (e.getSource() == slObject.getJBSwitch()) {
 			slObject.switchState();
@@ -480,19 +486,22 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		/*-- FICHIER --*/
 			// Nouveau
 		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {	
-			
-			// On propose à l'utilisateur de sauvegarder son travail avant de continuer
-			String[] tabVal = {"Enregistrer et continuer", "Continuer sans enregistrer", "Annuler" };
-			int val =  JOptionPane.showOptionDialog(this, "La création d'un nouveau graphe entrainera la perte du graphe actuel s'il n'a pas été sauvegardé. \nVoulez vous continuer ?", "Création d'un nouveau graphe",  JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,tabVal,tabVal[0]);
-			
-			if (val == 0) {
-				if(ctrl.getFile().equals(""))
-					saveDialog();
-				else
-					ctrl.saveFile("", "adjacence");
-				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
+			if (bSaved == false) {
+				// On propose à l'utilisateur de sauvegarder son travail avant de continuer
+				String[] tabVal = {"Enregistrer et continuer", "Continuer sans enregistrer", "Annuler" };
+				int val =  JOptionPane.showOptionDialog(this, "La création d'un nouveau graphe entrainera la perte du graphe actuel s'il n'a pas été sauvegardé. \nVoulez vous continuer ?", "Création d'un nouveau graphe",  JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,tabVal,tabVal[0]);
+				
+				if (val == 0) {
+					if(ctrl.getFile().equals(""))
+						saveDialog();
+					else
+						ctrl.saveFile("", "adjacence");
+					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
+				}
+				else if (val == 1) new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			}
-			else if (val == 1) new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
+			else
+				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			
 		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
 			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
@@ -514,13 +523,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Quitter
 		} else if (e.getSource() == tabMenuItemFile[5]) {
 			this.dispose();
-
+			
 		/*-- EDITION --*/
 		} else if (e.getSource() == tabMenuItemEdition[0] || e.getSource() == buttonUndo) {
 				ctrl.undo();
+				bSaved = false;
 				this.refresh();
 		} else if (e.getSource() == tabMenuItemEdition[1] || e.getSource() == buttonRedo) {
 				ctrl.redo();
+				bSaved = false;
 				this.refresh();
 		
 		/*-- EXPORTER --*/
@@ -546,6 +557,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Ajouter un sommet
 		} else if (e.getSource() == tabMenuItemGraph[0] || e.getSource() == popUpItem[0] || e.getSource() == buttonAddVertex) {
 			new PopupAddVertex("Ajouter un sommet", true, ctrl, this);
+			bSaved = false;
 			
 			// Modifier un sommet
 		} else if (e.getSource() == tabMenuItemGraph[1] || e.getSource() == popUpItem[1] || e.getSource() == buttonUpdateVertex) {
@@ -555,28 +567,34 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				showError("Veuillez sélectionner un sommet.");
 			} else {
 				new PopupUpdateVertex("Modifier un sommet", true, ctrl, this);
+				bSaved = false;
 			}
 			
 			// Supprimer un sommet
 		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2] || e.getSource() == buttonDeleteVertex) {
 			ctrl.deleteMultipleVertex(pGraph.getAlSelected());
 			setAlSelected(new ArrayList<String>());
+			bSaved = false;
 			refresh();
 			// Coloriser un sommet
 		} else if (e.getSource() == tabMenuItemGraph[3] || e.getSource() == popUpItem[3]) {
 			new PopupColorizeVertex("Coloriser un sommet", true, ctrl, this);
+			bSaved = false;
 
 			// Ajouter un arc
 		} else if (e.getSource() == tabMenuItemGraph[4] || e.getSource() == popUpItem[4] || e.getSource() == buttonAddArc) {
 			new PopupAddArc("Ajout d'un arc", true, ctrl, this);
+			bSaved = false;
 			
 			// Mofidier un arc
 		} else if (e.getSource() == tabMenuItemGraph[5] || e.getSource() == popUpItem[5] || e.getSource() == buttonUpdateArc) {
 			new PopupUpdateArc("Modifier un arc", true, ctrl, this);
+			bSaved = false;
 
 			// Supprimer un arc
 		} else if (e.getSource() == tabMenuItemGraph[6] || e.getSource() == popUpItem[6] || e.getSource() == buttonDeleteArc) {
 			new PopupDeleteArc("Supprimer un arc", true, ctrl, this);
+			bSaved = false;
 		
 		/*--ALGORITHMES--*/
 			//Plus grande valeur
@@ -796,11 +814,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			} else {
 				ctrl.saveFile(path + ".txt", format);
 			}
+			bSaved = true;
 		}
 	}
 
 	public void startParcours() {
 		ctrl.startParcours();
+	}
+	
+	public void setBSaved(boolean b) {
+		bSaved = b;
 	}
 
 	public void showHiLightAlgorithm() {

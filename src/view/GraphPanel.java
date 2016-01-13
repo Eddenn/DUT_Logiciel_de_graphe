@@ -567,6 +567,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			ctrl.provSave();
 			bDragged = false;
 			bMoved = false;
+			hci.setBSaved(false);
 		}
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		
