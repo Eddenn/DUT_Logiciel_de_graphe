@@ -66,8 +66,11 @@ public class Controller implements IControlable, IIhmable {
 	/**
 	 * Méthode qui crée un nouveau graphe vide avec les paramêtres choisis par
 	 * l'utilisateur.
-	 * @param bOriented true s'il est orienté, false sinon.
-	 * @param bValued true s'il est valué, false sinon.
+	 * 
+	 * @param bOriented
+	 *            true s'il est orienté, false sinon.
+	 * @param bValued
+	 *            true s'il est valué, false sinon.
 	 */
 	public void newGraph(boolean bOriented, boolean bValued) {
 		graph = new Graph(bOriented, bValued);
@@ -81,6 +84,7 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * Méthode permettant de sauvegarder le graphe dans un fichier texte
+	 * 
 	 * @param strFileName
 	 *            le chemin où le fichier doit être enregistré, si null, on
 	 *            reprend le chemin sauvegardé pour écraser l'ancienne
@@ -102,15 +106,14 @@ public class Controller implements IControlable, IIhmable {
 
 			if (format.equals("matrice")) {
 				fw.write("IsMatrix=true\n");
-				
+
 				fw.write("Directed=" + graph.isDirected() + "\n");
 				fw.write("Valued=" + graph.isValued() + "\n\n");
 				fw.write("-- Matrice :\n");
 				fw.write(graph.displayMatrix() + "\n");
-			}
-			else {
+			} else {
 				fw.write("IsMatrix=false\n");
-	
+
 				fw.write("Directed=" + graph.isDirected() + "\n");
 				fw.write("Valued=" + graph.isValued() + "\n\n");
 				fw.write("-- Liste d'adjacence :\n");
@@ -150,16 +153,17 @@ public class Controller implements IControlable, IIhmable {
 	/**
 	 * Méthode permettant de charger un fichier texte
 	 * 
-	 * @param strFileName le chemin du fichier à charger
-	 * @throws Exception 
+	 * @param strFileName
+	 *            le chemin du fichier à charger
+	 * @throws Exception
 	 */
 	public void loadFile(String strFileName) throws Exception {
-		
-		if(strFileName.indexOf(".txt") < 0){
+
+		if (strFileName.indexOf(".txt") < 0) {
 			hci.afficherMessage("Format de fichier invalide : .txt uniquement");
 			return;
 		}
-		
+
 		ReaderFile rf = new ReaderFile(strFileName);
 
 		graph = rf.getGraph();
@@ -184,7 +188,7 @@ public class Controller implements IControlable, IIhmable {
 		} else {
 			hci.initHmVertex();
 		}
-		
+
 		initProvSave();
 		hci.refresh();
 		hci.setInfo();
@@ -193,37 +197,44 @@ public class Controller implements IControlable, IIhmable {
 	/**
 	 * Méthode permettant d'ouvrir le manuel utilisateur sur un navigateur web
 	 */
-	public void openHelp(){
-		Desktop desktop = null; 
-		try { 
-			if (Desktop.isDesktopSupported()) { 
-				desktop = Desktop.getDesktop(); 
+	public void openHelp() {
+		Desktop desktop = null;
+		try {
+			if (Desktop.isDesktopSupported()) {
+				desktop = Desktop.getDesktop();
 				desktop.open(new File("manuel/index.html"));
-			} 
-		} 
-		catch (Exception ex) { Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex); }
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
-	
+
 	/**
-	 * Méthode permettant d'ouvrir la documentation javadoc sur un navigateur web
+	 * Méthode permettant d'ouvrir la documentation javadoc sur un navigateur
+	 * web
 	 */
-	public void openJavadoc(){
-		Desktop desktop = null; 
-		try { 
-			if (Desktop.isDesktopSupported()) { 
-				desktop = Desktop.getDesktop(); 
+	public void openJavadoc() {
+		Desktop desktop = null;
+		try {
+			if (Desktop.isDesktopSupported()) {
+				desktop = Desktop.getDesktop();
 				desktop.open(new File("javadoc/index.html"));
-			} 
-		} 
-		catch (Exception ex) { Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex); }
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
-	
+
 	/**
-	 * Méthode qui exporte le graphe en matrice ou liste d'adjacence dans un fichier texte
-	 * @param strFileName le chemin du fichier
-	 * @param format le format soit matrice soit liste
+	 * Méthode qui exporte le graphe en matrice ou liste d'adjacence dans un
+	 * fichier texte
+	 * 
+	 * @param strFileName
+	 *            le chemin du fichier
+	 * @param format
+	 *            le format soit matrice soit liste
 	 */
-	public void export(String strFileName, String format){
+	public void export(String strFileName, String format) {
 		FileWriter fw = null;
 
 		try {
@@ -232,24 +243,23 @@ public class Controller implements IControlable, IIhmable {
 
 			// écriture des lignes de texte
 			fw.write("Graphe ");
-			//Orienté ou non
+			// Orienté ou non
 			if (graph.isDirected()) {
 				fw.write("orienté ");
-			}else{
+			} else {
 				fw.write("non orienté ");
 			}
-			//Valué ou non 
-			if(graph.isValued()){
+			// Valué ou non
+			if (graph.isValued()) {
 				fw.write("et valué. \n\n");
-			}else{
+			} else {
 				fw.write("et non valué.. \n\n");
 			}
-			//matrice ou liste d'adjacence
-			if(format.equals("matrice")){
+			// matrice ou liste d'adjacence
+			if (format.equals("matrice")) {
 				fw.write("-- Matrice :\n");
 				fw.write(graph.displayMatrix() + "\n");
-			}
-			else {
+			} else {
 				fw.write("-- Liste d'adjacence :\n");
 				fw.write(graph.getFormattedList() + "\n");
 			}
@@ -262,13 +272,14 @@ public class Controller implements IControlable, IIhmable {
 		}
 	}
 
-	
 	/*-----------------------
 	 * Gestion des composants
 	 *------------------------*/
 	/**
 	 * Méthode permettant d'ajouter un sommet au graphe
-	 * @param strVertexName  le nom du sommet
+	 * 
+	 * @param strVertexName
+	 *            le nom du sommet
 	 * @return true si le nom est déjà utilisé, false sinon
 	 */
 	public boolean addVertex(String strVertexName) {
@@ -286,7 +297,7 @@ public class Controller implements IControlable, IIhmable {
 		}
 		return bExist;
 	}
-	
+
 	public boolean deleteVertex(String s) {
 		Vertex v = graph.getVertex(s);
 		if (v != null) {
@@ -296,7 +307,7 @@ public class Controller implements IControlable, IIhmable {
 		}
 		return false;
 	}
-	
+
 	public void deleteMultipleVertex(ArrayList<String> s) {
 		for (int i = 0; i < s.size(); i++) {
 			Vertex v = graph.getVertex(s.get(i));
@@ -310,8 +321,11 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * Méthode permettant d'ajouter un arc ou une arête non valué.
-	 * @param v  le nom du premier sommet
-	 * @param vBis le nom du deuxième sommet
+	 * 
+	 * @param v
+	 *            le nom du premier sommet
+	 * @param vBis
+	 *            le nom du deuxième sommet
 	 */
 	public void addArc(Vertex v, Vertex vBis) {
 		if (checkArcAlreadyExist(v, vBis)) {
@@ -324,9 +338,13 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * Méthode permettant d'ajouter un arc ou une arête valué
-	 * @param v  le nom du premier sommet
-	 * @param vBis  le nom du deuxième sommet
-	 * @param iValue  la valeur de l'arc
+	 * 
+	 * @param v
+	 *            le nom du premier sommet
+	 * @param vBis
+	 *            le nom du deuxième sommet
+	 * @param iValue
+	 *            la valeur de l'arc
 	 */
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
 		if (checkArcAlreadyExist(v, vBis)) {
@@ -338,8 +356,11 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * Méthode permettant de supprimer un arc ou une arête
-	 * @param v  le nom du premier sommet
-	 * @param vBis le nom du deuxième sommet
+	 * 
+	 * @param v
+	 *            le nom du premier sommet
+	 * @param vBis
+	 *            le nom du deuxième sommet
 	 */
 	public boolean delArc(Vertex v, Vertex vBis) {
 		if (graph.getAlVertex().contains(v) && graph.getAlVertex().contains(vBis)) {
@@ -353,8 +374,11 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * Méthode qui vérifie si un arc ou une arête existe déjà.
-	 * @param v  nom du premier sommet
-	 * @param vBis  nom du deuxième sommet
+	 * 
+	 * @param v
+	 *            nom du premier sommet
+	 * @param vBis
+	 *            nom du deuxième sommet
 	 * @return true s'il existe, false sinon
 	 */
 	private boolean checkArcAlreadyExist(Vertex v, Vertex vBis) {
@@ -374,24 +398,26 @@ public class Controller implements IControlable, IIhmable {
 	 * Méthode permettant d'annuler la dernière action
 	 */
 	public void undo() {
-		 if (cptModif > 1) { 
-			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveGraphList.get(cptModif-2)), graph.isDirected(), graph.isValued());
-		 	graph = rF.getGraph();
-		 	hci.initHmVertexByTab(rF.getPoints()); 
-		 	cptModif--; 
-		 }
+		if (cptModif > 1) {
+			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveGraphList.get(cptModif - 2)), graph.isDirected(),
+					graph.isValued());
+			graph = rF.getGraph();
+			hci.initHmVertexByTab(rF.getPoints());
+			cptModif--;
+		}
 	}
 
 	/**
 	 * Méthode permettant de rétablir la derniére action effectuée
 	 */
 	public void redo() {
-		if (cptModif >= 0 && cptModif < saveGraphList.size()) { 
-			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveGraphList.get(cptModif)), graph.isDirected(), graph.isValued());
+		if (cptModif >= 0 && cptModif < saveGraphList.size()) {
+			ReaderFile rF = new ReaderFile(new ArrayList<String>(saveGraphList.get(cptModif)), graph.isDirected(),
+					graph.isValued());
 			graph = rF.getGraph();
-		  	hci.initHmVertexByTab(rF.getPoints()); 
-		  	cptModif++; 
-		  }
+			hci.initHmVertexByTab(rF.getPoints());
+			cptModif++;
+		}
 	}
 
 	/**
@@ -409,36 +435,40 @@ public class Controller implements IControlable, IIhmable {
 	 * Utilisée pour sauvegarder les actions effectuées.
 	 */
 	public void provSave() {
-		
+
 		// Initialisation de la ArrayList contenant la liste d'adjacence du
-		// graphe + les coordonnées des points au moment où l'utilisateur effectue une action
+		// graphe + les coordonnées des points au moment où l'utilisateur
+		// effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
-		
+
 		// Sauvegarde des coordonnées
 		alProv.add("-- Coordonnées des points :\n");
 		String sCoord = "[";
 		int cpt = 0;
 		int nbSommet = getNbSommet();
 		for (Point c : hci.getHmVertex().values()) {
-			sCoord+= (c.getX() + "," + c.getY());
+			sCoord += (c.getX() + "," + c.getY());
 			cpt++;
 			if (cpt != nbSommet)
-				sCoord+=";";
+				sCoord += ";";
 		}
-		sCoord+="]";
+		sCoord += "]";
 
 		// Ajout des coordonnées
 		alProv.add(sCoord);
-		
-		// Ajout de la liste d'adjacence et des coordonnées dans la ArrayList de sauvegarde
+
+		// Ajout de la liste d'adjacence et des coordonnées dans la ArrayList de
+		// sauvegarde
 		saveGraphList.add(cptModif, alProv);
-		
-		// Suppression des dernières actions effectuées dans le cas ou l'utilisateur est revenu plusieurs fois et a effectué une nouvelle action.
+
+		// Suppression des dernières actions effectuées dans le cas ou
+		// l'utilisateur est revenu plusieurs fois et a effectué une nouvelle
+		// action.
 		int i = cptModif + 1;
 		while (i < saveGraphList.size()) {
 			saveGraphList.remove(i);
 		}
-		
+
 		// Incrémentation du compteur indiquant le nombre de modification
 		// (Repère utilisé pour savoir notre position dans la ArrayList
 		// permettant le retour en arrière
@@ -449,55 +479,106 @@ public class Controller implements IControlable, IIhmable {
 	 * Méthodes de l'interface IControlable
 	 *-------------------------------------*/
 
+	/**
+	 * Renvoie un tableau de caractère contenant la première lettre de chaque
+	 * sommet
+	 * 
+	 * @param tableau
+	 *            de caractère contenant la première lettre de chaque sommet
+	 */
 	public char[] listeSommet() {
 		return graph.getListVertex();
 	}
 
+	/**
+	 * Renvoie la matrice
+	 * 
+	 * @param matrice
+	 *            du graphe
+	 */
 	public int[][] getMatrice() {
+		// On génère la matrice
 		graph.generateMatrix();
+
+		// On retourne la matrice générée
 		return graph.getTMatrix();
 	}
 
+	/**
+	 * Permet de mettre à jour l'IHM pour les classes Parcours
+	 */
 	public void majIHM() {
+		// on vérifie qu'on a bien un parcours de lancé
 		if (parcours != null) {
+			// On affiche une surbrillance sur le sommet et arc actifs
 			hci.showHiLightAlgorithm();
-		}
 
-		if( parcours instanceof ParcoursDijkstra) {
-			if(hci.getMatrixDialog()!=null)hci.getMatrixDialog().dispose();
-			hci.openMatrix(((ParcoursDijkstra)(parcours)).getTChemins(), "Tableau de Dijkstra");
-			hci.getMatrixDialog().paint(hci.getMatrixDialog().getGraphics());
+			// Si nous sommes dans l'algorithme ParcoursDijkstra
+			if (parcours instanceof ParcoursDijkstra) {
+				// On vérifie si une fenêtre du tableau de Dijkstra est ouvert
+				if (hci.getMatrixDialog() != null) {
+					// Si oui, on la ferme
+					hci.getMatrixDialog().dispose();
+				}
+				
+				// On ouvre une nouvelle fenêtre pour afficher le tableau de Dijkstra
+				hci.openMatrix(((ParcoursDijkstra) (parcours)).getTChemins(), "Tableau de Dijkstra");
+				hci.getMatrixDialog().paint(hci.getMatrixDialog().getGraphics());
+			}
 		}
 	}
-	
-	public void repaintVertex() {
-		hci.repaint();
-	}
 
+	/**
+	 * Permet de démarrer le parcours "PlusGrandeValeur"
+	 */
 	public void startParcours() {
-		this.parcours = new Parcours(this);
-		this.parcours.lancer();
-		hci.showInfo(parcours.getMessage());
-	}
-	
-	public void startParcoursDijkstra(int iVertex) {
-		this.parcours = new ParcoursDijkstra(this,iVertex);
+		// On nettoie la liste des sommets et arcs sélectionnés
 		hci.getGraphPanel().clearAlSelected();
 		hci.getGraphPanel().paintAll(hci.getGraphPanel().getGraphics());
+		
+		// On instancie un parcours et on le lance
+		this.parcours = new Parcours(this);
 		this.parcours.lancer();
+		
+		// On met à jour l'IHM
 		majIHM();
-		hci.showInfo("L'algorithme est terminé.");
-	}
-	
-	public void startParcoursLienExiste(int iStartVertex, int iEndVertex) {
-		this.parcours = new ParcoursLienExiste(this,iStartVertex,iEndVertex);
-		this.parcours.lancer();
+		
+		// On affiche le message de retour
 		hci.showInfo(parcours.getMessage());
 	}
-	
+
+	public void startParcoursDijkstra(int iVertex) {
+		// On nettoie la liste des sommets et arcs sélectionnés
+		hci.getGraphPanel().clearAlSelected();
+		hci.getGraphPanel().paintAll(hci.getGraphPanel().getGraphics());
+		
+		this.parcours = new ParcoursDijkstra(this, iVertex);
+		this.parcours.lancer();
+		
+		// On met à jour l'IHM
+		majIHM();
+		
+		// On affiche le message de retour
+		hci.showInfo("L'algorithme est terminé.");
+	}
+
+	public void startParcoursLienExiste(int iStartVertex, int iEndVertex) {
+		// On nettoie la liste des sommets et arcs sélectionnés
+		hci.getGraphPanel().clearAlSelected();
+		hci.getGraphPanel().paintAll(hci.getGraphPanel().getGraphics());
+		
+		this.parcours = new ParcoursLienExiste(this, iStartVertex, iEndVertex);
+		this.parcours.lancer();
+		
+		// On met à jour l'IHM
+		majIHM();
+		
+		// On affiche le message de retour
+		hci.showInfo(parcours.getMessage());
+	}
+
 	/*
-	 * -------------------------------- 
-	 * Méthodes de l'interface IIhmable
+	 * -------------------------------- Méthodes de l'interface IIhmable
 	 * ---------------------------------
 	 */
 	@Override
@@ -544,6 +625,12 @@ public class Controller implements IControlable, IIhmable {
 		return parcours.getMessage();
 	}
 
+	/**
+	 * Permet de mettre à jour les sommets
+	 * @param oldName ancien nom du sommet
+	 * @param newName nouveau nom du sommet
+	 * @return faux si la mise à jour a échoué et vrai si elle a réussi
+	 */
 	public boolean updateVertex(String oldName, String newName) {
 		boolean bUpdate = true;
 		if (graph.getVertex(newName) != null) {
@@ -559,6 +646,13 @@ public class Controller implements IControlable, IIhmable {
 		return bUpdate;
 	}
 
+	/**
+	 * Permet de mettre à jour un arc entre deux sommets
+	 * @param v sommet de départ de l'arc
+	 * @param vBis sommet d'arrivé de l'arc
+	 * @param value valeur de l'arc
+	 * @return faux si la mise à jour a échoué et vrai si elle a réussi
+	 */
 	public boolean updateArc(Vertex v, Vertex vBis, int value) {
 		for (Arc a : v.getAlArcs()) {
 			if (a.getVertex() == vBis) {
@@ -566,7 +660,7 @@ public class Controller implements IControlable, IIhmable {
 				provSave();
 				return true;
 			}
-				
+
 		}
 		return false;
 	}
