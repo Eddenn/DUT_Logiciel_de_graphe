@@ -22,6 +22,7 @@ public class ReaderFile {
 	private boolean bHaveCoord;
 	private Point[] tPoints;
 	private GraphStyle style;
+	private Scanner sc;
 	
 	public ReaderFile(String strFilePath) {
 		BufferedReader br = null;
@@ -32,7 +33,7 @@ public class ReaderFile {
 			e.printStackTrace();
 		}
 		
-		Scanner sc = new Scanner(br);
+		sc = new Scanner(br);
 		
 		alStr = new ArrayList<String>();
 		

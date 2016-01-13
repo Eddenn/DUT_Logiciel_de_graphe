@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -8,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import controller.Controller;
 
@@ -22,7 +20,7 @@ public class PopupAlgoRC extends Popup {
 
 	private static final long serialVersionUID = 1L;
 	private JButton ok, annuler;
-	private JComboBox boxDep, boxArr;
+	private JComboBox<String> boxDep, boxArr;
 
 	/**
 	 * Constructeur qui instancie la fenêtre pop-up pour ajouter un arc
@@ -52,13 +50,13 @@ public class PopupAlgoRC extends Popup {
 		// Gestion du sommet de départ
 		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
-		boxDep = new JComboBox(tabVertex);
+		boxDep = new JComboBox<String>(tabVertex);
 		panelComboBox.add(boxDep,"");
 		
 		// Gestion du sommet d'arrivée
 		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
-		boxArr = new JComboBox(tabVertex);
+		boxArr = new JComboBox<String>(tabVertex);
 		panelComboBox.add(boxArr);
 				
 		// Ajout des comboBox à la fenetre

@@ -2,7 +2,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
@@ -58,13 +57,13 @@ public class PopupUpdateArc extends Popup  {
 		// Gestion du sommet de d�part
 		JLabel lDep = new JLabel("Depart : ");
 		panelComboBox.add(lDep, "West");
-		boxDep = new JComboBox(tabVertex);
+		boxDep = new JComboBox<String>(tabVertex);
 		panelComboBox.add(boxDep, "");
 
 		// Gestion du sommet d'arriv�
 		JLabel lArr = new JLabel("Arrivee : ");
 		panelComboBox.add(lArr);
-		boxArr = new JComboBox(tabVertex);
+		boxArr = new JComboBox<String>(tabVertex);
 		panelComboBox.add(boxArr);
 
 		// Panel contenant le textField

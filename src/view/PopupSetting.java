@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
@@ -48,7 +47,7 @@ public class PopupSetting extends Popup {
 		style = hci.getGraphPanel().getStyle();
 		
 		//Styles prédéfinis
-		boxStyle = new JComboBox(GraphStyle.values());
+		boxStyle = new JComboBox<GraphStyle>(GraphStyle.values());
 		boxStyle.setSelectedItem(style);
 		boxStyle.addActionListener(this);
 		pStyle.add(boxStyle,BorderLayout.NORTH);
