@@ -120,7 +120,6 @@ public class PopupDeleteArc extends Popup {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		System.out.println(arg0.getKeyCode());
 		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
 			valider();
 		}

@@ -206,12 +206,12 @@ public class ReaderFile {
 	private void generateStyle() {
 		int iIndiceStyle = getStyleIndice();
 		
-		style.Personnalise.setEdgeBorder(Color.BLACK);
-		style.Personnalise.setEdgeBackground(Color.WHITE);
-		style.Personnalise.setEdgeText(Color.BLACK);
-		style.Personnalise.setArcLine(Color.GRAY);
-		style.Personnalise.setArcText(Color.BLACK);
-		style.Personnalise.setBackground(new Color(238,238,238));
+		GraphStyle.Personnalise.setEdgeBorder(Color.BLACK);
+		GraphStyle.Personnalise.setEdgeBackground(Color.WHITE);
+		GraphStyle.Personnalise.setEdgeText(Color.BLACK);
+		GraphStyle.Personnalise.setArcLine(Color.GRAY);
+		GraphStyle.Personnalise.setArcText(Color.BLACK);
+		GraphStyle.Personnalise.setBackground(new Color(238,238,238));
 		
 		if (iIndiceStyle != -1) {
 			alStr.remove(iIndiceStyle);

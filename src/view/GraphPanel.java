@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Controller;
@@ -438,6 +439,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				        g2d.setColor(style.getArcLine());
 				        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);	
 						drawArrow(g2d, (int)xn1, (int)yn1, (int)xm2, (int)ym2, (int)(22*iZoom), (int)(10*iZoom));
+
 						if(  hci.getGraph().isValued() ) {
 							g2d.setColor(style.getArcText());
 							g2d.drawString( ""+arc.getIValue() , (int)(xm1+xn2)/2 , (int)(ym1+yn2)/2 );
@@ -477,7 +479,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	 * @return
 	 */
 	public double zoomIn() {
-		if(iZoom<1.5) {
+		if(iZoom<1.6) {
 			for(Point c : hci.getHmVertex().values()) {
 				c.x = (int) (c.x/iZoom*(iZoom+0.2));
 				c.y = (int) (c.y/iZoom*(iZoom+0.2));
@@ -485,6 +487,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			}
 		}
 		refreshPreferedSize();
+		hci.getLabelZoom().setText(String.format("%3.0f",iZoom*100)+"%");
 		return iZoom;
 	}
 	
@@ -493,7 +496,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	 * @return
 	 */
 	public double zoomOut() {
-		if(iZoom>0.5) {
+		if(iZoom>0.6) {
 			for(Point c : hci.getHmVertex().values()) {
 				c.x = (int) (c.x/iZoom*(iZoom-0.2));
 				c.y = (int) (c.y/iZoom*(iZoom-0.2));
@@ -501,6 +504,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			}
 		}
 		refreshPreferedSize();
+		hci.getLabelZoom().setText(String.format("%3.0f",iZoom*100)+"%");
 		return iZoom;
 	}
 	
@@ -785,7 +789,34 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 		//CTRL+N
 		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_N ) {
-			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
+			if (hci.bSaved == false) {
+				// On propose à l'utilisateur de sauvegarder son travail avant
+				// de continuer
+				String[] tabVal = { "Enregistrer et continuer", "Continuer sans enregistrer", "Annuler" };
+				int val = JOptionPane.showOptionDialog(this,
+						"La création d'un nouveau graphe entrainera la perte du graphe actuel s'il n'a pas été sauvegardé. \nVoulez vous continuer ?",
+						"Création d'un nouveau graphe", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+						tabVal, tabVal[0]);
+
+				if (val == 0) {
+					if (ctrl.getFile().equals(""))
+						hci.saveDialog();
+					else
+						ctrl.saveFile("", "adjacence");
+					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
+				} else if (val == 1)
+					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
+			} else
+				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
+			
+			//Reset style personnalise
+			GraphStyle.Personnalise.setEdgeBorder(Color.BLACK);
+			GraphStyle.Personnalise.setEdgeBackground(Color.WHITE);
+			GraphStyle.Personnalise.setEdgeText(Color.BLACK);
+			GraphStyle.Personnalise.setArcLine(Color.GRAY);
+			GraphStyle.Personnalise.setArcText(Color.BLACK);
+			GraphStyle.Personnalise.setBackground(new Color(238,238,238));
+			this.setBackground(new Color(238,238,238));
 		}
 		//CTRL+O
 		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_O ) {

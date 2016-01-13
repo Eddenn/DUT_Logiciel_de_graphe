@@ -87,8 +87,6 @@ public class ParcoursDijkstra implements IParcourable {
 			
 			// On parcourt chaque sommet
 			for (int iSommet = 0; iSommet < tChemins.length; iSommet++) {
-				this.pauseSynchro();
-				
 				ligArcActif = i;
 				colArcActif = sommetActif;
 				
@@ -101,6 +99,8 @@ public class ParcoursDijkstra implements IParcourable {
 									+ tChemins[i - 1][sommetActif];
 							
 							filsPere[1][iSommet] = sommetActif;
+							ctrl.majIHM();
+							this.pauseSynchro();
 						} else {
 							if (tChemins[i - 1][sommetActif] + getValeurArc(sommetActif,
 									iSommet) < tChemins[i - 1][iSommet]) {
@@ -108,6 +108,8 @@ public class ParcoursDijkstra implements IParcourable {
 										+ getValeurArc(sommetActif, iSommet);
 								
 								filsPere[1][iSommet] = sommetActif;
+								ctrl.majIHM();
+								this.pauseSynchro();
 
 							} else {
 								tChemins[i][iSommet] = tChemins[i - 1][iSommet];
@@ -119,8 +121,6 @@ public class ParcoursDijkstra implements IParcourable {
 						tChemins[i][iSommet] = tChemins[i - 1][iSommet];
 					}
 				}
-				
-				ctrl.majIHM();
 			}
 			
 			// On détermine le nouveau sommet actif

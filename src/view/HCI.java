@@ -54,9 +54,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	// Main graph (draw)
 	private GraphPanel pGraph;
 	private JScrollPane jscrPanel;
-	private JPanel pInfo;
 
-	private JLabel lCoord, lInfo;
+	private JPanel pBottomGraph;
+	private JLabel lCoord,lZoom;
 	private JButton buttonMatrix;
 
 	// Panel de JButton
@@ -65,7 +65,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			buttonSetting;
 	private JButton buttonAddVertex, buttonUpdateVertex, buttonDeleteVertex, buttonAddArc, buttonUpdateArc,
 			buttonDeleteArc;
-
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
@@ -298,13 +297,19 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// ---------Graphe--------//
 		pGraph = new GraphPanel(this, ctrl);
 		
+		pBottomGraph = new JPanel(new GridLayout(1,2));
 		lCoord = new JLabel("");
+		pBottomGraph.add(lCoord);
+		JPanel pZoom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		lZoom = new JLabel("100%");
+		pZoom.add(lZoom);
+		pBottomGraph.add(pZoom);
 		
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
 		panelCenter.add(jscrPanel);
-		panelCenter.add(lCoord, "South");
+		panelCenter.add(pBottomGraph, "South");
 		add(panelCenter, BorderLayout.CENTER);
 		// ----------------------//
 
@@ -336,6 +341,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// Réduire
 		buttonRedo = initSmoothButton("Refaire", "/redo.png", "/redo_rollover.png");
 		pTopButton.add(buttonRedo);
+		// Matrice
+		buttonMatrix = initSmoothButton("Afficher la matrice", "/matrice.png", "/matrice_rollover.png");
+		pTopButton.add(buttonMatrix);
 		// Parametre
 		buttonSetting = initSmoothButton("Paramètres", "/parametre.png", "/parametre_rollover.png");
 		pTopButton.add(buttonSetting);
@@ -432,11 +440,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.addKeyListener(pGraph);
 	}
 
+
 	/**
 	 * Méthode utiliser pour ouvrir une fenêtre contenant la matrice
 	 * @param tMatrix un double tableau contenant les informations de la matrice
 	 */
-	public void openMatrix(int[][] tMatrix) {
+	public void openMatrix(int[][] tMatrix, String strTitle) {
+
 		String str = "<html><body><table><tbody><tr>";
 		for (Vertex v : this.getGraph().getAlVertex()) {
 			str += "<td style=\"border: 1px solid black;\">" + v.getName().charAt(0) + "</td>";
@@ -450,7 +460,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			str += "</tr>";
 		}
 		str += "</tbody></table></body></html>";
-		matrixDialog = new JDialog(this, "Matrice");
+
+		matrixDialog = new JDialog(this,strTitle);
 		JPanel pStr = new JPanel();
 		pStr.add(new JLabel(str));
 		matrixDialog.setContentPane(pStr);
@@ -545,9 +556,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			} else
 				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
+			
+			//Reset style personnalise
+			GraphStyle.Personnalise.setEdgeBorder(Color.BLACK);
+			GraphStyle.Personnalise.setEdgeBackground(Color.WHITE);
+			GraphStyle.Personnalise.setEdgeText(Color.BLACK);
+			GraphStyle.Personnalise.setArcLine(Color.GRAY);
+			GraphStyle.Personnalise.setArcText(Color.BLACK);
+			GraphStyle.Personnalise.setBackground(new Color(238,238,238));
+			getGraphPanel().setBackground(new Color(238,238,238));
 
-		} else if (e.getSource() == tabMenuItemFile[0] || e.getSource() == buttonNew) {
-			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
@@ -555,7 +573,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				try {
 					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 				} catch (Exception e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Les fchiers contiennent probablement des erreurs", "Erreur", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			// Enregistrer
@@ -599,7 +617,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource() == tabMenuItemExport[1]) {
 			JFileChooser dial = new JFileChooser(new File("."));
 			if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION)
-				PdfGenerator.generer(graph, dial.getName(), dial.getSelectedFile().getAbsolutePath() + ".pdf", this);
+				PdfGenerator.generer(graph, dial.getSelectedFile().getAbsolutePath() + ".pdf", this);
 			// Matrice
 		} else if (e.getSource() == tabMenuItemExport[2]) {
 			JFileChooser dial = new JFileChooser(new File("."));
@@ -692,6 +710,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			pGraph.zoomOut();
 			pGraph.repaint();
 			pGraph.revalidate();
+			
+			// Affiche la martrice
+		} else if (e.getSource() == buttonMatrix) {
+			if(matrixDialog!=null)matrixDialog.dispose();
+			openMatrix(graph.generateMatrix(),"Matrice");
+			
 			// Paramètres
 		} else if (e.getSource() == buttonSetting) {
 			new PopupSetting("Paramètres", true, ctrl, this);
@@ -786,6 +810,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	 */
 	public void refresh() {
 		graph = ctrl.getGraph();
+		menuAlgo.setVisible(graph.isValued());
 		slObject.refresh();
 		repaint();
 	}
@@ -839,6 +864,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	 */
 	public JLabel getLabelCoord() {
 		return this.lCoord;
+	}
+
+	public JLabel getLabelZoom() {
+		return this.lZoom;
 	}
 	
 	/**
@@ -983,7 +1012,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				}
 			}
 		}
+	
+		pGraph.paintVertexAndArc((Graphics2D)pGraph.getGraphics());
 
-		pGraph.paintVertexAndArc((Graphics2D) pGraph.getGraphics());
 	}
 }

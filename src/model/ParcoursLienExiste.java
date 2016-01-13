@@ -70,11 +70,13 @@ public class ParcoursLienExiste implements IParcourable {
 		colArcActif = sommetActif;
 		
 		ListeFilsDuPere lfdp = new ListeFilsDuPere(sommetActif, null);
+		
+		recurr(lfdp);
 
-		boolean bContinu = true;
-
-		bContinu = recurr(lfdp);
-
+		sommetActif = lfdpArrive.getSommet();
+		ligArcActif = lfdpArrive.getSommet();
+		colArcActif = lfdpArrive.getPere().getSommet();
+		
 		if (lfdpArrive != null) {
 			lfdp = lfdpArrive;
 
@@ -91,23 +93,26 @@ public class ParcoursLienExiste implements IParcourable {
 			}
 		}
 
+		ctrl.majIHM();
+		
 		if (iValeurChemin == -1) {
 			message = "Il n'y a pas de chemin entre " + lstSommet[sommetDepart] + " et " + lstSommet[sommetArrive]
 					+ ".";
 		} else {
-			message = "Le chemin de " + lstSommet[sommetDepart] + " à " + lstSommet[sommetArrive] + " vaut "
+			message = "Il existe un chemin partant de " + lstSommet[sommetDepart] + " vers " + lstSommet[sommetArrive] + " vallant "
 					+ iValeurChemin;
 		}
 	}
 
 	private boolean recurr(ListeFilsDuPere lfdp) {
+		ctrl.majIHM();
 		boolean bContinu = true;
 
 		for (Integer integer : getFils(sommetActif)) {
 			lfdp.ajouterFils(integer.intValue());
 		}
-
-		while (!lfdp.filsTousTraites() && bContinu) {
+		
+		while (bContinu) {
 			this.pauseSynchro();
 			
 			if (sommetArrive == lfdp.getFilsCourant().getSommet()) {
@@ -118,12 +123,11 @@ public class ParcoursLienExiste implements IParcourable {
 				sommetActif = lfdp.getFilsCourant().getSommet();
 				ligArcActif = lfdp.getFilsCourant().getSommet();
 				colArcActif = lfdp.getSommet();
+				ctrl.majIHM();
 				
-				lfdp = lfdp.getFilsCourant();
-				lfdp.getPere().incrementeFilsTraite();
-				recurr(lfdp);
+				lfdp = lfdp.getFilsCourantIncremente();
+				bContinu = recurr(lfdp);
 			}
-			ctrl.majIHM();
 		}
 
 		lfdp = lfdp.getFilsCourant();
@@ -132,7 +136,10 @@ public class ParcoursLienExiste implements IParcourable {
 	}
 
 	private ArrayList<Integer> getFils(int iSommet) {
-		alSommetsTraites.add(new Integer(iSommet));
+		if (iSommet != sommetArrive) {
+			alSommetsTraites.add(new Integer(iSommet));
+		}
+		
 		ArrayList<Integer> alInteger = new ArrayList<Integer>();
 
 		for (int i = 0; i < matrice.length; i++) {
