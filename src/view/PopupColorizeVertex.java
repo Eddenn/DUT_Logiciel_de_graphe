@@ -15,7 +15,7 @@ import controller.Controller;
 import model.Vertex;
 
 /**
- * Classe qui gèrent la fenêtre utilisateur pour changer la couleur d'un sommet
+ * Classe qui gï¿½rent la fenï¿½tre utilisateur pour changer la couleur d'un sommet
  * @author Groupe 3
  * @version 2016-01-12
  */
@@ -26,11 +26,11 @@ public class PopupColorizeVertex extends Popup {
 	private Color c;
 
 	/**
-	* Méthode qui instancie la pop-up pour choisir le style d'un sommet.
+	* Mï¿½thode qui instancie la pop-up pour choisir le style d'un sommet.
 	 * @param title le titre de la pop-up.
 	 * @param modal 
-	 * @param ctrl le controleur utilisé.
-	 * @param hci le hci utilisé.
+	 * @param ctrl le controleur utilisï¿½.
+	 * @param hci le hci utilisï¿½.
 	 */
 	public PopupColorizeVertex(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
@@ -60,7 +60,7 @@ public class PopupColorizeVertex extends Popup {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == buttonChoice) {
-			c = JColorChooser.showDialog(null,"Sélection de couleur", null);
+			c = JColorChooser.showDialog(null,"Sï¿½lection de couleur", null);
 			for (String s : hci.getGraphPanel().getAlSelected()) {
 				for(Vertex v : hci.getGraph().getAlVertex()) {
 					if(v.getName().equals(s)) {
@@ -71,7 +71,7 @@ public class PopupColorizeVertex extends Popup {
 			}
 		}
 		
-		if (e.getSource() == buttonDelete ) {
+		else if (e.getSource() == buttonDelete ) {
 			for (String s : hci.getGraphPanel().getAlSelected()) {
 				for(Vertex v : hci.getGraph().getAlVertex()) {
 					if(v.getName().equals(s)) {

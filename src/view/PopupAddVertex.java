@@ -78,7 +78,7 @@ public class PopupAddVertex extends Popup  {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == ok)
 			valider();
-		if (e.getSource() == annuler)
+		else if (e.getSource() == annuler)
 			dispose();
 	}
 
