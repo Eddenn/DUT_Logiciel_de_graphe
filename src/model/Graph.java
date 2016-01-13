@@ -128,7 +128,7 @@ public class Graph {
 	 * @param strName le nom du sommet
 	 */
 	public void addVertex(String strName) {
-		alVertex.add(new Vertex(strName, this));
+		alVertex.add(new Vertex(strName));
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class Graph {
 	 * @param strColor la couleur du sommet
 	 */
 	public void addVertex(String strName, String strColor) {
-		alVertex.add(new Vertex(strName, strColor, this));
+		alVertex.add(new Vertex(strName, strColor));
 	}
 
 	/**
