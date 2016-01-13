@@ -224,6 +224,27 @@ public class Controller implements IControlable, IIhmable {
 		}
 		return bExist;
 	}
+	
+	public boolean deleteVertex(String s) {
+		Vertex v = graph.getVertex(s);
+		if (v != null) {
+			graph.deleteVertex(v);
+			provSave();
+			return true;
+		}
+		return false;
+	}
+	
+	public void deleteMultipleVertex(ArrayList<String> s) {
+		for (int i = 0; i < s.size(); i++) {
+			Vertex v = graph.getVertex(s.get(i));
+			if (v != null) {
+				graph.deleteVertex(v);
+				hci.getHmVertex().remove(s.get(i));
+			}
+		}
+		provSave();
+	}
 
 	/**
 	 * Mï¿½thode permettant d'ajouter un arc ou une arï¿½te non valuï¿½
@@ -335,17 +356,17 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/**
-	 * Mï¿½thode permettant de sauvegarder l'ï¿½tat du graphe ï¿½ un instant t.
-	 * Utilisï¿½ pour sauvegarder les actions effectuï¿½es.
+	 * Méthode permettant de sauvegarder l'ï¿½tat du graphe ï¿½ un instant t.
+	 * Utilisée pour sauvegarder les actions effectuées.
 	 */
 	public void provSave() {
 		
 		// Initialisation de la ArrayList contenant la liste d'adjacence du
-		// graphe + les coordonnï¿½es des points au moment oï¿½ l'utilisateur effectue une action
+		// graphe + les coordonnées des points au moment où l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
 		
-		// Sauvegarde des coordonnï¿½es
-		alProv.add("-- Coordonnï¿½es des points :\n");
+		// Sauvegarde des coordonnées
+		alProv.add("-- Coordonnées des points :\n");
 		String sCoord = "[";
 		int cpt = 0;
 		int nbSommet = getNbSommet();
