@@ -46,7 +46,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JMenuItem[] tabMenuItemExport = new JMenuItem[4];
 	private JMenuItem[] tabMenuItemGraph = new JMenuItem[7];
 	private JMenuItem[] tabMenuItemAlgo = new JMenuItem[3];
-	private JMenuItem[] tabMenuItemAide = new JMenuItem[2];
+	private JMenuItem[] tabMenuItemAide = new JMenuItem[3];
 
 	// Liste d'Objet
 	private SwitchList slObject;
@@ -276,11 +276,16 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemAide[0].addActionListener(this);
 		menuAide.add(tabMenuItemAide[0]);
 
-		// Menu Item - Manuel Utilisateur
-		tabMenuItemAide[1] = new JMenuItem("Manuel Utilisateur");
+		// Menu Item - Docuementation Utilisateur
+		tabMenuItemAide[1] = new JMenuItem("Documentation Utilisateur");
 		tabMenuItemAide[1].addActionListener(this);
 		menuAide.add(tabMenuItemAide[1]);
-
+		
+		//Menu Item - Documentation programmeur
+		tabMenuItemAide[2] = new JMenuItem("Documentation Programmeur");
+		tabMenuItemAide[2].addActionListener(this);
+		menuAide.add(tabMenuItemAide[2]);
+		
 		menuBarMain.add(menuAide);
 
 		menuBarMain.setPreferredSize(new Dimension(250, 20));
@@ -693,10 +698,14 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			/*-- AIDE --*/
 		} else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
+
 					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre</center></html>",
+
 					"A propos", 1);
 		} else if (e.getSource() == tabMenuItemAide[1]) {
 			ctrl.openHelp();
+		}else if (e.getSource()==tabMenuItemAide[2]){
+			ctrl.openJavadoc();
 
 			/*-- BUTTON --*/
 			// Zoom in
