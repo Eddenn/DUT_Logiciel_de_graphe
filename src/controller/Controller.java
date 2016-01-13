@@ -201,14 +201,57 @@ public class Controller implements IControlable, IIhmable {
 		catch (Exception ex) { Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex); }
 	}
 	
+	/**
+	 * M�thode qui exporte le graphe en matrice ou liste d'adjacence dans un fichier texte
+	 * @param strFileName le chemin du fichier
+	 * @param format le format soit matrice soit liste
+	 */
+	public void export(String strFileName, String format){
+		FileWriter fw = null;
+
+		try {
+			// ouverture du fichier en mode �criture
+			fw = new FileWriter(strFileName, false);
+
+			// �criture des lignes de texte
+			fw.write("Graphe ");
+			//Orient� ou non
+			if (graph.isDirected()) {
+				fw.write("orient� ");
+			}else{
+				fw.write("non orient� ");
+			}
+			//Valu� ou non 
+			if(graph.isValued()){
+				fw.write("et valu�. \n\n");
+			}else{
+				fw.write("et non valu�. \n\n");
+			}
+			//matrice ou liste d'adjacence
+			if(format.equals("matrice")){
+				fw.write("-- Matrice :\n");
+				fw.write(graph.displayMatrix() + "\n");
+			}
+			else {
+				fw.write("-- Liste d'adjacence :\n");
+				fw.write(graph.getFormattedList() + "\n");
+			}
+
+			// fermeture du fichier
+			fw.close();
+
+		} catch (IOException e) {
+			hci.showError("Probl�me d'enregistrement du fichier " + strFileName + ".");
+		}
+	}
+
+	
 	/*-----------------------
 	 * Gestion des composants
 	 *------------------------*/
 	/**
 	 * M�thode permettant d'ajouter un sommet au graphe
-	 * 
-	 * @param strVertexName
-	 *            le nom du sommet
+	 * @param strVertexName  le nom du sommet
 	 * @return true si le nom est d�ja utilis�, false sinon
 	 */
 	public boolean addVertex(String strVertexName) {
@@ -250,11 +293,8 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * M�thode permettant d'ajouter un arc ou une ar�te non valu�
-	 * 
-	 * @param v
-	 *            le nom du premier sommet
-	 * @param vBis
-	 *            le nom du deuxi�me sommet
+	 * @param v  le nom du premier sommet
+	 * @param vBis  le nom du deuxi�me sommet
 	 */
 	public void addArc(Vertex v, Vertex vBis) {
 		if (checkArcAlreadyExist(v, vBis)) {
@@ -267,13 +307,9 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * M�thode permettant d'ajouter un arc ou une ar�te valu�
-	 * 
-	 * @param v
-	 *            le nom du premier sommet
-	 * @param vBis
-	 *            le nom du deuxi�me sommet
-	 * @param iValue
-	 *            la valeur de l'arc
+	 * @param v  le nom du premier sommet
+	 * @param vBis  le nom du deuxi�me sommet
+	 * @param iValue  la valeur de l'arc
 	 */
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
 		if (checkArcAlreadyExist(v, vBis)) {
@@ -285,11 +321,8 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * M�thode permettant de supprimer un arc ou une ar�te
-	 * 
-	 * @param v
-	 *            le nom du premier sommet
-	 * @param vBis
-	 *            le nom du deuxi�me sommet
+	 * @param v  le nom du premier sommet
+	 * @param vBis le nom du deuxi�me sommet
 	 */
 	public boolean delArc(Vertex v, Vertex vBis) {
 		if (graph.getAlVertex().contains(v) && graph.getAlVertex().contains(vBis)) {
@@ -303,11 +336,8 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * M�thode qui v�rifie si un arc ou une ar�te existe d�j�
-	 * 
-	 * @param v
-	 *            nom du premier sommet
-	 * @param vBis
-	 *            nom du deuxi�me sommet
+	 * @param v  nom du premier sommet
+	 * @param vBis  nom du deuxi�me sommet
 	 * @return true s'il existe, false sinon
 	 */
 	private boolean checkArcAlreadyExist(Vertex v, Vertex vBis) {
@@ -358,13 +388,18 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * M�thode permettant de sauvegarder l'�tat du graphe � un instant t.
 	 * Utilis�e pour sauvegarder les actions effectu�es.
+=======
+	 * M�thode permettant de sauvegarder l'�tat du graphe � un instant t.
+	 * Utilis� pour sauvegarder les actions effectu�es.
+>>>>>>> ab825d4c2cf3b258b7266aadcc655fd535c36e52
 	 */
 	public void provSave() {
 		
 		// Initialisation de la ArrayList contenant la liste d'adjacence du
-		// graphe + les coordonn�es des points au moment o� l'utilisateur effectue une action
+		// graphe + les coordonnées des points au moment où l'utilisateur effectue une action
 		ArrayList<String> alProv = graph.getFormattedListAlString();
 		
 		// Sauvegarde des coordonn�es
@@ -416,6 +451,11 @@ public class Controller implements IControlable, IIhmable {
 			hci.showHiLightAlgorithm();
 		}
 
+		if( parcours instanceof ParcoursDijkstra) {
+			if(hci.getMatrixDialog()!=null)hci.getMatrixDialog().dispose();
+			hci.openMatrix(((ParcoursDijkstra)(parcours)).getTChemins());
+			hci.getMatrixDialog().paint(hci.getMatrixDialog().getGraphics());;
+		}
 	}
 	
 	public void repaintVertex() {
