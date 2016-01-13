@@ -37,7 +37,15 @@ public enum GraphStyle {
 	private Color arcText;
 	private Color background;
 	   
-	//Constructeur
+	/**
+	 * Constructeur qui prend en paramètre les couleurs sélectionnées.
+	 * @param edgeBorder couleur du bord du sommet
+	 * @param edgeBackground couleur du fond du sommet
+	 * @param edgeText couleur du texte du sommet
+	 * @param arcLine couleur de l'arc
+	 * @param arcText couleur du texte de l'arc
+	 * @param background couleur du fond
+	 */
 	private GraphStyle(Color edgeBorder, Color edgeBackground, Color edgeText, Color arcLine, Color arcText, Color background) {
 		this.edgeBorder = edgeBorder;
 		this.edgeBackground = edgeBackground;
@@ -47,6 +55,10 @@ public enum GraphStyle {
 		this.background = background;
 	}
 	
+	/**
+	 * Méthode permettant d'écrire sous forme de chaine de caractère le style du graphe pour pouvoir l'enregistrer.
+	 * @return la chaine de caractère 
+	 */
 	public String toStringSave() {
 		return edgeBackground.getRed()+","+edgeBackground.getGreen()+","+edgeBackground.getBlue()+";"+
 			   edgeBorder.getRed()+","+edgeBorder.getGreen()+","+edgeBorder.getBlue()+";"+
