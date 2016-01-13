@@ -15,13 +15,11 @@ public class ParcoursLienExiste implements IParcourable {
 	private int ligArcActif;
 	private int colArcActif;
 
-	private boolean next;
 	private String message;
 
 	private int[][] matrice;
 	private char[] lstSommet;
 
-	private ArrayList<ListeFilsDuPere> alFilsDuPere;
 	private ArrayList<Integer> alSommetsTraites;
 
 	private ListeFilsDuPere lfdpArrive;
@@ -43,7 +41,6 @@ public class ParcoursLienExiste implements IParcourable {
 		matrice = ctrl.getMatrice();
 		lstSommet = ctrl.listeSommet();
 
-		alFilsDuPere = new ArrayList<ListeFilsDuPere>();
 		alSommetsTraites = new ArrayList<Integer>();
 
 		lfdpArrive = null;

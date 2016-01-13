@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;

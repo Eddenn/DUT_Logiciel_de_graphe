@@ -7,7 +7,6 @@ public class ListeFilsDuPere {
 	private ListeFilsDuPere listePere;
 	private ArrayList<ListeFilsDuPere> alFils;
 	private int iCpt;
-	private int valeur;
 	
 	public ListeFilsDuPere(int iSommet, ListeFilsDuPere listePere) {
 		this.iSommet = iSommet;
