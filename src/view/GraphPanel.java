@@ -254,7 +254,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		        
 		        g2d.setColor(new Color(20,20,255,50));
 		        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);	
-				drawArrow(g2d, (int)xm1, (int)ym1, (int)xn2, (int)yn2, (int)(22*iZoom), (int)(10*iZoom));			        
+				drawArrow(g2d, (int)xn2, (int)yn2, (int)xm1, (int)ym1, (int)(22*iZoom), (int)(10*iZoom));			        
 			} else {
 				g2d.drawLine((int)pCenter1.x, (int)pCenter1.y, (int)pCenter2.x, (int)pCenter2.y);
 		    	if(  hci.getGraph().isDirected() ) {	
@@ -393,7 +393,8 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 						/*-----Cacul des points M et N pour placer les deux arcs par rapport au pCenter1*/
 						int d = 0;
 						int h = (int) (iWidthEdge/3*iZoom);
-						int dx = (int)pCenter2.x - (int)pCenter1.x, dy = (int)pCenter2.y - (int)pCenter1.y;
+						int dx = (int)pCenter2.x - (int)pCenter1.x;
+						int dy = (int)pCenter2.y - (int)pCenter1.y;
 				        double D = Math.sqrt(dx*dx + dy*dy);
 				        double xm1 = D - d, xn1 = xm1, ym1 = h, yn1 = -h, x;
 				        double sin = dy/D, cos = dx/D;
@@ -427,7 +428,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				        
 				        g2d.setColor(style.getArcLine());
 				        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);	
-						drawArrow(g2d, (int)xm1, (int)ym1, (int)xn2, (int)yn2, (int)(22*iZoom), (int)(10*iZoom));
+						drawArrow(g2d, (int)xn1, (int)yn1, (int)xm2, (int)ym2, (int)(22*iZoom), (int)(10*iZoom));
 						if(  hci.getGraph().isValued() ) {
 							g2d.setColor(style.getArcText());
 							g2d.drawString( ""+arc.getIValue() , (int)(xm1+xn2)/2 , (int)(ym1+yn2)/2 );
