@@ -167,7 +167,7 @@ public class ReaderMatrix {
 				if (tMatrix[i][j] == 1) {
 					Vertex vBis = graph.getVertex(j);
 
-					graph.addArc(vBis, v);
+					graph.addArc(v, vBis);
 				}
 			}
 

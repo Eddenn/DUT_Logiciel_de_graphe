@@ -768,11 +768,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			String format = "";
 			String extension = dial.getFileFilter().getDescription();
 
-			if (extension.equals("Export en matrice")) {
+			if (extension.equals("Export en matrice (*.txt)")) {
 				format = "matrice";
 			}
 
-			if (extension.equals("Export en liste d'adjacence")) {
+			if (extension.equals("Export en liste d'adjacence (*.txt)")) {
 				format = "adjacence";
 			}
 			

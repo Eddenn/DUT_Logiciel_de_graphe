@@ -119,7 +119,7 @@ public class Controller implements IControlable, IIhmable {
 				fw.write("-- Liste d'adjacence :\n");
 				fw.write(graph.getFormattedList() + "\n");
 			}
-			fw.write("-- Coordonnï¿½es des points :\n");
+			fw.write("-- Coordonnées des points :\n");
 			fw.write("[");
 
 			Point[] tabPoint = new Point[graph.getAlVertex().size()];
