@@ -84,7 +84,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		this.setSize(900, 700);
 		this.setPreferredSize(new Dimension(900, 700));
-		ImageIcon img = new ImageIcon("images/Logo_32x32_LGP.png");
+		ImageIcon img = new ImageIcon(getClass().getResource("/Logo_32x32_LGP.png"));
 		this.setIconImage(img.getImage());
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
