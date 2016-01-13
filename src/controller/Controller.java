@@ -250,9 +250,7 @@ public class Controller implements IControlable, IIhmable {
 	 *------------------------*/
 	/**
 	 * Méthode permettant d'ajouter un sommet au graphe
-	 * 
-	 * @param strVertexName
-	 *            le nom du sommet
+	 * @param strVertexName  le nom du sommet
 	 * @return true si le nom est déja utilisé, false sinon
 	 */
 	public boolean addVertex(String strVertexName) {
@@ -270,14 +268,32 @@ public class Controller implements IControlable, IIhmable {
 		}
 		return bExist;
 	}
+	
+	public boolean deleteVertex(String s) {
+		Vertex v = graph.getVertex(s);
+		if (v != null) {
+			graph.deleteVertex(v);
+			provSave();
+			return true;
+		}
+		return false;
+	}
+	
+	public void deleteMultipleVertex(ArrayList<String> s) {
+		for (int i = 0; i < s.size(); i++) {
+			Vertex v = graph.getVertex(s.get(i));
+			if (v != null) {
+				graph.deleteVertex(v);
+				hci.getHmVertex().remove(s.get(i));
+			}
+		}
+		provSave();
+	}
 
 	/**
 	 * Méthode permettant d'ajouter un arc ou une aréte non valué
-	 * 
-	 * @param v
-	 *            le nom du premier sommet
-	 * @param vBis
-	 *            le nom du deuxiéme sommet
+	 * @param v  le nom du premier sommet
+	 * @param vBis  le nom du deuxiéme sommet
 	 */
 	public void addArc(Vertex v, Vertex vBis) {
 		if (checkArcAlreadyExist(v, vBis)) {
@@ -290,13 +306,9 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * Méthode permettant d'ajouter un arc ou une aréte valué
-	 * 
-	 * @param v
-	 *            le nom du premier sommet
-	 * @param vBis
-	 *            le nom du deuxiéme sommet
-	 * @param iValue
-	 *            la valeur de l'arc
+	 * @param v  le nom du premier sommet
+	 * @param vBis  le nom du deuxiéme sommet
+	 * @param iValue  la valeur de l'arc
 	 */
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
 		if (checkArcAlreadyExist(v, vBis)) {
@@ -308,11 +320,8 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * Méthode permettant de supprimer un arc ou une aréte
-	 * 
-	 * @param v
-	 *            le nom du premier sommet
-	 * @param vBis
-	 *            le nom du deuxiéme sommet
+	 * @param v  le nom du premier sommet
+	 * @param vBis le nom du deuxiéme sommet
 	 */
 	public boolean delArc(Vertex v, Vertex vBis) {
 		if (graph.getAlVertex().contains(v) && graph.getAlVertex().contains(vBis)) {
@@ -325,12 +334,9 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/**
-	 * Méthode qui vérifie si un arc ou une aréte existe déjé
-	 * 
-	 * @param v
-	 *            nom du premier sommet
-	 * @param vBis
-	 *            nom du deuxiéme sommet
+	 * Méthode qui vérifie si un arc ou une aréte existe déjà
+	 * @param v  nom du premier sommet
+	 * @param vBis  nom du deuxiéme sommet
 	 * @return true s'il existe, false sinon
 	 */
 	private boolean checkArcAlreadyExist(Vertex v, Vertex vBis) {
@@ -381,13 +387,14 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/**
-	 * Méthode permettant de sauvegarder l'état du graphe é un instant t.
+	 * Méthode permettant de sauvegarder l'état du graphe à un instant t.
 	 * Utilisé pour sauvegarder les actions effectuées.
 	 */
 	public void provSave() {
 		
 		// Initialisation de la ArrayList contenant la liste d'adjacence du
-		// graphe + les coordonnées des points au moment oé l'utilisateur effectue une action
+		// graphe + les coordonnées des points au moment où l'utilisateur effectue une action
+
 		ArrayList<String> alProv = graph.getFormattedListAlString();
 		
 		// Sauvegarde des coordonnées

@@ -559,16 +559,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			
 			// Supprimer un sommet
 		} else if (e.getSource() == tabMenuItemGraph[2] || e.getSource() == popUpItem[2] || e.getSource() == buttonDeleteVertex) {
-			for(String s : pGraph.getAlSelected()) {
-				Vertex tmpVertex = null;
-				for (Vertex v : ctrl.getGraph().getAlVertex()) {
-					if (v.getName().equals(s)) {
-						tmpVertex = v;
-					}
-				}
-				ctrl.getGraph().deleteVertex(tmpVertex);
-				this.hmVertex.remove(s);
-			}
+			ctrl.deleteMultipleVertex(pGraph.getAlSelected());
 			setAlSelected(new ArrayList<String>());
 			refresh();
 			// Coloriser un sommet
@@ -779,13 +770,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public void saveDialog() {
 		
-		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Enregistrer en matrice", ".txt");
-		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter("Enregistrer en liste d'adjacence", ".txt");
+		FileNameExtensionFilter filterMatrix        = new FileNameExtensionFilter("Enregistrer en matrice (*.txt)", ".txt");
+		FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter("Enregistrer en liste d'adjacence (*.txt)", ".txt");
 
 		JFileChooser dial = new JFileChooser(new File("."));
 		dial.setAcceptAllFileFilterUsed(false);
-		dial.addChoosableFileFilter(filterMatrix);
 		dial.addChoosableFileFilter(filterAdjacencyList);
+		dial.addChoosableFileFilter(filterMatrix);
 
 		if (dial.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 			String format = "";
