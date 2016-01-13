@@ -41,7 +41,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	// Menu bar of this frame
 	private JMenuBar menuBarMain;
 	private JMenu menuFichier, menuEdition, menuExport, menuGraph, menuAlgo, menuAide;
-	private JMenuItem[] tabMenuItemFile = new JMenuItem[6];
+	private JMenuItem[] tabMenuItemFile = new JMenuItem[5];
 	private JMenuItem[] tabMenuItemEdition = new JMenuItem[6];
 	private JMenuItem[] tabMenuItemExport = new JMenuItem[4];
 	private JMenuItem[] tabMenuItemGraph = new JMenuItem[7];
@@ -128,19 +128,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// Separator
 		menuFichier.addSeparator();
 
-		// MenuItem - Imprimer
-		tabMenuItemFile[4] = new JMenuItem(
-				"<html>Imprimer&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp;<i>Ctrl+P</i></html>");
+		// MenuItem - Quitter
+		tabMenuItemFile[4] = new JMenuItem("<html>Quitter</html>");
 		tabMenuItemFile[4].addActionListener(this);
 		menuFichier.add(tabMenuItemFile[4]);
-
-		// Separator
-		menuFichier.addSeparator();
-
-		// MenuItem - Quitter
-		tabMenuItemFile[5] = new JMenuItem("<html>Quitter</html>");
-		tabMenuItemFile[5].addActionListener(this);
-		menuFichier.add(tabMenuItemFile[5]);
 
 		// Add menuFichier to this frame
 		menuBarMain.add(menuFichier);
@@ -503,10 +494,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		System.out.println(e.getSource() == null);
-		
+	public void actionPerformed(ActionEvent e) {		
 		// Switch the state of the SwitchList
 		if (e.getSource() == slObject.getJBSwitch()) {
 			slObject.switchState();
@@ -549,19 +537,28 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource()==tabMenuItemFile[3]) {
 			saveDialog();
 			// Quitter
-		} else if (e.getSource() == tabMenuItemFile[5]) {
-			this.dispose();
+		} else if (e.getSource() == tabMenuItemFile[4]) {
+			System.exit(0);
 			
 		/*-- EDITION --*/
 		} else if (e.getSource() == tabMenuItemEdition[0] || e.getSource() == buttonUndo) {
-				ctrl.undo();
-				bSaved = false;
-				this.refresh();
+			ctrl.undo();
+			bSaved = false;
+			this.refresh();
 		} else if (e.getSource() == tabMenuItemEdition[1] || e.getSource() == buttonRedo) {
-				ctrl.redo();
-				bSaved = false;
-				this.refresh();
+			ctrl.redo();
+			bSaved = false;
+			this.refresh();
 		
+		} else if (e.getSource() == tabMenuItemEdition[2] ) {
+			pGraph.cutEdge();
+		} else if (e.getSource() == tabMenuItemEdition[3] ) {
+			pGraph.copyEdge();
+		} else if (e.getSource() == tabMenuItemEdition[4] ) {
+			pGraph.pasteEdge();
+		} else if (e.getSource() == tabMenuItemEdition[5] ) {
+			pGraph.selectAll();
+			
 		/*-- EXPORTER --*/
 			// Image
 		} else if (e.getSource() == tabMenuItemExport[0]) {
