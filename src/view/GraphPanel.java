@@ -57,7 +57,11 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	private GraphStyle style;
 	private Controller ctrl;
 
-	/*--Constructeur du panel de dessin--*/
+	/**
+	 * Constructeur du panel de dessin
+	 * @param hci le hci utilisé
+	 * @param ctrl le controleur utilisé
+	 */
 	public GraphPanel(HCI hci, Controller ctrl) {
 		super();
 		this.hci = hci;
@@ -124,7 +128,12 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		return null;
 	}
+	public double getZoom() { return iZoom; }
 	
+	/**
+	 * 
+	 * @param g2d
+	 */
 	public void paintVertexAndArc(Graphics2D g2d) {
 		Graph graphLoaded = hci.getGraph();
 		
@@ -495,9 +504,12 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		return iZoom;
 	}
 	
-	public double getZoom() { return iZoom; }
-	
 	/*--Fonctions utiles--*/
+	/**
+	 * Méthode qui vérifie si le curseur se situe sur un sommet.
+	 * @param e 
+	 * @return le sommet sur lequel pointe le curseur
+	 */
 	public Point isOnEdge(MouseEvent e) {
 		double centerX,centerY;
 		for(String s : hci.getHmVertex().keySet()) {
@@ -510,10 +522,21 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		return null;
 	}
+	
+	/**
+	 * Méthode utiliser lors de la selection multiple. 
+	 * Permet de définir la couleur du rectangle de sélection selon la couleur de font.
+	 * @param color couleur de départ
+	 * @return la couleur inverse
+	 */
 	public static Color getContrastColor(Color color) {
 		  double y = (299 * color.getRed() + 587 * color.getGreen() + 114 * color.getBlue()) / 1000;
 		  return y >= 128 ? Color.black : Color.white;
 		}
+	
+	/**
+	 * Méthode utilisé pour supprimer plusieurs sommets.
+	 */
 	public void cutEdge() {
 		if(alSelected.size() > 0) clipBoardEdge.clear();
 		for(String s : alSelected) {
@@ -521,17 +544,29 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		ctrl.deleteMultipleVertex(this.getAlSelected());
 	}
+	
+	/**
+	 * Méthode utilisé pour copier plusieurs sommets
+	 */
 	public void copyEdge() {
 		if(alSelected.size() > 0) clipBoardEdge.clear();
 		for(String s : alSelected) {
 			clipBoardEdge.put(s, hci.getHmVertex().get(s));
 		}
 	}
+	
+	/**
+	 * Méthode permettant de sélectionnet tout le graphe
+	 */
 	public void selectAll() {
 		for(String s : hci.getHmVertex().keySet()) {
 			alSelected.add(s);
 		}
 	}
+	
+	/**
+	 * Méthode permettant de coller les sommets copier
+	 */
 	public void pasteEdge() {
 		for(String s : clipBoardEdge.keySet()) {
 			int cpt = 1;
