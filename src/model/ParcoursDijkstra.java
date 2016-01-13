@@ -158,7 +158,7 @@ public class ParcoursDijkstra implements IParcourable {
 
 							// On met à jour l'IHM et on fait une pause
 							ctrl.majIHM();
-							//this.pauseSynchro();
+							this.pauseSynchro();
 						} else {
 							// S'il y a un chemin existant, on vérifie que la
 							// nouvelle valeur est inférieure à l'ancienne
@@ -174,7 +174,7 @@ public class ParcoursDijkstra implements IParcourable {
 
 								// On met à jour l'IHM et on fait une pause
 								ctrl.majIHM();
-								//this.pauseSynchro();
+								this.pauseSynchro();
 
 							} else {
 								// Si c'est plus grand, alors on récupère
