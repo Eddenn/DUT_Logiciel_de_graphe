@@ -56,7 +56,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private GraphPanel pGraph;
 	private JScrollPane jscrPanel;
 
-	private JLabel lCoord;
+	private JPanel pBottomGraph;
+	private JLabel lCoord,lZoom;
 	private JButton buttonMatrix;
 
 	// Panel of JButton
@@ -298,13 +299,19 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		// ---------Graph--------//
 		pGraph = new GraphPanel(this, ctrl);
 		
+		pBottomGraph = new JPanel(new GridLayout(1,2));
 		lCoord = new JLabel("");
+		pBottomGraph.add(lCoord);
+		JPanel pZoom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		lZoom = new JLabel("100%");
+		pZoom.add(lZoom);
+		pBottomGraph.add(pZoom);
 		
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
 		panelCenter.add(jscrPanel);
-		panelCenter.add(lCoord, "South");
+		panelCenter.add(pBottomGraph, "South");
 		add(panelCenter, BorderLayout.CENTER);
 		// ----------------------//
 
@@ -839,6 +846,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public JLabel getLabelCoord() {
 		return this.lCoord;
+	}
+
+	public JLabel getLabelZoom() {
+		return this.lZoom;
 	}
 	
 	public void setInfo() {

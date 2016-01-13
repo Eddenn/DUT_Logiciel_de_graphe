@@ -470,7 +470,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	 * @return
 	 */
 	public double zoomIn() {
-		if(iZoom<1.5) {
+		if(iZoom<1.6) {
 			for(Point c : hci.getHmVertex().values()) {
 				c.x = (int) (c.x/iZoom*(iZoom+0.2));
 				c.y = (int) (c.y/iZoom*(iZoom+0.2));
@@ -478,6 +478,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			}
 		}
 		refreshPreferedSize();
+		hci.getLabelZoom().setText(String.format("%3.0f",iZoom*100)+"%");
 		return iZoom;
 	}
 	
@@ -486,7 +487,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	 * @return
 	 */
 	public double zoomOut() {
-		if(iZoom>0.5) {
+		if(iZoom>0.6) {
 			for(Point c : hci.getHmVertex().values()) {
 				c.x = (int) (c.x/iZoom*(iZoom-0.2));
 				c.y = (int) (c.y/iZoom*(iZoom-0.2));
@@ -494,6 +495,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 			}
 		}
 		refreshPreferedSize();
+		hci.getLabelZoom().setText(String.format("%3.0f",iZoom*100)+"%");
 		return iZoom;
 	}
 	
