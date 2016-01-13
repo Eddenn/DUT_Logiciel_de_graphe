@@ -60,12 +60,18 @@ public class PopupAddArc extends Popup {
 		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
 		boxDep = new JComboBox(tabVertex);
+		if(hci.getAlSelected().size() == 2) {
+			boxDep.setSelectedItem(hci.getAlSelected().get(0));
+		}
 		panelComboBox.add(boxDep,"");
 		
 		// Gestion du sommet d'arrivée
 		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
+		if(hci.getAlSelected().size() == 2) {
+			boxArr.setSelectedItem(hci.getAlSelected().get(1));
+		}
 		panelComboBox.add(boxArr);
 		
 		// Panel contenant le textField

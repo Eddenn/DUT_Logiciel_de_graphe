@@ -1,0 +1,13 @@
+IsMatrix=false
+Directed=true
+Valued=true
+
+-- Liste d'adjacence :
+A={(B,1),(A,4)}
+B={(C,3),(A,4)}
+C={(A,6)}
+
+-- Coordonnées des points :
+[324.0,204.0;90.0,152.0;182.0,50.0]
+-- Style :
+255,255,255;0,0,0;0,0,0;128,128,128;0,0,0;238,238,238

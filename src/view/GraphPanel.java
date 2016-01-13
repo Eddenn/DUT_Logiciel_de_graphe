@@ -17,10 +17,12 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 import controller.Controller;
@@ -252,7 +254,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		        
 		        g2d.setColor(new Color(20,20,255,50));
 		        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);	
-				drawArrow(g2d, (int)xm1, (int)ym1, (int)xn2, (int)yn2, (int)(22*iZoom), (int)(10*iZoom));			        
+				drawArrow(g2d, (int)xn2, (int)yn2, (int)xm1, (int)ym1, (int)(22*iZoom), (int)(10*iZoom));			        
 			} else {
 				g2d.drawLine((int)pCenter1.x, (int)pCenter1.y, (int)pCenter2.x, (int)pCenter2.y);
 		    	if(  hci.getGraph().isDirected() ) {	
@@ -391,7 +393,8 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 						/*-----Cacul des points M et N pour placer les deux arcs par rapport au pCenter1*/
 						int d = 0;
 						int h = (int) (iWidthEdge/3*iZoom);
-						int dx = (int)pCenter2.x - (int)pCenter1.x, dy = (int)pCenter2.y - (int)pCenter1.y;
+						int dx = (int)pCenter2.x - (int)pCenter1.x;
+						int dy = (int)pCenter2.y - (int)pCenter1.y;
 				        double D = Math.sqrt(dx*dx + dy*dy);
 				        double xm1 = D - d, xn1 = xm1, ym1 = h, yn1 = -h, x;
 				        double sin = dy/D, cos = dx/D;
@@ -425,7 +428,8 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				        
 				        g2d.setColor(style.getArcLine());
 				        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);	
-						drawArrow(g2d, (int)xm2, (int)ym2, (int)xn1, (int)yn1, (int)(22*iZoom), (int)(10*iZoom));
+						drawArrow(g2d, (int)xn1, (int)yn1, (int)xm2, (int)ym2, (int)(22*iZoom), (int)(10*iZoom));
+
 						if(  hci.getGraph().isValued() ) {
 							g2d.setColor(style.getArcText());
 							g2d.drawString( ""+arc.getIValue() , (int)(xm1+xn2)/2 , (int)(ym1+yn2)/2 );
@@ -701,11 +705,44 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}	
 	}	
 
+	public void cutEdge() {
+		if(alSelected.size() > 0) clipBoardEdge.clear();
+		for(String s : alSelected) {
+			clipBoardEdge.put(s, hci.getHmVertex().get(s));
+		}
+		ctrl.deleteMultipleVertex(this.getAlSelected());
+	}
+	
+	public void copyEdge() {
+		if(alSelected.size() > 0) clipBoardEdge.clear();
+		for(String s : alSelected) {
+			clipBoardEdge.put(s, hci.getHmVertex().get(s));
+		}
+	}
+	
+	public void selectAll() {
+		for(String s : hci.getHmVertex().keySet()) {
+			alSelected.add(s);
+		}
+	}
+	
+	public void pasteEdge() {
+		for(String s : clipBoardEdge.keySet()) {
+			int cpt = 1;
+			while(hci.getHmVertex().containsKey(s.substring(0,1)+"("+cpt+")") || clipBoardEdge.containsKey(s.substring(0,1)+"("+cpt+")")) {
+				cpt++;
+			}
+			hci.getGraph().addVertex(s.substring(0,1)+"("+cpt+")");
+			hci.getHmVertex().put(s.substring(0,1)+"("+cpt+")", new Point((int)(clipBoardEdge.get(s).x+iWidthEdge*iZoom),(int)(clipBoardEdge.get(s).y+iHeightEdge*iZoom)));
+			hci.refresh();
+		}
+	}
+	
 	/*--KeyListener--*/
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {		
 		//Suppr Pressed pour la supression des sommets sélectionnés
-		if(e.getKeyCode()==127) {
+		if(e.getKeyCode()==KeyEvent.VK_DELETE) {
 			ctrl.deleteMultipleVertex(alSelected);
 			setAlSelected(new ArrayList<String>());
 			hci.refresh();
@@ -714,42 +751,58 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		//CTRL Pressed pour la sélection
 		else if(e.getKeyCode()==17) bCtrlPressed = true;
 		
-		//CTRL+C
-		else if(e.getModifiersEx()==128 && e.getKeyCode()==67 ) {
-			clipBoardEdge.clear();
-			for(String s : alSelected) {
-				int cpt = 1;
-				while(hci.getHmVertex().containsKey(s.substring(0,1)+"("+cpt+")") || clipBoardEdge.containsKey(s.substring(0,1)+"("+cpt+")")) {
-					cpt++;
-				}
-				clipBoardEdge.put(s.substring(0,1)+"("+cpt+")", new Point((int)(hci.getHmVertex().get(s).x+iWidthEdge*iZoom),(int)(hci.getHmVertex().get(s).y+iHeightEdge*iZoom)));
+		//CTRL+N
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_N ) {
+			new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, hci);
+		}
+		//CTRL+O
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_O ) {
+			JFileChooser dial = new JFileChooser(new File("."));
+			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+				try {
+					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
+				} catch (Exception e1) {}
+		}
+		//CTRL+S
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_S ) {
+			if(ctrl.getFile().equals("")){
+				hci.saveDialog();
+			}else{
+				ctrl.saveFile("", "adjacence");
 			}
 		}
-		//CTRL+V
-		else if(e.getModifiersEx()==128 && e.getKeyCode()==86 ) {
-			for(String s : clipBoardEdge.keySet()) {
-				hci.getGraph().addVertex(s);
-				hci.getHmVertex().put(s, clipBoardEdge.get(s));
-				hci.refresh();
-			}
-			clipBoardEdge.clear();
+		//CTRL+MAJ+S
+		else if(e.getModifiersEx()==192 && e.getKeyCode()==KeyEvent.VK_S ) {
+			hci.saveDialog();
+		}
+		else if (e.getKeyCode() == 27){
+			System.exit(0);
 		}
 		//CTRL+Z
-		else if(e.getModifiersEx()==128 && e.getKeyCode()==90 ) {
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_Z ) {
 			ctrl.undo();
 			hci.refresh();
 		}
 		//CTRL+Y
-		else if(e.getModifiersEx()==128 && e.getKeyCode()==89 ) {
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_Y ) {
 			ctrl.redo();
 			hci.refresh();
 		}
-		else if(e.getKeyCode()==KeyEvent.VK_F1 ) {
-			hci.startParcours();
+		//CTRL+X
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_X ) {
+			cutEdge();
 		}
-		
-		else if (e.getKeyCode() == 27){
-			System.exit(0);
+		//CTRL+C
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_C ) {
+			copyEdge();
+		}
+		//CTRL+V
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_V ) {
+			pasteEdge();
+		}
+		//CTRL+V
+		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_A ) {
+			selectAll();
 		}
 		
 		refreshPreferedSize();
@@ -766,10 +819,10 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		if( e.getWheelRotation() == 1 && e.isControlDown() ) {
+		if( e.getWheelRotation() == -1 && e.isControlDown() ) {
 			zoomIn();
 		}
-		if( e.getWheelRotation() == -1 && e.isControlDown() ) {
+		if( e.getWheelRotation() == 1 && e.isControlDown() ) {
 			zoomOut();
 		}
 		
