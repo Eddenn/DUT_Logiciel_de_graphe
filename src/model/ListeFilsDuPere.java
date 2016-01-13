@@ -37,6 +37,13 @@ public class ListeFilsDuPere {
 		return alFils.size();
 	}
 
+	public ListeFilsDuPere getFilsCourantIncremente() {
+		if (alFils.size() == 0 || filsTousTraites()) {
+			return listePere;
+		}
+
+		return alFils.get(iCpt++);
+	}
 	public ListeFilsDuPere getFilsCourant() {
 		if (alFils.size() == 0 || filsTousTraites()) {
 			return listePere;
@@ -47,6 +54,14 @@ public class ListeFilsDuPere {
 	
 	public boolean filsTousTraites() {
 		return iCpt == alFils.size();
+	}
+	
+	public ArrayList<ListeFilsDuPere> getAlFils() {
+		return alFils;
+	}
+	
+	public int getCpt() {
+		return iCpt;
 	}
 	
 	public String toString() {

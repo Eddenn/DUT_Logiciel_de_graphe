@@ -101,13 +101,14 @@ public class ParcoursLienExiste implements IParcourable {
 	}
 
 	private boolean recurr(ListeFilsDuPere lfdp) {
+		ctrl.majIHM();
 		boolean bContinu = true;
 
 		for (Integer integer : getFils(sommetActif)) {
 			lfdp.ajouterFils(integer.intValue());
 		}
-
-		while (!lfdp.filsTousTraites() && bContinu) {
+		
+		while (bContinu) {
 			this.pauseSynchro();
 			
 			if (sommetArrive == lfdp.getFilsCourant().getSommet()) {
@@ -118,12 +119,11 @@ public class ParcoursLienExiste implements IParcourable {
 				sommetActif = lfdp.getFilsCourant().getSommet();
 				ligArcActif = lfdp.getFilsCourant().getSommet();
 				colArcActif = lfdp.getSommet();
+				ctrl.majIHM();
 				
-				lfdp = lfdp.getFilsCourant();
-				lfdp.getPere().incrementeFilsTraite();
-				recurr(lfdp);
+				lfdp = lfdp.getFilsCourantIncremente();
+				bContinu = recurr(lfdp);
 			}
-			ctrl.majIHM();
 		}
 
 		lfdp = lfdp.getFilsCourant();
@@ -132,7 +132,10 @@ public class ParcoursLienExiste implements IParcourable {
 	}
 
 	private ArrayList<Integer> getFils(int iSommet) {
-		alSommetsTraites.add(new Integer(iSommet));
+		if (iSommet != sommetArrive) {
+			alSommetsTraites.add(new Integer(iSommet));
+		}
+		
 		ArrayList<Integer> alInteger = new ArrayList<Integer>();
 
 		for (int i = 0; i < matrice.length; i++) {

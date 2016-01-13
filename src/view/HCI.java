@@ -55,8 +55,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	// Main graph (draw)
 	private GraphPanel pGraph;
 	private JScrollPane jscrPanel;
+	private JPanel pInfo;
 
-	private JLabel lCoord;
+	private JLabel lCoord, lInfo;
+	private JButton buttonMatrix;
 
 	// Panel of JButton
 	private JPanel pButton, pTopButton, pBottomButton;
@@ -64,6 +66,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			buttonSetting;
 	private JButton buttonAddVertex, buttonUpdateVertex, buttonDeleteVertex, buttonAddArc, buttonUpdateArc,
 			buttonDeleteArc;
+
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
@@ -296,10 +299,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// ---------Graph--------//
 		pGraph = new GraphPanel(this, ctrl);
+		
+		lCoord = new JLabel("");
+		
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
-		lCoord = new JLabel("");
 		panelCenter.add(jscrPanel);
 		panelCenter.add(lCoord, "South");
 		add(panelCenter, BorderLayout.CENTER);
@@ -429,7 +434,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.addKeyListener(pGraph);
 	}
 
-	public void openMatrix(int[][] tMatrix) {
+	public void openMatrix(int[][] tMatrix, String strTitle) {
 		String str = "<html><body><table><tbody><tr>";
 		for (Vertex v : this.getGraph().getAlVertex()) {
 			str += "<td style=\"border: 1px solid black;\">" + v.getName().charAt(0) + "</td>";
@@ -443,7 +448,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			str += "</tr>";
 		}
 		str += "</tbody></table></body></html>";
-		matrixDialog = new JDialog(this, "Matrice");
+
+		matrixDialog = new JDialog(this,strTitle);
 		JPanel pStr = new JPanel();
 		pStr.add(new JLabel(str));
 		matrixDialog.setContentPane(pStr);
@@ -537,7 +543,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				try {
 					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					return;
 				}
@@ -772,6 +777,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	 */
 	public void refresh() {
 		graph = ctrl.getGraph();
+		menuAlgo.setVisible(graph.isValued());
 		slObject.refresh();
 		repaint();
 	}
@@ -819,6 +825,22 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public JLabel getLabelCoord() {
 		return this.lCoord;
+	}
+	
+	public void setInfo() {
+		String str;
+		str=("Graphe ");
+		if(graph.isDirected()){
+			str+=("orienté");
+		}else{
+			str+=("non orienté");
+		}
+		if(graph.isValued()){
+			str+=(" et valué");
+		}else{
+			str+=(" et non valué");
+		}
+		slObject.setInfo(str);
 	}
 
 	public Controller getController() {
@@ -883,7 +905,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void setBSaved(boolean b) {
 		bSaved = b;
 	}
-
+	
 	public void showHiLightAlgorithm() {
 		ArrayList<String> alSelected = pGraph.getAlSelected();
 
@@ -922,10 +944,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				}
 			}
 		}
-
-		// System.out.println(alParcours);
-
-		pGraph.paintVertexAndArc((Graphics2D) pGraph.getGraphics());
-		// pGraph.paintAll(pGraph.getGraphics());
+		
+		pGraph.paintVertexAndArc((Graphics2D)pGraph.getGraphics());
 	}
 }
