@@ -21,8 +21,8 @@ public class SwitchList extends JPanel{
 	private static final long serialVersionUID = -967795867440790085L;
 	@SuppressWarnings("rawtypes")
 	private JList listOfObject;
-	private JButton jbSwitch;
-	private JLabel lTitle;
+	private JButton jbSwitch, buttonMatrix;
+	private JLabel lTitle, lInfo;
 	private int state = 1;
 	private HCI hci;
 	
@@ -31,7 +31,7 @@ public class SwitchList extends JPanel{
 		this.hci = hci;
 		setLayout(new BorderLayout());
 		
-		/*--Header of the JList--*/
+		/*--Haut de la liste--*/
 		JPanel jpTop = new JPanel();
 	    jpTop.setBackground(Color.WHITE);
 		//Button used to switch 
@@ -61,12 +61,20 @@ public class SwitchList extends JPanel{
 	    JScrollPane jscrPanel = new JScrollPane(listOfObject);
 	    add(jscrPanel,BorderLayout.CENTER);
 	    
+	    /*--Bas de la liste --*/
+	    JPanel jpBottom = new JPanel();
+	    jpBottom.setBackground(Color.WHITE);
+		lInfo = new JLabel("");
+		jpBottom.add(lInfo);
+		add(jpBottom, BorderLayout.SOUTH);
+	    
 	    this.setPreferredSize(new Dimension(200,500));
 	}
 	//Getters and Setters
 	@SuppressWarnings("unchecked")
 	public JList<String> getListOfObject() {return this.listOfObject;}
-	public JButton getJBSwitch()   {return this.jbSwitch;}
+	public JButton getJBSwitch(){return this.jbSwitch;}
+	public Object getJBMatrix() {return this.buttonMatrix;}
 	
 	@SuppressWarnings("unchecked")
 	public void refresh() {
@@ -143,6 +151,7 @@ public class SwitchList extends JPanel{
 			// S1 --4-- S2
 			// S1 --4-> S2
 			// S1 ----> S2
+			
 		}
 	}
 	
@@ -157,4 +166,9 @@ public class SwitchList extends JPanel{
 		}
 		refresh();
 	}
+	
+	public void setInfo(String strInfo) {
+		lInfo.setText(strInfo);
+	}
+
 }

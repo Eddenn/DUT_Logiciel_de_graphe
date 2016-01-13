@@ -429,6 +429,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				        g2d.setColor(style.getArcLine());
 				        g2d.drawLine((int)xm1, (int)ym1, (int)xn2, (int)yn2);	
 						drawArrow(g2d, (int)xn1, (int)yn1, (int)xm2, (int)ym2, (int)(22*iZoom), (int)(10*iZoom));
+
 						if(  hci.getGraph().isValued() ) {
 							g2d.setColor(style.getArcText());
 							g2d.drawString( ""+arc.getIValue() , (int)(xm1+xn2)/2 , (int)(ym1+yn2)/2 );

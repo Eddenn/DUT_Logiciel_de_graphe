@@ -80,6 +80,7 @@ public class Controller implements IControlable, IIhmable {
 		hci.permitModifArc(graph.isValued());
 		hci.initHmVertex();
 		hci.refresh();
+		hci.setInfo();
 	}
 
 	/**
@@ -191,6 +192,7 @@ public class Controller implements IControlable, IIhmable {
 		
 		initProvSave();
 		hci.refresh();
+		hci.setInfo();
 	}
 
 	/**
@@ -435,7 +437,11 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/*--------------------------------------
+<<<<<<< HEAD
+	 * Méthodes de l'interface IControlable
+=======
 	 * M�thodes de l'interface IControlable
+>>>>>>> 99b6b551c4bf07aeb50c0392ab32d1120c5bf776
 	 *-------------------------------------*/
 
 	public char[] listeSommet() {
@@ -454,7 +460,7 @@ public class Controller implements IControlable, IIhmable {
 
 		if( parcours instanceof ParcoursDijkstra) {
 			if(hci.getMatrixDialog()!=null)hci.getMatrixDialog().dispose();
-			hci.openMatrix(((ParcoursDijkstra)(parcours)).getTChemins());
+			hci.openMatrix(((ParcoursDijkstra)(parcours)).getTChemins(), "Tableau de Dijkstra");
 			hci.getMatrixDialog().paint(hci.getMatrixDialog().getGraphics());;
 		}
 	}
@@ -472,6 +478,8 @@ public class Controller implements IControlable, IIhmable {
 	public void startParcoursDijkstra(int iVertex) {
 		this.parcours = new ParcoursDijkstra(this,iVertex);
 		this.parcours.lancer();
+		majIHM();
+		hci.showInfo("L'algorithme est terminé.");
 	}
 	
 	public void startParcoursLienExiste(int iStartVertex, int iEndVertex) {
