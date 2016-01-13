@@ -516,7 +516,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Permet d'initialiser le tableau de coordonnée dans hci en lui passant un tableau de point
-	 * @param tab talbeau de point
+	 * @param tab tableau de point
 	 */
 	public void initHmVertexByTab(Point[] tab) {
 		// Initialization of hmVertex
@@ -694,7 +694,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		} else if (e.getSource() == tabMenuItemAide[0]) { // A propos
 			JOptionPane.showMessageDialog(this,
 
-					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre<br/><h3>Copyright</h3>Farm-Fresh Web IconsDate<br/>18 September 2010 <br/>http://www.fatcow.com/free-icons/Author<br/>FatCow Web Hosting</center></html>",
+					"<html>Projet tuteuré de deuxième année de DUT Informatique.<br/><center><h3>Groupe 3</h3>Alouache Mehdi<br/>Cavelier Guillaume<br/>Douchin Nicolas<br/>Dumont Mélanie<br/>Hazard Alexandre</center></html>",
 
 					"A propos", 1);
 		} else if (e.getSource() == tabMenuItemAide[1]) {
@@ -861,7 +861,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	/**
-	 * Méthode permettant d'afficher les coordonnées du point selectionner
+	 * Méthode permettant d'afficher les coordonnées du point selectionné
 	 * @return un label
 	 */
 	public JLabel getLabelCoord() {

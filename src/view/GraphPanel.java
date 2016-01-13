@@ -106,6 +106,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public double getiWidthEdge() 					{return iWidthEdge;}
 	public double getiHeightEdge() 					{return iHeightEdge;}
 	public ArrayList<String> getAlSelected() 	   	{return this.alSelected;}
+	public void clearAlSelected() {
+		alSelected.clear();
+	}
 	public void setAlSelected(ArrayList<String> s) 	{this.alSelected = s;}
 	public GraphStyle getStyle() {return style;}
 	public void setStyle(GraphStyle style) {this.style = style;}

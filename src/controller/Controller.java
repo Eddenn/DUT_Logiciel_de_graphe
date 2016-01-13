@@ -468,6 +468,8 @@ public class Controller implements IControlable, IIhmable {
 	
 	public void startParcoursDijkstra(int iVertex) {
 		this.parcours = new ParcoursDijkstra(this,iVertex);
+		hci.getGraphPanel().clearAlSelected();
+		hci.getGraphPanel().paintAll(hci.getGraphPanel().getGraphics());
 		this.parcours.lancer();
 		majIHM();
 		hci.showInfo("L'algorithme est terminé.");

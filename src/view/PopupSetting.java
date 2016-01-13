@@ -23,7 +23,7 @@ import controller.Controller;
 public class PopupSetting extends Popup {
 
 	private static final long serialVersionUID = 7294187771970061680L;
-	private JComboBox<GraphStyle> boxStyle;
+	private JComboBox boxStyle;
 	private JButton buttonEdgeBackground;
 	private JButton buttonEdgeBorder;
 	private JButton buttonEdgeText;
@@ -47,7 +47,7 @@ public class PopupSetting extends Popup {
 		style = hci.getGraphPanel().getStyle();
 		
 		//Styles prédéfinis
-		boxStyle = new JComboBox<GraphStyle>(GraphStyle.values());
+		boxStyle = new JComboBox(GraphStyle.values());
 		boxStyle.setSelectedItem(style);
 		boxStyle.addActionListener(this);
 		pStyle.add(boxStyle,BorderLayout.NORTH);

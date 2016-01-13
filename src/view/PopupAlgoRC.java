@@ -20,7 +20,7 @@ public class PopupAlgoRC extends Popup {
 
 	private static final long serialVersionUID = 1L;
 	private JButton ok, annuler;
-	private JComboBox<String> boxDep, boxArr;
+	private JComboBox boxDep, boxArr;
 
 	/**
 	 * Constructeur qui instancie la fenêtre pop-up pour ajouter un arc
@@ -50,13 +50,13 @@ public class PopupAlgoRC extends Popup {
 		// Gestion du sommet de départ
 		JLabel lDep = new JLabel("Départ : ");
 		panelComboBox.add(lDep,"West");
-		boxDep = new JComboBox<String>(tabVertex);
+		boxDep = new JComboBox(tabVertex);
 		panelComboBox.add(boxDep,"");
 		
 		// Gestion du sommet d'arrivée
 		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
-		boxArr = new JComboBox<String>(tabVertex);
+		boxArr = new JComboBox(tabVertex);
 		panelComboBox.add(boxArr);
 				
 		// Ajout des comboBox à la fenetre
