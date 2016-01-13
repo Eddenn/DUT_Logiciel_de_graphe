@@ -110,7 +110,7 @@ public class PopupNewGraph extends Popup  {
 			this.bEnd=true;
 			dispose();
 		}
-		if(arg0.getKeyCode() == 27){
+		else if(arg0.getKeyCode() == 27){
 			bClose=true;
 			this.bEnd=true;
 			dispose();

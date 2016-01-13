@@ -137,7 +137,7 @@ public class PopupSetting extends Popup {
                 boxStyle.setSelectedItem(GraphStyle.Personnalise);
             }
 		}
-		if(e.getSource() == buttonEdgeBorder) {
+		else if(e.getSource() == buttonEdgeBorder) {
 			Color c = JColorChooser.showDialog(null,"Sélection de couleur", null);
             if (c != null) {
             	GraphStyle oldStyle = style;
@@ -155,7 +155,7 @@ public class PopupSetting extends Popup {
                 boxStyle.setSelectedItem(GraphStyle.Personnalise);
             }
 		}
-		if(e.getSource() == buttonEdgeText) {
+		else if(e.getSource() == buttonEdgeText) {
 			Color c = JColorChooser.showDialog(null,"Sélection de couleur", null);
             if (c != null) {
             	GraphStyle oldStyle = style;
@@ -173,7 +173,7 @@ public class PopupSetting extends Popup {
                 boxStyle.setSelectedItem(GraphStyle.Personnalise);
             }
 		}
-		if(e.getSource() == buttonArcLine) {
+		else if(e.getSource() == buttonArcLine) {
 			Color c = JColorChooser.showDialog(null,"Sélection de couleur", null);
             if (c != null) {
             	GraphStyle oldStyle = style;
@@ -191,7 +191,7 @@ public class PopupSetting extends Popup {
                 boxStyle.setSelectedItem(GraphStyle.Personnalise);
             }
 		}
-		if(e.getSource() == buttonArcText) {
+		else if(e.getSource() == buttonArcText) {
 			Color c = JColorChooser.showDialog(null,"Sélection de couleur", null);
             if (c != null) {
             	GraphStyle oldStyle = style;
@@ -209,7 +209,7 @@ public class PopupSetting extends Popup {
                 boxStyle.setSelectedItem(GraphStyle.Personnalise);
             }
 		}
-		if(e.getSource() == buttonBackground) {
+		else if(e.getSource() == buttonBackground) {
 			Color c = JColorChooser.showDialog(null,"Sélection de couleur", null);
             if (c != null) {
             	GraphStyle oldStyle = style;

@@ -51,15 +51,15 @@ public class ReaderMatrix {
 				return createDirectedValuedGraph();
 			}
 
-			if (bDirected && !bValued) {
+			else if (bDirected && !bValued) {
 				return createDirectedNotValuedGraph();
 			}
 
-			if (!bDirected && bValued) {
+			else if (!bDirected && bValued) {
 				return createNotDirectedValuedGraph();
 			}
 
-			if (!bDirected && !bValued) {
+			else if (!bDirected && !bValued) {
 				return createNotDirectedNotValuedGraph();
 			}
 		} catch (Exception e) {
