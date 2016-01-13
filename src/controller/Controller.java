@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.Desktop;
+import java.awt.Graphics2D;
 import java.awt.Menu;
 import java.awt.Point;
 import java.io.File;
@@ -393,6 +394,7 @@ public class Controller implements IControlable, IIhmable {
 		if (parcours != null) {
 			hci.showHiLightAlgorithm();
 		}
+
 	}
 	
 	public void repaintVertex() {

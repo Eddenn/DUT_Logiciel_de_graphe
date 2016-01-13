@@ -799,16 +799,37 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	public void showHiLightAlgorithm() {
+		ArrayList<String> alSelected = pGraph.getAlSelected();
+		alSelected.clear();
+		
 		for (Vertex vertex : graph.getAlVertex()) {
 			if (ctrl.sommetActif(vertex.getName().charAt(0))) {
-				pGraph.highlightEdge((Graphics2D) pGraph.getGraphics(), vertex);
+				alSelected.add(vertex.getName());
 			}
 
 			for (Arc arc : vertex.getAlArcs()) {
 				if (ctrl.arcActif(vertex.getName().charAt(0), arc.getVertex().getName().charAt(0))) {
-					pGraph.highlightArc((Graphics2D) pGraph.getGraphics(), vertex, arc);
+					if(graph.isValued()) {	
+						if (graph.isDirected()) {
+							//Valué et orienté
+							alSelected.add(HCI.centerStr(vertex.getName(),5)+"------"+HCI.centerStr(""+arc.getIValue(),7)+"----->"+HCI.centerStr(arc.getVertex().getName(),5));
+						} else {
+							//Valué et non orienté
+							alSelected.add(HCI.centerStr(vertex.getName(),5)+"------"+HCI.centerStr(""+arc.getIValue(),7)+"------"+HCI.centerStr(arc.getVertex().getName(),5));	
+						}
+					} else {
+						if (graph.isDirected()) {
+							//Non valué et orienté
+							alSelected.add(HCI.centerStr(vertex.getName(),5)+"-------->"+HCI.centerStr(arc.getVertex().getName(),5));
+						} else {
+							//Non valué et non orienté
+							alSelected.add(HCI.centerStr(vertex.getName(),5)+"---------"+HCI.centerStr(arc.getVertex().getName(),5));
+						}
+					}
 				}
 			}
 		}
+		
+		pGraph.paintVertexAndArc((Graphics2D)pGraph.getGraphics());
 	}
 }

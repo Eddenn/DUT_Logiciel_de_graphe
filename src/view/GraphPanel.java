@@ -85,6 +85,43 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		
+		paintVertexAndArc(g2d);
+		
+		g2d.setStroke(pointille);
+		g2d.draw(rectSelection);
+		g2d.setStroke(new BasicStroke((float)iZoom+2));
+	}
+	
+	/*--Getters and Setters--*/
+	public double getiWidthEdge() 					{return iWidthEdge;}
+	public double getiHeightEdge() 					{return iHeightEdge;}
+	public ArrayList<String> getAlSelected() 	   	{return this.alSelected;}
+	public void setAlSelected(ArrayList<String> s) 	{this.alSelected = s;}
+	public GraphStyle getStyle() {return style;}
+	public void setStyle(GraphStyle style) {this.style = style;}
+	public Vertex getVertex(Point p) {
+		for(String s : hci.getHmVertex().keySet()) {
+			if(hci.getHmVertex().get(s)==p) {
+				for(Vertex v : hci.getGraph().getAlVertex()) {
+					if(v.getName().equals(s)) {
+						return v;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	public Vertex getVertex(String s) {
+		for(Vertex v : hci.getGraph().getAlVertex()) {
+			if(v.getName().equals(s)) {
+				return v;
+			}
+		}
+		return null;
+	}
+	
+	public void paintVertexAndArc(Graphics2D g2d) {
 		Graph graphLoaded = hci.getGraph();
 		
 		drawArcs(g2d);
@@ -124,38 +161,6 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 			}
 		}
-		
-		g2d.setStroke(pointille);
-		g2d.draw(rectSelection);
-		g2d.setStroke(new BasicStroke((float)iZoom+2));
-	}
-	
-	/*--Getters and Setters--*/
-	public double getiWidthEdge() 					{return iWidthEdge;}
-	public double getiHeightEdge() 					{return iHeightEdge;}
-	public ArrayList<String> getAlSelected() 	   	{return this.alSelected;}
-	public void setAlSelected(ArrayList<String> s) 	{this.alSelected = s;}
-	public GraphStyle getStyle() {return style;}
-	public void setStyle(GraphStyle style) {this.style = style;}
-	public Vertex getVertex(Point p) {
-		for(String s : hci.getHmVertex().keySet()) {
-			if(hci.getHmVertex().get(s)==p) {
-				for(Vertex v : hci.getGraph().getAlVertex()) {
-					if(v.getName().equals(s)) {
-						return v;
-					}
-				}
-			}
-		}
-		return null;
-	}
-	public Vertex getVertex(String s) {
-		for(Vertex v : hci.getGraph().getAlVertex()) {
-			if(v.getName().equals(s)) {
-				return v;
-			}
-		}
-		return null;
 	}
 	
 	/**
