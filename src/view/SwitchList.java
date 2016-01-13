@@ -15,9 +15,14 @@ import javax.swing.JScrollPane;
 
 import model.*;
 
+/**
+ * Classe permettant d'afficher la liste des sommets et des arcs
+ * @author Groupe 3
+ * @version 2016-01-13
+ */
+
 public class SwitchList extends JPanel{
-	/** Serial Version
-	  */
+
 	private static final long serialVersionUID = -967795867440790085L;
 	@SuppressWarnings("rawtypes")
 	private JList listOfObject;
@@ -26,6 +31,10 @@ public class SwitchList extends JPanel{
 	private int state = 1;
 	private HCI hci;
 	
+	/**
+	 * Constructeur permettant de créer la liste
+	 * @param hci l'IHM du programme
+	 */
 	@SuppressWarnings("rawtypes")
 	public SwitchList(HCI hci) {
 		this.hci = hci;
@@ -76,6 +85,9 @@ public class SwitchList extends JPanel{
 	public JButton getJBSwitch(){return this.jbSwitch;}
 	public Object getJBMatrix() {return this.buttonMatrix;}
 	
+	/**
+	 * Méthode mettant à jour la JList présente dans SwitchList en fonction du graphe
+	 */
 	@SuppressWarnings("unchecked")
 	public void refresh() {
 		Graph graphLoaded = hci.getGraph();
@@ -100,13 +112,13 @@ public class SwitchList extends JPanel{
 			for(Vertex v : graphLoaded.getAlVertex()) {
 				if(graphLoaded.isValued()) {	
 					if (graphLoaded.isDirected()) {
-						//ValuÃ© et orientÃ©
+						//Valué et orienté
 						for(Arc a : v.getAlArcs()) {
 							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"----->"+HCI.centerStr(a.getVertex().getName(),5);
 							cpt++;
 						}
 					} else {
-						//ValuÃ© et non orientÃ©
+						//Valué et non orienté
 						for(Arc a : v.getAlArcs()) {
 							bFound = false;
 							for(String s : tabArc) {
@@ -123,13 +135,13 @@ public class SwitchList extends JPanel{
 					}
 				} else {
 					if (graphLoaded.isDirected()) {
-						//Non valuÃ© et orientÃ©
+						//Non valué et orienté
 						for(Arc a : v.getAlArcs()) {
 							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"-------->"+HCI.centerStr(a.getVertex().getName(),5);
 							cpt++;
 						}
 					} else {
-						//Non valuÃ© et non orientÃ©
+						//Non valué et non orienté
 						for(Arc a : v.getAlArcs()) {
 							bFound = false;
 							for(String s : tabArc) {
@@ -155,6 +167,9 @@ public class SwitchList extends JPanel{
 		}
 	}
 	
+	/**
+	 * Méthode permettant de changer l'état de la liste entre l'état "Sommet" et l'état "Arc"
+	 */
 	//Set state of the SwitchList
 	public void switchState() {
 		if(state == 0) {
@@ -167,6 +182,10 @@ public class SwitchList extends JPanel{
 		refresh();
 	}
 	
+	/**
+	 * Méthode permettant d'afficher les paramètres du graphe (Orienté / valué)
+	 * @param strInfo La chaine à afficher
+	 */
 	public void setInfo(String strInfo) {
 		lInfo.setText(strInfo);
 	}
