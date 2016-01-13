@@ -99,24 +99,28 @@ public class PopupDeleteArc extends Popup {
 	private void valider() {
 		int vertexDep = boxDep.getSelectedIndex();
 		int vertexArr = boxArr.getSelectedIndex();
-					
-		Vertex vDep = ctrl.getGraph().getAlVertex().get(vertexDep);
-		Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexArr);
-		
-		if (! ctrl.getGraph().isDirected()) {
-			if (! ctrl.delArc(vDep, vArr) || ! ctrl.delArc(vArr, vDep)) {
-				JOptionPane.showMessageDialog(null, "Il n'existe pas d'arc entre les sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
+				
+		if (ctrl.getNbSommet() > 0) {
+			Vertex vDep = ctrl.getGraph().getAlVertex().get(vertexDep);
+			Vertex vArr = ctrl.getGraph().getAlVertex().get(vertexArr);
+			
+			if (! ctrl.getGraph().isDirected()) {
+				if (! ctrl.delArc(vDep, vArr) || ! ctrl.delArc(vArr, vDep)) {
+					JOptionPane.showMessageDialog(null, "Il n'existe pas d'arc entre les sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
+				else
+					dispose();
 			}
-			else
-				dispose();
-		}
-		else {
-			if (! ctrl.delArc(vDep, vArr)) {
-				JOptionPane.showMessageDialog(null, "Il n'existe pas d'arc entre les sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
+			else {
+				if (! ctrl.delArc(vDep, vArr)) {
+					JOptionPane.showMessageDialog(null, "Il n'existe pas d'arc entre les sommets", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
+				else
+					dispose();
 			}
-			else
-				dispose();
 		}
+		else
+			JOptionPane.showMessageDialog(null, "Il n'existe aucun sommet", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	@Override
