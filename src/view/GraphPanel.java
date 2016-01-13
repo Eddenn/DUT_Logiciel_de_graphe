@@ -39,7 +39,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	final static float dash1[] = {5.0f};
 	final static BasicStroke pointille = new BasicStroke(1.0f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,10.0f, dash1, 0.0f);
 	
+	private boolean bClickOnVoid;
 	private ArrayList<String> alSelected;		//Sélection
+	private String highlightParcours;
 	private HashMap<String,Point> clipBoardEdge;//Presse-Papier
 	private Point saveMousePosition;			//Sauvegarde de la dernière position de la souris (Voir MouseDragged)
 	private Point rectSelectionStartPoint;
@@ -59,8 +61,9 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		super();
 		this.hci = hci;
 		this.ctrl = ctrl;
-		rectSelection = new Rectangle2D.Double();
+		this.rectSelection = new Rectangle2D.Double();
 		this.rectSelection.setRect(-1, -1, 0, 0);
+		this.bClickOnVoid = false;
 		this.style = GraphStyle.Basique;
 		this.clipBoardEdge = new HashMap<String,Point>();
 		this.saveMousePosition= new Point(0,0);
@@ -70,6 +73,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		this.iHeightEdge = 50*iZoom;
 		this.iWidthEdge = 50*iZoom;
 		this.alSelected = new ArrayList<String>();
+		this.highlightParcours = "";
 		this.bDragged = false;
 		this.setBackground(style.getBackground());
 		this.addMouseListener(this);
@@ -110,7 +114,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 						}
 					}
 					
-					if( strSelected.equals(s) ) {
+					if( strSelected.equals(s) || strSelected.equals(highlightParcours)) {
 						highlightArc(g2d, v, a);
 					}
 				}
@@ -119,12 +123,13 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		drawVertex(g2d);
 		for(Vertex v : graphLoaded.getAlVertex()) {
 			for(String s : alSelected) {
-				if(v.getName().equals(s)) {
+				if(v.getName().equals(s) || v.getName().equals(highlightParcours)) {
 					highlightEdge(g2d, v);
 				}
 			}
 		}
-		
+
+		g2d.setColor(getContrastColor(style.getBackground()));
 		g2d.setStroke(pointille);
 		g2d.draw(rectSelection);
 		g2d.setStroke(new BasicStroke((float)iZoom+2));
@@ -164,7 +169,11 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	 * @param v le sommet à surligner
 	 */
 	public void highlightEdge(Graphics2D g2d, Vertex v) {
-		g2d.setColor(new Color(20,20,255,50));
+		if(v.getName().equals(highlightParcours)) {
+			g2d.setColor(new Color(20,255,20,50));
+		} else {
+			g2d.setColor(new Color(20,20,255,50));
+		}
 		g2d.fillOval((int)(hci.getHmVertex().get(v.getName()).x-5*iZoom) , (int)(hci.getHmVertex().get(v.getName()).y-5*iZoom) , (int)((iWidthEdge+10)*iZoom)  , (int)((iHeightEdge+10)*iZoom  ));
 		g2d.setColor(Color.BLACK);
 	}
@@ -185,7 +194,11 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		Point pCenter1 = new Point( (int)(c1.getX()+iWidthEdge/2*iZoom) , (int)(c1.getY()+iHeightEdge/2*iZoom) );
 		Point pCenter2 = new Point( (int)(c2.getX()+iWidthEdge/2*iZoom) , (int)(c2.getY()+iHeightEdge/2*iZoom) );		
 		
-		g2d.setColor(new Color(20,20,255,50));
+		if(v.getName().equals(highlightParcours)) {
+			g2d.setColor(new Color(20,255,20,50));
+		} else {
+			g2d.setColor(new Color(20,20,255,50));
+		}
 		g2d.setStroke(new BasicStroke((float)iZoom+2));
 		if(arc.getVertex() == v) {	//Arc partant d'un sommet et  pointant sur lui-même
 			g2d.drawArc((int)(c2.getX()+12.5*iZoom), (int)(c2.getY()+40*iZoom), (int)(25*iZoom), (int)(25*iZoom), 150, 240);
@@ -493,7 +506,10 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		return null;
 	}
-	
+	public static Color getContrastColor(Color color) {
+		  double y = (299 * color.getRed() + 587 * color.getGreen() + 114 * color.getBlue()) / 1000;
+		  return y >= 128 ? Color.black : Color.white;
+		}
 	/*--MouseListener--*/
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -538,11 +554,15 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		if(c!=null){
 			e.translatePoint((int)(c.getX()-e.getX()), (int)(c.getY()-e.getY()));
 			bDragged = true;
+		} else {
+			bClickOnVoid = true;
 		}
 		saveMousePosition = e.getPoint();
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		bClickOnVoid = false;
+		
 		if(bDragged == true && bMoved == true) {
 			ctrl.provSave();
 			bDragged = false;
@@ -644,7 +664,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 			}	
 		}
-		if(rectSelectionStartPoint!=null) {
+		if(rectSelectionStartPoint!=null && bClickOnVoid) {
 
 			int xMin,yMin;
 			int xMax,yMax;
