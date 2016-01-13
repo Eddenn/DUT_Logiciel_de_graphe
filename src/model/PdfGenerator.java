@@ -1,3 +1,7 @@
+/**
+ * Classe permettant d'exporter l'état du graphe au format PDF.
+ */
+
 package model;
 
 import java.awt.Dimension;
@@ -41,7 +45,15 @@ public class PdfGenerator {
 	private static Graph g;
 	private static HCI hci;
 
+	/**
+	 * Constructeur
+	 * @param g
+	 * @param name
+	 * @param path
+	 * @param hci
+	 */
 	public static void generer(Graph g, String name, String path, HCI hci) {
+		//Vérification des extensions
 		try {
 			if (path != null) {
 				strFile = path;
@@ -57,8 +69,7 @@ public class PdfGenerator {
 				strImagePath += date.getTime();
 			}
 
-			// simple test de commit
-
+			//Creation de l'objet, association des meta-données...
 			PdfGenerator.g = g;
 			PdfGenerator.hci = hci;
 			Document document = new Document();
@@ -73,9 +84,10 @@ public class PdfGenerator {
 		}
 	}
 
-	// iText allows to add metadata to the PDF which can be viewed in your Adobe
-	// Reader
-	// under File -> Properties
+	/**
+	 * Ajoute les meta-données au document.
+	 * @param document
+	 */
 	private static void addMetaData(Document document) {
 		document.addTitle("My first PDF");
 		document.addSubject("Using iText");
@@ -84,6 +96,12 @@ public class PdfGenerator {
 		document.addCreator("Groupe 3 Projet Tuteuré");
 	}
 
+	/**
+	 * Genere la preface du document (titre, informations, nom de l'auteur).
+	 * @param document
+	 * @param name
+	 * @throws DocumentException
+	 */
 	private static void addTitlePage(Document document, String name) throws DocumentException {
 		Paragraph preface = new Paragraph();
 		// We add one empty line
@@ -130,27 +148,35 @@ public class PdfGenerator {
 		document.newPage();
 	}
 
+	/**
+	 * Ecrit le corps du document (image, matrice, liste d'ajdacence).
+	 * @param document
+	 * @throws DocumentException
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 */
 	private static void addContent(Document document) throws DocumentException, MalformedURLException, IOException {
 		Anchor anchor = new Anchor("Image du graphe :", catFont);
 		anchor.setName("1 - Image du graphe :");
 
-		// Second parameter is the number of the chapter
+		//Ici, chaque chapitre correspond à une section du document
 		Chapter catPart = new Chapter(new Paragraph(anchor), 1);
-
-		// now add all this to the document
 		document.add(catPart);
 
+		//Ajout d'une image
 		Dimension size = hci.getGraphPanel().getSize();
 		BufferedImage bi = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2 = bi.createGraphics();
 		hci.getGraphPanel().paint(g2);
 
+		//Valeurs relevees en dur, sur les dimensions d'un pdf;
 		int iMaxWidth = 520;
 		int iMaxHeight = 446;
 
 		double iNewWidth = 0.0;
 		double iNewHeight = 0.0;
 
+		//On calcule une redimension de l'image pour le pdf
 		if (size.width > iMaxWidth || size.height > iMaxHeight) {
 			double dCoef1 = (double) size.width / (double) iMaxWidth;
 			double dCoef2 = (double) size.height / (double) iMaxWidth;
@@ -167,7 +193,7 @@ public class PdfGenerator {
 		ImageIO.write(bi, "png", new File(strImagePath + "_tn.png"));
 
 		Image image = Image.getInstance(strImagePath + "_tn.png");
-		image.scaleToFit((float) iNewWidth, (float) iNewHeight);
+		image.scaleToFit((float) iNewWidth, (float) iNewHeight); //ajustement pour la page
 
 		document.add(image);
 		new File(strImagePath + "_tn.png").delete();
@@ -200,7 +226,7 @@ public class PdfGenerator {
 		Paragraph listVextex = new Paragraph(sVertex);
 		document.add(listVextex);
 
-		// add a table
+		//Derniere section du document, sous la forme d'un tableau
 		Section subCatPart = catPart3.addSection(new Paragraph("\n\nListe des elements: \n\n", smallBold));
 		createTable(subCatPart);
 
@@ -208,9 +234,15 @@ public class PdfGenerator {
 
 	}
 
+	/**
+	 * Dernier element du document : l'inventaire des entites qui interviennent dans le graphe.
+	 * @param subCatPart
+	 * @throws BadElementException
+	 */
 	private static void createTable(Section subCatPart) throws BadElementException {
 		PdfPTable table = new PdfPTable(3);
 
+		//on crée trois colonnes "sommet", "cout" et "destination"
 		PdfPCell c1 = new PdfPCell(new Phrase("Sommet"));
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		table.addCell(c1);
@@ -224,6 +256,7 @@ public class PdfGenerator {
 		table.addCell(c1);
 		table.setHeaderRows(1);
 
+		//Remplissage du tableau d'après les données présentes dans le graphe.
 		for (Vertex v : g.getAlVertex()) {
 			for (Arc a : v.getAlArcs()) {
 
@@ -248,6 +281,11 @@ public class PdfGenerator {
 
 	}
 
+	/**
+	 * Effectue des sauts de ligne
+	 * @param paragraph
+	 * @param number
+	 */
 	private static void addEmptyLine(Paragraph paragraph, int number) {
 		for (int i = 0; i < number; i++) {
 			paragraph.add(new Paragraph(" "));
