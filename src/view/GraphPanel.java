@@ -566,6 +566,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 	 * Méthode permettant de sélectionnet tout le graphe
 	 */
 	public void selectAll() {
+		alSelected.clear();
 		for(String s : hci.getHmVertex().keySet()) {
 			alSelected.add(s);
 		}
@@ -868,7 +869,7 @@ public class GraphPanel extends JPanel implements MouseListener,MouseMotionListe
 		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_V ) {
 			pasteEdge();
 		}
-		//CTRL+V
+		//CTRL+A
 		else if(e.getModifiersEx()==128 && e.getKeyCode()==KeyEvent.VK_A ) {
 			selectAll();
 		}
