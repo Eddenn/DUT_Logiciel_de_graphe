@@ -692,6 +692,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			
 			// Affiche la martrice
 		} else if (e.getSource() == buttonMatrix) {
+			if(matrixDialog!=null)matrixDialog.dispose();
 			openMatrix(graph.generateMatrix(),"Matrice");
 			
 			// Paramètres
