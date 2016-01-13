@@ -205,6 +205,20 @@ public class Controller implements IControlable, IIhmable {
 	}
 	
 	/**
+	 * Méthode permettant d'ouvrir la documentation javadoc sur un navigateur web
+	 */
+	public void openJavadoc(){
+		Desktop desktop = null; 
+		try { 
+			if (Desktop.isDesktopSupported()) { 
+				desktop = Desktop.getDesktop(); 
+				desktop.open(new File("javadoc/index.html"));
+			} 
+		} 
+		catch (Exception ex) { Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex); }
+	}
+	
+	/**
 	 * Méthode qui exporte le graphe en matrice ou liste d'adjacence dans un fichier texte
 	 * @param strFileName le chemin du fichier
 	 * @param format le format soit matrice soit liste
