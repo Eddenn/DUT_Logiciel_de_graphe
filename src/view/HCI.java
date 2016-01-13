@@ -55,8 +55,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	// Main graph (draw)
 	private GraphPanel pGraph;
 	private JScrollPane jscrPanel;
+	private JPanel pInfo;
 
-	private JLabel lCoord;
+	private JLabel lCoord, lInfo;
+	private JButton buttonMatrix;
 
 	// Panel of JButton
 	private JPanel pButton, pTopButton, pBottomButton;
@@ -64,6 +66,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			buttonSetting;
 	private JButton buttonAddVertex, buttonUpdateVertex, buttonDeleteVertex, buttonAddArc, buttonUpdateArc,
 			buttonDeleteArc;
+
 
 	// Items du menu contextuel
 	private JMenuItem[] popUpItem = new JMenuItem[7];
@@ -296,10 +299,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// ---------Graph--------//
 		pGraph = new GraphPanel(this, ctrl);
+		
+		lCoord = new JLabel("");
+		
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
-		lCoord = new JLabel("");
 		panelCenter.add(jscrPanel);
 		panelCenter.add(lCoord, "South");
 		add(panelCenter, BorderLayout.CENTER);
@@ -538,7 +543,6 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				try {
 					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					return;
 				}
@@ -683,12 +687,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		refresh();
 	}
 
-	@Override
+	@SuppressWarnings("deprecation")
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getSource() == slObject.getListOfObject()) {
 			pGraph.getAlSelected().clear();
-			for (String s : slObject.getListOfObject().getSelectedValuesList()) {
-				pGraph.getAlSelected().add(s);
+			for( Object s : slObject.getListOfObject().getSelectedValues() ) {
+				pGraph.getAlSelected().add((String)s);
 			}
 			repaint();
 		}
@@ -821,6 +825,22 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	public JLabel getLabelCoord() {
 		return this.lCoord;
+	}
+	
+	public void setInfo() {
+		String str;
+		str=("Graphe ");
+		if(graph.isDirected()){
+			str+=("orienté");
+		}else{
+			str+=("non orienté");
+		}
+		if(graph.isValued()){
+			str+=(" et valué");
+		}else{
+			str+=(" et non valué");
+		}
+		slObject.setInfo(str);
 	}
 
 	public Controller getController() {

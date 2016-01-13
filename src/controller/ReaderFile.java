@@ -12,6 +12,13 @@ import java.util.Scanner;
 import model.Graph;
 import view.GraphStyle;
 
+/**
+ * Classe qui lit un fichier texte et génère le graphe contenu à l'intérieur
+ * 
+ * @author Groupe 3
+ * @version 2016-01-08
+ */
+
 public class ReaderFile {
 	private ArrayList<String> alStr;
 	private Graph graph;
@@ -24,6 +31,10 @@ public class ReaderFile {
 	private GraphStyle style;
 	private Scanner sc;
 	
+	/**
+	 * Constructeur permettant de charger un fichier à partir de son chemin d'accès
+	 * @param strFilePath Le nom du fichier à charger
+	 */
 	public ReaderFile(String strFilePath) {
 		BufferedReader br = null;
 
@@ -78,6 +89,12 @@ public class ReaderFile {
 		generateStyle();
 	}
 	
+	/**
+	 * Constructeur permettant de charger un graphe à partir de ses informations contenues dans une ArrayList de String (Utilisé pour la sauvegarde provisoire)
+	 * @param alStr ArrayList de String contenant les données du graphe ainsi que son style
+	 * @param bDirected true si le graphe est orienté
+	 * @param bValued true si le graphe est valué
+	 */
 	public ReaderFile(ArrayList<String> alStr, boolean bDirected, boolean bValued) {
 		this.alStr = alStr;
 		this.bDirected = bDirected;
@@ -97,6 +114,9 @@ public class ReaderFile {
 		generateTabPoints();
 	}
 	
+	  //----------------------------//
+	 //---- Getters and Setters ---//
+	//----------------------------//
 	public Graph getGraph() {
 		return graph;
 	}
@@ -113,6 +133,9 @@ public class ReaderFile {
 		return bHaveCoord;
 	}
 	
+	/**
+	 * Méthode permettant de lire les coordonnées des points du graphe
+	 */
 	private void generateTabPoints() {
 		int iIndiceCoord = getCoordinatesIndice();
 		
@@ -162,6 +185,10 @@ public class ReaderFile {
 		}
 	}
 	
+	/**
+	 * Méthode permettant de connaitre l'indice de la ligne où figure les coordonnées
+	 * @return -1 si la ArrayList ne comporte pas de coordonnées
+	 */
 	private int getCoordinatesIndice() {
 		for (int i = 0; i < alStr.size(); i++) {
 			if (alStr.get(i).indexOf("Coordonn") >= 0) {
@@ -173,6 +200,9 @@ public class ReaderFile {
 	}
 	
 	/*----- Style -----*/
+	/**
+	 * Méthode permettant de générer le style associé au graphe
+	 */
 	private void generateStyle() {
 		int iIndiceStyle = getStyleIndice();
 		
@@ -223,6 +253,11 @@ public class ReaderFile {
 			style = GraphStyle.Basique;
 		}
 	}
+	
+	/**
+	 * Méthode permettant de connaitre l'indice de la ligne où figure le style
+	 * @return -1 si la ArrayList ne comporte pas de style
+	 */
 	private int getStyleIndice() {
 		for (int i = 0; i < alStr.size(); i++) {
 			if (alStr.get(i).indexOf("Style") >= 0) {
@@ -234,25 +269,37 @@ public class ReaderFile {
 	}
 	/*----------------*/
 	
+	
+	/**
+	 * Methode permettant de savoir si le contenu du fichier correspond à une matrice
+	 * @param str La première ligne du fichier
+	 * @return false si le contenu est une liste d'adjacence
+	 */
 	private boolean isMatrix(String str) {
 		str = str.toLowerCase().replaceAll("ismatrix=", "");
 
 		return (str.toLowerCase().equals("true"));
 	}
 	
+	/**
+	 * Méthode permettant de savoir si le graphe est orienté ou non
+	 * @param str La deuxième ligne du fichier
+	 * @return true si le graphe est orienté
+	 */
 	private boolean checkDirection(String str) {
 		str = str.toLowerCase().replace("directed=", "");
 		
 		return (str.toLowerCase().equals("true"));
 	}
 	
+	/**
+	 * Méthode permettant de savoir si le graphe est valué ou non
+	 * @param str La troisième ligne du fichier
+	 * @return true si le graphe est valué
+	 */
 	private boolean checkValue(String str) {
 		str = str.toLowerCase().replace("valued=", "");
 
 		return (str.toLowerCase().equals("true"));
-	}
-	
-	public boolean haveCoord() {
-		return bHaveCoord;
 	}
 }

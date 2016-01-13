@@ -80,6 +80,7 @@ public class Controller implements IControlable, IIhmable {
 		hci.permitModifArc(graph.isValued());
 		hci.initHmVertex();
 		hci.refresh();
+		hci.setInfo();
 	}
 
 	/**
@@ -152,15 +153,10 @@ public class Controller implements IControlable, IIhmable {
 	}
 
 	/**
-	 * Mï¿½thode permettant de charger un fichier texte
+	 * Méthode permettant de charger un fichier texte
 	 * 
-	 * @param strFileName
-<<<<<<< HEAD
-	 *            le chemin du fichier é charger
+	 * @param strFileName le chemin du fichier à charger
 	 * @throws Exception 
-=======
-	 *            le chemin du fichier à charger
->>>>>>> branch 'master' of https://MagicTruite@bitbucket.org/projettuteur/graphix.git
 	 */
 	public void loadFile(String strFileName) throws Exception {
 		
@@ -187,7 +183,7 @@ public class Controller implements IControlable, IIhmable {
 		hci.setGraph(graph);
 		hci.permitModifArc(graph.isValued());
 
-		if (!bGraphWasNull && rf.haveCoord()) {
+		if (!bGraphWasNull && rf.hasCoord()) {
 			Point[] tPoints = rf.getPoints();
 			hci.initHmVertexByTab(tPoints);
 		} else {
@@ -196,6 +192,7 @@ public class Controller implements IControlable, IIhmable {
 		
 		initProvSave();
 		hci.refresh();
+		hci.setInfo();
 	}
 
 	/**
