@@ -574,12 +574,10 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
-			FileNameExtensionFilter filterMatrix = new FileNameExtensionFilter("Enregistrer en matrice (*.txt)", "txt");
-			FileNameExtensionFilter filterAdjacencyList = new FileNameExtensionFilter(
-					"Enregistrer en liste d'adjacence (*.txt)", "txt");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(
+					"Fichier texte (*.txt)", "txt");
 			dial.setAcceptAllFileFilterUsed(false);
-			dial.addChoosableFileFilter(filterMatrix);
-			dial.addChoosableFileFilter(filterAdjacencyList);
+			dial.addChoosableFileFilter(filter);
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				try {
 					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());

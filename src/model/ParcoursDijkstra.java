@@ -48,7 +48,7 @@ public class ParcoursDijkstra implements IParcourable {
 		this.sommetDepart = sommetDepart;
 
 		message = "";
-		
+
 		// On récupére la matrice et la liste des sommets
 		matrice = ctrl.getMatrice();
 		lstSommet = ctrl.listeSommet();
@@ -72,6 +72,10 @@ public class ParcoursDijkstra implements IParcourable {
 		// suivant une relation fils/pere, le fils est référencé par l'indice du
 		// tableau, et le père par la valeur du tableau à cet indice
 		filsPere = new int[matrice.length];
+
+		for (int i = 0; i < filsPere.length; i++) {
+			filsPere[i] = -1;
+		}
 	}
 
 	/**
@@ -229,39 +233,46 @@ public class ParcoursDijkstra implements IParcourable {
 		sommetActif = -1;
 		ligArcActif = -1;
 		colArcActif = -1;
-		
+
 		ArrayList<String> alStr = new ArrayList<String>();
-		
+
 		for (int i = 0; i < filsPere.length; i++) {
 			int iSommet = i;
 			String str = "";
-			
-			while (iSommet != sommetDepart) {
-				str += lstSommet[iSommet] + ";";
-				
-				iSommet = filsPere[iSommet];
+
+			if (filsPere[i] != -1) {
+				while (iSommet != sommetDepart && iSommet != -1) {
+					if (filsPere[iSommet] == -1) {
+						str = "";
+					} else {
+						str += lstSommet[iSommet] + ";";
+
+						iSommet = filsPere[iSommet];
+					}
+				}
+
+				str += lstSommet[sommetDepart];
+
+				alStr.add(str);
 			}
-			
-			str += lstSommet[sommetDepart];;
-			alStr.add(str);
 		}
-		
+
 		message += "<html>";
-		
+
 		for (String str : alStr) {
 			String[] tStr = str.split(";");
-			
+
 			for (int i = tStr.length - 1; i >= 0; i--) {
 				message += tStr[i];
-				
+
 				if (i != 0) {
 					message += " &rarr; ";
 				}
 			}
-			
+
 			message += "<br />";
 		}
-		
+
 		message += "</html>";
 	}
 
