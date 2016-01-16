@@ -15,10 +15,11 @@ import controller.Controller;
 
 /**
  * Classe qui gèrent la fenêtre utilisateur pour modifier un arc.
+ * 
  * @author Groupe 3
  * @version 2016-01-12
  */
-public class PopupUpdateArc extends Popup  {
+public class PopupUpdateArc extends Popup {
 
 	private static final long serialVersionUID = 2869913711173398321L;
 	private JButton ok, annuler;
@@ -28,10 +29,14 @@ public class PopupUpdateArc extends Popup  {
 
 	/**
 	 * Méthode qui instancie la pop-up pour modifier un arc.
-	 * @param title le titre de la pop-up.
-	 * @param modal 
-	 * @param ctrl le controleur utilisé.
-	 * @param hci le hci utilisé.
+	 * 
+	 * @param title
+	 *            le titre de la pop-up.
+	 * @param modal
+	 * @param ctrl
+	 *            le controleur utilisé.
+	 * @param hci
+	 *            le hci utilisé.
 	 */
 	public PopupUpdateArc(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
@@ -58,7 +63,7 @@ public class PopupUpdateArc extends Popup  {
 		JLabel lDep = new JLabel("Depart : ");
 		panelComboBox.add(lDep, "West");
 		boxDep = new JComboBox(tabVertex);
-		if(hci.getAlSelected().size() == 2) {
+		if (hci.getAlSelected().size() == 2) {
 			boxDep.setSelectedItem(hci.getAlSelected().get(0));
 		}
 		panelComboBox.add(boxDep, "");
@@ -67,7 +72,7 @@ public class PopupUpdateArc extends Popup  {
 		JLabel lArr = new JLabel("Arrivee : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
-		if(hci.getAlSelected().size() == 2) {
+		if (hci.getAlSelected().size() == 2) {
 			boxArr.setSelectedItem(hci.getAlSelected().get(1));
 		}
 		panelComboBox.add(boxArr);
@@ -131,11 +136,11 @@ public class PopupUpdateArc extends Popup  {
 			JOptionPane.showMessageDialog(null, "Un arc doit appartenir à deux sommets", "Erreur",
 					JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Code de gestion de la modification de l'arc.
-		if (e.getSource() == ok ) 
+		if (e.getSource() == ok)
 			valider();
 		else
 			dispose();
@@ -143,10 +148,9 @@ public class PopupUpdateArc extends Popup  {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
+		if (arg0.getKeyCode() == 10 || arg0.getKeyCode() == 13) {
 			valider();
-		}
-		else if (arg0.getKeyCode() == 27)
+		} else if (arg0.getKeyCode() == 27)
 			dispose();
 	}
 

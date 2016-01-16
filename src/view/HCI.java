@@ -22,6 +22,7 @@ import model.Vertex;
 
 /**
  * Classe principale de l'IHM
+ * 
  * @author Groupe 3
  * @version 2016-01-12
  */
@@ -56,7 +57,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	private JScrollPane jscrPanel;
 
 	private JPanel pBottomGraph;
-	private JLabel lCoord,lZoom;
+	private JLabel lCoord, lZoom;
 	private JButton buttonMatrix;
 
 	// Panel de JButton
@@ -79,7 +80,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.ctrl = controller;
 		this.graph = controller.getGraph();
 
-		//Paramètre basique de la frame
+		// Paramètre basique de la frame
 		this.setTitle("Logiciel pédagogique d'édition de graphe");
 
 		this.setSize(900, 700);
@@ -203,7 +204,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		menuBarMain.add(menuExport);
 
-		//GRAPHE
+		// GRAPHE
 		menuGraph = new JMenu("Graphe");
 
 		// MenuItem - Ajouter un sommet
@@ -249,7 +250,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		menuBarMain.add(menuGraph);
 
-		//ALGORITHMES
+		// ALGORITHMES
 		menuAlgo = new JMenu("Algorithme");
 		// MenuItem - PlusGrandeValeur
 		tabMenuItemAlgo[0] = new JMenuItem("PlusGrandeValeur");
@@ -268,7 +269,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		menuBarMain.add(menuAlgo);
 
-		//AIDE
+		// AIDE
 		menuAide = new JMenu("Aide");
 
 		// MenuItem - A Propos
@@ -280,12 +281,12 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		tabMenuItemAide[1] = new JMenuItem("Documentation Utilisateur");
 		tabMenuItemAide[1].addActionListener(this);
 		menuAide.add(tabMenuItemAide[1]);
-		
-		//Menu Item - Documentation programmeur
+
+		// Menu Item - Documentation programmeur
 		tabMenuItemAide[2] = new JMenuItem("Documentation Programmeur");
 		tabMenuItemAide[2].addActionListener(this);
 		menuAide.add(tabMenuItemAide[2]);
-		
+
 		menuBarMain.add(menuAide);
 
 		menuBarMain.setPreferredSize(new Dimension(250, 20));
@@ -301,15 +302,15 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 		// ---------Graphe--------//
 		pGraph = new GraphPanel(this, ctrl);
-		
-		pBottomGraph = new JPanel(new GridLayout(1,2));
+
+		pBottomGraph = new JPanel(new GridLayout(1, 2));
 		lCoord = new JLabel("");
 		pBottomGraph.add(lCoord);
 		JPanel pZoom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		lZoom = new JLabel("100%");
 		pZoom.add(lZoom);
 		pBottomGraph.add(pZoom);
-		
+
 		jscrPanel = new JScrollPane(pGraph);
 
 		JPanel panelCenter = new JPanel(new BorderLayout());
@@ -445,10 +446,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		this.addKeyListener(pGraph);
 	}
 
-
 	/**
 	 * Méthode utiliser pour ouvrir une fenêtre contenant la matrice
-	 * @param tMatrix un double tableau contenant les informations de la matrice
+	 * 
+	 * @param tMatrix
+	 *            un double tableau contenant les informations de la matrice
 	 */
 	public void openMatrix(int[][] tMatrix, String strTitle) {
 
@@ -466,7 +468,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 		}
 		str += "</tbody></table></body></html>";
 
-		matrixDialog = new JDialog(this,strTitle);
+		matrixDialog = new JDialog(this, strTitle);
 		JPanel pStr = new JPanel();
 		pStr.add(new JLabel(str));
 		matrixDialog.setContentPane(pStr);
@@ -479,10 +481,14 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	/**
-	 * Permet de créer des boutons 
-	 * @param toolTipsText bulle info
-	 * @param icon chemin de l'icone
-	 * @param icon_rollover chemin de l'icone lorsque le curseur est dessus
+	 * Permet de créer des boutons
+	 * 
+	 * @param toolTipsText
+	 *            bulle info
+	 * @param icon
+	 *            chemin de l'icone
+	 * @param icon_rollover
+	 *            chemin de l'icone lorsque le curseur est dessus
 	 * @return un bouton
 	 */
 	public JButton initSmoothButton(String toolTipsText, String icon, String icon_rollover) {
@@ -520,8 +526,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	/**
-	 * Permet d'initialiser le tableau de coordonnée dans hci en lui passant un tableau de point
-	 * @param tab tableau de point
+	 * Permet d'initialiser le tableau de coordonnée dans hci en lui passant un
+	 * tableau de point
+	 * 
+	 * @param tab
+	 *            tableau de point
 	 */
 	public void initHmVertexByTab(Point[] tab) {
 		// Initialization of hmVertex
@@ -561,28 +570,28 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 					new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
 			} else
 				new PopupNewGraph("Création d'un nouveau graphe", true, ctrl, this);
-			
-			//Reset style personnalise
+
+			// Reset style personnalise
 			GraphStyle.Personnalise.setEdgeBorder(Color.BLACK);
 			GraphStyle.Personnalise.setEdgeBackground(Color.WHITE);
 			GraphStyle.Personnalise.setEdgeText(Color.BLACK);
 			GraphStyle.Personnalise.setArcLine(Color.GRAY);
 			GraphStyle.Personnalise.setArcText(Color.BLACK);
-			GraphStyle.Personnalise.setBackground(new Color(238,238,238));
-			getGraphPanel().setBackground(new Color(238,238,238));
+			GraphStyle.Personnalise.setBackground(new Color(238, 238, 238));
+			getGraphPanel().setBackground(new Color(238, 238, 238));
 
 			// Ouvrir
 		} else if (e.getSource() == tabMenuItemFile[1] || e.getSource() == buttonOpen) {
 			JFileChooser dial = new JFileChooser(new File("."));
-			FileNameExtensionFilter filter = new FileNameExtensionFilter(
-					"Fichier texte (*.txt)", "txt");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichier texte (*.txt)", "txt");
 			dial.setAcceptAllFileFilterUsed(false);
 			dial.addChoosableFileFilter(filter);
 			if (dial.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				try {
 					ctrl.loadFile(dial.getSelectedFile().getAbsolutePath());
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Les fchiers contiennent probablement des erreurs", "Erreur", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Les fchiers contiennent probablement des erreurs", "Erreur",
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			// Enregistrer
@@ -708,7 +717,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 					"A propos", 1);
 		} else if (e.getSource() == tabMenuItemAide[1]) {
 			ctrl.openHelp();
-		}else if (e.getSource()==tabMenuItemAide[2]){
+		} else if (e.getSource() == tabMenuItemAide[2]) {
 			ctrl.openJavadoc();
 
 			/*-- BUTTON --*/
@@ -723,12 +732,13 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 			pGraph.zoomOut();
 			pGraph.repaint();
 			pGraph.revalidate();
-			
+
 			// Affiche la martrice
 		} else if (e.getSource() == buttonMatrix) {
-			if(matrixDialog!=null)matrixDialog.dispose();
-			openMatrix(graph.generateMatrix(),"Matrice");
-			
+			if (matrixDialog != null)
+				matrixDialog.dispose();
+			openMatrix(graph.generateMatrix(), "Matrice");
+
 			// Paramètres
 		} else if (e.getSource() == buttonSetting) {
 			new PopupSetting("Paramètres", true, ctrl, this);
@@ -740,8 +750,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getSource() == slObject.getListOfObject()) {
 			pGraph.getAlSelected().clear();
-			for( Object s : slObject.getListOfObject().getSelectedValues() ) {
-				pGraph.getAlSelected().add((String)s);
+			for (Object s : slObject.getListOfObject().getSelectedValues()) {
+				pGraph.getAlSelected().add((String) s);
 			}
 			repaint();
 		}
@@ -791,6 +801,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Méthode utiliser pour centrer une chaine de caractère
+	 * 
 	 * @param str
 	 * @param size
 	 * @return
@@ -811,7 +822,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Méthode permettant d'ajouter un sommet
-	 * @param strName le nom du sommet
+	 * 
+	 * @param strName
+	 *            le nom du sommet
 	 */
 	public void addVertex(String strName) {
 		hmVertex.put(strName, new Point(1, 1));
@@ -824,28 +837,33 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public void refresh() {
 		graph = ctrl.getGraph();
 		menuAlgo.setVisible(graph.isValued());
-		
+
 		menuAlgo.setVisible(graph.getAlVertex().size() != 0);
-		
+
 		slObject.refresh();
 		repaint();
 	}
 
 	/**
 	 * Méthode utiliser pour afficher un message d'erreur
-	 * @param strError la chaine de caractère à afficher
+	 * 
+	 * @param strError
+	 *            la chaine de caractère à afficher
 	 */
 	public void showError(String strError) {
 		JOptionPane.showMessageDialog(null, strError, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	/**
-	 * Méthode utiliser pour afficher un message 
-	 * @param strError la chaine de caractère à afficher
+	 * Méthode utiliser pour afficher un message
+	 * 
+	 * @param strError
+	 *            la chaine de caractère à afficher
 	 */
-	public void showMessage(String strTitle,String strMessage) {
-//		JOptionPane.showMessageDialog(null, strMessage, "Message", JOptionPane.PLAIN_MESSAGE);
-		JDialog messageDialog = new JDialog(this,strTitle);
+	public void showMessage(String strTitle, String strMessage) {
+		// JOptionPane.showMessageDialog(null, strMessage, "Message",
+		// JOptionPane.PLAIN_MESSAGE);
+		JDialog messageDialog = new JDialog(this, strTitle);
 		JPanel pStr = new JPanel();
 		pStr.add(new JLabel(strMessage));
 		messageDialog.setContentPane(pStr);
@@ -855,7 +873,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Méthode utiliser pour afficher un message d'information
-	 * @param strInfo chaine de caractère à afficher
+	 * 
+	 * @param strInfo
+	 *            chaine de caractère à afficher
 	 */
 	public void showInfo(String strInfo) {
 		JOptionPane.showMessageDialog(null, strInfo, "Information", JOptionPane.INFORMATION_MESSAGE);
@@ -890,6 +910,7 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Méthode permettant d'afficher les coordonnées du point selectionné
+	 * 
 	 * @return un label
 	 */
 	public JLabel getLabelCoord() {
@@ -899,22 +920,22 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	public JLabel getLabelZoom() {
 		return this.lZoom;
 	}
-	
+
 	/**
 	 * Méthode permettant de modifier les informations du graphe
 	 */
 	public void setInfo() {
 		String str;
-		str=("Graphe ");
-		if(graph.isDirected()){
-			str+=("orienté");
-		}else{
-			str+=("non orienté");
+		str = ("Graphe ");
+		if (graph.isDirected()) {
+			str += ("orienté");
+		} else {
+			str += ("non orienté");
 		}
-		if(graph.isValued()){
-			str+=(" et valué");
-		}else{
-			str+=(" et non valué");
+		if (graph.isValued()) {
+			str += (" et valué");
+		} else {
+			str += (" et non valué");
 		}
 		slObject.setInfo(str);
 	}
@@ -932,8 +953,11 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	/**
-	 * Méthode permettant d'empêcher l'utilisateur de modifier un arc si le graphe n'est pas valué.
-	 * @param b vrai s'il peut modifier, false s'il ne peut pas
+	 * Méthode permettant d'empêcher l'utilisateur de modifier un arc si le
+	 * graphe n'est pas valué.
+	 * 
+	 * @param b
+	 *            vrai s'il peut modifier, false s'il ne peut pas
 	 */
 	public void permitModifArc(boolean b) {
 		tabMenuItemGraph[5].setEnabled(b);
@@ -942,7 +966,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 	}
 
 	/**
-	 * Méthode permettant à l'utilisateur de choisir d'enregistrer son graphe sous forme de matrice ou de liste d'adjacence.
+	 * Méthode permettant à l'utilisateur de choisir d'enregistrer son graphe
+	 * sous forme de matrice ou de liste d'adjacence.
 	 */
 	public void saveDialog() {
 
@@ -986,7 +1011,9 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Méthode permettant d'afficher un message.
-	 * @param s la chaine à afficher
+	 * 
+	 * @param s
+	 *            la chaine à afficher
 	 */
 	public void afficherMessage(String s) {
 		javax.swing.JOptionPane.showMessageDialog(null, s);
@@ -994,14 +1021,17 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 
 	/**
 	 * Méthode permettant de savoir si l'utilisateur vient d'enregistrer
-	 * @param b true s'il vient d'enregistrer, false sinon
+	 * 
+	 * @param b
+	 *            true s'il vient d'enregistrer, false sinon
 	 */
 	public void setBSaved(boolean b) {
 		bSaved = b;
 	}
 
 	/**
-	 * Méthode permettant de mettre en évidence les sommets et arcs actifs lors d'application d'algorithme de parcours
+	 * Méthode permettant de mettre en évidence les sommets et arcs actifs lors
+	 * d'application d'algorithme de parcours
 	 */
 	public void showHiLightAlgorithm() {
 		ArrayList<String> alSelected = pGraph.getAlSelected();
@@ -1041,8 +1071,8 @@ public class HCI extends JFrame implements ActionListener, ListSelectionListener
 				}
 			}
 		}
-	
-		pGraph.paintVertexAndArc((Graphics2D)pGraph.getGraphics());
+
+		pGraph.paintVertexAndArc((Graphics2D) pGraph.getGraphics());
 
 	}
 }

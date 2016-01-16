@@ -16,20 +16,26 @@ import controller.Controller;
 
 /**
  * Classe qui gère la fenêtre utilisateur pour ajouter un sommet.
+ * 
  * @author Groupe 3
  * @version 2016-01-12
  */
-public class PopupAddVertex extends Popup  {
+public class PopupAddVertex extends Popup {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
 	private JButton ok, annuler;
 
-	/** Méthode qui instancie la pop-up pour ajouter un sommet.
-	 * @param title le titre de la pop-up.
-	 * @param modal 
-	 * @param ctrl le controleur utilisé.
-	 * @param hci le hci utilisé.
+	/**
+	 * Méthode qui instancie la pop-up pour ajouter un sommet.
+	 * 
+	 * @param title
+	 *            le titre de la pop-up.
+	 * @param modal
+	 * @param ctrl
+	 *            le controleur utilisé.
+	 * @param hci
+	 *            le hci utilisé.
 	 */
 	public PopupAddVertex(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
@@ -37,7 +43,7 @@ public class PopupAddVertex extends Popup  {
 		this.ctrl = ctrl;
 		this.setSize(300, 150);
 		setLocationRelativeTo(null);
-		
+
 		// Contenu
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
@@ -63,10 +69,9 @@ public class PopupAddVertex extends Popup  {
 
 		setVisible(true);
 	}
-	
-	
+
 	private void valider() {
-		if(!ctrl.addVertex(nom.getText())){
+		if (!ctrl.addVertex(nom.getText())) {
 			hci.getHmVertex().put(nom.getText(), new Point(0, 0));
 			hci.getAlSelected().clear();
 			hci.getAlSelected().add(nom.getText());
@@ -84,10 +89,9 @@ public class PopupAddVertex extends Popup  {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
+		if (arg0.getKeyCode() == 10 || arg0.getKeyCode() == 13) {
 			valider();
-		}
-		else if (arg0.getKeyCode() == 27)
+		} else if (arg0.getKeyCode() == 27)
 			dispose();
 	}
 

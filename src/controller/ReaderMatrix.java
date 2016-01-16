@@ -21,9 +21,13 @@ public class ReaderMatrix {
 
 	/**
 	 * Constructeur permettant de générer le graphe
-	 * @param alStr Une ArrayList de String correspondant aux lignes d'un fichier
-	 * @param bDirected true si le graphe est orienté
-	 * @param bValued true si le graphe est valué
+	 * 
+	 * @param alStr
+	 *            Une ArrayList de String correspondant aux lignes d'un fichier
+	 * @param bDirected
+	 *            true si le graphe est orienté
+	 * @param bValued
+	 *            true si le graphe est valué
 	 */
 	public ReaderMatrix(ArrayList<String> alStr, boolean bDirected, boolean bValued) {
 		this.alStr = alStr;
@@ -33,16 +37,17 @@ public class ReaderMatrix {
 		graph = new Graph(bDirected, bValued);
 
 		generateMatrix();
-		
+
 		graph = createGraph();
 	}
 
 	public Graph getGraph() {
 		return graph;
 	}
-	
+
 	/**
 	 * Méthode créant le graphe selon le fait qu'il soit valué ou orienté
+	 * 
 	 * @return null si le format d'écriture du fichier est erroné
 	 */
 	private Graph createGraph() {
@@ -72,12 +77,12 @@ public class ReaderMatrix {
 	 * Méthode permettant lire la matrice contenue dans le fichier
 	 */
 	private void generateMatrix() {
-		
+
 		int cpt = 0;
 		for (int i = 0; i < alStr.size() && alStr.get(i).indexOf("Coordonn") < 0; i++) {
 			cpt++;
 		}
-		
+
 		tMatrix = new int[cpt][cpt];
 
 		for (int i = 0; i < cpt; i++) {
@@ -91,6 +96,7 @@ public class ReaderMatrix {
 
 	/**
 	 * Méthode permettant de lire un graphe orienté et valué
+	 * 
 	 * @return null si le graphe n'a pas été correctement créé.
 	 */
 	private Graph createDirectedValuedGraph() {
@@ -118,9 +124,9 @@ public class ReaderMatrix {
 		return graph;
 	}
 
-	
 	/**
 	 * Méthode permettant de lire un graphe orienté non valué
+	 * 
 	 * @return null si le graphe n'a pas été correctement créé.
 	 */
 	private Graph createDirectedNotValuedGraph() {
@@ -148,9 +154,9 @@ public class ReaderMatrix {
 		return graph;
 	}
 
-	
 	/**
 	 * Méthode permettant de lire un graphe non orienté et non valué
+	 * 
 	 * @return null si le graphe n'a pas été correctement créé.
 	 */
 	private Graph createNotDirectedNotValuedGraph() {
@@ -184,6 +190,7 @@ public class ReaderMatrix {
 
 	/**
 	 * Méthode permettant de lire un graphe non orienté et valué
+	 * 
 	 * @return null si le graphe n'a pas été correctement créé.
 	 */
 	private Graph createNotDirectedValuedGraph() {

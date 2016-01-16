@@ -6,6 +6,7 @@ import java.util.Set;
 
 /**
  * Classe permettant de gérer le graphe dans son ensemble
+ * 
  * @author Groupe 3
  * @version 2016-01-11
  */
@@ -17,12 +18,16 @@ public class Graph {
 	private boolean bValued;
 
 	/**
-	 * Constructeur qui instancie un graphe avec les paramètres désirés 
-	 * @param bDirected true si le graphe est orienté, false sinon
-	 * @param bValued true si le graphe est valué, false sinon
+	 * Constructeur qui instancie un graphe avec les paramètres désirés
+	 * 
+	 * @param bDirected
+	 *            true si le graphe est orienté, false sinon
+	 * @param bValued
+	 *            true si le graphe est valué, false sinon
 	 */
 	public Graph(boolean bDirected, boolean bValued) {
-		alVertex = new ArrayList<Vertex>(); //récupération de l'ArrayList de sommet
+		alVertex = new ArrayList<Vertex>(); // récupération de l'ArrayList de
+											// sommet
 		this.bDirected = bDirected;
 		this.bValued = bValued;
 
@@ -30,6 +35,7 @@ public class Graph {
 
 	/**
 	 * Méthoque qui indique si le graphe est orienté
+	 * 
 	 * @return true s'il est orienté, false sinon
 	 */
 	public boolean isDirected() {
@@ -38,15 +44,16 @@ public class Graph {
 
 	/**
 	 * Méthode qui indique si le graphe est valué
+	 * 
 	 * @return true s'il est valué, false sinon
 	 */
 	public boolean isValued() {
 		return bValued;
 	}
 
-
 	/**
 	 * Méthode permettant de générer la matrice du graphe
+	 * 
 	 * @return un tableau représentant la matrice
 	 */
 	public int[][] generateMatrix() {
@@ -84,9 +91,10 @@ public class Graph {
 		}
 		return tMatrix;
 	}
-	
+
 	/**
 	 * Méthode permettant de générer la liste d'adjacence du graphe
+	 * 
 	 * @return une hashMap contenant le nom des sommets et leurs arcs
 	 */
 	public HashMap<String, ArrayList<String>> generateAdjacencyList() {
@@ -125,7 +133,9 @@ public class Graph {
 
 	/**
 	 * Méthode permettant d'ajouter un sommet
-	 * @param strName le nom du sommet
+	 * 
+	 * @param strName
+	 *            le nom du sommet
 	 */
 	public void addVertex(String strName) {
 		alVertex.add(new Vertex(strName));
@@ -133,8 +143,11 @@ public class Graph {
 
 	/**
 	 * Méthode permettant d'ajouter un sommet avec une couleur particulière
-	 * @param strName le nom du sommet
-	 * @param strColor la couleur du sommet
+	 * 
+	 * @param strName
+	 *            le nom du sommet
+	 * @param strColor
+	 *            la couleur du sommet
 	 */
 	public void addVertex(String strName, String strColor) {
 		alVertex.add(new Vertex(strName, strColor));
@@ -142,8 +155,11 @@ public class Graph {
 
 	/**
 	 * Methode permettant d'ajouter des arcs et arêtes non valués
-	 * @param v le nom du premier sommet
-	 * @param vBis le nom du deuxième sommet
+	 * 
+	 * @param v
+	 *            le nom du premier sommet
+	 * @param vBis
+	 *            le nom du deuxième sommet
 	 */
 	public void addArc(Vertex v, Vertex vBis) {
 		if (this.bDirected) {
@@ -158,9 +174,11 @@ public class Graph {
 	}
 
 	/**
-	 * Méthode permettant de supprimer un sommet
-	 * Supprimer aussi tous les arcs associés
-	 * @param v le nom du sommet à supprimer
+	 * Méthode permettant de supprimer un sommet Supprimer aussi tous les arcs
+	 * associés
+	 * 
+	 * @param v
+	 *            le nom du sommet à supprimer
 	 */
 	public void deleteVertex(Vertex v) {
 		for (int i = 0; i < alVertex.size(); i++) {
@@ -175,9 +193,11 @@ public class Graph {
 
 	/**
 	 * Méthode permettant de supprimer un arc
-	 * @param a l'arc à supprimer
+	 * 
+	 * @param a
+	 *            l'arc à supprimer
 	 */
-	public boolean deleteArc(Vertex v, Vertex vBis)  {
+	public boolean deleteArc(Vertex v, Vertex vBis) {
 		for (int i = 0; i < v.getAlArcs().size(); i++) {
 			if (v.getAlArcs().get(i).getVertex() == vBis) {
 				v.getAlArcs().remove(v.getAlArcs().get(i));
@@ -189,9 +209,13 @@ public class Graph {
 
 	/**
 	 * Methode permettant d'ajouter des arcs et arêtes valuées
-	 * @param v le nom du premier sommet
-	 * @param vBis le nom du deuxième sommet
-	 * @param iValue la valeur de l'arc
+	 * 
+	 * @param v
+	 *            le nom du premier sommet
+	 * @param vBis
+	 *            le nom du deuxième sommet
+	 * @param iValue
+	 *            la valeur de l'arc
 	 */
 	public void addArc(Vertex v, Vertex vBis, int iValue) {
 		if (this.bDirected) {
@@ -211,23 +235,25 @@ public class Graph {
 	public int[][] getTMatrix() {
 		return this.tMatrix;
 	}
-	
+
 	/**
 	 * Méthode qui retourner la liste des noms des sommets
+	 * 
 	 * @return tableau de caractères
 	 */
 	public char[] getListVertex() {
 		char[] tChar = new char[alVertex.size()];
-		
+
 		for (int i = 0; i < alVertex.size(); i++) {
 			tChar[i] = alVertex.get(i).getName().charAt(0);
 		}
-		
+
 		return tChar;
 	}
 
 	/**
 	 * Méthode qui retourne tous les sommets
+	 * 
 	 * @return une arraylist de sommet
 	 */
 	public ArrayList<Vertex> getAlVertex() {
@@ -236,7 +262,9 @@ public class Graph {
 
 	/**
 	 * Méthode qui retourne le sommet à l'indice donné
-	 * @param i l'indice du sommet dans l'arrayList de sommet
+	 * 
+	 * @param i
+	 *            l'indice du sommet dans l'arrayList de sommet
 	 * @return le sommet correspondant
 	 */
 	public Vertex getVertex(int i) {
@@ -245,7 +273,9 @@ public class Graph {
 
 	/**
 	 * Méthode qui retourne le sommet correspondant au nom de sommet donné
-	 * @param strVertexName le nom du sommet à retourner
+	 * 
+	 * @param strVertexName
+	 *            le nom du sommet à retourner
 	 * @return le sommet correspondant
 	 */
 	public Vertex getVertex(String strVertexName) {
@@ -257,13 +287,14 @@ public class Graph {
 
 		return null;
 	}
-	
+
 	public void setValued(boolean bValued) {
 		this.bValued = bValued;
 	}
 
 	/**
 	 * Méthode permettant d'obtenir la liste d'adjacence du graphe
+	 * 
 	 * @return Une string sous la forme "A:{B(6)}...."
 	 */
 	public String getFormattedList() {
@@ -291,7 +322,9 @@ public class Graph {
 
 	/**
 	 * Méthode permettant d'obtenir la liste d'adjacence du graphe
-	 * @return Une ArrayList de String donc chaque élément correspont à un sommet
+	 * 
+	 * @return Une ArrayList de String donc chaque élément correspont à un
+	 *         sommet
 	 */
 	public ArrayList<String> getFormattedListAlString() {
 
@@ -300,7 +333,7 @@ public class Graph {
 		ArrayList<String> alRet = new ArrayList<String>();
 		alRet.add("-- Liste d'adjacence :\n");
 		String sProv = "";
-		
+
 		Set<String> setKey = hm.keySet();
 		java.util.Iterator<String> it = setKey.iterator();
 
@@ -343,7 +376,7 @@ public class Graph {
 
 		return sRet;
 	}
-	
+
 	public String displayMatrix2() {
 		this.generateMatrix();
 		String sRet = "";
@@ -362,11 +395,14 @@ public class Graph {
 
 		return sRet;
 	}
-	
+
 	/**
 	 * Méthode permettant de mettre à jour un sommet
-	 * @param oldName l'ancien nom du sommet
-	 * @param newName le nouveau nom du sommet
+	 * 
+	 * @param oldName
+	 *            l'ancien nom du sommet
+	 * @param newName
+	 *            le nouveau nom du sommet
 	 */
 	public void updateVertex(String oldName, String newName) {
 		for (Vertex v : alVertex) {
@@ -375,17 +411,17 @@ public class Graph {
 			}
 		}
 	}
-	
+
 	/**
 	 * Méthode permettant de modifier la valeur d'un arc
-	 * @param a L'arc à modifier
-	 * @param value la nouvelle valeur de l'arc
+	 * 
+	 * @param a
+	 *            L'arc à modifier
+	 * @param value
+	 *            la nouvelle valeur de l'arc
 	 */
 	public void updateArc(Arc a, int value) {
 		a.setValue(value);
 	}
-	
-	
 
-	
 }

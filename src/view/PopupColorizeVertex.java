@@ -15,22 +15,28 @@ import controller.Controller;
 import model.Vertex;
 
 /**
- * Classe qui g�rent la fen�tre utilisateur pour changer la couleur d'un sommet
+ * Classe qui g�rent la fen�tre utilisateur pour changer la couleur d'un
+ * sommet
+ * 
  * @author Groupe 3
  * @version 2016-01-12
  */
 public class PopupColorizeVertex extends Popup {
 
 	private static final long serialVersionUID = -8234116112966360284L;
-	private JButton buttonChoice,buttonDelete;
+	private JButton buttonChoice, buttonDelete;
 	private Color c;
 
 	/**
-	* M�thode qui instancie la pop-up pour choisir le style d'un sommet.
-	 * @param title le titre de la pop-up.
-	 * @param modal 
-	 * @param ctrl le controleur utilis�.
-	 * @param hci le hci utilis�.
+	 * M�thode qui instancie la pop-up pour choisir le style d'un sommet.
+	 * 
+	 * @param title
+	 *            le titre de la pop-up.
+	 * @param modal
+	 * @param ctrl
+	 *            le controleur utilis�.
+	 * @param hci
+	 *            le hci utilis�.
 	 */
 	public PopupColorizeVertex(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
@@ -38,11 +44,11 @@ public class PopupColorizeVertex extends Popup {
 		this.ctrl = ctrl;
 		this.setSize(300, 150);
 		setLocationRelativeTo(null);
-		
+
 		c = Color.WHITE;
-		
+
 		// Contenu
-		JPanel content = new JPanel(new GridLayout(2,1));
+		JPanel content = new JPanel(new GridLayout(2, 1));
 		content.setBackground(Color.white);
 		content.setPreferredSize(new Dimension(300, 70));
 		content.setBorder(BorderFactory.createTitledBorder("Sommet"));
@@ -59,22 +65,22 @@ public class PopupColorizeVertex extends Popup {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == buttonChoice) {
-			c = JColorChooser.showDialog(null,"S�lection de couleur", null);
+		if (e.getSource() == buttonChoice) {
+			c = JColorChooser.showDialog(null, "S�lection de couleur", null);
 			for (String s : hci.getGraphPanel().getAlSelected()) {
-				for(Vertex v : hci.getGraph().getAlVertex()) {
-					if(v.getName().equals(s)) {
+				for (Vertex v : hci.getGraph().getAlVertex()) {
+					if (v.getName().equals(s)) {
 						v.setColor(c);
 					}
 				}
 				hci.refresh();
 			}
 		}
-		
-		else if (e.getSource() == buttonDelete ) {
+
+		else if (e.getSource() == buttonDelete) {
 			for (String s : hci.getGraphPanel().getAlSelected()) {
-				for(Vertex v : hci.getGraph().getAlVertex()) {
-					if(v.getName().equals(s)) {
+				for (Vertex v : hci.getGraph().getAlVertex()) {
+					if (v.getName().equals(s)) {
 						v.setColor(null);
 					}
 				}

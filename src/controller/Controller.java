@@ -520,8 +520,9 @@ public class Controller implements IControlable, IIhmable {
 					// Si oui, on la ferme
 					hci.getMatrixDialog().dispose();
 				}
-				
-				// On ouvre une nouvelle fenêtre pour afficher le tableau de Dijkstra
+
+				// On ouvre une nouvelle fenêtre pour afficher le tableau de
+				// Dijkstra
 				hci.openMatrix(((ParcoursDijkstra) (parcours)).getTChemins(), "Tableau de Dijkstra");
 				hci.getMatrixDialog().paint(hci.getMatrixDialog().getGraphics());
 			}
@@ -535,14 +536,14 @@ public class Controller implements IControlable, IIhmable {
 		// On nettoie la liste des sommets et arcs sélectionnés
 		hci.getGraphPanel().clearAlSelected();
 		hci.getGraphPanel().paintAll(hci.getGraphPanel().getGraphics());
-		
+
 		// On instancie un parcours et on le lance
 		this.parcours = new Parcours(this);
 		this.parcours.lancer();
-		
+
 		// On met à jour l'IHM
 		majIHM();
-		
+
 		// On affiche le message de retour
 		hci.showInfo(parcours.getMessage());
 	}
@@ -551,15 +552,15 @@ public class Controller implements IControlable, IIhmable {
 		// On nettoie la liste des sommets et arcs sélectionnés
 		hci.getGraphPanel().clearAlSelected();
 		hci.getGraphPanel().paintAll(hci.getGraphPanel().getGraphics());
-		
+
 		this.parcours = new ParcoursDijkstra(this, iVertex);
 		this.parcours.lancer();
-		
+
 		// On met à jour l'IHM
 		majIHM();
-		
-		hci.showMessage("Chemin Dijkstra",this.parcours.getMessage());
-		
+
+		hci.showMessage("Chemin Dijkstra", this.parcours.getMessage());
+
 		// On affiche le message de retour
 		hci.showInfo("L'algorithme est terminé.");
 	}
@@ -568,13 +569,13 @@ public class Controller implements IControlable, IIhmable {
 		// On nettoie la liste des sommets et arcs sélectionnés
 		hci.getGraphPanel().clearAlSelected();
 		hci.getGraphPanel().paintAll(hci.getGraphPanel().getGraphics());
-		
+
 		this.parcours = new ParcoursLienExiste(this, iStartVertex, iEndVertex);
 		this.parcours.lancer();
-		
+
 		// On met à jour l'IHM
 		majIHM();
-		
+
 		// On affiche le message de retour
 		hci.showInfo(parcours.getMessage());
 	}
@@ -629,8 +630,11 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * Permet de mettre à jour les sommets
-	 * @param oldName ancien nom du sommet
-	 * @param newName nouveau nom du sommet
+	 * 
+	 * @param oldName
+	 *            ancien nom du sommet
+	 * @param newName
+	 *            nouveau nom du sommet
 	 * @return faux si la mise à jour a échoué et vrai si elle a réussi
 	 */
 	public boolean updateVertex(String oldName, String newName) {
@@ -650,9 +654,13 @@ public class Controller implements IControlable, IIhmable {
 
 	/**
 	 * Permet de mettre à jour un arc entre deux sommets
-	 * @param v sommet de départ de l'arc
-	 * @param vBis sommet d'arrivé de l'arc
-	 * @param value valeur de l'arc
+	 * 
+	 * @param v
+	 *            sommet de départ de l'arc
+	 * @param vBis
+	 *            sommet d'arrivé de l'arc
+	 * @param value
+	 *            valeur de l'arc
 	 * @return faux si la mise à jour a échoué et vrai si elle a réussi
 	 */
 	public boolean updateArc(Vertex v, Vertex vBis, int value) {

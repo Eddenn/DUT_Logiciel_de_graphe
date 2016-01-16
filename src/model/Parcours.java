@@ -45,7 +45,7 @@ public class Parcours implements IParcourable {
 
 		// recherche de l'arc le plus grand
 		int max = -1;
-		
+
 		for (int col = 0; col < matrice.length; col++) {
 			this.sommetActif = col;
 			for (int lig = 0; lig < matrice.length; lig++) {
@@ -63,7 +63,7 @@ public class Parcours implements IParcourable {
 						this.message = "etape " + etape + "           max : " + max;
 					}
 					ctrl.majIHM();
-					
+
 					etape++;
 				}
 			}
@@ -71,8 +71,7 @@ public class Parcours implements IParcourable {
 
 		if (max == -1) {
 			this.message = "Aucune valeur n'a été trouvée";
-		}
-		else {
+		} else {
 			message = "Le max ainsi trouvé vaut " + max;
 		}
 

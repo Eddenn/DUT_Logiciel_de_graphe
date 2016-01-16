@@ -13,13 +13,13 @@ import javax.swing.JTextField;
 
 import controller.Controller;
 
-
 /**
  * Classe gérant la fenêtre utilisateur pour modifier un sommet.
- * @author Groupe 3 
+ * 
+ * @author Groupe 3
  * @version 2016-01-12
  */
-public class PopupUpdateVertex extends Popup  {
+public class PopupUpdateVertex extends Popup {
 
 	private static final long serialVersionUID = -8234116112966360284L;
 	private JTextField nom;
@@ -27,10 +27,14 @@ public class PopupUpdateVertex extends Popup  {
 
 	/**
 	 * Méthode qui instancie la pop-up pour modifier un sommet.
-	 * @param title le titre de la pop-up.
-	 * @param modal 
-	 * @param ctrl le controleur utilisé.
-	 * @param hci le hci utilisé.
+	 * 
+	 * @param title
+	 *            le titre de la pop-up.
+	 * @param modal
+	 * @param ctrl
+	 *            le controleur utilisé.
+	 * @param hci
+	 *            le hci utilisé.
 	 */
 	public PopupUpdateVertex(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
@@ -38,7 +42,7 @@ public class PopupUpdateVertex extends Popup  {
 		this.ctrl = ctrl;
 		this.setSize(300, 150);
 		setLocationRelativeTo(null);
-		
+
 		// Contenu
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
@@ -70,8 +74,7 @@ public class PopupUpdateVertex extends Popup  {
 	}
 
 	private void valider() {
-		if (ctrl.updateVertex(hci.getAlSelected().get(0), nom.getText()))
-		{
+		if (ctrl.updateVertex(hci.getAlSelected().get(0), nom.getText())) {
 			hci.getHmVertex().put(nom.getText(), hci.getHmVertex().get(hci.getAlSelected().get(0)));
 			hci.getHmVertex().remove(hci.getAlSelected().get(0));
 			hci.getAlSelected().clear();
@@ -80,10 +83,10 @@ public class PopupUpdateVertex extends Popup  {
 			dispose();
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == ok && !nom.getText().isEmpty()) 
+		if (e.getSource() == ok && !nom.getText().isEmpty())
 			valider();
 		if (e.getSource() == annuler) {
 			dispose();
@@ -92,10 +95,9 @@ public class PopupUpdateVertex extends Popup  {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
+		if (arg0.getKeyCode() == 10 || arg0.getKeyCode() == 13) {
 			valider();
-		}
-		else if (arg0.getKeyCode() == 27)
+		} else if (arg0.getKeyCode() == 27)
 			dispose();
 	}
 

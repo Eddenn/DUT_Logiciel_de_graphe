@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 /**
  * Classe permettant de gérer les sommets
+ * 
  * @author Groupe 3
  * @version 2016-01-13
  */
@@ -17,7 +18,9 @@ public class Vertex {
 
 	/**
 	 * Constructeur permettant d'instancier un sommet
-	 * @param strName Le nom du sommet
+	 * 
+	 * @param strName
+	 *            Le nom du sommet
 	 */
 	public Vertex(String strName) {
 		this.alArcs = new ArrayList<Arc>();
@@ -26,8 +29,11 @@ public class Vertex {
 
 	/**
 	 * Constructeur permettant d'instancier un sommet
-	 * @param strName Le nom du sommet
-	 * @param strColor La couleur du sommet
+	 * 
+	 * @param strName
+	 *            Le nom du sommet
+	 * @param strColor
+	 *            La couleur du sommet
 	 */
 	public Vertex(String strName, String strColor) {
 		this.alArcs = new ArrayList<Arc>();
@@ -38,12 +44,15 @@ public class Vertex {
 	public String getName() {
 		return this.strName;
 	}
+
 	public void setName(String s) {
 		this.strName = s;
 	}
+
 	public Color getColor() {
 		return color;
 	}
+
 	public void setColor(Color color) {
 		this.color = color;
 	}
@@ -56,7 +65,7 @@ public class Vertex {
 	public String toString() {
 		String sRet = this.strName + " : ";
 		for (Arc a : alArcs) {
-			sRet += a.displayVertex(this) +  " ";
+			sRet += a.displayVertex(this) + " ";
 		}
 		return sRet;
 	}

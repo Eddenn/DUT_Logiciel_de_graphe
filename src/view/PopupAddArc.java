@@ -15,6 +15,7 @@ import controller.Controller;
 
 /**
  * Classe gérant la fenêtre utilisateur d'ajout d'arc
+ * 
  * @author Groupe 3
  * @version 2016-01-12
  */
@@ -25,23 +26,26 @@ public class PopupAddArc extends Popup {
 	@SuppressWarnings("rawtypes")
 	private JComboBox boxDep, boxArr;
 	private JTextField valArc;
-	
-	
+
 	/**
 	 * Constructeur qui instancie la fenêtre pop-up pour ajouter un arc
-	 * @param title le titre de la fenêtre
+	 * 
+	 * @param title
+	 *            le titre de la fenêtre
 	 * @param modal
-	 * @param ctrl le controleur lancé
-	 * @param hci  le hci lancé
+	 * @param ctrl
+	 *            le controleur lancé
+	 * @param hci
+	 *            le hci lancé
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PopupAddArc(String title, boolean modal, Controller ctrl, HCI hci) {
 		super(title, modal, ctrl, hci);
 		this.setSize(300, 165);
 		setLocationRelativeTo(null);
-		
+
 		String[] tabVertex = new String[ctrl.getGraph().getAlVertex().size()];
-		
+
 		for (int i = 0; i < ctrl.getGraph().getAlVertex().size(); i++) {
 			tabVertex[i] = (ctrl.getGraph().getAlVertex().get(i).getName());
 		}
@@ -49,87 +53,86 @@ public class PopupAddArc extends Popup {
 		JLabel text = new JLabel("<html> Saisissez les données de l'arc : <br/><br/> </html>");
 		text.setHorizontalAlignment(JLabel.CENTER);
 		add(text, "North");
-		
+
 		// Panel contenant les JComboBox et le textfield
 		JPanel content = new JPanel(new BorderLayout());
-		
+
 		// Panel contenant les JComboBox
 		JPanel panelComboBox = new JPanel();
-		
+
 		// Gestion du sommet de départ
 		JLabel lDep = new JLabel("Départ : ");
-		panelComboBox.add(lDep,"West");
+		panelComboBox.add(lDep, "West");
 		boxDep = new JComboBox(tabVertex);
-		if(hci.getAlSelected().size() == 2) {
+		if (hci.getAlSelected().size() == 2) {
 			boxDep.setSelectedItem(hci.getAlSelected().get(0));
 		}
-		panelComboBox.add(boxDep,"");
-		
+		panelComboBox.add(boxDep, "");
+
 		// Gestion du sommet d'arrivée
 		JLabel lArr = new JLabel("Arrivée : ");
 		panelComboBox.add(lArr);
 		boxArr = new JComboBox(tabVertex);
-		if(hci.getAlSelected().size() == 2) {
+		if (hci.getAlSelected().size() == 2) {
 			boxArr.setSelectedItem(hci.getAlSelected().get(1));
 		}
 		panelComboBox.add(boxArr);
-		
+
 		// Panel contenant le textField
 		JPanel panelTextField = new JPanel(new BorderLayout());
-		
+
 		// Gestion du TextField
-		panelTextField.add(new JLabel("Valeur de l'arc : "),"West");
+		panelTextField.add(new JLabel("Valeur de l'arc : "), "West");
 		valArc = new JTextField();
 		valArc.addKeyListener(this);
-		
-		if (! hci.getGraph().isValued())
+
+		if (!hci.getGraph().isValued())
 			valArc.setEditable(false);
-		
+
 		panelTextField.add(valArc);
-		
+
 		// Ajout des comboBox et textField a la fenetre
-		content.add(panelComboBox,"North");
+		content.add(panelComboBox, "North");
 		content.add(panelTextField);
 		add(content);
-		
+
 		// Panel contenant les boutons
-		JPanel control =new JPanel();
-		ok = new JButton ("Valider");
+		JPanel control = new JPanel();
+		ok = new JButton("Valider");
 		ok.addActionListener(this);
-		annuler = new JButton ("Annuler");
+		annuler = new JButton("Annuler");
 		annuler.addActionListener(this);
 		control.add(ok);
 		control.add(annuler);
 		add(control, "South");
-		
+
 		setVisible(true);
 	}
-	
+
 	private void valider() {
 		int vertexDep = boxDep.getSelectedIndex();
 		int vertexArr = boxArr.getSelectedIndex();
-		
+
 		if (this.ctrl.getNbSommet() > 0) {
 			if (this.ctrl.getGraph().isValued()) {
 				if (valArc.getText().matches("[0-9]+")) {
-					ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
+					ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep),
+							ctrl.getGraph().getAlVertex().get(vertexArr), Integer.parseInt(valArc.getText()));
 					dispose();
-				}
-				else
+				} else
 					valArc.setText("Valeur erronée");
-			}
-			else {
+			} else {
 				ctrl.addArc(ctrl.getGraph().getAlVertex().get(vertexDep), ctrl.getGraph().getAlVertex().get(vertexArr));
 				dispose();
 			}
-		}
-		else
-			JOptionPane.showMessageDialog(null, "Un arc doit avoir une origine et une destination.", "Erreur", JOptionPane.ERROR_MESSAGE);
+		} else
+			JOptionPane.showMessageDialog(null, "Un arc doit avoir une origine et une destination.", "Erreur",
+					JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == ok )
+		if (e.getSource() == ok)
 			valider();
 		else
 			dispose();
@@ -137,10 +140,9 @@ public class PopupAddArc extends Popup {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(arg0.getKeyCode()==10 || arg0.getKeyCode()==13) {
+		if (arg0.getKeyCode() == 10 || arg0.getKeyCode() == 13) {
 			valider();
-		}
-		else if (arg0.getKeyCode() == 27)
+		} else if (arg0.getKeyCode() == 27)
 			dispose();
 	}
 
@@ -151,6 +153,5 @@ public class PopupAddArc extends Popup {
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 	}
-	
 
 }

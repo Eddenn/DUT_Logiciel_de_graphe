@@ -26,16 +26,16 @@ public class Arc {
 	public Vertex getVertex() {
 		return this.vertex;
 	}
-	
-	public void setVertex(Vertex v){
+
+	public void setVertex(Vertex v) {
 		this.vertex = v;
 	}
 
 	public int getIValue() {
 		return this.iValue;
 	}
-	
-	public void setValue(int a){
+
+	public void setValue(int a) {
 		this.iValue = a;
 	}
 
@@ -49,6 +49,5 @@ public class Arc {
 
 		return str;
 	}
-
 
 }

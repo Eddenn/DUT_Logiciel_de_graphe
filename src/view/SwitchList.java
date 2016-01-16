@@ -17,11 +17,12 @@ import model.*;
 
 /**
  * Classe permettant d'afficher la liste des sommets et des arcs
+ * 
  * @author Groupe 3
  * @version 2016-01-13
  */
 
-public class SwitchList extends JPanel{
+public class SwitchList extends JPanel {
 
 	private static final long serialVersionUID = -967795867440790085L;
 	@SuppressWarnings("rawtypes")
@@ -30,127 +31,153 @@ public class SwitchList extends JPanel{
 	private JLabel lTitle, lInfo;
 	private int state = 1;
 	private HCI hci;
-	
+
 	/**
 	 * Constructeur permettant de créer la liste
-	 * @param hci l'IHM du programme
+	 * 
+	 * @param hci
+	 *            l'IHM du programme
 	 */
 	@SuppressWarnings("rawtypes")
 	public SwitchList(HCI hci) {
 		this.hci = hci;
 		setLayout(new BorderLayout());
-		
+
 		/*--Haut de la liste--*/
 		JPanel jpTop = new JPanel();
-	    jpTop.setBackground(Color.WHITE);
-		//Button used to switch 
-		ImageIcon iSwitch = new ImageIcon( getClass().getResource( "/switch.png"));
+		jpTop.setBackground(Color.WHITE);
+		// Button used to switch
+		ImageIcon iSwitch = new ImageIcon(getClass().getResource("/switch.png"));
 		jbSwitch = new JButton(iSwitch);
 		jbSwitch.setContentAreaFilled(false);
 		jbSwitch.setBorderPainted(false);
 		jbSwitch.setRolloverIcon(new ImageIcon("images/switch_rollover.png"));
 		jbSwitch.setMargin(new Insets(0, 0, 0, 0));
-		jbSwitch.setBackground(new Color(255,255,255));
-		jbSwitch.setForeground(new Color(255,255,255));
+		jbSwitch.setBackground(new Color(255, 255, 255));
+		jbSwitch.setForeground(new Color(255, 255, 255));
 		jbSwitch.setToolTipText("Changer de liste");
 		jbSwitch.addActionListener(hci);
 		jpTop.add(jbSwitch);
 		lTitle = new JLabel("Liste des Sommets");
-	    jpTop.add(lTitle);
-	    add(jpTop,BorderLayout.NORTH);
-	    /*-----------------------*/
-	    
-	    //JList
-	    listOfObject = new JList();
-	    DefaultListCellRenderer renderer =  (DefaultListCellRenderer)listOfObject.getCellRenderer();  //Center string in the list
-	    renderer.setHorizontalAlignment(JLabel.CENTER); 	
-	    // -----------------------
-	    listOfObject.addMouseListener(new ListMouseListener(hci));
-	    listOfObject.addListSelectionListener(hci);
-	    JScrollPane jscrPanel = new JScrollPane(listOfObject);
-	    add(jscrPanel,BorderLayout.CENTER);
-	    
-	    /*--Bas de la liste --*/
-	    JPanel jpBottom = new JPanel();
-	    jpBottom.setBackground(Color.WHITE);
+		jpTop.add(lTitle);
+		add(jpTop, BorderLayout.NORTH);
+		/*-----------------------*/
+
+		// JList
+		listOfObject = new JList();
+		DefaultListCellRenderer renderer = (DefaultListCellRenderer) listOfObject.getCellRenderer(); // Center
+																										// string
+																										// in
+																										// the
+																										// list
+		renderer.setHorizontalAlignment(JLabel.CENTER);
+		// -----------------------
+		listOfObject.addMouseListener(new ListMouseListener(hci));
+		listOfObject.addListSelectionListener(hci);
+		JScrollPane jscrPanel = new JScrollPane(listOfObject);
+		add(jscrPanel, BorderLayout.CENTER);
+
+		/*--Bas de la liste --*/
+		JPanel jpBottom = new JPanel();
+		jpBottom.setBackground(Color.WHITE);
 		lInfo = new JLabel("");
 		jpBottom.add(lInfo);
 		add(jpBottom, BorderLayout.SOUTH);
-	    
-	    this.setPreferredSize(new Dimension(200,500));
+
+		this.setPreferredSize(new Dimension(200, 500));
 	}
-	//Getters and Setters
+
+	// Getters and Setters
 	@SuppressWarnings("unchecked")
-	public JList<String> getListOfObject() {return this.listOfObject;}
-	public JButton getJBSwitch(){return this.jbSwitch;}
-	public Object getJBMatrix() {return this.buttonMatrix;}
-	
+	public JList<String> getListOfObject() {
+		return this.listOfObject;
+	}
+
+	public JButton getJBSwitch() {
+		return this.jbSwitch;
+	}
+
+	public Object getJBMatrix() {
+		return this.buttonMatrix;
+	}
+
 	/**
-	 * Méthode mettant à jour la JList présente dans SwitchList en fonction du graphe
+	 * Méthode mettant à jour la JList présente dans SwitchList en fonction du
+	 * graphe
 	 */
 	@SuppressWarnings("unchecked")
 	public void refresh() {
 		Graph graphLoaded = hci.getGraph();
-		if(state == 0) {	//State of the SwitchList (0 = Sommets)
+		if (state == 0) { // State of the SwitchList (0 = Sommets)
 			String[] tabVertex = new String[graphLoaded.getAlVertex().size()];
 			int cpt = 0;
-			for(Vertex v : graphLoaded.getAlVertex()) {
+			for (Vertex v : graphLoaded.getAlVertex()) {
 				tabVertex[cpt] = v.getName();
 				cpt++;
 			}
 			listOfObject.setListData(tabVertex);
-		} else if(state == 1) { 	//State of the SwitchList (1 = Arcs)
+		} else if (state == 1) { // State of the SwitchList (1 = Arcs)
 			int nbArc = 0;
-			for(Vertex v : graphLoaded.getAlVertex()) {
-				for(@SuppressWarnings("unused") Arc a : v.getAlArcs()) {
+			for (Vertex v : graphLoaded.getAlVertex()) {
+				for (@SuppressWarnings("unused")
+				Arc a : v.getAlArcs()) {
 					nbArc++;
 				}
 			}
 			String[] tabArc = new String[nbArc];
 			int cpt = 0;
 			boolean bFound = false;
-			for(Vertex v : graphLoaded.getAlVertex()) {
-				if(graphLoaded.isValued()) {	
+			for (Vertex v : graphLoaded.getAlVertex()) {
+				if (graphLoaded.isValued()) {
 					if (graphLoaded.isDirected()) {
-						//Valué et orienté
-						for(Arc a : v.getAlArcs()) {
-							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"----->"+HCI.centerStr(a.getVertex().getName(),5);
+						// Valué et orienté
+						for (Arc a : v.getAlArcs()) {
+							tabArc[cpt] = HCI.centerStr(v.getName(), 5) + "------"
+									+ HCI.centerStr("" + a.getIValue(), 7) + "----->"
+									+ HCI.centerStr(a.getVertex().getName(), 5);
 							cpt++;
 						}
 					} else {
-						//Valué et non orienté
-						for(Arc a : v.getAlArcs()) {
+						// Valué et non orienté
+						for (Arc a : v.getAlArcs()) {
 							bFound = false;
-							for(String s : tabArc) {
-								if( s!=null && (s.equals(HCI.centerStr(a.getVertex().getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"------"+HCI.centerStr(v.getName(),5)))) {
+							for (String s : tabArc) {
+								if (s != null && (s.equals(HCI.centerStr(a.getVertex().getName(), 5) + "------"
+										+ HCI.centerStr("" + a.getIValue(), 7) + "------"
+										+ HCI.centerStr(v.getName(), 5)))) {
 									bFound = true;
 								}
 							}
-							if(!bFound) {
-								tabArc[cpt] = HCI.centerStr(v.getName(),5)+"------"+HCI.centerStr(""+a.getIValue(),7)+"------"+HCI.centerStr(a.getVertex().getName(),5);
+							if (!bFound) {
+								tabArc[cpt] = HCI.centerStr(v.getName(), 5) + "------"
+										+ HCI.centerStr("" + a.getIValue(), 7) + "------"
+										+ HCI.centerStr(a.getVertex().getName(), 5);
 								cpt++;
 							}
-							
+
 						}
 					}
 				} else {
 					if (graphLoaded.isDirected()) {
-						//Non valué et orienté
-						for(Arc a : v.getAlArcs()) {
-							tabArc[cpt] = HCI.centerStr(v.getName(),5)+"-------->"+HCI.centerStr(a.getVertex().getName(),5);
+						// Non valué et orienté
+						for (Arc a : v.getAlArcs()) {
+							tabArc[cpt] = HCI.centerStr(v.getName(), 5) + "-------->"
+									+ HCI.centerStr(a.getVertex().getName(), 5);
 							cpt++;
 						}
 					} else {
-						//Non valué et non orienté
-						for(Arc a : v.getAlArcs()) {
+						// Non valué et non orienté
+						for (Arc a : v.getAlArcs()) {
 							bFound = false;
-							for(String s : tabArc) {
-								if( s!=null && s.equals(HCI.centerStr(a.getVertex().getName(),5)+"---------"+HCI.centerStr(v.getName(),5))) {
+							for (String s : tabArc) {
+								if (s != null && s.equals(HCI.centerStr(a.getVertex().getName(), 5) + "---------"
+										+ HCI.centerStr(v.getName(), 5))) {
 									bFound = true;
 								}
 							}
-							if(!bFound) {
-								tabArc[cpt] = HCI.centerStr(v.getName(),5)+"---------"+HCI.centerStr(a.getVertex().getName(),5);
+							if (!bFound) {
+								tabArc[cpt] = HCI.centerStr(v.getName(), 5) + "---------"
+										+ HCI.centerStr(a.getVertex().getName(), 5);
 								cpt++;
 							}
 						}
@@ -163,28 +190,31 @@ public class SwitchList extends JPanel{
 			// S1 --4-- S2
 			// S1 --4-> S2
 			// S1 ----> S2
-			
+
 		}
 	}
-	
+
 	/**
-	 * Méthode permettant de changer l'état de la liste entre l'état "Sommet" et l'état "Arc"
+	 * Méthode permettant de changer l'état de la liste entre l'état "Sommet" et
+	 * l'état "Arc"
 	 */
-	//Set state of the SwitchList
+	// Set state of the SwitchList
 	public void switchState() {
-		if(state == 0) {
+		if (state == 0) {
 			lTitle.setText("Liste des Arcs");
-			state=1;
-		} else if(state == 1) {
+			state = 1;
+		} else if (state == 1) {
 			lTitle.setText("Liste des Sommets");
-			state=0;
+			state = 0;
 		}
 		refresh();
 	}
-	
+
 	/**
 	 * Méthode permettant d'afficher les paramètres du graphe (Orienté / valué)
-	 * @param strInfo La chaine à afficher
+	 * 
+	 * @param strInfo
+	 *            La chaine à afficher
 	 */
 	public void setInfo(String strInfo) {
 		lInfo.setText(strInfo);

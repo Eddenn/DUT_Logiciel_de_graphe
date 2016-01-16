@@ -19,12 +19,15 @@ public class ReaderAdjacencyList {
 	private Graph graph;
 	private ArrayList<String> alVertexName;
 
-	
 	/**
 	 * Constructeur permettant de générer le graphe
-	 * @param alStr Une ArrayList de String correspondant aux lignes d'un fichier
-	 * @param bDirected true si le graphe est orienté
-	 * @param bValued true si le graphe est valué
+	 * 
+	 * @param alStr
+	 *            Une ArrayList de String correspondant aux lignes d'un fichier
+	 * @param bDirected
+	 *            true si le graphe est orienté
+	 * @param bValued
+	 *            true si le graphe est valué
 	 */
 	public ReaderAdjacencyList(ArrayList<String> alStr, boolean bDirected, boolean bValued) {
 		this.alStr = alStr;
@@ -37,11 +40,10 @@ public class ReaderAdjacencyList {
 		graph = createGraph();
 	}
 
-	
 	public Graph getGraph() {
 		return graph;
 	}
-	
+
 	/**
 	 * Méthode permettant d'initialiser les sommets du graphe
 	 */
@@ -60,6 +62,7 @@ public class ReaderAdjacencyList {
 
 	/**
 	 * Méthode créant le graphe selon le fait qu'il soit valué ou orienté
+	 * 
 	 * @return null si le format d'écriture du fichier est erroné
 	 */
 	private Graph createGraph() {
@@ -79,13 +82,15 @@ public class ReaderAdjacencyList {
 			else if (!bDirected && !bValued) {
 				return createNotDirectedNotValuedGraph();
 			}
-		} catch (Exception e) {}
-		
+		} catch (Exception e) {
+		}
+
 		return null;
 	}
 
 	/**
 	 * Méthode permettant de lire un graphe orienté et valué
+	 * 
 	 * @return null si le graphe n'a pas été correctement créé.
 	 */
 	private Graph createDirectedValuedGraph() {
@@ -125,12 +130,13 @@ public class ReaderAdjacencyList {
 				bContinue = false;
 			}
 		}
-		
+
 		return graph;
 	}
 
 	/**
 	 * Méthode permettant de lire un graphe orienté non valué
+	 * 
 	 * @return null si le graphe n'a pas été correctement créé.
 	 */
 	private Graph createDirectedNotValuedGraph() {
@@ -170,12 +176,13 @@ public class ReaderAdjacencyList {
 				bContinue = false;
 			}
 		}
-		
+
 		return graph;
 	}
 
 	/**
 	 * Méthode permettant de lire un graphe non orienté et valué
+	 * 
 	 * @return null si le graphe n'a pas été correctement créé.
 	 */
 	private Graph createNotDirectedValuedGraph() {
@@ -214,18 +221,19 @@ public class ReaderAdjacencyList {
 						}
 					}
 				}
-				
+
 				alVertexAlreadyProcessed.add(tStr[0]);
 			} else {
 				bContinue = false;
 			}
 		}
-		
+
 		return graph;
 	}
 
 	/**
 	 * Méthode permettant de lire un graphe non orienté et non valué
+	 * 
 	 * @return null si le graphe n'a pas été correctement créé.
 	 */
 	private Graph createNotDirectedNotValuedGraph() {
@@ -264,13 +272,13 @@ public class ReaderAdjacencyList {
 						}
 					}
 				}
-				
+
 				alVertexAlreadyProcessed.add(tStr[0]);
 			} else {
 				bContinue = false;
 			}
 		}
-		
+
 		return graph;
 	}
 }
