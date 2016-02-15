@@ -669,6 +669,7 @@ public class GraphPanel extends JPanel implements MouseListener, MouseMotionList
 							(int) (clipBoardEdge.get(s).y + iHeightEdge * iZoom)));
 			hci.refresh();
 		}
+		ctrl.provSave();
 	}
 
 	/*--MouseListener--*/
